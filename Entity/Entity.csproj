@@ -59,7 +59,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppUser.cs" />
     <Compile Include="Database.cs" />
+    <Compile Include="Migrations\201612150929317_InitialCreate.cs" />
+    <Compile Include="Migrations\201612150929317_InitialCreate.Designer.cs">
+      <DependentUpon>201612150929317_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Organization.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -71,6 +78,11 @@
       <Project>{65b0d4c3-2525-43ae-9ec4-d18fe6eda055}</Project>
       <Name>Interface</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201612150929317_InitialCreate.resx">
+      <DependentUpon>201612150929317_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

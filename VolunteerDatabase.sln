@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entity", "Entity\Entity.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Desktop", "Desktop\Desktop.csproj", "{5CA92A07-5982-423C-9567-9ED525140B10}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helper", "Helper\Helper.csproj", "{A0BB3A1E-EA95-4F39-94CA-1777B04D8825}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{5CA92A07-5982-423C-9567-9ED525140B10}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CA92A07-5982-423C-9567-9ED525140B10}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5CA92A07-5982-423C-9567-9ED525140B10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0BB3A1E-EA95-4F39-94CA-1777B04D8825}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0BB3A1E-EA95-4F39-94CA-1777B04D8825}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0BB3A1E-EA95-4F39-94CA-1777B04D8825}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0BB3A1E-EA95-4F39-94CA-1777B04D8825}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -8,6 +8,8 @@
         Title="MainWindow" Height="300" Width="300">
     <Grid>
         <Button x:Name="createDatabase" Content="创建数据库" HorizontalAlignment="Left" Height="31" Margin="29,182,0,0" VerticalAlignment="Top" Width="83" Click="createDatabase_Click"/>
+        <Button x:Name="signUpButton" Content="注册" HorizontalAlignment="Left" Height="31" Margin="144,182,0,0" VerticalAlignment="Top" Width="81" Click="signUpButton_Click"/>
+        <Button x:Name="signInButton" Content="登录" HorizontalAlignment="Left" Height="31" Margin="90,133,0,0" VerticalAlignment="Top" Width="81"/>
 
     </Grid>
 </Window>

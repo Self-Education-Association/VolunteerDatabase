@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using VolunteerDatabase.Entity;
+using Microsoft.AspNet.Identity;
 
 namespace VolunteerDatabase.Desktop
 {
@@ -20,6 +21,8 @@ namespace VolunteerDatabase.Desktop
     /// </summary>
     public partial class MainWindow : Window
     {
+        private UserManager<AppUser> _userManager;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -36,6 +39,11 @@ namespace VolunteerDatabase.Desktop
                 db.Database.Create();
             }
             MessageBox.Show("success");
+        }
+
+        private void signUpButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
