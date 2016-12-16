@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using VolunteerDatabase.Entity;
 using Microsoft.AspNet.Identity;
+using VolunteerDatabase.Helper;
 
 namespace VolunteerDatabase.Desktop
 {
@@ -41,9 +42,10 @@ namespace VolunteerDatabase.Desktop
             MessageBox.Show("success");
         }
 
-        private void signUpButton_Click(object sender, RoutedEventArgs e)
+        private async void signUpButton_Click(object sender, RoutedEventArgs e)
         {
-
+            var helper = IdentityHelper.GetInstanceAsync();
+            await (await helper).GetRoleAsync(AppUserRoleName.Administrator);
         }
     }
 }

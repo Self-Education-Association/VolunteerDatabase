@@ -21,7 +21,7 @@ namespace VolunteerDatabase.Helper
 
         private RoleManager<IdentityRole> roleManager;
 
-        public IdentityHelper GetInstance()
+        public static IdentityHelper GetInstance()
         {
             if (helper == null)
             {
@@ -34,6 +34,15 @@ namespace VolunteerDatabase.Helper
                 }
             }
             return helper;
+        }
+
+        public static async Task<IdentityHelper> GetInstanceAsync()
+        {
+            Task<IdentityHelper> helper = Task.Run(() =>
+            {
+                return GetInstance();
+            });
+            return await helper;
         }
 
         private IdentityHelper()

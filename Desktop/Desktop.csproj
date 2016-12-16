@@ -116,6 +116,10 @@
       <Project>{a0239464-f740-49d6-8b33-ee4917fc3bb7}</Project>
       <Name>Entity</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Helper\Helper.csproj">
+      <Project>{a0bb3a1e-ea95-4f39-94ca-1777b04d8825}</Project>
+      <Name>Helper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Interface\Interface.csproj">
       <Project>{65b0d4c3-2525-43ae-9ec4-d18fe6eda055}</Project>
       <Name>Interface</Name>
