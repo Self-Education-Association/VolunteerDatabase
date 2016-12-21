@@ -45,7 +45,7 @@ namespace VolunteerDatabase.Desktop
         private async void signUpButton_Click(object sender, RoutedEventArgs e)
         {
             var helper = IdentityHelper.GetInstanceAsync();
-            await (await helper).GetRoleAsync(AppUserRoleName.Administrator);
+            await (await helper).GetRoleAsync(AppRoleEnum.Administrator);
         }
     }
 }

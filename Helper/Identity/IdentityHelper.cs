@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Identity;
 using VolunteerDatabase.Entity;
-using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace VolunteerDatabase.Helper
 {
@@ -16,10 +15,6 @@ namespace VolunteerDatabase.Helper
         private static readonly object locker = new object();
 
         private Database database;
-
-        private UserManager<AppUser> userManager;
-
-        private RoleManager<IdentityRole> roleManager;
 
         public static IdentityHelper GetInstance()
         {
@@ -48,18 +43,37 @@ namespace VolunteerDatabase.Helper
         private IdentityHelper()
         {
             database = new Database();
-            userManager = new UserManager<AppUser>(new UserStore<AppUser>(database));
-            roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(database));
         }
 
         public async Task<IdentityResult> CreateUserAsync(AppUser user, string password)
         {
-            var result = await userManager.CreateAsync(user: user, password: password);
+            var result = Task.Run(() => CreateUser(user, password));
 
-            return result;
+            return await result;
         }
 
-        public async Task<IdentityResult> CreateUserAsync(AppUser user, string password, AppUserRoleName roleName)
+        public IdentityResult CreateUser(AppUser user, string password)
+        {
+            user.Salt = SecurityHelper.GetSalt();
+            user.HashedPassword = SecurityHelper.Hash(password, user.Salt);
+            database.Users.Add(user);
+            bool flag = false;
+            do
+            {
+                try
+                {
+                    database.SaveChanges();
+                }
+                catch (DbUpdateException e)
+                {
+                    flag = true;
+                }
+            } while (flag);
+
+            return IdentityResult.Success();
+        }
+
+        public async Task<IdentityResult> CreateUserAsync(AppUser user, string password, AppRoleEnum roleName)
         {
             var role = GetRoleAsync(roleName);
             var result = await CreateUserAsync(user, password);
@@ -70,7 +84,17 @@ namespace VolunteerDatabase.Helper
             return new IdentityResult(result.Errors);
         }
 
-        public async Task<IdentityResult> AddToRoleAsync(string userId, AppUserRoleName roleName)
+        public IdentityResult AddToRole(string userId, string role)
+        {
+            var user = database.Users.Find(userId);
+            if (user == null)
+            {
+                return IdentityResult.Error("未找到用户。");
+            }
+            if (user.Role)
+        }
+
+        public async Task<IdentityResult> AddToRoleAsync(string userId, AppRoleEnum roleName)
         {
             var role = await GetRoleAsync(roleName);
             var result = await userManager.AddToRoleAsync(userId: userId, role: role.Name);
@@ -83,7 +107,7 @@ namespace VolunteerDatabase.Helper
             return result;
         }
 
-        public async Task<IdentityRole> GetRoleAsync(AppUserRoleName roleName)
+        public async Task<IdentityRole> GetRoleAsync(AppRoleEnum roleName)
         {
             var role = await roleManager.FindByNameAsync(roleName.ToString());
             if (role == null)
@@ -114,12 +138,5 @@ namespace VolunteerDatabase.Helper
 
             return result;
         }
-    }
-
-    public enum AppUserRoleName
-    {
-        Administrator,
-        OrgnizationAdministrator,
-        OrgnizationMember
     }
 }
