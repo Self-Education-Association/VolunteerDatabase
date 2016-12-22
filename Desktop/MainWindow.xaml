@@ -10,6 +10,7 @@
         <Button x:Name="createDatabase" Content="创建数据库" HorizontalAlignment="Left" Height="31" Margin="29,182,0,0" VerticalAlignment="Top" Width="81" Click="createDatabase_Click"/>
         <Button x:Name="signUpButton" Content="注册" HorizontalAlignment="Left" Height="31" Margin="144,182,0,0" VerticalAlignment="Top" Width="81" Click="signUpButton_Click"/>
         <Button x:Name="signInButton" Content="登录" HorizontalAlignment="Left" Height="31" Margin="90,133,0,0" VerticalAlignment="Top" Width="81"/>
-
+        <TextBox x:Name="nameTextBox" HorizontalAlignment="Left" Height="23" Margin="46,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="85"/>
+        <PasswordBox x:Name="passwordTextBox" HorizontalAlignment="Left" Height="23" Margin="46,64,0,0" VerticalAlignment="Top" Width="85"/>
     </Grid>
 </Window>

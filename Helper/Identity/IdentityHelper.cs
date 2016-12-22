@@ -45,32 +45,22 @@ namespace VolunteerDatabase.Helper
             database = new Database();
         }
 
-        public async Task<IdentityResult> CreateUserAsync(AppUser user, string password)
+        public async Task<IdentityResult> CreateUserAsync(AppUser user, string password, AppRoleEnum roleEnum)
         {
-            var result = Task.Run(() => CreateUser(user, password));
+            var result = Task.Run(() => CreateUser(user: user, password: password, roleEnum: roleEnum));
 
             return await result;
         }
 
-        public IdentityResult CreateUser(AppUser user, string password)
+        public IdentityResult CreateUser(AppUser user, string password, AppRoleEnum roleEnum)
         {
             user.Salt = SecurityHelper.GetSalt();
             user.HashedPassword = SecurityHelper.Hash(password, user.Salt);
             database.Users.Add(user);
             Save();
+            AddToRole(user.Id, roleEnum);
 
             return IdentityResult.Success();
-        }
-
-        public async Task<IdentityResult> CreateUserAsync(AppUser user, string password, AppRoleEnum roleEnum)
-        {
-            var role = GetRole(roleEnum);
-            var result = await CreateUserAsync(user, password);
-            if (result.Succeeded)
-            {
-                return await AddToRoleAsync(user.Id, roleEnum);
-            }
-            return IdentityResult.Error(result.Errors);
         }
 
         private IdentityResult AddToRole(int userId, string roleName)
@@ -123,7 +113,7 @@ namespace VolunteerDatabase.Helper
                             Name = roleEnum.ToString(),
                             RoleEnum = roleEnum
                         };
-                        database.Roles.Add(role);
+                        database.Roles.Add(newRole);
                         Save();
                         role = database.Roles.SingleOrDefault(r => r.RoleEnum == roleEnum);
                     }
@@ -171,9 +161,17 @@ namespace VolunteerDatabase.Helper
                 {
                     database.SaveChanges();
                 }
-                catch (DbUpdateException)
+                catch (DbUpdateConcurrencyException)
                 {
                     flag = true;
+                    foreach (var entity in database.ChangeTracker.Entries())
+                    {
+                        database.Entry(entity).Reload();
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
                 }
             } while (flag);
         }

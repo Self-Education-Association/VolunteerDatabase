@@ -13,8 +13,6 @@ namespace VolunteerDatabase.Entity
 
         public string Name { get; set; }
 
-        public virtual AppUser Administrator { get; set; }
-
         public virtual List<AppUser> Members { get; set; }
     }
 
