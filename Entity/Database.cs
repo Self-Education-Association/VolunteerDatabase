@@ -16,7 +16,6 @@
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<AppUser>().HasMany(u => u.Roles).WithMany(r => r.Users);
             modelBuilder.Entity<AppUser>().HasRequired(u => u.Organization).WithMany(o => o.Members);
-            modelBuilder.Entity<Organization>().HasRequired(o => o.Administrator);
         }
 
         public virtual DbSet<AppUser> Users { get; set; }

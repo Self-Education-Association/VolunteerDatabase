@@ -54,17 +54,9 @@
     <Compile Include="AppRole.cs" />
     <Compile Include="AppUser.cs" />
     <Compile Include="Database.cs" />
-    <Compile Include="Migrations\201612150929317_InitialCreate.cs" />
-    <Compile Include="Migrations\201612150929317_InitialCreate.Designer.cs">
-      <DependentUpon>201612150929317_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201612160931319_IdentityModel.cs" />
-    <Compile Include="Migrations\201612160931319_IdentityModel.Designer.cs">
-      <DependentUpon>201612160931319_IdentityModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201612220851470_UpdateIdentityModel.cs" />
-    <Compile Include="Migrations\201612220851470_UpdateIdentityModel.Designer.cs">
-      <DependentUpon>201612220851470_UpdateIdentityModel.cs</DependentUpon>
+    <Compile Include="Migrations\201612220938477_Initial.cs" />
+    <Compile Include="Migrations\201612220938477_Initial.Designer.cs">
+      <DependentUpon>201612220938477_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Organization.cs" />
@@ -81,14 +73,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612150929317_InitialCreate.resx">
-      <DependentUpon>201612150929317_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612160931319_IdentityModel.resx">
-      <DependentUpon>201612160931319_IdentityModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612220851470_UpdateIdentityModel.resx">
-      <DependentUpon>201612220851470_UpdateIdentityModel.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201612220938477_Initial.resx">
+      <DependentUpon>201612220938477_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

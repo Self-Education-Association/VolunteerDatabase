@@ -10,7 +10,6 @@ namespace VolunteerDatabase.Entity.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "VolunteerDatabase.Entity.Database";
         }
 
         protected override void Seed(VolunteerDatabase.Entity.Database context)
