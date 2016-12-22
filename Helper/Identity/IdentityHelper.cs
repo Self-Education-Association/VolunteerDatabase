@@ -57,6 +57,113 @@ namespace VolunteerDatabase.Helper
             user.Salt = SecurityHelper.GetSalt();
             user.HashedPassword = SecurityHelper.Hash(password, user.Salt);
             database.Users.Add(user);
+            Save();
+
+            return IdentityResult.Success();
+        }
+
+        public async Task<IdentityResult> CreateUserAsync(AppUser user, string password, AppRoleEnum roleEnum)
+        {
+            var role = GetRole(roleEnum);
+            var result = await CreateUserAsync(user, password);
+            if (result.Succeeded)
+            {
+                return await AddToRoleAsync(user.Id, roleEnum);
+            }
+            return IdentityResult.Error(result.Errors);
+        }
+
+        private IdentityResult AddToRole(int userId, string roleName)
+        {
+            var user = database.Users.Find(userId);
+            if (user == null)
+            {
+                return IdentityResult.Error("未找到用户。");
+            }
+            var role = database.Roles.SingleOrDefault(r => r.Name == roleName);
+            if (role == null)
+            {
+                return IdentityResult.Error("无该用户组。");
+            }
+            if (user.Roles.Contains(role))
+            {
+                return IdentityResult.Error("该用户已存在于[" + roleName + "]用户组。");
+            }
+            user.Roles.Add(role);
+            Save();
+
+            return IdentityResult.Success();
+        }
+
+        public IdentityResult AddToRole(int userId, AppRoleEnum roleEnum)
+        {
+            var role = GetRole(roleEnum);
+            return AddToRole(userId: userId, roleName: roleEnum.ToString());
+        }
+
+        public async Task<IdentityResult> AddToRoleAsync(int userId, AppRoleEnum roleEnum)
+        {
+            var result = Task.Run(()=>AddToRole(userId: userId, roleEnum: roleEnum));
+
+            return await result;
+        }
+
+        public AppRole GetRole(AppRoleEnum roleEnum)
+        {
+            var role = database.Roles.SingleOrDefault(r => r.RoleEnum == roleEnum);
+            if (role == null)
+            {
+                lock (locker)
+                {
+                    role = database.Roles.SingleOrDefault(r => r.RoleEnum == roleEnum);
+                    if (role == null)
+                    {
+                        var newRole = new AppRole
+                        {
+                            Name = roleEnum.ToString(),
+                            RoleEnum = roleEnum
+                        };
+                        database.Roles.Add(role);
+                        Save();
+                        role = database.Roles.SingleOrDefault(r => r.RoleEnum == roleEnum);
+                    }
+                }
+            }
+            return role;
+        }
+
+        public IdentityClaims CreateClaims(string userName, string password)
+        {
+            var user = database.Users.SingleOrDefault(u => u.Name == userName);
+            if (SecurityHelper.CheckPassword(password: password, salt: user?.Salt, hashedPassword: user?.HashedPassword))
+            {
+                return IdentityClaims.Create(user);
+            }
+            return IdentityClaims.Create(null);
+        }
+
+        public IdentityResult ChangePassword(string userName, string currentPassword, string newPassword)
+        {
+            IdentityResult result;
+            var claims = CreateClaims(userName: userName, password: currentPassword);
+            if (claims.IsAuthenticated)
+            {
+                var user = claims.User;
+                user.Salt = SecurityHelper.GetSalt();
+                user.HashedPassword = SecurityHelper.Hash(password: newPassword, salt: user.Salt);
+                Save();
+                result = IdentityResult.Success();
+            }
+            else
+            {
+                result = IdentityResult.Error("密码验证失败。");
+            }
+
+            return result;
+        }
+
+        private void Save()
+        {
             bool flag = false;
             do
             {
@@ -64,79 +171,11 @@ namespace VolunteerDatabase.Helper
                 {
                     database.SaveChanges();
                 }
-                catch (DbUpdateException e)
+                catch (DbUpdateException)
                 {
                     flag = true;
                 }
             } while (flag);
-
-            return IdentityResult.Success();
-        }
-
-        public async Task<IdentityResult> CreateUserAsync(AppUser user, string password, AppRoleEnum roleName)
-        {
-            var role = GetRoleAsync(roleName);
-            var result = await CreateUserAsync(user, password);
-            if (result.Succeeded)
-            {
-                return await userManager.AddToRoleAsync(user.Id, (await role).Name);
-            }
-            return new IdentityResult(result.Errors);
-        }
-
-        public IdentityResult AddToRole(string userId, string role)
-        {
-            var user = database.Users.Find(userId);
-            if (user == null)
-            {
-                return IdentityResult.Error("未找到用户。");
-            }
-            if (user.Role)
-        }
-
-        public async Task<IdentityResult> AddToRoleAsync(string userId, AppRoleEnum roleName)
-        {
-            var role = await GetRoleAsync(roleName);
-            var result = await userManager.AddToRoleAsync(userId: userId, role: role.Name);
-            return result;
-        }
-
-        public async Task<IdentityResult> AddToRoleAsync(string userId, IdentityRole role)
-        {
-            var result = await userManager.AddToRoleAsync(userId: userId, role: role.Name);
-            return result;
-        }
-
-        public async Task<IdentityRole> GetRoleAsync(AppRoleEnum roleName)
-        {
-            var role = await roleManager.FindByNameAsync(roleName.ToString());
-            if (role == null)
-            {
-                lock (locker)
-                {
-                    role = roleManager.FindByName(roleName.ToString());
-                    if (role == null)
-                    {
-                        var create = roleManager.Create(new IdentityRole(roleName.ToString()));
-                        if (create.Succeeded)
-                        {
-                            role = new IdentityRole(roleName.ToString());
-                        }
-                        else
-                        {
-                            return null;
-                        }
-                    }
-                }
-            }
-            return role;
-        }
-
-        public async Task<IdentityResult> ChangePasswordAsync(AppUser user, string currentPassword, string newPassword)
-        {
-            var result = await userManager.ChangePasswordAsync(userId: user.Id, currentPassword: currentPassword, newPassword: newPassword);
-
-            return result;
         }
     }
 }

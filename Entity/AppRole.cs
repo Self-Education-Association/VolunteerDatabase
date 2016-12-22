@@ -21,6 +21,7 @@ namespace VolunteerDatabase.Entity
     {
         Administrator,
         OrgnizationAdministrator,
-        OrgnizationMember
+        OrgnizationMember,
+        LogViewer
     }
 }
