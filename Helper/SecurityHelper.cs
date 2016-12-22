@@ -38,5 +38,14 @@ namespace VolunteerDatabase.Helper
             rng.GetBytes(salt);
             return encoding.GetString(salt);
         }
+
+        public static bool CheckPassword(string password, string salt, string hashedPassword)
+        {
+            if (Hash(password: password, salt: salt) == hashedPassword)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

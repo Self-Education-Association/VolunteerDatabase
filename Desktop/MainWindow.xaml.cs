@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using VolunteerDatabase.Entity;
-using Microsoft.AspNet.Identity;
 using VolunteerDatabase.Helper;
 
 namespace VolunteerDatabase.Desktop
@@ -22,7 +21,7 @@ namespace VolunteerDatabase.Desktop
     /// </summary>
     public partial class MainWindow : Window
     {
-        private UserManager<AppUser> _userManager;
+        private IdentityClaims claims;
 
         public MainWindow()
         {
@@ -45,7 +44,7 @@ namespace VolunteerDatabase.Desktop
         private async void signUpButton_Click(object sender, RoutedEventArgs e)
         {
             var helper = IdentityHelper.GetInstanceAsync();
-            await (await helper).GetRoleAsync(AppRoleEnum.Administrator);
+            (await helper).GetRole(AppRoleEnum.Administrator);
         }
     }
 }

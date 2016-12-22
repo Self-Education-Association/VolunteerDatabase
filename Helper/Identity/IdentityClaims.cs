@@ -11,7 +11,7 @@ namespace VolunteerDatabase.Helper
     {
         private AppUser _user;
 
-        private AppRoleEnum _role;
+        private List<AppRoleEnum> _roles;
 
         private bool _isAuthenticated;
 
@@ -24,21 +24,21 @@ namespace VolunteerDatabase.Helper
             }
         }
 
-        public AppRoleEnum? Role
+        public List<AppRoleEnum> Roles
         {
             get
             {
-                if (!_isAuthenticated) return null;
-                return _role;
+                if (!_isAuthenticated) return new List<AppRoleEnum>();
+                return _roles;
             }
         }
 
         public bool IsAuthenticated { get { return _isAuthenticated; } }
 
-        protected IdentityClaims Success(AppUser user)
+        internal static IdentityClaims Create(AppUser user)
         {
             IdentityClaims claims;
-            if (user == null || user.Role == null)
+            if (user == null || user.Roles == null)
             {
                 claims = new IdentityClaims
                 {
@@ -50,7 +50,7 @@ namespace VolunteerDatabase.Helper
                 claims = new IdentityClaims
                 {
                     _user = user,
-                    _role = user.Role.RoleEnum,
+                    _roles = (from r in user.Roles select r.RoleEnum).ToList(),
                     _isAuthenticated = true
                 };
             }

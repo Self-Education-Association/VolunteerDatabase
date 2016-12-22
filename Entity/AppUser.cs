@@ -22,7 +22,7 @@ namespace VolunteerDatabase.Entity
 
         public string Room { get; set; }
 
-        public virtual AppRole Role { get; set; }
+        public virtual List<AppRole> Roles { get; set; }
 
         public AppUserStatus Status { get; set; }
 
