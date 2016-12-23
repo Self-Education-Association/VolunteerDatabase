@@ -4,18 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VolunteerDatabase.Entity;
+using VolunteerDatabase.Interface;
 
 namespace VolunteerDatabase.Helper
 {
-    public class IdentityClaims
+    public class IdentityClaims : IClaims
     {
-        private AppUser _user;
+        private IUser _user;
 
-        private List<AppRoleEnum> _roles;
+        private IUser _holder;
+
+        private IEnumerable<AppRoleEnum> _roles;
 
         private bool _isAuthenticated;
 
-        public AppUser User
+        public IUser User
         {
             get
             {
@@ -24,7 +27,15 @@ namespace VolunteerDatabase.Helper
             }
         }
 
-        public List<AppRoleEnum> Roles
+        public IUser Holder
+        {
+            get
+            {
+                return _holder;
+            }
+        }
+
+        public IEnumerable<AppRoleEnum> Roles
         {
             get
             {
@@ -35,13 +46,19 @@ namespace VolunteerDatabase.Helper
 
         public bool IsAuthenticated { get { return _isAuthenticated; } }
 
-        internal static IdentityClaims Create(AppUser user)
+        public bool IsInRole(AppRoleEnum roleEnum)
+        {
+            return Roles.Contains(roleEnum);
+        }
+
+        internal static IdentityClaims Create(IUser user, IUser holder)
         {
             IdentityClaims claims;
             if (user == null || user.Roles == null)
             {
                 claims = new IdentityClaims
                 {
+                    _holder = holder,
                     _isAuthenticated = false
                 };
             }
@@ -50,7 +67,8 @@ namespace VolunteerDatabase.Helper
                 claims = new IdentityClaims
                 {
                     _user = user,
-                    _roles = (from r in user.Roles select r.RoleEnum).ToList(),
+                    _holder = holder,
+                    _roles = from r in user.Roles select r.RoleEnum,
                     _isAuthenticated = true
                 };
             }

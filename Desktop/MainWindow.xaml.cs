@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using VolunteerDatabase.Entity;
 using VolunteerDatabase.Helper;
+using VolunteerDatabase.Interface;
 
 namespace VolunteerDatabase.Desktop
 {
@@ -67,6 +68,7 @@ namespace VolunteerDatabase.Desktop
             {
                 MessageBox.Show(result.Errors.ToString());
             }
+
         }
     }
 }

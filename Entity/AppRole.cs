@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VolunteerDatabase.Interface;
 
 namespace VolunteerDatabase.Entity
 {
-    public class AppRole
+    public class AppRole : IRole
     {
         public int Id { get; set; }
 
@@ -15,13 +16,5 @@ namespace VolunteerDatabase.Entity
         public AppRoleEnum RoleEnum { get; set; }
 
         public virtual List<AppUser> Users { get; set; }
-    }
-
-    public enum AppRoleEnum
-    {
-        Administrator,
-        OrgnizationAdministrator,
-        OrgnizationMember,
-        LogViewer
     }
 }

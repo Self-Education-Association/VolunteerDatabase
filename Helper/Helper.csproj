@@ -49,9 +49,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Identity\IdentityClaims.cs" />
-    <Compile Include="Identity\IdentityHelper.cs" />
-    <Compile Include="Identity\IdentityResult.cs" />
+    <Compile Include="AuthorizeHelper.cs" />
+    <Compile Include="IdentityClaims.cs" />
+    <Compile Include="IdentityHelper.cs" />
+    <Compile Include="IdentityResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SecurityHelper.cs" />
   </ItemGroup>
