@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace VolunteerDatabase.Interface
 {
-    public interface IClaims
+    public interface IClaims<T> where T : IUser
     {
-        IUser User { get; }
+        T User { get; }
 
-        IUser Holder { get; }
+        T Holder { get; }
 
         bool IsAuthenticated { get; }
 

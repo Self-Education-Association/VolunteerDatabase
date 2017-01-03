@@ -8,17 +8,17 @@ using VolunteerDatabase.Interface;
 
 namespace VolunteerDatabase.Helper
 {
-    public class IdentityClaims : IClaims
+    public class AppUserIdentityClaims : IClaims<AppUser>
     {
-        private IUser _user;
+        private AppUser _user;
 
-        private IUser _holder;
+        private AppUser _holder;
 
         private IEnumerable<AppRoleEnum> _roles;
 
         private bool _isAuthenticated;
 
-        public IUser User
+        public AppUser User
         {
             get
             {
@@ -27,7 +27,7 @@ namespace VolunteerDatabase.Helper
             }
         }
 
-        public IUser Holder
+        public AppUser Holder
         {
             get
             {
@@ -51,12 +51,12 @@ namespace VolunteerDatabase.Helper
             return Roles.Contains(roleEnum);
         }
 
-        internal static IdentityClaims Create(IUser user, IUser holder)
+        internal static AppUserIdentityClaims Create(AppUser user, AppUser holder)
         {
-            IdentityClaims claims;
-            if (user == null || user.Roles == null)
+            AppUserIdentityClaims claims;
+            if (user == null)
             {
-                claims = new IdentityClaims
+                claims = new AppUserIdentityClaims
                 {
                     _holder = holder,
                     _isAuthenticated = false
@@ -64,7 +64,7 @@ namespace VolunteerDatabase.Helper
             }
             else
             {
-                claims = new IdentityClaims
+                claims = new AppUserIdentityClaims
                 {
                     _user = user,
                     _holder = holder,
@@ -76,6 +76,6 @@ namespace VolunteerDatabase.Helper
             return claims;
         }
 
-        private IdentityClaims() { }
+        private AppUserIdentityClaims() { }
     }
 }
