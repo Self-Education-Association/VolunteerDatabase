@@ -26,6 +26,10 @@ namespace VolunteerDatabase.Helper
 
         public static bool Authorize(IAuthorizeInput<TData, AppUser> input, AuthorizeFunction function, AppRoleEnum roleEnum)
         {
+            if (input == null || input.Claims == null)
+            {
+                return false;
+            }
             if (!input.Claims.IsAuthenticated)
             {
                 return false;

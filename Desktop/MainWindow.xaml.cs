@@ -54,6 +54,7 @@ namespace VolunteerDatabase.Desktop
 
         private async void signUpButton_Click(object sender, RoutedEventArgs e)
         {
+            
             signUpButton.IsEnabled = false;
             await initialHelper();
             helper.CreateOrFindRole(AppRoleEnum.LogViewer);
@@ -80,15 +81,30 @@ namespace VolunteerDatabase.Desktop
 
         private void signInButton_Click(object sender, RoutedEventArgs e)
         {
-            AuthorizeHelper<string, bool>.Execute(new StringInput { Claims = claims, Data = "123" }, IsString, AppRoleEnum.Administrator);
+            try
+            {
+                var resultt = Shenzang.Say(claims, "申子昂");
+            }
+            catch (AppUserNotAuthorizedException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
+    }
 
-        private bool IsString(string input)
+    public class Shenzang
+    {
+        private static string say(string name)
         {
-            return true;
+            return string.Format("{0}: 我是智障。", name);
         }
 
-        public class StringInput : IAppUserAuthorizeInput<string>
+        public static string Say(IClaims<AppUser> claims, string name)
+        {
+            return AuthorizeHelper<string, string>.Execute(new StringInput { Claims = claims, Data = name }, say, AppRoleEnum.OrgnizationMember);
+        }
+
+        protected class StringInput : IAppUserAuthorizeInput<string>
         {
             public IClaims<AppUser> Claims { get; set; }
 
