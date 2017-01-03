@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace VolunteerDatabase.Interface
 {
-    public interface IAuthorizeInput<TData>
+    public interface IAuthorizeInput<TData, TUser> where TUser : IUser
     {
-        IClaims Claims { get; }
+        IClaims<TUser> Claims { get; }
 
         TData Data { get; set; }
     }

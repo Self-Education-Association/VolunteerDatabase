@@ -13,6 +13,8 @@ namespace VolunteerDatabase.Entity
 
         public string Name { get; set; }
 
+        public OrganizationEnum OrganizationEnum { get; set; }
+
         public virtual List<AppUser> Members { get; set; }
     }
 
@@ -20,5 +22,10 @@ namespace VolunteerDatabase.Entity
     {
         Enabled,
         Disabled
+    }
+
+    public enum OrganizationEnum
+    {
+        SEA
     }
 }

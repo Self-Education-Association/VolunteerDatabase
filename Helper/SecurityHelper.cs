@@ -7,7 +7,7 @@ using System.Security.Cryptography;
 
 namespace VolunteerDatabase.Helper
 {
-    public static class SecurityHelper
+    internal static class SecurityHelper
     {
         private static SHA256Managed sha = new SHA256Managed();
 

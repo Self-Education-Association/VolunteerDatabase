@@ -49,8 +49,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppUserNotAuthorizeException.cs" />
     <Compile Include="AuthorizeHelper.cs" />
-    <Compile Include="IdentityClaims.cs" />
+    <Compile Include="IAppUserAuthorizeInput.cs" />
+    <Compile Include="AppUserIdentityClaims.cs" />
     <Compile Include="IdentityHelper.cs" />
     <Compile Include="IdentityResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

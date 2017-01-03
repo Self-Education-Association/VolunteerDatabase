@@ -9,7 +9,7 @@ using VolunteerDatabase.Interface;
 
 namespace VolunteerDatabase.Helper
 {
-    public class IdentityHelper
+    public sealed class IdentityHelper : IDisposable
     {
         private static IdentityHelper helper;
 
@@ -46,17 +46,23 @@ namespace VolunteerDatabase.Helper
             database = new Database();
         }
 
-        public async Task<IdentityResult> CreateUserAsync(AppUser user, string password, AppRoleEnum roleEnum)
+        public async Task<IdentityResult> CreateUserAsync(AppUser user, string password, AppRoleEnum roleEnum, OrganizationEnum orgEnum)
         {
-            var result = Task.Run(() => CreateUser(user: user, password: password, roleEnum: roleEnum));
+            var result = Task.Run(() => CreateUser(user: user, password: password, roleEnum: roleEnum, orgEnum: orgEnum));
 
             return await result;
         }
 
-        public IdentityResult CreateUser(AppUser user, string password, AppRoleEnum roleEnum)
+        public IdentityResult CreateUser(AppUser user, string password, AppRoleEnum roleEnum, OrganizationEnum orgEnum)
         {
+            if (database.Users.Where(u => u.Name == user.Name) != null && database.Users.Where(u => u.Name == user.Name).Count() != 0)
+            {
+                return IdentityResult.Error("该用户名已被使用。");
+            }
+            var org = CreateOrFindOrganization(orgEnum);
             user.Salt = SecurityHelper.GetSalt();
             user.HashedPassword = SecurityHelper.Hash(password, user.Salt);
+            user.Organization = org;
             database.Users.Add(user);
             Save();
             AddToRole(user.Id, roleEnum);
@@ -70,6 +76,10 @@ namespace VolunteerDatabase.Helper
             if (user == null)
             {
                 return IdentityResult.Error("未找到用户。");
+            }
+            if (user.Roles == null)
+            {
+                user.Roles = new List<AppRole>();
             }
             var role = database.Roles.SingleOrDefault(r => r.Name == roleName);
             if (role == null)
@@ -88,18 +98,18 @@ namespace VolunteerDatabase.Helper
 
         public IdentityResult AddToRole(int userId, AppRoleEnum roleEnum)
         {
-            var role = GetRole(roleEnum);
+            var role = CreateOrFindRole(roleEnum);
             return AddToRole(userId: userId, roleName: roleEnum.ToString());
         }
 
         public async Task<IdentityResult> AddToRoleAsync(int userId, AppRoleEnum roleEnum)
         {
-            var result = Task.Run(()=>AddToRole(userId: userId, roleEnum: roleEnum));
+            var result = Task.Run(() => AddToRole(userId: userId, roleEnum: roleEnum));
 
             return await result;
         }
 
-        public AppRole GetRole(AppRoleEnum roleEnum)
+        public AppRole CreateOrFindRole(AppRoleEnum roleEnum)
         {
             var role = database.Roles.SingleOrDefault(r => r.RoleEnum == roleEnum);
             if (role == null)
@@ -123,14 +133,43 @@ namespace VolunteerDatabase.Helper
             return role;
         }
 
-        public IdentityClaims CreateClaims(string userName, string password)
+        public Organization CreateOrFindOrganization(OrganizationEnum orgEnum)
+        {
+            var org = database.Organizations.SingleOrDefault(r => r.OrganizationEnum == orgEnum);
+            if (org == null)
+            {
+                lock (locker)
+                {
+                    org = database.Organizations.SingleOrDefault(r => r.OrganizationEnum == orgEnum);
+                    if (org == null)
+                    {
+                        var newOrg = new Organization
+                        {
+                            Name = orgEnum.ToString(),
+                            OrganizationEnum = orgEnum
+                        };
+                        database.Organizations.Add(newOrg);
+                        Save();
+                        org = database.Organizations.SingleOrDefault(r => r.OrganizationEnum == orgEnum);
+                    }
+                }
+            }
+            return org;
+        }
+
+        public AppUserIdentityClaims CreateClaims(string userName, string password, string holderName = "")
         {
             var user = database.Users.SingleOrDefault(u => u.Name == userName);
             if (SecurityHelper.CheckPassword(password: password, salt: user?.Salt, hashedPassword: user?.HashedPassword))
             {
-                return IdentityClaims.Create(user);
+                var holder = database.Users.SingleOrDefault(u => u.Name == holderName);
+                if (holder != null)
+                {
+                    return AppUserIdentityClaims.Create(user, holder);
+                }
+                return AppUserIdentityClaims.Create(user, user); //若Holder不为有效值则Holder被赋值为User
             }
-            return IdentityClaims.Create(null);
+            return AppUserIdentityClaims.Create(null, user);
         }
 
         public IdentityResult ChangePassword(string userName, string currentPassword, string newPassword)
@@ -139,7 +178,11 @@ namespace VolunteerDatabase.Helper
             var claims = CreateClaims(userName: userName, password: currentPassword);
             if (claims.IsAuthenticated)
             {
-                var user = claims.User;
+                var user = database.Users.SingleOrDefault(u => u.Name == claims.User.Name);
+                if (user == null)
+                {
+                    return IdentityResult.Error("找不到用户。");
+                }
                 user.Salt = SecurityHelper.GetSalt();
                 user.HashedPassword = SecurityHelper.Hash(password: newPassword, salt: user.Salt);
                 Save();
@@ -147,7 +190,7 @@ namespace VolunteerDatabase.Helper
             }
             else
             {
-                result = IdentityResult.Error("密码验证失败。");
+                result = IdentityResult.Error("用户验证失败。");
             }
 
             return result;
@@ -176,5 +219,44 @@ namespace VolunteerDatabase.Helper
                 }
             } while (flag);
         }
+
+        #region IDisposable Support
+        private bool disposedValue = false; // 要检测冗余调用
+
+        void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // TODO: 释放托管状态(托管对象)。
+                    database.Dispose();
+                    database = null;
+                }
+
+                // TODO: 释放未托管的资源(未托管的对象)并在以下内容中替代终结器。
+                // TODO: 将大型字段设置为 null。
+                helper = null;
+
+                disposedValue = true;
+            }
+        }
+
+        // TODO: 仅当以上 Dispose(bool disposing) 拥有用于释放未托管资源的代码时才替代终结器。
+        ~IdentityHelper()
+        {
+            // 请勿更改此代码。将清理代码放入以上 Dispose(bool disposing) 中。
+            Dispose(false);
+        }
+
+        // 添加此代码以正确实现可处置模式。
+        public void Dispose()
+        {
+            // 请勿更改此代码。将清理代码放入以上 Dispose(bool disposing) 中。
+            Dispose(true);
+            // TODO: 如果在以上内容中替代了终结器，则取消注释以下行。
+            GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 }
