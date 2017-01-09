@@ -49,6 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppAuthorizeAttribute.cs" />
+    <Compile Include="AppUserAuthorizeInput.cs" />
     <Compile Include="AppUserNotAuthorizeException.cs" />
     <Compile Include="AuthorizeHelper.cs" />
     <Compile Include="IAppUserAuthorizeInput.cs" />

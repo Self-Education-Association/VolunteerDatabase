@@ -54,6 +54,7 @@
     <Compile Include="AppRole.cs" />
     <Compile Include="AppUser.cs" />
     <Compile Include="Database.cs" />
+    <Compile Include="DatabaseContext.cs" />
     <Compile Include="Migrations\201612220938477_Initial.cs" />
     <Compile Include="Migrations\201612220938477_Initial.Designer.cs">
       <DependentUpon>201612220938477_Initial.cs</DependentUpon>
