@@ -6,7 +6,7 @@
 
     public class Database : DbContext
     {
-        internal Database()
+        public Database()
             : base("name=Database")
         {
         }

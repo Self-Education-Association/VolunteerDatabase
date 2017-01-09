@@ -26,6 +26,15 @@ namespace VolunteerDatabase.Entity
 
     public enum OrganizationEnum
     {
-        SEA
+        SEA团队,
+        校志愿服务中心,
+        国际经济贸易学院,
+        金融学院,
+        国际商学院,
+        公共管理学院,
+        法学院,
+        中国语言文学学院,
+        保险学院,
+        统计学院
     }
 }
