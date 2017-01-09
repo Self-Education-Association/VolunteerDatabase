@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using VolunteerDatabase.Entity;
@@ -14,9 +15,11 @@ namespace VolunteerDatabase.Helper
 
         private AuthorizeHelper() { }
 
-        public static TOut Execute(IAuthorizeInput<TData, AppUser> input, AuthorizeFunction function, AppRoleEnum roleEnum)
+        public static TOut Execute(IAuthorizeInput<TData, AppUser> input, AuthorizeFunction function)
         {
-            if (!Authorize(input, function, roleEnum))
+            var attribute = (AppAuthorizeAttribute)Attribute.GetCustomAttribute(function.GetMethodInfo(), typeof(AppAuthorizeAttribute));
+            var roleEnum = attribute.Role;
+            if (!Authorize(input, function))
             {
                 throw new AppUserNotAuthorizedException(input.Claims, roleEnum);
             }
@@ -24,8 +27,18 @@ namespace VolunteerDatabase.Helper
             return output;
         }
 
-        public static bool Authorize(IAuthorizeInput<TData, AppUser> input, AuthorizeFunction function, AppRoleEnum roleEnum)
+        public static bool Authorize(IAuthorizeInput<TData, AppUser> input, AuthorizeFunction function)
         {
+            var attribute = (AppAuthorizeAttribute)Attribute.GetCustomAttribute(function.GetMethodInfo(), typeof(AppAuthorizeAttribute));
+            AppRoleEnum roleEnum;
+            if (attribute == null)
+            {
+                roleEnum = AppRoleEnum.OrgnizationAdministrator;
+            }
+            else
+            {
+                roleEnum = attribute.Role;
+            }
             if (input == null || input.Claims == null)
             {
                 return false;

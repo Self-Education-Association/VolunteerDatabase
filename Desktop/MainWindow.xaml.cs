@@ -39,22 +39,20 @@ namespace VolunteerDatabase.Desktop
             textBox.Text = "";
         }
 
-        private void createDatabase_Click(object sender, RoutedEventArgs e)
+        private async void createDatabase_Click(object sender, RoutedEventArgs e)
         {
-            using (var db = new Database())
+            var db = await DatabaseContext.GetInstanceAsync();
+            if (db.Database.Exists())
             {
-                if (db.Database.Exists())
-                {
-                    db.Database.Delete();
-                }
-                db.Database.Create();
+                db.Database.Delete();
             }
+            db.Database.Create();
             MessageBox.Show("success");
         }
 
         private async void signUpButton_Click(object sender, RoutedEventArgs e)
         {
-            
+
             signUpButton.IsEnabled = false;
             await initialHelper();
             helper.CreateOrFindRole(AppRoleEnum.LogViewer);
@@ -94,6 +92,7 @@ namespace VolunteerDatabase.Desktop
 
     public class Shenzang
     {
+        [AppAuthorize(Role = AppRoleEnum.LogViewer)]
         private static string say(string name)
         {
             return string.Format("{0}: 我是智障。", name);
@@ -101,7 +100,7 @@ namespace VolunteerDatabase.Desktop
 
         public static string Say(IClaims<AppUser> claims, string name)
         {
-            return AuthorizeHelper<string, string>.Execute(new StringInput { Claims = claims, Data = name }, say, AppRoleEnum.OrgnizationMember);
+            return AuthorizeHelper<string, string>.Execute(new StringInput { Claims = claims, Data = name }, say);
         }
 
         protected class StringInput : IAppUserAuthorizeInput<string>
