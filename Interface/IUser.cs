@@ -8,7 +8,7 @@ namespace VolunteerDatabase.Interface
 {
     public interface IUser
     {
-        string Name { get; set; }
+        string AccountName { get; set; }
 
         AppUserStatus Status { get; set; }
     }

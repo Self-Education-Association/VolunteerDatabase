@@ -55,7 +55,7 @@ namespace VolunteerDatabase.Helper
 
         public IdentityResult CreateUser(AppUser user, string password, AppRoleEnum roleEnum, OrganizationEnum orgEnum)
         {
-            if (database.Users.Where(u => u.Name == user.Name) != null && database.Users.Where(u => u.Name == user.Name).Count() != 0)
+            if (database.Users.Where(u => u.AccountName == user.AccountName) != null && database.Users.Where(u => u.AccountName == user.AccountName).Count() != 0)
             {
                 return IdentityResult.Error("该用户名已被使用。");
             }
@@ -159,10 +159,10 @@ namespace VolunteerDatabase.Helper
 
         public AppUserIdentityClaims CreateClaims(string userName, string password, string holderName = "")
         {
-            var user = database.Users.SingleOrDefault(u => u.Name == userName);
+            var user = database.Users.SingleOrDefault(u => u.AccountName == userName);
             if (SecurityHelper.CheckPassword(password: password, salt: user?.Salt, hashedPassword: user?.HashedPassword))
             {
-                var holder = database.Users.SingleOrDefault(u => u.Name == holderName);
+                var holder = database.Users.SingleOrDefault(u => u.AccountName == holderName);
                 if (holder != null)
                 {
                     return AppUserIdentityClaims.Create(user, holder);
@@ -172,13 +172,18 @@ namespace VolunteerDatabase.Helper
             return AppUserIdentityClaims.Create(null, user);
         }
 
+        public Task<AppUserIdentityClaims> CreateClaimsAsync(string userName, string password, string holderName = "")
+        {
+            return Task.Run(() => CreateClaims(userName, password, holderName));
+        }
+
         public IdentityResult ChangePassword(string userName, string currentPassword, string newPassword)
         {
             IdentityResult result;
             var claims = CreateClaims(userName: userName, password: currentPassword);
             if (claims.IsAuthenticated)
             {
-                var user = database.Users.SingleOrDefault(u => u.Name == claims.User.Name);
+                var user = database.Users.SingleOrDefault(u => u.AccountName == claims.User.AccountName);
                 if (user == null)
                 {
                     return IdentityResult.Error("找不到用户。");

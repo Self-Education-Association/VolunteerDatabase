@@ -58,7 +58,7 @@ namespace VolunteerDatabase.Helper
             if (typeof(IProject).IsAssignableFrom(input.Data.GetType()))
             {
                 var project = input.Data as IProject;
-                if (project.Manager.Name == input.Claims.User.Name)
+                if (project.Manager.AccountName == input.Claims.User.AccountName)
                 {
                     return true;
                 }

@@ -63,6 +63,10 @@
     <Compile Include="Migrations\201612270324330_UpdateOrganizationModel.Designer.cs">
       <DependentUpon>201612270324330_UpdateOrganizationModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701090851588_UpdateUserModel.cs" />
+    <Compile Include="Migrations\201701090851588_UpdateUserModel.Designer.cs">
+      <DependentUpon>201701090851588_UpdateUserModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Organization.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -83,6 +87,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612270324330_UpdateOrganizationModel.resx">
       <DependentUpon>201612270324330_UpdateOrganizationModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701090851588_UpdateUserModel.resx">
+      <DependentUpon>201701090851588_UpdateUserModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

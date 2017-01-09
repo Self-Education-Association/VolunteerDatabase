@@ -32,9 +32,9 @@ namespace VolunteerDatabase.Helper
             return Hash(password + salt);
         }
 
-        public static string GetSalt(int length = 256)
+        public static string GetSalt(int bitLength = 256)
         {
-            byte[] salt = new byte[length];
+            byte[] salt = new byte[bitLength/8];
             rng.GetBytes(salt);
             return encoding.GetString(salt);
         }
