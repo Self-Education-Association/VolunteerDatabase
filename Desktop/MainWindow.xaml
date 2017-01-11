@@ -7,7 +7,11 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="300" Width="300">
     <Grid>
-        <Button x:Name="createDatabase" Content="创建数据库" HorizontalAlignment="Left" Height="31" Margin="29,182,0,0" VerticalAlignment="Top" Width="81" Click="createDatabase_Click"/>
+        <Button x:Name="createDatabase" Content="创建数据库" HorizontalAlignment="Left" Height="31" Margin="29,182,0,0" VerticalAlignment="Top" Width="81" Click="createDatabase_Click" BorderBrush="#FFD63535">
+            <Button.Background>
+                <SolidColorBrush Color="Red" />
+            </Button.Background>
+        </Button>
 
     </Grid>
 </Window>

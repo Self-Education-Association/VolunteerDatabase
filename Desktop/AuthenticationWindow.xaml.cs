@@ -47,14 +47,25 @@ namespace VolunteerDatabase.Desktop
 
         private async void signInButton_Click(object sender, RoutedEventArgs e)
         {
+            signInButton.IsEnabled = false;
             await initialHelper();
             claims = await helper.CreateClaimsAsync(userName: accountSignInTextBox.Text, password: passwordSignInTextBox.Password);
-            if (claims != null)
+            if (claims != null && claims.IsAuthenticated)
             {
-                var main = new MainWindow(claims);
-                Hide();
-                main.Show();
+                showMainWindow(claims);
             }
+            else
+            {
+                MessageBox.Show("Login Failed!");
+            }
+            signInButton.IsEnabled = true;
+        }
+
+        private void showMainWindow(AppUserIdentityClaims claims)
+        {
+            var main = new MainWindow(claims);
+            Hide();
+            main.Show();
         }
 
         private async void signUpButton_Click(object sender, RoutedEventArgs e)
@@ -73,9 +84,7 @@ namespace VolunteerDatabase.Desktop
                 claims = helper.CreateClaims(userName: accountSignUpTextBox.Text, password: passwordSignUpTextBox.Password);
                 if (claims != null)
                 {
-                    var main = new MainWindow(claims);
-                    Hide();
-                    main.Show();
+                    showMainWindow(claims);
                 }
             }
             else

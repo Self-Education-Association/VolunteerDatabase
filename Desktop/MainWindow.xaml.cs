@@ -30,12 +30,6 @@ namespace VolunteerDatabase.Desktop
             this.claims = claims;
         }
 
-        private void removeText(object sender, EventArgs e)
-        {
-            var textBox = sender as TextBox;
-            textBox.Text = "";
-        }
-
         private async void createDatabase_Click(object sender, RoutedEventArgs e)
         {
             var db = await DatabaseContext.GetInstanceAsync();
