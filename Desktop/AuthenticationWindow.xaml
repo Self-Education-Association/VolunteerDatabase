@@ -21,7 +21,7 @@
             <Grid>
                 <TextBox x:Name="accountSignInTextBox" Height="25" Margin="49,10,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="账号" GotFocus="removeText"/>
                 <PasswordBox x:Name="passwordSignInTextBox" Height="25" Margin="49,40,10,0" VerticalAlignment="Top" Password="       " GotFocus="removeText"/>
-                <Button x:Name="signInButton" Content="登录" Margin="10,0,10,8" Height="30" VerticalAlignment="Bottom" Click="signInButton_Click" GotFocus="removeText"/>
+                <Button x:Name="signInButton" Content="登录" Margin="10,0,10,8" Height="30" VerticalAlignment="Bottom" Click="signInButton_Click" GotFocus="removeText" Background="GreenYellow"/>
                 <Label x:Name="accountSignInLable" Content="账号" HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top"/>
                 <Label x:Name="passwordSignInLable" Content="密码" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.624,-0.529"/>
             </Grid>
