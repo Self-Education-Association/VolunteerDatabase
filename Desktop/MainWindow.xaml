@@ -12,6 +12,11 @@
                 <SolidColorBrush Color="Red" />
             </Button.Background>
         </Button>
+        <Button x:Name="authorizeButton" Content="认证" HorizontalAlignment="Left" Height="31" Margin="171,182,0,0" VerticalAlignment="Top" Width="81" BorderBrush="#FFD63535" Click="authorizeButton_Click">
+            <Button.Background>
+                <SolidColorBrush Color="Red" />
+            </Button.Background>
+        </Button>
 
     </Grid>
 </Window>

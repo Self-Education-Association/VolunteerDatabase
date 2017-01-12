@@ -30,10 +30,36 @@ namespace VolunteerDatabase.Desktop
             this.claims = claims;
         }
 
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
         private async void createDatabase_Click(object sender, RoutedEventArgs e)
         {
             var db = await DatabaseContext.GetInstanceAsync();
             MessageBox.Show("success");
+        }
+
+        private void authorizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var result = AuthorizeHelper<string, string>.Execute(AppUserAuthorizeInput<string>.Create(claims, "return"), say);
+                MessageBox.Show(result);
+            }
+            catch (AppUserNotAuthorizedException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        [AppAuthorize(AppRoleEnum.Administrator)]
+        //[AppAuthorize(AppRoleEnum.OrgnizationMember)]
+        [AppAuthorize(AppRoleEnum.LogViewer)]
+        private string say(string input)
+        {
+            return input;
         }
     }
 }

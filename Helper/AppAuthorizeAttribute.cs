@@ -7,9 +7,14 @@ using VolunteerDatabase.Interface;
 
 namespace VolunteerDatabase.Helper
 {
-    [AttributeUsage(AttributeTargets.Method)]
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
     public class AppAuthorizeAttribute : Attribute
     {
+        public AppAuthorizeAttribute(AppRoleEnum role)
+        {
+            Role = role;
+        }
+
         public AppRoleEnum Role { get; set; }
     }
 }
