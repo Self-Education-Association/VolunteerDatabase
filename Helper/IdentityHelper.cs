@@ -13,7 +13,9 @@ namespace VolunteerDatabase.Helper
     {
         private static IdentityHelper helper;
 
-        private static readonly object locker = new object();
+        private static readonly object helperLocker = new object();
+        private static readonly object roleLocker = new object();
+        private static readonly object orgLocker = new object();
 
         private Database database;
 
@@ -21,7 +23,7 @@ namespace VolunteerDatabase.Helper
         {
             if (helper == null)
             {
-                lock (locker)
+                lock (helperLocker)
                 {
                     if (helper == null)
                     {
@@ -55,17 +57,20 @@ namespace VolunteerDatabase.Helper
 
         public IdentityResult CreateUser(AppUser user, string password, AppRoleEnum roleEnum, OrganizationEnum orgEnum)
         {
-            if (database.Users.Where(u => u.AccountName == user.AccountName) != null && database.Users.Where(u => u.AccountName == user.AccountName).Count() != 0)
+            lock (database)
             {
-                return IdentityResult.Error("该用户名已被使用。");
+                if (database.Users.Where(u => u.AccountName == user.AccountName) != null && database.Users.Where(u => u.AccountName == user.AccountName).Count() != 0)
+                {
+                    return IdentityResult.Error("该用户名已被使用。");
+                }
+                var org = CreateOrFindOrganization(orgEnum);
+                user.Salt = SecurityHelper.GetSalt();
+                user.HashedPassword = SecurityHelper.Hash(password, user.Salt);
+                user.Organization = org;
+                database.Users.Add(user);
+                Save();
+                AddToRole(user.Id, roleEnum);
             }
-            var org = CreateOrFindOrganization(orgEnum);
-            user.Salt = SecurityHelper.GetSalt();
-            user.HashedPassword = SecurityHelper.Hash(password, user.Salt);
-            user.Organization = org;
-            database.Users.Add(user);
-            Save();
-            AddToRole(user.Id, roleEnum);
 
             return IdentityResult.Success();
         }
@@ -114,7 +119,7 @@ namespace VolunteerDatabase.Helper
             var role = database.Roles.SingleOrDefault(r => r.RoleEnum == roleEnum);
             if (role == null)
             {
-                lock (locker)
+                lock (roleLocker)
                 {
                     role = database.Roles.SingleOrDefault(r => r.RoleEnum == roleEnum);
                     if (role == null)
@@ -138,7 +143,7 @@ namespace VolunteerDatabase.Helper
             var org = database.Organizations.SingleOrDefault(r => r.OrganizationEnum == orgEnum);
             if (org == null)
             {
-                lock (locker)
+                lock (orgLocker)
                 {
                     org = database.Organizations.SingleOrDefault(r => r.OrganizationEnum == orgEnum);
                     if (org == null)

@@ -18,6 +18,7 @@ namespace VolunteerDatabase.Interface
         Administrator,
         OrgnizationAdministrator,
         OrgnizationMember,
-        LogViewer
+        LogViewer,
+        TestOnly
     }
 }

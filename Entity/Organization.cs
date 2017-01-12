@@ -35,6 +35,7 @@ namespace VolunteerDatabase.Entity
         法学院,
         中国语言文学学院,
         保险学院,
-        统计学院
+        统计学院,
+        TestOnly
     }
 }
