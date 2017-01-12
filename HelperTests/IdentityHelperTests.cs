@@ -56,6 +56,8 @@ namespace VolunteerDatabase.Helper.Tests
             {
                 Assert.Fail();
             }
+            database.Users.Remove(dbUser);
+            database.SaveChanges();
         }
 
         [TestMethod()]

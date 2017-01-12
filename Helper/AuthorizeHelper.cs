@@ -17,11 +17,11 @@ namespace VolunteerDatabase.Helper
 
         public static TOut Execute(IAuthorizeInput<TData, AppUser> input, AuthorizeFunction function)
         {
-            var attribute = (AppAuthorizeAttribute)Attribute.GetCustomAttribute(function.GetMethodInfo(), typeof(AppAuthorizeAttribute));
-            var roleEnum = attribute.Role;
             if (!Authorize(input, function))
             {
-                throw new AppUserNotAuthorizedException(input.Claims, roleEnum);
+                var attributes = Attribute.GetCustomAttributes(function.GetMethodInfo(), typeof(AppAuthorizeAttribute));
+                IEnumerable<AppRoleEnum> requiredRoles = from AppAuthorizeAttribute a in attributes select a.Role;
+                throw new AppUserNotAuthorizedException(input.Claims, requiredRoles);
             }
             var output = function(input.Data);
             return output;
@@ -29,15 +29,15 @@ namespace VolunteerDatabase.Helper
 
         public static bool Authorize(IAuthorizeInput<TData, AppUser> input, AuthorizeFunction function)
         {
-            var attribute = (AppAuthorizeAttribute)Attribute.GetCustomAttribute(function.GetMethodInfo(), typeof(AppAuthorizeAttribute));
-            AppRoleEnum roleEnum;
-            if (attribute == null)
+            var attributes = Attribute.GetCustomAttributes(function.GetMethodInfo(), typeof(AppAuthorizeAttribute));
+            IEnumerable<AppRoleEnum> requiredRoles;
+            if (attributes == null || attributes.Count() == 0)
             {
-                roleEnum = AppRoleEnum.OrgnizationAdministrator;
+                requiredRoles = new List<AppRoleEnum> { AppRoleEnum.Administrator };
             }
             else
             {
-                roleEnum = attribute.Role;
+                requiredRoles = from AppAuthorizeAttribute a in attributes select a.Role;
             }
             if (input == null || input.Claims == null)
             {
@@ -51,9 +51,12 @@ namespace VolunteerDatabase.Helper
             {
                 return true;
             }
-            if (input.Claims.IsInRole(roleEnum))
+            foreach(var role in requiredRoles)
             {
-                return true;
+                if (input.Claims.IsInRole(role))
+                {
+                    return true;
+                }
             }
             if (typeof(IProject).IsAssignableFrom(input.Data.GetType()))
             {

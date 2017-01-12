@@ -8,7 +8,7 @@ using VolunteerDatabase.Interface;
 
 namespace VolunteerDatabase.Helper
 {
-    class AppUserAuthorizeInput<T> : IAppUserAuthorizeInput<T>
+    public class AppUserAuthorizeInput<T> : IAppUserAuthorizeInput<T>
     {
         public IClaims<AppUser> Claims { get; private set; }
 
