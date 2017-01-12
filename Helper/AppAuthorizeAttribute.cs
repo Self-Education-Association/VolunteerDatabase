@@ -10,7 +10,7 @@ namespace VolunteerDatabase.Helper
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
     public class AppAuthorizeAttribute : Attribute
     {
-        public AppAuthorizeAttribute(AppRoleEnum role)
+        public AppAuthorizeAttribute(AppRoleEnum role = AppRoleEnum.Administrator)
         {
             Role = role;
         }
