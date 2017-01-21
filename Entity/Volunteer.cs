@@ -17,6 +17,7 @@ namespace VolunteerDatabase.Entity
         public int Score { get; set; }
         public virtual List<CreditRecord> Records { get; set; } 
         public virtual List<BlackListRecord> BlackRecords { get; set; }
+        public virtual List<Project> Project { get; set; }
 
     }
 
