@@ -30,5 +30,7 @@ namespace VolunteerDatabase.Entity
         public AppUserStatus Status { get; set; }
 
         public virtual Organization Organization { get; set; }
+
+        public virtual List<Project> Project { get; set; }
     }
 }

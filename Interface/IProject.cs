@@ -11,5 +11,13 @@ namespace VolunteerDatabase.Interface
         string Name { get; set; }
 
         IUser Manager { get; set; }
+
+        ProjectCondition Condition { get; set; }
+    }
+
+    public enum ProjectCondition
+    {
+        Ongoing,
+        Finished
     }
 }
