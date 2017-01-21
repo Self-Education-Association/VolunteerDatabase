@@ -21,6 +21,7 @@
         public virtual DbSet<AppUser> Users { get; set; }
 
         public virtual DbSet<AppRole> Roles { get; set; }
+        public virtual DbSet<Volunteer> Volunteers { get; set; }
 
         public virtual DbSet<Organization> Organizations { get; set; }
     }

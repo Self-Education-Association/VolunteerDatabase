@@ -59,6 +59,9 @@
     <Compile Include="IdentityResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SecurityHelper.cs" />
+    <Compile Include="test.cs" />
+    <Compile Include="VolunteerHelper.cs" />
+    <Compile Include="VolunteerResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entity\Entity.csproj">
