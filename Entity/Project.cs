@@ -13,7 +13,7 @@ namespace VolunteerDatabase.Entity
 
         public string Place { get; set; }
 
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         public int Maximum { get; set; }
 
@@ -31,6 +31,10 @@ namespace VolunteerDatabase.Entity
 
         public virtual List<AppUser>   Managers { get; set; }
 
+        public static implicit operator int(Project v)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

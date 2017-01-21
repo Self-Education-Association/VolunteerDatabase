@@ -53,10 +53,14 @@
     <Compile Include="AppUserAuthorizeInput.cs" />
     <Compile Include="AppUserNotAuthorizeException.cs" />
     <Compile Include="AuthorizeHelper.cs" />
+    <Compile Include="DealWithExcel.cs" />
+    <Compile Include="GradeVolunteers.cs" />
     <Compile Include="IAppUserAuthorizeInput.cs" />
     <Compile Include="AppUserIdentityClaims.cs" />
     <Compile Include="IdentityHelper.cs" />
     <Compile Include="IdentityResult.cs" />
+    <Compile Include="ProjectManage.cs" />
+    <Compile Include="ProjectProgress.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SecurityHelper.cs" />
   </ItemGroup>
