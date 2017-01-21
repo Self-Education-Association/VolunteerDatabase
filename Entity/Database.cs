@@ -29,6 +29,5 @@
 
         public virtual DbSet<Project> Projects { get; set; }
 
-        public virtual DbSet<Volunteer> Volunteers { get; set; }
     }
 }
