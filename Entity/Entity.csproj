@@ -67,9 +67,15 @@
     <Compile Include="Migrations\201701090851588_UpdateUserModel.Designer.cs">
       <DependentUpon>201701090851588_UpdateUserModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701191025282_develop.cs" />
+    <Compile Include="Migrations\201701191025282_develop.Designer.cs">
+      <DependentUpon>201701191025282_develop.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Organization.cs" />
+    <Compile Include="Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Volunteer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -90,6 +96,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701090851588_UpdateUserModel.resx">
       <DependentUpon>201701090851588_UpdateUserModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701191025282_develop.resx">
+      <DependentUpon>201701191025282_develop.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
