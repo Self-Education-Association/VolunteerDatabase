@@ -31,10 +31,7 @@ namespace VolunteerDatabase.Entity
 
         public virtual List<AppUser>   Managers { get; set; }
 
-        public static implicit operator int(Project v)
-        {
-            throw new NotImplementedException();
-        }
+        public virtual List<BlackListRecord> BlackListRecords { get; set; }
     }
 
 }

@@ -15,6 +15,11 @@ namespace VolunteerDatabase.Helper
         //查询某一志愿者
         private object VolunteerLocker = new object();
         Database database;
+
+        public VolunteerHelper()
+        {
+            database = DatabaseContext.GetInstance();
+        }
         public Volunteer FindVolunteer(int id)
         {
             var result = database.Volunteers.SingleOrDefault( v => v.Id == id);

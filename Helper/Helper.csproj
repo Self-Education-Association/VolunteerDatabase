@@ -53,6 +53,8 @@
     <Compile Include="AppUserAuthorizeInput.cs" />
     <Compile Include="AppUserNotAuthorizeException.cs" />
     <Compile Include="AuthorizeHelper.cs" />
+    <Compile Include="BlackListHelper.cs" />
+    <Compile Include="BlackListResult.cs" />
     <Compile Include="DealWithExcel.cs" />
     <Compile Include="GradeVolunteers.cs" />
     <Compile Include="IAppUserAuthorizeInput.cs" />
