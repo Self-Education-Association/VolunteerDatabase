@@ -19,28 +19,90 @@ namespace VolunteerDatabase.Helper
         }
         public List<BlackListRecord> FindBlackList(int id) {
             //异常处理
-            var result = database.BlackListRecords.Where(b => b.Id == id).ToList();
-            return result;
+            if(id==0)
+            {
+                BlackListResult.Error("请输入查询Id！");
+            }
+            try
+            {
+                var result = database.BlackListRecords.Where(b => b.Id == id).ToList();
+                return result;
+            }
+            catch(Exception e)
+            {
+               return null;
+            }
+            
+          
         }
         public List<BlackListRecord> FindBlackList(Volunteer v) {
             //异常处理
-            var result = database.BlackListRecords.Where(b => b.Volunteer.Id == v.Id).ToList();
-            return result;
+            if(v==null)
+            {
+                BlackListResult.Error("请输入查询姓名！");
+            }
+            try
+            {
+                var result = database.BlackListRecords.Where(b => b.Volunteer.Id == v.Id).ToList();
+                return result;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
         public List<BlackListRecord> FindBlackList(Organization org) {
-            var result = database.BlackListRecords.Where(b => b.Organization.Id == org.Id).ToList();
-            return result;
+            if(org==null)
+            {
+                BlackListResult.Error("请输入组织名称！");
+            }
+            try
+            {
+                var result = database.BlackListRecords.Where(b => b.Organization.Id == org.Id).ToList();
+                return result;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
         public List<BlackListRecord> FindBlackList(AppUser adder) {
-            var result = database.BlackListRecords.Where(b => b.Adder.Id == adder.Id).ToList();
-            return result;
+            if (adder == null)
+            {
+                BlackListResult.Error("请输入添加者信息！");
+            }
+            try
+            {
+                var result = database.BlackListRecords.Where(b => b.Adder.Id == adder.Id).ToList();
+                return result;
+             }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
         public List<BlackListRecord> FindBlackList(Project project) {
-            var result = database.BlackListRecords.Where(b => b.Project.Id == project.Id).ToList();
-            return result;
-        }
+            if (project == null)
+            {
+               BlackListResult.Error("请输入项目名称！");
+            }
+            try
+            {
+                var result = database.BlackListRecords.Where(b => b.Project.Id == project.Id).ToList();
+                return result;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }   
+          }
+    
         public List<BlackListRecord> FindBlackListByAddTime(DateTime start,DateTime end)
         {
+            if(start==null&&end==null)
+            {
+                BlackListResult.Error("请输入查询时间段！");
+            }
             if (start > end)
             {
                 return null;
