@@ -33,6 +33,33 @@ namespace VolunteerDatabase.Helper
             }
             return Project;
         }
+
+        public ProgressResult CreatVolunteer(Project Pro,string Room,string Name,string email,int Phone)
+        {
+            ProgressResult result;
+            if(Room==""|Name==""||email==""||Phone==0)
+            {
+                ProgressResult.Error("志愿者信息不完整");
+            }
+            lock(database)
+            {
+                Volunteer Vol = new Volunteer();
+                Vol.Project.Add(Pro);
+                Vol.Id = database.Volunteers.Count() + 1;
+                Vol.Email = email;
+                Vol.PhoneNum = Phone;
+                Vol.Name = Name;
+                Vol.Room = Room;
+                Vol.Score = 0;
+                Vol.Records = null;
+                Vol.BlackListRecords = null;
+                database.Volunteers.Add(Vol);
+                Save();
+            }
+            result = ProgressResult.Success();
+            return result;
+        }
+
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
         public List<Volunteer> FindSortedVolunteersByProject(Project project)

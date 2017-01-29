@@ -10,6 +10,8 @@ namespace VolunteerDatabase.Entity
     {
         public int Id { get; set;}
 
+        public int PhoneNum { get; set; }
+
         public string Name { get; set; }
 
         public string Email { get; set; }
