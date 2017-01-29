@@ -17,24 +17,21 @@ namespace VolunteerDatabase.Entity
 
         public int Maximum { get; set; }
 
-        public DateTime StartTime { get; set; }
+        public string Details { get; set; }
 
-        public DateTime EndTime { get; set; }
+        public DateTime? Time { get; set; }
 
-        public DateTime CreatTime { get; set; }
+        public DateTime? CreatTime { get; set; }
 
         public ProjectCondition Condition { get; set; }
+
+        public ProjectScoreCondition ScoreCondition { get; set; }
 
         public Organization Creater { get; set; }
 
         public virtual List<Volunteer> Volunteer{ get; set; }
 
         public virtual List<AppUser>   Managers { get; set; }
-
-        public static implicit operator int(Project v)
-        {
-            throw new NotImplementedException();
-        }
     }
 
 }

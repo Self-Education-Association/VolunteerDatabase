@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VolunteerDatabase.Entity
 {
-    public class Volunteer
+    public class Volunteer:IComparable<Volunteer>
     {
         public int Id { get; set;}
 
@@ -19,5 +19,24 @@ namespace VolunteerDatabase.Entity
         public virtual List<Project> Project{ get; set; }
 
         public int Score { get; set; }
+
+        public int CompareTo(Volunteer obj)
+        {
+            int result;
+            if(this.Score==obj.Score)
+            {
+                result = 0;
+            }
+            else           
+            if(this.Score>obj.Score)
+            {
+                result = -1;
+            }
+            else
+            {
+                result = 1;
+            }
+            return result;
+        }
     }
 }

@@ -54,7 +54,6 @@
     <Compile Include="AppUserNotAuthorizeException.cs" />
     <Compile Include="AuthorizeHelper.cs" />
     <Compile Include="DealWithExcel.cs" />
-    <Compile Include="GradeVolunteers.cs" />
     <Compile Include="IAppUserAuthorizeInput.cs" />
     <Compile Include="AppUserIdentityClaims.cs" />
     <Compile Include="IdentityHelper.cs" />
