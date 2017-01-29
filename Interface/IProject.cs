@@ -20,4 +20,10 @@ namespace VolunteerDatabase.Interface
         Ongoing,
         Finished
     }
+
+    public enum ProjectScoreCondition
+    {
+        Scored,
+        UnScored
+    }
 }
