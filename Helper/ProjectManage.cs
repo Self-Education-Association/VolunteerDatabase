@@ -65,6 +65,7 @@ namespace VolunteerDatabase.Helper
                 Project.Condition = ProjectCondition.Ongoing;
                 Project.ScoreCondition = ProjectScoreCondition.UnScored;
                 Project.Creater = org;
+                Project.BlackListRecords = null;
                 database.Projects.Add(Project);
                 Save();
             }
