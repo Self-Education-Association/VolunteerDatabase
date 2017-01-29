@@ -11,7 +11,7 @@ namespace VolunteerDatabase.Helper
     public class ProjectProgress
     {
         private Database database;
-        [AppAuthorize(AppRoleEnum.OrgnizationMember)]]
+        [AppAuthorize(AppRoleEnum.OrgnizationMember)]
         public List<Project> FindAuthorizedProjectByUser(AppUser user)
         {
             var Project = from o in database.Projects where o.Managers.Equals(user) select o;
