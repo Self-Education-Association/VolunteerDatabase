@@ -32,5 +32,6 @@ namespace VolunteerDatabase.Entity
         public virtual Organization Organization { get; set; }
 
         public virtual List<Project> Project { get; set; }
+        public virtual List<BlackListRecord> BlackListRecords { get; set; }
     }
 }

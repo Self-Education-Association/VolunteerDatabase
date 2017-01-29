@@ -16,6 +16,7 @@ namespace VolunteerDatabase.Entity
         public OrganizationEnum OrganizationEnum { get; set; }
 
         public virtual List<AppUser> Members { get; set; }
+        public virtual List<BlackListRecord> BlackListRecords { get; set; }
     }
 
     public enum OrganizationStatus

@@ -214,6 +214,7 @@ namespace VolunteerDatabase.Helper
                 try
                 {
                     database.SaveChanges();
+                    flag = false;
                 }
                 catch (DbUpdateConcurrencyException)
                 {
