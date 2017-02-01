@@ -241,3 +241,6 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 /Helper/test.cs
+/Helper/Form1.cs
+/Helper/Form1.Designer.cs
+/Helper/Form1.resx

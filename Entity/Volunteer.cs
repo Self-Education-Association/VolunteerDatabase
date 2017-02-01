@@ -17,6 +17,7 @@ namespace VolunteerDatabase.Entity
         public string Email { get; set; }
 
         public string Room { get; set; }
+        public string Class { get; set; }
 
         public virtual List<Project> Project{ get; set; }
 
