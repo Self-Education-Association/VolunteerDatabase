@@ -23,7 +23,7 @@
             modelBuilder.Entity<Volunteer>().HasMany(v => v.BlackListRecords).WithRequired(b => b.Volunteer);
             modelBuilder.Entity<Volunteer>().HasMany(v => v.Project).WithMany(p => p.Volunteer);
 
-            modelBuilder.Entity<BlackListRecord>().HasRequired(b => b.Organization).WithMany(o => o.BlackListRecords);
+            modelBuilder.Entity<BlackListRecord>().HasRequired(b => b.Organization).WithMany(o => o.BlackListRecords).WillCascadeOnDelete(false);
             modelBuilder.Entity<BlackListRecord>().HasRequired(b => b.Adder).WithMany(a => a.BlackListRecords);
             modelBuilder.Entity<BlackListRecord>().HasRequired(b => b.Project).WithMany(p => p.BlackListRecords);
         }
