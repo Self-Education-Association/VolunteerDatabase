@@ -19,7 +19,7 @@ namespace VolunteerDatabase.Helper.Tests
         [TestMethod()]
         public void GetInstanceTest()
         {
-            Assert.IsInstanceOfType(helper, typeof(IdentityHelper));
+            Assert.IsInstanceOfType(helper, typeof(IdentityHelper));//引用类型，保证类型相同
         }
 
         [TestMethod()]
