@@ -11,6 +11,7 @@ namespace VolunteerDatabase.Entity
         public int Id { get; set;}
 
         public int PhoneNum { get; set; }
+        public string Mobile { get; set; }
 
         public string Name { get; set; }
 

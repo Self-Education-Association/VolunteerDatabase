@@ -14,11 +14,11 @@ namespace VolunteerDatabase.Helper
         //增删查改志愿者条目
         //查询某一志愿者
         private static VolunteerHelper helper;
-        private object VolunteerLocker = new object();
-        private object helperlocker = new object();
+        private static readonly object VolunteerLocker = new object();
+        private static readonly object helperlocker = new object();
         Database database;
 
-        public VolunteerHelper GetInstance()
+        public static VolunteerHelper GetInstance()
         {
             if (helper == null)
             {
@@ -31,6 +31,15 @@ namespace VolunteerDatabase.Helper
                 }
             }
             return helper;
+        }
+
+        public async Task<VolunteerHelper> GetInstanceAsync()
+        {
+            Task<VolunteerHelper> helper = Task.Run(() =>
+            {
+                return GetInstance();
+            });
+            return await helper;
         }
         public VolunteerHelper()
         {

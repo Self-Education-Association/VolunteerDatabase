@@ -12,9 +12,9 @@ namespace VolunteerDatabase.Helper
     public class BlackListHelper
     {
         private static BlackListHelper helper;
-        private object helperlocker = new object();
+        private static readonly object helperlocker = new object();
         Database database = new Database();
-        public BlackListHelper GetInstance()
+        public static BlackListHelper GetInstance()
         {
             if(helper == null)
             {
@@ -27,6 +27,14 @@ namespace VolunteerDatabase.Helper
                 }
             }
             return helper;
+        }
+        public async Task<BlackListHelper> GetInstanceAsync()
+        {
+            Task<BlackListHelper> helper = Task.Run(() =>
+            {
+                return GetInstance();
+            });
+            return await helper;
         }
         public BlackListHelper()
         {
