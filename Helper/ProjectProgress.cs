@@ -51,7 +51,7 @@ namespace VolunteerDatabase.Helper
                 Vol.Name = Name;
                 Vol.Room = Room;
                 Vol.Score = 0;
-                Vol.Records = null;
+                //Vol.Records = null;
                 Vol.BlackListRecords = null;
                 database.Volunteers.Add(Vol);
                 Save();
