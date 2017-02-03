@@ -61,11 +61,11 @@ namespace VolunteerDatabase.Helper
         public VolunteerResult AddVolunteer(Volunteer v)
         {
             if(v==null)
-                return VolunteerResult.Error("欲创建的志愿者对象为null!");
+                return VolunteerResult.Error(VolunteerResult.AddVolunteerErrorEnum.NullVolunteerObject);
             if (v.Id == 0)
-                return VolunteerResult.Error("一个或多个志愿者学号未填写，请完整填写表单。");
+                return VolunteerResult.Error(VolunteerResult.AddVolunteerErrorEnum.EmptyId);
             if (database.Volunteers.Where(o => o.Id == v.Id).Count() != 0)
-                return VolunteerResult.Error("存在学号相同的志愿者，请确认输入是否有误。");
+                return VolunteerResult.Error(VolunteerResult.AddVolunteerErrorEnum.SameIdVolunteerExisted);
             database.Volunteers.Add(v);
             Save();
             return VolunteerResult.Success();
@@ -74,7 +74,7 @@ namespace VolunteerDatabase.Helper
         public VolunteerResult AddVolunteer(int id,string name="",string c="",string mobile="",string room="",string email="")
         {
             if(id==0)
-                return VolunteerResult.Error("一个或多个志愿者学号未填写，请完整填写表单。");
+                return VolunteerResult.Error(VolunteerResult.EditVolunteerErrorEnum.EmptyId);
             var v = new Volunteer
             {
                 Id = id,
@@ -91,7 +91,7 @@ namespace VolunteerDatabase.Helper
         public VolunteerResult EditVolunteer(Volunteer a,Volunteer b)
         {
             if (a == null || a.Id == 0)
-                return VolunteerResult.Error("欲修改的志愿者记录不存在，请重新查询再试。");
+                return VolunteerResult.Error(VolunteerResult.EditVolunteerErrorEnum.NonExistingVolunteer);
             var v = database.Volunteers.SingleOrDefault(o => o.Id == a.Id);
             v.Id=b.Id;
             v.Name = b.Name;
@@ -106,7 +106,7 @@ namespace VolunteerDatabase.Helper
         public VolunteerResult EditVolunteer(Volunteer a, int id, string name = "",string c="", string mobile = "", string room = "", string email = "")
         {
             if (id == 0)
-                return VolunteerResult.Error("一个或多个志愿者学号未填写，请完整填写表单。");
+                return VolunteerResult.Error(VolunteerResult.EditVolunteerErrorEnum.NonExistingVolunteer);
             var v = database.Volunteers.SingleOrDefault(o => o.Id == a.Id);
             v.Id = id;
             v.Name = name;
@@ -129,7 +129,7 @@ namespace VolunteerDatabase.Helper
             }
             else
             {
-                return VolunteerResult.Error("删除失败，待删除的志愿者记录不存在！");
+                return VolunteerResult.Error(VolunteerResult.DeleteVolunteerErrorEnum.NonExistingVolunteer);
             }
         }
         [AppAuthorize]
@@ -144,7 +144,7 @@ namespace VolunteerDatabase.Helper
             }
             else
             {
-                return VolunteerResult.Error("删除失败，待删除的志愿者记录不存在！");
+                return VolunteerResult.Error(VolunteerResult.DeleteVolunteerErrorEnum.NonExistingVolunteer);
             }
         }
 
