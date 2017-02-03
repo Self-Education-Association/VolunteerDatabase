@@ -13,13 +13,39 @@ namespace VolunteerDatabase.Helper
     {
         //增删查改志愿者条目
         //查询某一志愿者
-        private object VolunteerLocker = new object();
+        private static VolunteerHelper helper;
+        private static readonly object VolunteerLocker = new object();
+        private static readonly object helperlocker = new object();
         Database database;
 
+        public static VolunteerHelper GetInstance()
+        {
+            if (helper == null)
+            {
+                lock (helperlocker)
+                {
+                    if (helper == null)
+                    {
+                        helper = new VolunteerHelper();
+                    }
+                }
+            }
+            return helper;
+        }
+
+        public async Task<VolunteerHelper> GetInstanceAsync()
+        {
+            Task<VolunteerHelper> helper = Task.Run(() =>
+            {
+                return GetInstance();
+            });
+            return await helper;
+        }
         public VolunteerHelper()
         {
             database = DatabaseContext.GetInstance();
         }
+        
         public Volunteer FindVolunteer(int id)
         {
             var result = database.Volunteers.SingleOrDefault( v => v.Id == id);
@@ -31,6 +57,7 @@ namespace VolunteerDatabase.Helper
             return result;
         }
         //新建志愿者
+        [AppAuthorize]
         public VolunteerResult AddVolunteer(Volunteer v)
         {
             if(v==null)
@@ -43,6 +70,7 @@ namespace VolunteerDatabase.Helper
             Save();
             return VolunteerResult.Success();
         }
+        [AppAuthorize]
         public VolunteerResult AddVolunteer(int id,string name="",string c="",string mobile="",string room="",string email="")
         {
             if(id==0)
@@ -59,6 +87,7 @@ namespace VolunteerDatabase.Helper
             return AddVolunteer(v);
         }
         //编辑志愿者
+        [AppAuthorize]
         public VolunteerResult EditVolunteer(Volunteer a,Volunteer b)
         {
             if (a == null || a.Id == 0)
@@ -73,6 +102,7 @@ namespace VolunteerDatabase.Helper
             Save();
             return VolunteerResult.Success();
         }
+        [AppAuthorize]
         public VolunteerResult EditVolunteer(Volunteer a, int id, string name = "",string c="", string mobile = "", string room = "", string email = "")
         {
             if (id == 0)
@@ -88,6 +118,7 @@ namespace VolunteerDatabase.Helper
             return VolunteerResult.Success();
         }
         //删除志愿者
+        [AppAuthorize]
         public VolunteerResult DeleteVolunteer(Volunteer a)
         {
             if (a != null)
@@ -101,7 +132,7 @@ namespace VolunteerDatabase.Helper
                 return VolunteerResult.Error("删除失败，待删除的志愿者记录不存在！");
             }
         }
-
+        [AppAuthorize]
         public VolunteerResult DeleteVolunteer(int id)
         {
             var v = database.Volunteers.SingleOrDefault(o => o.Id == id);
@@ -117,6 +148,7 @@ namespace VolunteerDatabase.Helper
             }
         }
 
+        #region Save
         private void Save()
         {
             bool flag = false;
@@ -142,10 +174,6 @@ namespace VolunteerDatabase.Helper
                 }
             } while (flag);
         }
-
-
-        
-       
-
+        #endregion
     }
 }

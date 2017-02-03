@@ -11,14 +11,36 @@ namespace VolunteerDatabase.Helper
 {
     public class BlackListHelper
     {
-        //黑名单，记录增删查改
+        private static BlackListHelper helper;
+        private static readonly object helperlocker = new object();
         Database database = new Database();
+        public static BlackListHelper GetInstance()
+        {
+            if(helper == null)
+            {
+                lock(helperlocker)
+                {
+                    if(helper == null)
+                    {
+                        helper = new BlackListHelper();
+                    }
+                }
+            }
+            return helper;
+        }
+        public async Task<BlackListHelper> GetInstanceAsync()
+        {
+            Task<BlackListHelper> helper = Task.Run(() =>
+            {
+                return GetInstance();
+            });
+            return await helper;
+        }
         public BlackListHelper()
         {
             database = DatabaseContext.GetInstance();
         }
         public List<BlackListRecord> FindBlackList(int id) {
-            //异常处理
             if(id==0)
             {
                 BlackListResult.Error("请输入查询Id！");
@@ -32,8 +54,6 @@ namespace VolunteerDatabase.Helper
             {
                return null;
             }
-            
-          
         }
         public List<BlackListRecord> FindBlackList(Volunteer v) {
             //异常处理
@@ -119,6 +139,8 @@ namespace VolunteerDatabase.Helper
             var result = database.BlackListRecords.Where(b => b.EndTime < end && b.EndTime > start).ToList();
             return result;
         }
+        [AppAuthorize(AppRoleEnum.Administrator)]
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
         public BlackListResult AddBlackListRecord(BlackListRecord brec)//id是如何生成的？
         {
             if(brec==null||brec.Id==0)
@@ -145,10 +167,10 @@ namespace VolunteerDatabase.Helper
             }
             return BlackListResult.Success();
         }
+        [AppAuthorize(AppRoleEnum.Administrator)]
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
         public BlackListResult AddBlackListRecord(Volunteer volunteer, AppUser adder,DateTime endtime,Organization orgnization = null, Project project = null,BlackListRecordStatus status=BlackListRecordStatus.Enabled)
         {
-            //异常处理：id未设置，或已有id重复的条目，或输入的结束时间在当前时间之前，必填字段为空或不是相应类型(这个在前端检查)
-
             if(endtime<System.DateTime.Now)
             {
                 return BlackListResult.Error("输入的结束时间已过，请检查后重试。");
@@ -172,6 +194,8 @@ namespace VolunteerDatabase.Helper
             }
             return BlackListResult.Success();
         }
+        [AppAuthorize(AppRoleEnum.Administrator)]
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
         public BlackListResult EditBlackListRecord(int id,DateTime endtime,BlackListRecordStatus status)
         {
             var record = database.BlackListRecords.SingleOrDefault(b => b.Id == id);
@@ -195,6 +219,8 @@ namespace VolunteerDatabase.Helper
             }
             return BlackListResult.Success();
         }
+        [AppAuthorize(AppRoleEnum.Administrator)]
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
         public BlackListResult DeleteBlackListRecord(int id)
         {//异常：id为空,找不到id对应的条目
             var record = database.BlackListRecords.Find(id);
