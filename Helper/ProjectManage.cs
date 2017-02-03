@@ -47,7 +47,7 @@ namespace VolunteerDatabase.Helper
 
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public ProgressResult CreatNewProject(Organization org, DateTime? Time=null,List<Volunteer> Volunteer=null , List<AppUser> Managers=null, string Name ="", string Place = "",string Detail="", int Maximum = 70)
+        public ProgressResult CreatNewProject(Organization org, DateTime? Time=null, List<AppUser> Managers=null, string Name ="", string Place = "",string Detail="", int Maximum = 70)
         {
             ProgressResult result;
             lock (database)
@@ -61,11 +61,11 @@ namespace VolunteerDatabase.Helper
                 Project.Place = Place;
                 Project.Name = Name;
                 Project.Details = Detail;
-                Project.Volunteer = Volunteer;
                 Project.Condition = ProjectCondition.Ongoing;
                 Project.ScoreCondition = ProjectScoreCondition.UnScored;
                 Project.Creater = org;
                 Project.BlackListRecords = null;
+                Project.Volunteer = null;
                 database.Projects.Add(Project);
                 Save();
             }
@@ -125,6 +125,7 @@ namespace VolunteerDatabase.Helper
                     foreach (var entity in database.ChangeTracker.Entries())
                     {
                         database.Entry(entity).Reload();
+                        flag = false;
                     }
                 }
                 catch (Exception)

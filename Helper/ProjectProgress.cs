@@ -14,7 +14,7 @@ namespace VolunteerDatabase.Helper
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
         public List<Project> FindAuthorizedProjectByUser(AppUser user)
         {
-            var Project = from o in database.Projects where o.Managers.Equals(user) select o;
+            var Project = from o in database.Projects where o.Managers.Contains(user) select o;
             Project = Project.Where(o => o.Condition == ProjectCondition.Ongoing);
             List<Project> Projects = new List<Project>();
             foreach (var item in Project)
@@ -34,20 +34,20 @@ namespace VolunteerDatabase.Helper
             return Project;
         }
 
-        public ProgressResult CreatVolunteer(Project Pro,string Room,string Name,string email,int Phone)
+        public ProgressResult CreatVolunteer(Project Pro, string Room, string Name, string email, string Phone)
         {
             ProgressResult result;
-            if(Room==""|Name==""||email==""||Phone==0)
+            if (Room == "" | Name == "" || email == "" || Phone == "")
             {
                 ProgressResult.Error("志愿者信息不完整");
             }
-            lock(database)
+            lock (database)
             {
                 Volunteer Vol = new Volunteer();
                 Vol.Project.Add(Pro);
                 Vol.Id = database.Volunteers.Count() + 1;
                 Vol.Email = email;
-                Vol.PhoneNum = Phone;
+                Vol.Mobile = Phone;
                 Vol.Name = Name;
                 Vol.Room = Room;
                 Vol.Score = 0;
@@ -72,7 +72,7 @@ namespace VolunteerDatabase.Helper
             {
                 Volunteers.Add(item);
             }
-            Volunteers.Sort();
+            Volunteers.Sort(); //根据Score平均值降序排列
             return Volunteers;
         }
 
@@ -87,13 +87,17 @@ namespace VolunteerDatabase.Helper
         }
 
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
-        public ProgressResult SingleVolunteerInputById(int VolunteerId,Project Pro)
+        public ProgressResult SingleVolunteerInputById(int VolunteerId, Project Pro)
         {
             ProgressResult result;
             var Volunteer = database.Volunteers.SingleOrDefault(r => r.Id == VolunteerId);
             if (Volunteer == null)
             {
                 return ProgressResult.Error("志愿者不存在于数据库中");
+            }
+            if(Pro.Maximum<=Pro.Volunteer.Count)
+            {
+                return ProgressResult.Error("已达项目人数上限，添加失败");
             }
             lock (database)
             {
@@ -105,11 +109,11 @@ namespace VolunteerDatabase.Helper
             return result;
         }
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
-        public ProgressResult DeleteVolunteerFromProject(Volunteer Vol,Project Pro)
+        public ProgressResult DeleteVolunteerFromProject(Volunteer Vol, Project Pro)
         {
             ProgressResult result;
             bool? IsInProject = Pro.Volunteer.Contains(Vol);
-            if (IsInProject==null)
+            if (IsInProject == null)
             {
                 return ProgressResult.Error("志愿者不在该项目中");
             }
@@ -126,9 +130,9 @@ namespace VolunteerDatabase.Helper
         {
             ProgressResult result;
             var Volunteers = database.Volunteers.Where(o => o.Project.Contains(Pro));
-            lock(database)
+            lock (database)
             {
-                foreach(var item in Volunteers)
+                foreach (var item in Volunteers)
                 {
                     item.Score += 4;
                 }
@@ -139,10 +143,10 @@ namespace VolunteerDatabase.Helper
             return result;
         }
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
-        public ProgressResult ScoreSingleVolunteer(int Score,Volunteer Vol)
+        public ProgressResult ScoreSingleVolunteer(int Score, Volunteer Vol)
         {
             ProgressResult result;
-            if(Score<1||Score>5)
+            if (Score < 1 || Score > 5)
             {
                 ProgressResult.Error("分数超出合法范围");
             }
@@ -155,7 +159,7 @@ namespace VolunteerDatabase.Helper
         public ProgressResult FinishProject(Project Pro)
         {
             ProgressResult result;
-            if (Pro.Condition != ProjectCondition.Ongoing ||Pro.ScoreCondition==ProjectScoreCondition.Scored)
+            if (Pro.Condition != ProjectCondition.Ongoing || Pro.ScoreCondition == ProjectScoreCondition.Scored)
             {
                 ProgressResult.Error("项目不满足结项条件，请检查项目状态和评分");
             }
@@ -185,6 +189,7 @@ namespace VolunteerDatabase.Helper
                     foreach (var entity in database.ChangeTracker.Entries())
                     {
                         database.Entry(entity).Reload();
+                        flag = false;
                     }
                 }
                 catch (Exception)
@@ -194,44 +199,5 @@ namespace VolunteerDatabase.Helper
             } while (flag);
         }
         #endregion
-
-        #region 错误信息处理
-        public class ProgressResult
-        {
-            private string[] _errors;
-
-            private bool _succeeded;
-
-            public string[] Errors { get { return _errors; } }
-
-            public bool Succeeded { get { return _succeeded; } }
-
-            public static ProgressResult Error(params string[] errors)
-            {
-                if (errors.Count() == 0)
-                {
-                    errors = new string[] { "未提供错误信息。" };
-                }
-                var result = new ProgressResult
-                {
-                    _succeeded = false,
-                    _errors = errors
-                };
-                return result;
-            }
-
-            public static ProgressResult Success()
-            {
-                var result = new ProgressResult
-                {
-                    _succeeded = true,
-                    _errors = { }
-                };
-                return result;
-            }
-
-            private ProgressResult() { }
-        }
     }
-    #endregion
 }

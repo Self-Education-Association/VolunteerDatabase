@@ -10,7 +10,6 @@ namespace VolunteerDatabase.Entity
     {
         public int Id { get; set;}
 
-        public int PhoneNum { get; set; }
         public string Mobile { get; set; }
 
         public string Name { get; set; }
@@ -18,11 +17,12 @@ namespace VolunteerDatabase.Entity
         public string Email { get; set; }
 
         public string Room { get; set; }
+
         public string Class { get; set; }
 
         public virtual List<Project> Project{ get; set; }
 
-        //public virtual List<CreditRecord> Records { get; set; }
+        public virtual List<CreditRecord> Records { get; set; }
 
         public virtual List<BlackListRecord> BlackListRecords { get; set; }
 
@@ -31,12 +31,12 @@ namespace VolunteerDatabase.Entity
         public int CompareTo(Volunteer obj)
         {
             int result;
-            if(this.Score==obj.Score)
+            if((this.Score/this.Project.Count)==(obj.Score/obj.Project.Count))
             {
                 result = 0;
             }
-            else           
-            if(this.Score>obj.Score)
+            else
+            if((this.Score/this.Project.Count)>(obj.Score/obj.Project.Count))
             {
                 result = -1;
             }
