@@ -256,6 +256,7 @@ namespace VolunteerDatabase.Helper
                     foreach(var entity in database.ChangeTracker.Entries())
                     {
                         database.Entry(entity).Reload();
+                        flag = false;
                     }
                 }
                 catch(Exception)
