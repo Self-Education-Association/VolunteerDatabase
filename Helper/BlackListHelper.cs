@@ -41,10 +41,6 @@ namespace VolunteerDatabase.Helper
             database = DatabaseContext.GetInstance();
         }
         public List<BlackListRecord> FindBlackList(int id) {
-            //if(id==0)
-            //{
-            //    BlackListResult.Error("请输入查询Id！");
-            //}
             try
             {
                 var result = database.BlackListRecords.Where(b => b.Id == id).ToList();
@@ -57,10 +53,6 @@ namespace VolunteerDatabase.Helper
         }
         public List<BlackListRecord> FindBlackList(Volunteer v) {
             //异常处理
-            //if(v==null)
-            //{
-            //    BlackListResult.Error("输入的志愿者对象为null！");
-            //}
             try
             {
                 var result = database.BlackListRecords.Where(b => b.Volunteer.Id == v.Id).ToList();
@@ -72,10 +64,6 @@ namespace VolunteerDatabase.Helper
             }
         }
         public List<BlackListRecord> FindBlackList(Organization org) {
-            //if(org==null)
-            //{
-            //    BlackListResult.Error("请输入组织名称！");
-            //}
             try
             {
                 var result = database.BlackListRecords.Where(b => b.Organization.Id == org.Id).ToList();
@@ -87,10 +75,6 @@ namespace VolunteerDatabase.Helper
             }
         }
         public List<BlackListRecord> FindBlackList(AppUser adder) {
-            //if (adder == null)
-            //{
-            //   BlackListResult.Error("请输入添加者信息！");
-            //}
             try
             {
                 var result = database.BlackListRecords.Where(b => b.Adder.Id == adder.Id).ToList();
@@ -102,10 +86,6 @@ namespace VolunteerDatabase.Helper
             }
         }
         public List<BlackListRecord> FindBlackList(Project project) {
-            //if (project == null)
-            //{
-            //   BlackListResult.Error("请输入项目名称！");
-            //}
             try
             {
                 var result = database.BlackListRecords.Where(b => b.Project.Id == project.Id).ToList();
@@ -119,10 +99,6 @@ namespace VolunteerDatabase.Helper
     
         public List<BlackListRecord> FindBlackListByAddTime(DateTime start,DateTime end)
         {
-            //if(start==null&&end==null)
-            //{
-            //    BlackListResult.Error("请输入查询时间段！");
-            //}
             if (start > end)
             {
                 return null;
@@ -145,15 +121,15 @@ namespace VolunteerDatabase.Helper
         {
             if(brec==null||brec.Id==0)
             {
-                return BlackListResult.Error("欲添加的黑名单记录为空，请检查后重新输入！");
+                return BlackListResult.Error(BlackListResult.AddBlackListRecordErrorEnum.NullRecord);
             }
             if(database.BlackListRecords.Where(b=>b.Id==brec.Id).Count()!=0)
             {
-                return BlackListResult.Error("数据库中存在相同id的条目，请检查后重新输入！");
+                return BlackListResult.Error(BlackListResult.AddBlackListRecordErrorEnum.ExistingRecord);
             }
             if (brec.EndTime < System.DateTime.Now)
             {
-                return BlackListResult.Error("输入的结束时间已过，请检查后重新输入。");
+                return BlackListResult.Error(BlackListResult.AddBlackListRecordErrorEnum.WrongTime);
             }
 
             try
@@ -173,7 +149,7 @@ namespace VolunteerDatabase.Helper
         {
             if(endtime<System.DateTime.Now)
             {
-                return BlackListResult.Error("输入的结束时间已过，请检查后重新输入。");
+                return BlackListResult.Error(BlackListResult.AddBlackListRecordErrorEnum.WrongTime);
             }
             BlackListRecord result = new BlackListRecord
             {
@@ -201,11 +177,11 @@ namespace VolunteerDatabase.Helper
             var record = database.BlackListRecords.SingleOrDefault(b => b.Id == id);
             if (id == 0)
             {
-                return BlackListResult.Error("欲添加的黑名单记录为空，请检查后重新输入！");
+                return BlackListResult.Error(BlackListResult.EditBlackListRecordErrorEnum.EmptyId);
             }
             if (database.BlackListRecords.Where(b => b.Id == id).Count() == 0)
             {
-                return BlackListResult.Error("待编辑的条目在数据库中不存在，请重新查询后再试！");
+                return BlackListResult.Error(BlackListResult.EditBlackListRecordErrorEnum.NoExistingRecord);
             }
             try
             {
@@ -226,7 +202,7 @@ namespace VolunteerDatabase.Helper
             var record = database.BlackListRecords.Find(id);
             if(record==null)
             {
-                return BlackListResult.Error("删除失败，找不到该id对应的黑名单条目。");
+                return BlackListResult.Error(BlackListResult.DeleteBlackListRecordErrorEnum.NonExistingRecord);
             }
             try
             {
