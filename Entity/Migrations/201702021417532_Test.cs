@@ -3,7 +3,7 @@ namespace VolunteerDatabase.Entity.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Test : DbMigration
+    public partial class Test0 : DbMigration
     {
         public override void Up()
         {

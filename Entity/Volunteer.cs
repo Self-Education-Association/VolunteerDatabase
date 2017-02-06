@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace VolunteerDatabase.Entity
 {
     public class Volunteer:IComparable<Volunteer>
     {
-        public int Id { get; set;}
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int Id { get; set;}//学号
+
+        [Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid UID { get; set; }//唯一标识符：主键
 
         public string Mobile { get; set; }
 
@@ -22,12 +28,88 @@ namespace VolunteerDatabase.Entity
 
         public virtual List<Project> Project{ get; set; }
 
-        public virtual List<CreditRecord> Records { get; set; }
+        //public virtual List<CreditRecord> Records { get; set; }
 
         public virtual List<BlackListRecord> BlackListRecords { get; set; }
 
         public int Score { get; set; }
+        public static bool AreSame(Volunteer a,Volunteer b)
+        {
+            if (a == null && b == null)
+            {
+                return true;
+            }
 
+            if ((a == null && b != null) || (a != null && b == null))
+            {
+                return false;
+            }
+            else if (a.Id == b.Id &&
+                a.Name == b.Name &&
+                a.Mobile == b.Mobile &&
+                a.Email == b.Email &&
+                a.Class == b.Class &&
+                a.Room == b.Room
+                )
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        /*public static bool operator == (Volunteer a,Volunteer b)
+        {
+            if (a == null && b == null)
+            {
+                return true;
+            }
+
+            if ((a == null && b != null) || (a != null && b == null))
+            {
+                return false;
+            }
+            else if (a.Id == b.Id &&
+                a.Name == b.Name &&
+                a.Mobile == b.Mobile &&
+                a.Email == b.Email &&
+                a.Class == b.Class &&
+                a.Room == b.Room
+                )
+            {
+                return true;
+            }
+            else
+            { 
+                return false;
+            }
+        }
+        public static bool operator !=(Volunteer a,Volunteer b)
+        {
+            if (a == null && b == null)
+            {
+                return false;
+            }
+            if ((a == null && b != null) || (a != null && b == null))
+            {
+                return true;
+            }
+            else if (a.Id == b.Id &&
+                a.Name == b.Name &&
+                a.Mobile == b.Mobile &&
+                a.Email == b.Email &&
+                a.Class == b.Class &&
+                a.Room == b.Room
+                )
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }*/
         public int CompareTo(Volunteer obj)
         {
             int result;

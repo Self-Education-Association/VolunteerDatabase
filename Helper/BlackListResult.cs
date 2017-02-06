@@ -19,8 +19,8 @@ namespace VolunteerDatabase.Helper
             var result = new BlackListResult
             {
                 _succeed = true,
-                _errors = {}
-                 
+                _errors = {},
+                _errorvolunteerid = 0
             };
             return result;
         }
@@ -35,6 +35,20 @@ namespace VolunteerDatabase.Helper
             {
                 _succeed = false,
                 _errors = errors
+            };
+            return result;
+        }
+        public static BlackListResult Error(int id ,params string[] errors)
+        {
+            if (errors.Count() == 0)
+            {
+                errors = new string[] { "未提供错误信息。" };
+            }
+            var result = new BlackListResult
+            {
+                _succeed = false,
+                _errors = errors,
+                _errorvolunteerid = id
             };
             return result;
         }
