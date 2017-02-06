@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity;
     using System.Linq;
-
+    using System.ComponentModel.DataAnnotations.Schema;
     public class Database : DbContext
     {
         public Database()
@@ -14,6 +14,9 @@
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Volunteer>().Property(v => v.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+            modelBuilder.Entity<Volunteer>().HasKey(v => v.UID).Property(v => v.UID).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+
             modelBuilder.Entity<AppUser>().HasMany(u => u.Roles).WithMany(r => r.Users);
             modelBuilder.Entity<AppUser>().HasRequired(u => u.Organization).WithMany(o => o.Members);
 

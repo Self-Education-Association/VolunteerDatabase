@@ -52,7 +52,6 @@ namespace VolunteerDatabase.Helper
             }
         }
         public List<BlackListRecord> FindBlackList(Volunteer v) {
-            //异常处理
             try
             {
                 var result = database.BlackListRecords.Where(b => b.Volunteer.Id == v.Id).ToList();
@@ -117,7 +116,7 @@ namespace VolunteerDatabase.Helper
         }
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public BlackListResult AddBlackListRecord(BlackListRecord brec)//id是如何生成的？
+        public BlackListResult AddBlackListRecord(BlackListRecord brec)
         {
             if(brec==null||brec.Id==0)
             {
