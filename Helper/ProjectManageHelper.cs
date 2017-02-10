@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 using VolunteerDatabase.Entity;
 using VolunteerDatabase.Interface;
 using System.Data.Entity.Infrastructure;
-using static VolunteerDatabase.Helper.ProjectProgress;
+using static VolunteerDatabase.Helper.ProjectProgressHelper;
 
 namespace VolunteerDatabase.Helper
 {
-    public class ProjectManage
+    public class ProjectManageHelper
     {
         private Database database;
+
         public List<Project> ShowProjectList(Organization org,bool OnGoing)//true时得到正在进行中的项目
         {
             var pro = from o in database.Projects
@@ -91,6 +92,7 @@ namespace VolunteerDatabase.Helper
             result = ProgressResult.Success();
             return result;
         }
+
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
         public ProgressResult ProjectDelete(Project Pro)

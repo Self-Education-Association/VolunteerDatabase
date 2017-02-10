@@ -22,7 +22,7 @@ namespace VolunteerDatabase.Entity
 
         public virtual List<Project> Project{ get; set; }
 
-        public virtual List<CreditRecord> Records { get; set; }
+        //public virtual List<CreditRecord> Records { get; set; }
 
         public virtual List<BlackListRecord> BlackListRecords { get; set; }
 
