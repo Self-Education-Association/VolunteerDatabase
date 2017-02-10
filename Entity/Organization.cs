@@ -9,7 +9,7 @@ namespace VolunteerDatabase.Entity
 {
     public class Organization
     {
-        public int Id { get; set; }
+        public int Id { get; set; }//主键
 
         public string Name { get; set; }
 
@@ -36,6 +36,7 @@ namespace VolunteerDatabase.Entity
         法学院,
         中国语言文学学院,
         保险学院,
+        信息学院,
         统计学院,
         TestOnly
     }

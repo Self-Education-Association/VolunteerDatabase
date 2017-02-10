@@ -76,6 +76,18 @@
     <Compile Include="Migrations\201702021417532_Test.Designer.cs">
       <DependentUpon>201702021417532_Test.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702040832348_test.cs" />
+    <Compile Include="Migrations\201702040832348_test.Designer.cs">
+      <DependentUpon>201702040832348_test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702041352446_PhoneNumModify.cs" />
+    <Compile Include="Migrations\201702041352446_PhoneNumModify.Designer.cs">
+      <DependentUpon>201702041352446_PhoneNumModify.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702060410459_AddUid.cs" />
+    <Compile Include="Migrations\201702060410459_AddUid.Designer.cs">
+      <DependentUpon>201702060410459_AddUid.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Organization.cs" />
     <Compile Include="Project.cs" />
@@ -107,6 +119,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702021417532_Test.resx">
       <DependentUpon>201702021417532_Test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702040832348_test.resx">
+      <DependentUpon>201702040832348_test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702041352446_PhoneNumModify.resx">
+      <DependentUpon>201702041352446_PhoneNumModify.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702060410459_AddUid.resx">
+      <DependentUpon>201702060410459_AddUid.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
