@@ -9,7 +9,7 @@ namespace VolunteerDatabase.Entity
 {
     public class Organization
     {
-        public int Id { get; set; }
+        public int Id { get; set; }//主键
 
         public string Name { get; set; }
 

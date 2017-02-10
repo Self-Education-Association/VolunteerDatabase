@@ -27,6 +27,21 @@ namespace VolunteerDatabase.Helper
             };
             return result;
         }
+        public static VolunteerResult Error(int id,params string[] errors)
+        {
+            
+            if (errors.Count() == 0)
+            {
+                errors = new string[] { "未提供错误信息" };
+            }
+            var result = new VolunteerResult
+            {
+                _succeeded = false,
+                _errors = errors,
+                _errorvolunteerid = id
+            };
+            return result;
+        }
         public static VolunteerResult Error(AddVolunteerErrorEnum err,int id = 0)
         {
             VolunteerResult result;
@@ -80,6 +95,21 @@ namespace VolunteerDatabase.Helper
                     break;
             }
             return result;
+        }
+
+        public static bool AreSame(VolunteerResult a,VolunteerResult b)
+        {
+            if (a == null && b == null)
+                return true;
+            if ((a == null && b != null) || (a != null && b == null))
+                return false;
+            else if (a.Errors == b.Errors &&
+                a.Succeeded == b.Succeeded &&
+                a.ErrorVolunteerId == b.ErrorVolunteerId
+                )
+                return true;
+            else
+                return false;
         }
         public static VolunteerResult Success()
         {

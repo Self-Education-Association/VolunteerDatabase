@@ -16,6 +16,7 @@ namespace VolunteerDatabase.Helper
         private static VolunteerHelper helper;
         private static readonly object VolunteerLocker = new object();
         private static readonly object helperlocker = new object();
+        private const string DEFAULTSTRING = "未填写";
         Database database;
 
         public static VolunteerHelper GetInstance()
@@ -65,13 +66,21 @@ namespace VolunteerDatabase.Helper
             if (v.Id == 0)
                 return VolunteerResult.Error(VolunteerResult.AddVolunteerErrorEnum.EmptyId);
             if (database.Volunteers.Where(o => o.Id == v.Id).Count() != 0)
-                return VolunteerResult.Error(VolunteerResult.AddVolunteerErrorEnum.SameIdVolunteerExisted);
-            database.Volunteers.Add(v);
-            Save();
-            return VolunteerResult.Success();
+                return VolunteerResult.Error(VolunteerResult.AddVolunteerErrorEnum.SameIdVolunteerExisted,v.Id);
+            else
+            {
+                v.Mobile = v.Mobile == null ? DEFAULTSTRING : v.Mobile;
+                v.Room = v.Room == null ? DEFAULTSTRING : v.Room;
+                v.Name = v.Name == null ? DEFAULTSTRING : v.Name;
+                v.Class = v.Class == null ? DEFAULTSTRING : v.Class;
+                v.Email = v.Email == null ? DEFAULTSTRING : v.Email;
+                database.Volunteers.Add(v);
+                Save();
+                return VolunteerResult.Success();
+            }
         }
         [AppAuthorize]
-        public VolunteerResult AddVolunteer(int id,string name="",string c="",string mobile="",string room="",string email="")
+        public VolunteerResult AddVolunteer(int id,string name=DEFAULTSTRING,string c=DEFAULTSTRING,string mobile=DEFAULTSTRING,string room=DEFAULTSTRING,string email=DEFAULTSTRING)
         {
             if(id==0)
                 return VolunteerResult.Error(VolunteerResult.EditVolunteerErrorEnum.EmptyId);
@@ -103,7 +112,7 @@ namespace VolunteerDatabase.Helper
             return VolunteerResult.Success();
         }
         [AppAuthorize]
-        public VolunteerResult EditVolunteer(Volunteer a, int id, string name = "",string c="", string mobile = "", string room = "", string email = "")
+        public VolunteerResult EditVolunteer(Volunteer a, int id, string name = DEFAULTSTRING,string c= DEFAULTSTRING, string mobile = DEFAULTSTRING, string room = DEFAULTSTRING, string email = DEFAULTSTRING)
         {
             if (id == 0)
                 return VolunteerResult.Error(VolunteerResult.EditVolunteerErrorEnum.NonExistingVolunteer);
