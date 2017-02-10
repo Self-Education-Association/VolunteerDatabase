@@ -10,10 +10,8 @@ namespace VolunteerDatabase.Helper
     {
         private bool _succeed = false;
         private string[] _errors;
-        private int _errorvolunteerid;
         public bool Succeed { get { return _succeed; } }
         public string[] Errors { get { return _errors; } }
-        public int ErrorVolunteerId { get { return _errorvolunteerid; } }
         public static BlackListResult Success()
         {
             var result = new BlackListResult
