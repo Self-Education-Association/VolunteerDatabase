@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace VolunteerDatabase.Entity
 {
     public class BlackListRecord
     {
-        public int Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid UID { get; set; }
         public DateTime AddTime { get; set; }
         public DateTime EndTime { get; set; }
         public BlackListRecordStatus Status { get; set; }

@@ -10,12 +10,12 @@ namespace VolunteerDatabase.Entity
 {
     public class Volunteer:IComparable<Volunteer>
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int Id { get; set;}//学号
+        //[Required]
+        public int StudentNum { get; set;}//学号
 
-        [Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid UID { get; set; }//唯一标识符：主键
-
+        //[Required]
         public string Mobile { get; set; }
 
         public string Name { get; set; }
@@ -44,7 +44,7 @@ namespace VolunteerDatabase.Entity
             {
                 return false;
             }
-            else if (a.Id == b.Id &&
+            else if (a.StudentNum == b.StudentNum &&
                 a.Name == b.Name &&
                 a.Mobile == b.Mobile &&
                 a.Email == b.Email &&

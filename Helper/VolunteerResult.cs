@@ -3,17 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VolunteerDatabase.Interface;
 
 namespace VolunteerDatabase.Helper
 {
-    public class VolunteerResult
+    public class VolunteerResult:IResult
     {
         private bool _succeeded;
         private string[] _errors;
-        private int _errorvolunteerid;
+        private int _errorvolunteernum;
+        private string _errorstring;
         public bool Succeeded { get { return _succeeded; } }
         public string[] Errors { get { return _errors; } }
-        public int ErrorVolunteerId { get { return _errorvolunteerid; } }
+        public string ErrorString { get { return _errorstring; } }
+        public int ErrorVolunteerNum { get { return _errorvolunteernum; } }
         public static VolunteerResult Error(params string[] errors)
         {
             if (errors.Count() == 0)
@@ -23,26 +26,28 @@ namespace VolunteerDatabase.Helper
             var result = new VolunteerResult
             {
                 _succeeded = false,
-                _errors = errors
+                _errors = errors,
+                _errorstring = errors.ToString()
             };
             return result;
         }
-        public static VolunteerResult Error(int id,params string[] errors)
+        public static VolunteerResult Error(string errors,int num)
         {
             
             if (errors.Count() == 0)
             {
-                errors = new string[] { "未提供错误信息" };
+                errors =  "未提供错误信息" ;
             }
             var result = new VolunteerResult
             {
                 _succeeded = false,
-                _errors = errors,
-                _errorvolunteerid = id
+                _errors = new string[] { errors },
+                _errorvolunteernum = num,
+                _errorstring = errors.ToString()
             };
             return result;
         }
-        public static VolunteerResult Error(AddVolunteerErrorEnum err,int id = 0)
+        public static VolunteerResult Error(AddVolunteerErrorEnum err,int num=0)
         {
             VolunteerResult result;
             switch (err)
@@ -54,10 +59,10 @@ namespace VolunteerDatabase.Helper
                     result = Error("一个或多个志愿者学号未填写，请完整填写表单。");
                     break;
                 case (AddVolunteerErrorEnum.SameIdVolunteerExisted):
-                    if (id != 0)
-                        result = Error("存在学号相同的志愿者，请确认输入是否有误。数据库中已存在的学号：" + id);
+                    if(num!=0)
+                       result = Error("存在学号相同的志愿者，请确认输入是否有误。数据库中已存在的学号：" + num, num);
                     else
-                        result = Error("存在学号相同的志愿者，请确认输入是否有误。");
+                       result = Error("存在学号相同的志愿者，请确认输入是否有误。");
                     break;
                 default:
                     result = Error();
@@ -65,6 +70,7 @@ namespace VolunteerDatabase.Helper
             }
             return result;
         }
+
         public static VolunteerResult Error(EditVolunteerErrorEnum err)
         {
             VolunteerResult result;
@@ -103,20 +109,32 @@ namespace VolunteerDatabase.Helper
                 return true;
             if ((a == null && b != null) || (a != null && b == null))
                 return false;
-            else if (a.Errors == b.Errors &&
-                a.Succeeded == b.Succeeded &&
-                a.ErrorVolunteerId == b.ErrorVolunteerId
-                )
-                return true;
+            else if (a.ErrorString == b.ErrorString && a.Succeeded == b.Succeeded)
+            { 
+                if(a.ErrorVolunteerNum==b.ErrorVolunteerNum)
+                    return true;
+                else
+                    return false;
+            }
             else
                 return false;
+        }
+        public static List<int> CreateNumList(params int[] nums)
+        {
+            List<int> list = new List<int>();
+            foreach (int n in nums)
+            {
+                list.Add(n);
+            }
+            return list;
         }
         public static VolunteerResult Success()
         {
             var result = new VolunteerResult
             {
                 _succeeded = true,
-                _errors = { }
+                _errors = { },
+                _errorstring = ""
             };
             return result;
         }

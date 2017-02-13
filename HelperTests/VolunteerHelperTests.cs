@@ -19,6 +19,25 @@ namespace VolunteerDatabase.Helper.Tests
         {
             Assert.IsInstanceOfType(helper, typeof(VolunteerHelper));
         }
+        private Volunteer FindVolunteerByStuNum(Volunteer v)
+        {
+            Volunteer result = database.Volunteers.SingleOrDefault(o => o.StudentNum == v.StudentNum);
+            return result;
+        }
+        private Volunteer FindVolunteerByStuNum(int num)
+        {
+            Volunteer result = database.Volunteers.SingleOrDefault(o => o.StudentNum == num);
+            return result;
+        }
+        private Volunteer FindVolunteer(Volunteer v)
+        {
+            if (v.StudentNum == 0)
+                return null;
+            Volunteer result = FindVolunteerByStuNum(v.StudentNum);
+            if (Volunteer.AreSame(v, result))
+                return result;
+            else return null;
+        }
 
         [TestMethod()]
         public void AddVolunteerTest()
@@ -26,7 +45,7 @@ namespace VolunteerDatabase.Helper.Tests
             #region 插入第一个volunteer对象
             Volunteer v = new Volunteer
             {
-                Id = 888,
+                StudentNum = 888,
                 Mobile = "13812345678",
                 Name = "AddTest",
                 Email="AddTest@test.com",
@@ -34,14 +53,15 @@ namespace VolunteerDatabase.Helper.Tests
                 Room="AddTestRoom"
             };
             var result = helper.AddVolunteer(v);
-            if (result == VolunteerResult.Error(VolunteerResult.AddVolunteerErrorEnum.SameIdVolunteerExisted))
+            if (VolunteerResult.AreSame(result,VolunteerResult.Error(VolunteerResult.AddVolunteerErrorEnum.SameIdVolunteerExisted,v.StudentNum)))
             {
-                var existedvolunteer = database.Volunteers.Find(v.Id);
+                var existedvolunteer = FindVolunteerByStuNum(v);
                 database.Volunteers.Remove(existedvolunteer);
                 database.SaveChanges();
             }
+            
             result = helper.AddVolunteer(v);
-            var actual = database.Volunteers.Find(v.Id);
+            var actual = FindVolunteerByStuNum(v.StudentNum);
             if (!Volunteer.AreSame(v, actual))
                 Assert.Fail("插入第一个volunteer对象失败");
             //Assert.AreEqual(v, actual);
@@ -50,17 +70,17 @@ namespace VolunteerDatabase.Helper.Tests
             #endregion
 
             #region 插入第二个volunteer对象
-            int tempid = 999;
+            int tempnum = 999;
             string tempname = "TestVolunteer2";
-            result = helper.AddVolunteer(tempid, tempname);
-            if (result == VolunteerResult.Error(VolunteerResult.AddVolunteerErrorEnum.SameIdVolunteerExisted))
+            result = helper.AddVolunteer(tempnum, tempname);
+            if (VolunteerResult.AreSame(result, VolunteerResult.Error(VolunteerResult.AddVolunteerErrorEnum.SameIdVolunteerExisted,tempnum)))
             {
-                var existedvolunteer = database.Volunteers.Find(tempid);
+                var existedvolunteer = FindVolunteerByStuNum(tempnum);
                 database.Volunteers.Remove(existedvolunteer);
                 database.SaveChanges();
             }
-            result = helper.AddVolunteer(tempid, tempname);
-            actual = database.Volunteers.Find(tempid);
+            result = helper.AddVolunteer(tempnum, tempname);
+            actual = FindVolunteerByStuNum(tempnum);
             if (!VolunteerResult.AreSame(result, VolunteerResult.Success()))
                 Assert.Fail("插入第二个volunteer对象失败.");
             if (actual == null)
@@ -77,18 +97,16 @@ namespace VolunteerDatabase.Helper.Tests
 
             #region 插入学号为0的志愿者对象
             result = helper.AddVolunteer(0);
-            Assert.AreEqual(result, VolunteerResult.Error(VolunteerResult.AddVolunteerErrorEnum.EmptyId));
             if (!VolunteerResult.AreSame(result, VolunteerResult.Error(VolunteerResult.AddVolunteerErrorEnum.EmptyId)))
                 Assert.Fail("插入的学号为0的对象未能正确处理.");
             #endregion
 
             #region 插入重复对象
 
-            result = helper.AddVolunteer(v.Id, "shadowman");
-            Assert.AreEqual(VolunteerResult.Error(VolunteerResult.AddVolunteerErrorEnum.SameIdVolunteerExisted), result);
-            if (!VolunteerResult.AreSame(VolunteerResult.Error(VolunteerResult.AddVolunteerErrorEnum.SameIdVolunteerExisted), result))
+            result = helper.AddVolunteer(v.StudentNum, "shadowman");
+            if (!VolunteerResult.AreSame(VolunteerResult.Error(VolunteerResult.AddVolunteerErrorEnum.SameIdVolunteerExisted,v.StudentNum), result))
                 Assert.Fail("插入的学号为0的对象未能正确处理.");
-
+                
             #endregion
         }
 
@@ -96,13 +114,13 @@ namespace VolunteerDatabase.Helper.Tests
         public void DeleteVolunteerTest()
         {
             #region 新建一个志愿者对象
-            int tempid = 8888;
+            int tempnum = 8888;
             Volunteer v;
-            if (database.Volunteers.Find(tempid) == null)
+            if (FindVolunteerByStuNum(tempnum) == null)
             {
                 v = new Volunteer
                 {
-                    Id = tempid,
+                    StudentNum = tempnum,
                     Name = "DeleteTest",
                     Class = "TestClass",
                     Email = "test@test.com",
@@ -113,20 +131,20 @@ namespace VolunteerDatabase.Helper.Tests
             }
             else
             {
-                v = database.Volunteers.Find(tempid);
+                v = FindVolunteerByStuNum(tempnum);
             }
             #endregion
 
             #region 删除志愿者条目
             helper.DeleteVolunteer(v);
-            var result = database.Volunteers.Find(tempid);
+            var result = FindVolunteerByStuNum(tempnum);
             Assert.IsNull(result);
             #endregion
 
             #region 由id 删除志愿者条目
             helper.AddVolunteer(v);
-            helper.DeleteVolunteer(tempid);
-            result = database.Volunteers.Find(tempid);
+            helper.DeleteVolunteer(tempnum);
+            result = FindVolunteerByStuNum(tempnum);
             Assert.IsNull(result);
             #endregion
 
@@ -138,7 +156,7 @@ namespace VolunteerDatabase.Helper.Tests
             #region 新建一个志愿者对象
             Volunteer v = new Volunteer
             {
-                Id = 0301,
+                StudentNum = 0301,
                 Name = "DeleteTest",
                 Class = "TestClass",
                 Email = "test@test.com",
@@ -149,7 +167,7 @@ namespace VolunteerDatabase.Helper.Tests
             #endregion
 
             #region 用两种方式查找同一个志愿者
-            var result1 = helper.FindVolunteer(v.Id);
+            var result1 = helper.FindVolunteer(v.StudentNum);
             var result2 = helper.FindVolunteer(v.Name);
             if (!Volunteer.AreSame(v, result1))
                 Assert.Fail("通过id查找志愿者失败");
@@ -164,7 +182,7 @@ namespace VolunteerDatabase.Helper.Tests
             #region 新建一个志愿者对象
             Volunteer v = new Volunteer
             {
-                Id = 0401,
+                StudentNum = 0401,
                 Name = "EditTestName",
                 Class = "TestClass",
                 Email = "test@test.com",
@@ -175,17 +193,17 @@ namespace VolunteerDatabase.Helper.Tests
 
             #region 第一次修改
             v.Name = "ModifiedEditTestName";
-            var tempvolunteer = helper.FindVolunteer(v.Id);
+            var tempvolunteer = helper.FindVolunteer(v.StudentNum);
             helper.EditVolunteer(tempvolunteer, v);
-            tempvolunteer = helper.FindVolunteer(v.Id);
+            tempvolunteer = helper.FindVolunteer(v.StudentNum);
             if (!Volunteer.AreSame(v, tempvolunteer))
                 Assert.Fail("修改志愿者信息失败");
             #endregion
 
             #region 第二次修改
             v.Name = "EditByParamTestName";
-            helper.EditVolunteer(tempvolunteer, v.Id, v.Name);
-            tempvolunteer = helper.FindVolunteer(v.Id);
+            helper.EditVolunteer(tempvolunteer, v.StudentNum, v.Name);
+            tempvolunteer = helper.FindVolunteer(v.StudentNum);
             if (!Volunteer.AreSame(v, tempvolunteer))
                 Assert.Fail("第二次修改志愿者信息失败");
             #endregion

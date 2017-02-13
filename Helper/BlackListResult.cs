@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VolunteerDatabase.Interface;
 
 namespace VolunteerDatabase.Helper
 {
-    public class BlackListResult
+    public class BlackListResult:IResult
     {
         private bool _succeed = false;
         private string[] _errors;
         private int _errorvolunteerid;
-        public bool Succeed { get { return _succeed; } }
+        public bool Succeeded { get { return _succeed; } }
         public string[] Errors { get { return _errors; } }
         public int ErrorVolunteerId { get { return _errorvolunteerid; } }
         public static BlackListResult Success()

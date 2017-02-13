@@ -34,7 +34,7 @@ namespace VolunteerDatabase.Helper
             return Project;
         }
 
-        public ProgressResult CreatVolunteer(Project Pro, string Room, string Name, string email, string Phone)
+        public ProgressResult CreatVolunteer(Project Pro, int num, string Room, string Name, string email, string Phone)
         {
             ProgressResult result;
             if (Room == "" | Name == "" || email == "" || Phone == "")
@@ -45,7 +45,7 @@ namespace VolunteerDatabase.Helper
             {
                 Volunteer Vol = new Volunteer();
                 Vol.Project.Add(Pro);
-                Vol.Id = database.Volunteers.Count() + 1;
+                Vol.StudentNum = num;
                 Vol.Email = email;
                 Vol.Mobile = Phone;
                 Vol.Name = Name;
@@ -76,9 +76,9 @@ namespace VolunteerDatabase.Helper
             return Volunteers;
         }
 
-        public Volunteer FindVolunteerById(int VolunteerId)
+        public Volunteer FindVolunteerById(int num)
         {
-            var volunteer = database.Volunteers.SingleOrDefault(r => r.Id == VolunteerId);
+            var volunteer = database.Volunteers.SingleOrDefault(r => r.StudentNum == num);
             if (volunteer == null)
             {
                 ProgressResult.Error("志愿者不存在于数据库中");
@@ -87,10 +87,10 @@ namespace VolunteerDatabase.Helper
         }
 
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
-        public ProgressResult SingleVolunteerInputById(int VolunteerId, Project Pro)
+        public ProgressResult SingleVolunteerInputById(int num, Project Pro)
         {
             ProgressResult result;
-            var Volunteer = database.Volunteers.SingleOrDefault(r => r.Id == VolunteerId);
+            var Volunteer = database.Volunteers.SingleOrDefault(r => r.StudentNum == num);
             if (Volunteer == null)
             {
                 return ProgressResult.Error("志愿者不存在于数据库中");

@@ -7,13 +7,13 @@ namespace VolunteerDatabase.Entity.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class PhoneNumModify : IMigrationMetadata
+    public sealed partial class Initial : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(PhoneNumModify));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Initial));
         
         string IMigrationMetadata.Id
         {
-            get { return "201702041352446_PhoneNumModify"; }
+            get { return "201702090726466_Initial"; }
         }
         
         string IMigrationMetadata.Source

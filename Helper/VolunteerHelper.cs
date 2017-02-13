@@ -47,9 +47,9 @@ namespace VolunteerDatabase.Helper
             database = DatabaseContext.GetInstance();
         }
         
-        public Volunteer FindVolunteer(int id)
+        public Volunteer FindVolunteer(int num)
         {
-            var result = database.Volunteers.SingleOrDefault( v => v.Id == id);
+            var result = database.Volunteers.SingleOrDefault( v => v.StudentNum == num);
             return result;
         }
         public List<Volunteer> FindVolunteer(string name)
@@ -63,10 +63,11 @@ namespace VolunteerDatabase.Helper
         {
             if(v==null)
                 return VolunteerResult.Error(VolunteerResult.AddVolunteerErrorEnum.NullVolunteerObject);
-            if (v.Id == 0)
+            if (v.StudentNum == 0)
                 return VolunteerResult.Error(VolunteerResult.AddVolunteerErrorEnum.EmptyId);
-            if (database.Volunteers.Where(o => o.Id == v.Id).Count() != 0)
-                return VolunteerResult.Error(VolunteerResult.AddVolunteerErrorEnum.SameIdVolunteerExisted,v.Id);
+            if (database.Volunteers.Where(o => o.StudentNum == v.StudentNum).Count() != 0)
+                return VolunteerResult.Error(VolunteerResult.AddVolunteerErrorEnum.SameIdVolunteerExisted, v.StudentNum);
+
             else
             {
                 v.Mobile = v.Mobile == null ? DEFAULTSTRING : v.Mobile;
@@ -80,13 +81,13 @@ namespace VolunteerDatabase.Helper
             }
         }
         [AppAuthorize]
-        public VolunteerResult AddVolunteer(int id,string name=DEFAULTSTRING,string c=DEFAULTSTRING,string mobile=DEFAULTSTRING,string room=DEFAULTSTRING,string email=DEFAULTSTRING)
+        public VolunteerResult AddVolunteer(int num,string name=DEFAULTSTRING,string c=DEFAULTSTRING,string mobile=DEFAULTSTRING,string room=DEFAULTSTRING,string email=DEFAULTSTRING)
         {
-            if(id==0)
+            if(num==0)
                 return VolunteerResult.Error(VolunteerResult.EditVolunteerErrorEnum.EmptyId);
             var v = new Volunteer
             {
-                Id = id,
+                StudentNum = num,
                 Name = name,
                 Class = c,
                 Mobile = mobile,
@@ -99,10 +100,10 @@ namespace VolunteerDatabase.Helper
         [AppAuthorize]
         public VolunteerResult EditVolunteer(Volunteer a,Volunteer b)
         {
-            if (a == null || a.Id == 0)
+            if (a == null || a.StudentNum == 0)
                 return VolunteerResult.Error(VolunteerResult.EditVolunteerErrorEnum.NonExistingVolunteer);
-            var v = database.Volunteers.SingleOrDefault(o => o.Id == a.Id);
-            v.Id=b.Id;
+            var v = database.Volunteers.SingleOrDefault(o => o.StudentNum == a.StudentNum);
+            v.StudentNum=b.StudentNum;
             v.Name = b.Name;
             v.Class = b.Class;
             v.Mobile = b.Mobile;
@@ -112,12 +113,12 @@ namespace VolunteerDatabase.Helper
             return VolunteerResult.Success();
         }
         [AppAuthorize]
-        public VolunteerResult EditVolunteer(Volunteer a, int id, string name = DEFAULTSTRING,string c= DEFAULTSTRING, string mobile = DEFAULTSTRING, string room = DEFAULTSTRING, string email = DEFAULTSTRING)
+        public VolunteerResult EditVolunteer(Volunteer a, int num, string name = DEFAULTSTRING,string c= DEFAULTSTRING, string mobile = DEFAULTSTRING, string room = DEFAULTSTRING, string email = DEFAULTSTRING)
         {
-            if (id == 0)
-                return VolunteerResult.Error(VolunteerResult.EditVolunteerErrorEnum.NonExistingVolunteer);
-            var v = database.Volunteers.SingleOrDefault(o => o.Id == a.Id);
-            v.Id = id;
+            if (num == 0)
+                return VolunteerResult.Error(VolunteerResult.EditVolunteerErrorEnum.EmptyId);
+            var v = database.Volunteers.SingleOrDefault(o => o.StudentNum == a.StudentNum);
+            v.StudentNum = num;
             v.Name = name;
             v.Class = c;
             v.Mobile = mobile;
@@ -142,9 +143,9 @@ namespace VolunteerDatabase.Helper
             }
         }
         [AppAuthorize]
-        public VolunteerResult DeleteVolunteer(int id)
+        public VolunteerResult DeleteVolunteer(int num)
         {
-            var v = database.Volunteers.SingleOrDefault(o => o.Id == id);
+            var v = database.Volunteers.SingleOrDefault(o => o.StudentNum == num);
             if (v != null)
             {
                 database.Volunteers.Remove(v);

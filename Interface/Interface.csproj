@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="IAuthorizeInput.cs" />
     <Compile Include="IClaims.cs" />
+    <Compile Include="IResult.cs" />
     <Compile Include="IProject.cs" />
     <Compile Include="IRole.cs" />
     <Compile Include="IUser.cs" />

@@ -40,10 +40,10 @@ namespace VolunteerDatabase.Helper
         {
             database = DatabaseContext.GetInstance();
         }
-        public List<BlackListRecord> FindBlackList(int id) {
+        public List<BlackListRecord> FindBlackList(Guid uid) {
             try
             {
-                var result = database.BlackListRecords.Where(b => b.Id == id).ToList();
+                var result = database.BlackListRecords.Where(b => b.UID == uid).ToList();
                 return result;
             }
             catch(Exception)
@@ -54,7 +54,7 @@ namespace VolunteerDatabase.Helper
         public List<BlackListRecord> FindBlackList(Volunteer v) {
             try
             {
-                var result = database.BlackListRecords.Where(b => b.Volunteer.Id == v.Id).ToList();
+                var result = database.BlackListRecords.Where(b => b.Volunteer.UID == v.UID).ToList();
                 return result;
             }
             catch (Exception)
@@ -118,11 +118,11 @@ namespace VolunteerDatabase.Helper
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
         public BlackListResult AddBlackListRecord(BlackListRecord brec)
         {
-            if(brec==null||brec.Id==0)
+            if(brec==null||brec.UID==null)
             {
                 return BlackListResult.Error(BlackListResult.AddBlackListRecordErrorEnum.NullRecord);
             }
-            if(database.BlackListRecords.Where(b=>b.Id==brec.Id).Count()!=0)
+            if(database.BlackListRecords.Where(b=>b.UID==brec.UID).Count()!=0)
             {
                 return BlackListResult.Error(BlackListResult.AddBlackListRecordErrorEnum.ExistingRecord);
             }
@@ -171,14 +171,14 @@ namespace VolunteerDatabase.Helper
         }
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public BlackListResult EditBlackListRecord(int id,DateTime endtime,BlackListRecordStatus status)
+        public BlackListResult EditBlackListRecord(Guid uid,DateTime endtime,BlackListRecordStatus status)
         {
-            var record = database.BlackListRecords.SingleOrDefault(b => b.Id == id);
-            if (id == 0)
+            var record = database.BlackListRecords.SingleOrDefault(b => b.UID == uid);
+            if (uid == null)
             {
                 return BlackListResult.Error(BlackListResult.EditBlackListRecordErrorEnum.EmptyId);
             }
-            if (database.BlackListRecords.Where(b => b.Id == id).Count() == 0)
+            if (database.BlackListRecords.Where(b => b.UID == uid).Count() == 0)
             {
                 return BlackListResult.Error(BlackListResult.EditBlackListRecordErrorEnum.NoExistingRecord);
             }
