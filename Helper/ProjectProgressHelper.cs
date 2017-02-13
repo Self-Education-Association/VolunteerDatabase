@@ -8,9 +8,10 @@ using VolunteerDatabase.Interface;
 using System.Data.Entity.Infrastructure;
 namespace VolunteerDatabase.Helper
 {
-    public class ProjectProgress
+    public class ProjectProgressHelper
     {
         private Database database;
+
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
         public List<Project> FindAuthorizedProjectByUser(AppUser user)
         {
@@ -23,6 +24,7 @@ namespace VolunteerDatabase.Helper
             }
             return Projects;
         }
+
         [AppAuthorize(AppRoleEnum.Administrator)]
         public Project FindProjectByProjectId(int ProjectId)
         {
@@ -108,6 +110,7 @@ namespace VolunteerDatabase.Helper
             result = ProgressResult.Success();
             return result;
         }
+
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
         public ProgressResult DeleteVolunteerFromProject(Volunteer Vol, Project Pro)
         {
@@ -125,6 +128,7 @@ namespace VolunteerDatabase.Helper
             result = ProgressResult.Success();
             return result;
         }
+
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
         public ProgressResult Scoring4ForVolunteers(Project Pro)
         {
@@ -142,6 +146,7 @@ namespace VolunteerDatabase.Helper
             result = ProgressResult.Success();
             return result;
         }
+
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
         public ProgressResult ScoreSingleVolunteer(int Score, Volunteer Vol)
         {
@@ -155,6 +160,7 @@ namespace VolunteerDatabase.Helper
             result = ProgressResult.Success();
             return result;
         }
+
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
         public ProgressResult FinishProject(Project Pro)
         {
