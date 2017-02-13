@@ -171,7 +171,17 @@ namespace VolunteerDatabase.Helper.Tests
             var result2 = helper.FindVolunteer(v.Name);
             if (!Volunteer.AreSame(v, result1))
                 Assert.Fail("通过id查找志愿者失败");
-            if (!result2.Contains(v))
+            bool flag = false;
+            foreach (Volunteer o in result2)
+            {
+                if(Volunteer.AreSame(o,v))
+                {
+                    flag = true;
+                    break;
+                }
+                flag = false;
+            }
+            if (!flag)
                 Assert.Fail("通过Name查找志愿者失败");
             #endregion
         }

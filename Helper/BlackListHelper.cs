@@ -196,9 +196,9 @@ namespace VolunteerDatabase.Helper
         }
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public BlackListResult DeleteBlackListRecord(int id)
+        public BlackListResult DeleteBlackListRecord(Guid uid)
         {//异常：id为空,找不到id对应的条目
-            var record = database.BlackListRecords.Find(id);
+            var record = database.BlackListRecords.Find(uid);
             if(record==null)
             {
                 return BlackListResult.Error(BlackListResult.DeleteBlackListRecordErrorEnum.NonExistingRecord);

@@ -119,11 +119,11 @@ namespace VolunteerDatabase.Helper
                 return VolunteerResult.Error(VolunteerResult.EditVolunteerErrorEnum.EmptyId);
             var v = database.Volunteers.SingleOrDefault(o => o.StudentNum == a.StudentNum);
             v.StudentNum = num;
-            v.Name = name;
-            v.Class = c;
-            v.Mobile = mobile;
-            v.Room = room;
-            v.Email = email;
+            v.Name = name==DEFAULTSTRING?v.Name:DEFAULTSTRING;
+            v.Class = c==DEFAULTSTRING?v.Class:DEFAULTSTRING;
+            v.Mobile = mobile==DEFAULTSTRING?v.Mobile:DEFAULTSTRING;
+            v.Room = room==DEFAULTSTRING?v.Room:DEFAULTSTRING;
+            v.Email = email==DEFAULTSTRING?v.Email:DEFAULTSTRING;
             Save();
             return VolunteerResult.Success();
         }
