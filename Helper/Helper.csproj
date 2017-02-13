@@ -60,6 +60,7 @@
     <Compile Include="AppUserIdentityClaims.cs" />
     <Compile Include="IdentityHelper.cs" />
     <Compile Include="IdentityResult.cs" />
+    <Compile Include="LogHelper.cs" />
     <Compile Include="ProgressResult.cs" />
     <Compile Include="ProjectManageHelper.cs" />
     <Compile Include="ProjectProgressHelper.cs" />

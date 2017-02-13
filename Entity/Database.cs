@@ -14,7 +14,7 @@
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Volunteer>().Property(v => v.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+            //modelBuilder.Entity<Volunteer>().Property(v => v.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
             modelBuilder.Entity<Volunteer>().HasKey(v => v.UID).Property(v => v.UID).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 
             modelBuilder.Entity<AppUser>().HasMany(u => u.Roles).WithMany(r => r.Users);
@@ -26,6 +26,7 @@
             modelBuilder.Entity<Volunteer>().HasMany(v => v.BlackListRecords).WithRequired(b => b.Volunteer);
             modelBuilder.Entity<Volunteer>().HasMany(v => v.Project).WithMany(p => p.Volunteer);
 
+            modelBuilder.Entity<BlackListRecord>().HasKey(b => b.UID).Property(v => v.UID).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             modelBuilder.Entity<BlackListRecord>().HasRequired(b => b.Organization).WithMany(o => o.BlackListRecords).WillCascadeOnDelete(false);
             modelBuilder.Entity<BlackListRecord>().HasRequired(b => b.Adder).WithMany(a => a.BlackListRecords);
             modelBuilder.Entity<BlackListRecord>().HasRequired(b => b.Project).WithMany(p => p.BlackListRecords);
