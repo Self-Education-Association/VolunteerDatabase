@@ -118,14 +118,23 @@ namespace VolunteerDatabase.Helper
             if (num == 0)
                 return VolunteerResult.Error(VolunteerResult.EditVolunteerErrorEnum.EmptyId);
             var v = database.Volunteers.SingleOrDefault(o => o.StudentNum == a.StudentNum);
-            v.StudentNum = num;
-            v.Name = name==DEFAULTSTRING?v.Name:DEFAULTSTRING;
-            v.Class = c==DEFAULTSTRING?v.Class:DEFAULTSTRING;
-            v.Mobile = mobile==DEFAULTSTRING?v.Mobile:DEFAULTSTRING;
-            v.Room = room==DEFAULTSTRING?v.Room:DEFAULTSTRING;
-            v.Email = email==DEFAULTSTRING?v.Email:DEFAULTSTRING;
-            Save();
-            return VolunteerResult.Success();
+            if(v!=null)
+            {
+                v.StudentNum = num;
+                v.Name = (name == DEFAULTSTRING) ? v.Name : name;
+                v.Class = (c == DEFAULTSTRING) ? v.Class : c;
+                v.Mobile = (mobile == DEFAULTSTRING) ? v.Mobile : mobile;
+                v.Room = (room == DEFAULTSTRING) ? v.Room : room;
+                v.Email = (email == DEFAULTSTRING )? v.Email : email;
+                Save();
+                return VolunteerResult.Success();
+            }
+            else
+            {
+                return VolunteerResult.Error(VolunteerResult.EditVolunteerErrorEnum.NonExistingVolunteer);
+            }
+
+
         }
         //删除志愿者
         [AppAuthorize]
