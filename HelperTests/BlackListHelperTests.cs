@@ -47,8 +47,48 @@ namespace VolunteerDatabase.Helper.Tests
         #region 创建一个Project
         Project pro = new Project();
         #endregion
+        #region 查找黑名单记录
+    public List<BlackListRecord> FindBlackList(Guid uid)
+    {
+            var result = database.BlackListRecords.Where(b => b.UID == uid).ToList();
+            return result;
+    }
+    public List<BlackListRecord> FindBlackList(Volunteer v)
+    {
+            var result = database.BlackListRecords.Where(b => b.Volunteer.UID == v.UID).ToList();
+            return result;
+    }
+    public List<BlackListRecord> FindBlackList(Organization org)
+    {
+            var result = database.BlackListRecords.Where(b => b.Organization.Id == org.Id).ToList();
+            return result;
 
-        [TestMethod()]
+    }
+    public List<BlackListRecord> FindBlackList(AppUser adder)
+    {
+            var result = database.BlackListRecords.Where(b => b.Adder.Id == adder.Id).ToList();
+            return result;
+    }
+    public List<BlackListRecord> FindBlackList(Project project)
+    {
+            var result = database.BlackListRecords.Where(b => b.Project.Id == project.Id).ToList();
+            return result;
+   
+    }
+
+    public List<BlackListRecord> FindBlackListByAddTime(DateTime start, DateTime end)
+    {
+        var result = database.BlackListRecords.Where(b => b.AddTime < end && b.AddTime > start).ToList();
+        return result;
+    }
+    public List<BlackListRecord> FindBlackListByEndTime(DateTime start, DateTime end)
+    {
+        var result = database.BlackListRecords.Where(b => b.EndTime < end && b.EndTime > start).ToList();
+        return result;
+    }
+    #endregion
+
+    [TestMethod()]
         public void GetInstanceTest()
         {
             Assert.IsInstanceOfType(helper, typeof(BlackListHelper)); ;
@@ -77,10 +117,11 @@ namespace VolunteerDatabase.Helper.Tests
                 database.SaveChanges();
             } */
             helper.AddBlackListRecord(testaddrecord1);
-               var actual1 = database.BlackListRecords.Find(testaddrecord1.UID);
-            //Assert.AreEqual(result, actual1);
+            var actual1 =database.BlackListRecords.Find(Testadder1);
+                //Assert.AreEqual(result, actual1);
             //if (testaddrecord1 == actual1)
-                Assert.IsTrue(testaddrecord1 == actual1, "添加第一条黑名单记录失败！");
+            Assert.IsNotNull(actual1, "添加第一条记录为空！");
+         
             #endregion
 
             #region 添加第二条黑名单记录
@@ -96,8 +137,8 @@ namespace VolunteerDatabase.Helper.Tests
                 Project = pro
             };
             helper.AddBlackListRecord(testaddrecord2);
-            var actual2 = database.BlackListRecords.Find(testaddrecord2.UID);
-            Assert.IsTrue(testaddrecord2==actual2,"添加第二条黑名单记录失败！");
+            var actual2 = database.BlackListRecords.Find(Testadder2);
+            Assert.IsNotNull(actual2,"添加第二条黑名单记录失败！");
             #endregion
 
             #region   测试ExistingRecord
