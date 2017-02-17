@@ -192,7 +192,7 @@ namespace VolunteerDatabase.Helper
         public ProgressResult FinishProject(Project Pro)
         {
             ProgressResult result;
-            if (Pro.Condition != ProjectCondition.Ongoing || Pro.ScoreCondition == ProjectScoreCondition.Scored)
+            if (Pro.Condition == ProjectCondition.Finished || Pro.ScoreCondition == ProjectScoreCondition.UnScored)
             {
                 ProgressResult.Error("项目不满足结项条件，请检查项目状态和评分");
             }

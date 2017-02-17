@@ -124,7 +124,7 @@ namespace VolunteerDatabase.Helper
         public ProgressResult ProjectDelete(Project Pro)
         {
             ProgressResult result;
-            if(database.Projects.Contains(Pro)||Pro.Condition==ProjectCondition.Ongoing)
+            if(!database.Projects.Contains(Pro)||Pro.Condition==ProjectCondition.Finished)
             {
                 ProgressResult.Error("删除失败，项目不存在或已经结项");
             }
