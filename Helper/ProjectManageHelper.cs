@@ -6,14 +6,40 @@ using System.Threading.Tasks;
 using VolunteerDatabase.Entity;
 using VolunteerDatabase.Interface;
 using System.Data.Entity.Infrastructure;
-using static VolunteerDatabase.Helper.ProjectProgressHelper;
 
 namespace VolunteerDatabase.Helper
 {
     public class ProjectManageHelper
     {
-        private Database database;
-
+        Database database = new Database();
+        private static ProjectManageHelper helper;
+        private static readonly object helperlocker = new object();
+        public static ProjectManageHelper GetInstance()
+        {
+            if (helper == null)
+            {
+                lock (helperlocker)
+                {
+                    if (helper == null)
+                    {
+                        helper = new ProjectManageHelper();
+                    }
+                }
+            }
+            return helper;
+        }
+        public async Task<ProjectManageHelper> GetInstanceAsync()
+        {
+            Task<ProjectManageHelper> helper = Task.Run(() =>
+            {
+                return GetInstance();
+            });
+            return await helper;
+        }
+        public ProjectManageHelper()
+        {
+            database = DatabaseContext.GetInstance();
+        }
         public List<Project> ShowProjectList(Organization org,bool OnGoing)//true时得到正在进行中的项目
         {
             var pro = from o in database.Projects

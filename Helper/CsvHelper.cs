@@ -9,11 +9,41 @@ using Microsoft.Win32;
 using VolunteerDatabase.Entity;
 using VolunteerDatabase.Interface;
 using System.Data.Entity.Infrastructure;
+
+
 namespace VolunteerDatabase.Helper
 {
     public class CsvHelper
     {
-        private Database database;
+        Database database = new Database();
+        private CsvHelper()
+        {
+            database = DatabaseContext.GetInstance();
+        }
+        private static CsvHelper helper;
+        private static readonly object helperlocker = new object();
+        public static CsvHelper GetInstance()
+        {
+            if (helper == null)
+            {
+                lock (helperlocker)
+                {
+                    if (helper == null)
+                    {
+                        helper = new CsvHelper();
+                    }
+                }
+            }
+            return helper;
+        }
+        public async Task<CsvHelper> GetInstanceAsync()
+        {
+            Task<CsvHelper> helper = Task.Run(() =>
+            {
+                return GetInstance();
+            });
+            return await helper;
+        }
         public List<string> errorList;
         public List<string> informingMessage;
         public static List<Volunteer> ChangedVols;
@@ -114,7 +144,7 @@ namespace VolunteerDatabase.Helper
             ChangedVols.Clear();
         }
         #region 封装好的Save方法
-        private void Save()
+        public void Save()
         {
             bool flag = false;
             do
