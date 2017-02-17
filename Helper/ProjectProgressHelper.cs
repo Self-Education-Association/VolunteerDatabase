@@ -10,8 +10,35 @@ namespace VolunteerDatabase.Helper
 {
     public class ProjectProgressHelper
     {
-        private Database database;
-
+        private static ProjectProgressHelper helper;
+        private static readonly object helperlocker = new object();
+        Database database = new Database();
+        public static ProjectProgressHelper GetInstance()
+        {
+            if (helper == null)
+            {
+                lock (helperlocker)
+                {
+                    if (helper == null)
+                    {
+                        helper = new ProjectProgressHelper();
+                    }
+                }
+            }
+            return helper;
+        }
+        public async Task<ProjectProgressHelper> GetInstanceAsync()
+        {
+            Task<ProjectProgressHelper> helper = Task.Run(() =>
+            {
+                return GetInstance();
+            });
+            return await helper;
+        }
+        public ProjectProgressHelper()
+        {
+            database = DatabaseContext.GetInstance();
+        }
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
         public List<Project> FindAuthorizedProjectByUser(AppUser user)
         {
