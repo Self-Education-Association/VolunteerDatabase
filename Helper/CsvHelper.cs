@@ -88,8 +88,9 @@ namespace VolunteerDatabase.Helper
             foreach (var item in Temp)
             {
                 var vol = database.Volunteers.SingleOrDefault(o => o.StudentNum == item.StudentNum);
-                if (vol.Equals(item))
+                if (vol.Name==item.Name&&vol.Class==item.Class&&vol.Email==item.Email&&vol.Mobile==item.Mobile)
                 {
+                    vol.Project.Add(Pro);
                     continue;
                 }
                 else
