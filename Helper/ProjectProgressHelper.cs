@@ -94,7 +94,7 @@ namespace VolunteerDatabase.Helper
         public List<Volunteer> FindSortedVolunteersByProject(Project project)
         {
             var volunteer = from o in database.Volunteers
-                            where o.Project.Equals(project)
+                            where o.Project.Contains(project)
                             select o;
             List<Volunteer> Volunteers = new List<Volunteer>();
             foreach (var item in volunteer)
@@ -142,11 +142,12 @@ namespace VolunteerDatabase.Helper
         public ProgressResult DeleteVolunteerFromProject(Volunteer Vol, Project Pro)
         {
             ProgressResult result;
-            bool? IsInProject = Pro.Volunteer.Contains(Vol);
-            if (IsInProject == null)
+            bool IsInProject = Pro.Volunteer.Contains(Vol);
+            if (IsInProject == false)
             {
                 return ProgressResult.Error("志愿者不在该项目中");
             }
+            else
             lock (database)
             {
                 Pro.Volunteer.Remove(Vol);
