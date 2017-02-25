@@ -122,9 +122,18 @@ namespace VolunteerDatabase.Helper
             {
                 return BlackListResult.Error(BlackListResult.AddBlackListRecordErrorEnum.NullRecord);
             }
-            if(database.BlackListRecords.Where(b=>b.UID==brec.UID).Count()!=0)
+            var tempbrec = database.BlackListRecords.Where(b => b.Project == brec.Project);
+            
+           // if (database.BlackListRecords.Where(b=>b.Project==brec.Project).Count()!=0)
+           if(tempbrec != null )
             {
-                return BlackListResult.Error(BlackListResult.AddBlackListRecordErrorEnum.ExistingRecord);
+                foreach (var eptembrec in tempbrec)
+                {
+                    if (AreSame(eptembrec, brec))
+                        return BlackListResult.Error(BlackListResult.AddBlackListRecordErrorEnum.ExistingRecord);
+                    break;
+                }
+             //  return BlackListResult.Error(BlackListResult.AddBlackListRecordErrorEnum.ExistingRecord);
             }
             if (brec.EndTime < System.DateTime.Now)
             {
@@ -242,5 +251,24 @@ namespace VolunteerDatabase.Helper
                 
             } while (flag);
         }
+
+        #region 比较字段
+        public static bool AreSame(BlackListRecord a, BlackListRecord b)
+        {
+            if (a == null && b == null)
+                return true;
+            if ((a == null && b != null) || (a != null && b == null))
+                return false;
+            else if (a.Adder == b.Adder && a.AddTime == b.AddTime && a.EndTime == b.AddTime && a.Volunteer == b.Volunteer && a.Project == b.Project && a.Organization == b.Organization && a.Status == b.Status)
+            {
+
+                return true;
+
+            }
+            else
+                return false;
+        }
+        #endregion
+
     }
 }
