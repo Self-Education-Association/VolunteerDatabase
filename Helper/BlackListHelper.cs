@@ -147,7 +147,7 @@ namespace VolunteerDatabase.Helper
             }
             catch(Exception e)
             {
-                return BlackListResult.Error("出现错误，错误信息:{0}", e.Message);
+                return BlackListResult.Error("出现错误，错误信息:" + e.Message);
             }
             return BlackListResult.Success();
         }
@@ -174,7 +174,8 @@ namespace VolunteerDatabase.Helper
             }
             catch(Exception e)
             {
-                return BlackListResult.Error("出现错误，错误信息:{0}", e.Message);
+                string error = string.Format("出现错误，错误信息:{0}", e.Message);
+                return BlackListResult.Error(error);
             }
             return BlackListResult.Success();
         }
@@ -199,7 +200,7 @@ namespace VolunteerDatabase.Helper
             }
             catch (Exception e)
             {
-                return BlackListResult.Error("出现错误，错误信息:{0}", e.Message);
+                return BlackListResult.Error("出现错误，错误信息:" + e.Message);
             }
             return BlackListResult.Success();
         }
@@ -219,7 +220,7 @@ namespace VolunteerDatabase.Helper
             }
             catch(Exception e)
             {
-                return BlackListResult.Error("出现错误，错误信息:{0}", e.Message);
+                return BlackListResult.Error("出现错误，错误信息:" + e.Message);
             }
             return BlackListResult.Success();
         }

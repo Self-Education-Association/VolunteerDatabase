@@ -40,15 +40,11 @@ namespace VolunteerDatabase.Helper
             database = DatabaseContext.GetInstance();
         }
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
-        public List<Project> FindAuthorizedProjectByUser(AppUser user)
+        public List<Project> FindAuthorizedProjectsByUser(AppUser user)
         {
             var Project = from o in database.Projects where o.Managers.Contains(user) select o;
             Project = Project.Where(o => o.Condition == ProjectCondition.Ongoing);
-            List<Project> Projects = new List<Project>();
-            foreach (var item in Project)
-            {
-                Projects.Add(item);
-            }
+            List<Project> Projects = Project.ToList();
             return Projects;
         }
 
@@ -142,8 +138,7 @@ namespace VolunteerDatabase.Helper
         public ProgressResult DeleteVolunteerFromProject(Volunteer Vol, Project Pro)
         {
             ProgressResult result;
-            bool IsInProject = Pro.Volunteer.Contains(Vol);
-            if (IsInProject == false)
+            if (!Pro.Volunteer.Contains(Vol))
             {
                 return ProgressResult.Error("志愿者不在该项目中");
             }
@@ -197,6 +192,7 @@ namespace VolunteerDatabase.Helper
             {
                 ProgressResult.Error("项目不满足结项条件，请检查项目状态和评分");
             }
+            else
             lock (database)
             {
                 Pro.Condition = ProjectCondition.Finished;
