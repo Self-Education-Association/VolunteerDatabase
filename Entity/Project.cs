@@ -7,7 +7,7 @@ using VolunteerDatabase.Interface;
 
 namespace VolunteerDatabase.Entity
 {
-    public class Project 
+    public class Project
     {
         public string Name { get; set; }
 
@@ -34,6 +34,24 @@ namespace VolunteerDatabase.Entity
         public virtual List<AppUser>   Managers { get; set; }
 
         public virtual List<BlackListRecord> BlackListRecords { get; set; }
+
+        public virtual List<LogRecord> TargetedBy { get; set; }
+
+        public bool AreSameWith(Project b)
+        {
+            if(b==null)
+            {
+                return false;
+            }
+            if(b.Id==Id)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 
 }

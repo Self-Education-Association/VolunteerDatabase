@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VolunteerDatabase;
 
 namespace VolunteerDatabase.Interface
 {
-    public interface IAuthorizeInput<TData, TUser> where TUser : IUser
+    interface IDatabaseManager
     {
-        IClaims<TUser> Claims { get; }//令牌
+        void Save();
 
-        TData Data { get; set; }
     }
 }

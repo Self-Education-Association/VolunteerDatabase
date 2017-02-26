@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using VolunteerDatabase.Interface;
 
 namespace VolunteerDatabase.Entity
 {
@@ -27,12 +28,22 @@ namespace VolunteerDatabase.Entity
         public string Class { get; set; }
 
         public virtual List<Project> Project{ get; set; }
-
-        //public virtual List<CreditRecord> Records { get; set; }
-
         public virtual List<BlackListRecord> BlackListRecords { get; set; }
+        public virtual List<LogRecord> TargetedBy { get; set; }
 
         public int Score { get; set; }
+
+        public bool AreSameWith(Volunteer b)
+        {
+            if (b == null)
+                return false;
+            if (b.UID == this.UID)
+            {
+                return true;
+            }
+            else
+                return false;
+        }
         public static bool AreSame(Volunteer a,Volunteer b)
         {
             if (a == null && b == null)
@@ -59,57 +70,7 @@ namespace VolunteerDatabase.Entity
                 return false;
             }
         }
-        /*public static bool operator == (Volunteer a,Volunteer b)
-        {
-            if (a == null && b == null)
-            {
-                return true;
-            }
 
-            if ((a == null && b != null) || (a != null && b == null))
-            {
-                return false;
-            }
-            else if (a.Id == b.Id &&
-                a.Name == b.Name &&
-                a.Mobile == b.Mobile &&
-                a.Email == b.Email &&
-                a.Class == b.Class &&
-                a.Room == b.Room
-                )
-            {
-                return true;
-            }
-            else
-            { 
-                return false;
-            }
-        }
-        public static bool operator !=(Volunteer a,Volunteer b)
-        {
-            if (a == null && b == null)
-            {
-                return false;
-            }
-            if ((a == null && b != null) || (a != null && b == null))
-            {
-                return true;
-            }
-            else if (a.Id == b.Id &&
-                a.Name == b.Name &&
-                a.Mobile == b.Mobile &&
-                a.Email == b.Email &&
-                a.Class == b.Class &&
-                a.Room == b.Room
-                )
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }*/
         public int CompareTo(Volunteer obj)
         {
             int result;

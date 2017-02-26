@@ -32,6 +32,27 @@ namespace VolunteerDatabase.Entity
         public virtual Organization Organization { get; set; }
 
         public virtual List<Project> Project { get; set; }
+
         public virtual List<BlackListRecord> BlackListRecords { get; set; }
+
+        public virtual List<LogRecord> AddedLogRecords { get; set; }
+
+        public virtual List<LogRecord> TargetedBy { get; set; }
+
+        public bool AreSameWith(AppUser b)
+        {
+            if(this.Id==b.Id)
+            {
+                return true;
+            }
+            if(this.AccountName==b.AccountName)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

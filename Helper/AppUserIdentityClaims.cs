@@ -54,7 +54,7 @@ namespace VolunteerDatabase.Helper
         internal static AppUserIdentityClaims Create(AppUser user, AppUser holder)
         {
             AppUserIdentityClaims claims;
-            if (user == null)
+            if (user == null)//user应该是owner的意思
             {
                 claims = new AppUserIdentityClaims
                 {

@@ -1,11 +1,13 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VolunteerDatabase.Helper;
 using VolunteerDatabase.Entity;
+using VolunteerDatabase.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace VolunteerDatabase.Helper.Tests
 {
@@ -13,7 +15,34 @@ namespace VolunteerDatabase.Helper.Tests
     public class VolunteerHelperTests
     {
         Database database = new Database();
-        VolunteerHelper helper = VolunteerHelper.GetInstance();
+        VolunteerHelper helper;
+        private AppUserIdentityClaims testclaims;
+
+        [TestInitialize()]
+        public void Init()
+        {
+            IdentityHelper ihelper = IdentityHelper.GetInstance();
+            string userName = "VolunteerHelper";
+            AppUser user = new AppUser
+            {
+                AccountName = userName,
+                Name = "James",
+                Mobile = "1888888888",
+                Email="123@ab.com"
+            };
+            string password = "VolunteerHelperPassword";
+            AppUser dbUser = database.Users.SingleOrDefault(u => u.AccountName == userName);
+            if(dbUser!=null)
+            {
+                database.Users.Remove(dbUser);
+                database.SaveChanges();
+            }
+            IdentityResult result = ihelper.CreateUser(user, password, AppRoleEnum.OrgnizationMember,OrganizationEnum.SEA团队);
+            testclaims = ihelper.CreateClaims(userName, password, userName);
+            helper = VolunteerHelper.GetInstance(testclaims);
+        }
+
+
         [TestMethod()]
         public void GetInstanceTest()
         {
@@ -43,24 +72,23 @@ namespace VolunteerDatabase.Helper.Tests
         public void AddVolunteerTest()
         {
             #region 插入第一个volunteer对象
-            Volunteer v = new Volunteer
+            int stunum = 888;
+            if (database.Volunteers.Where(o => o.StudentNum == stunum).ToList().Count()>0)
             {
-                StudentNum = 888,
-                Mobile = "13812345678",
-                Name = "AddTest",
-                Email="AddTest@test.com",
-                Class="AddTestClass",
-                Room="AddTestRoom"
-            };
-            var result = helper.AddVolunteer(v);
-            if (VolunteerResult.AreSame(result,VolunteerResult.Error(VolunteerResult.AddVolunteerErrorEnum.SameIdVolunteerExisted,v.StudentNum)))
-            {
-                var existedvolunteer = FindVolunteerByStuNum(v);
+                var existedvolunteer = FindVolunteerByStuNum(stunum);
                 database.Volunteers.Remove(existedvolunteer);
                 database.SaveChanges();
             }
-            
-            result = helper.AddVolunteer(v);
+            Volunteer v = new Volunteer
+            {
+                StudentNum = stunum,
+                Mobile = "13812345678",
+                Name = "AddTest",
+                Email = "AddTest@test.com",
+                Class = "AddTestClass",
+                Room = "AddTestRoom"
+            };
+            var result = helper.AddVolunteer(v);
             var actual = FindVolunteerByStuNum(v.StudentNum);
             if (!Volunteer.AreSame(v, actual))
                 Assert.Fail("插入第一个volunteer对象失败");
@@ -78,8 +106,8 @@ namespace VolunteerDatabase.Helper.Tests
                 var existedvolunteer = FindVolunteerByStuNum(tempnum);
                 database.Volunteers.Remove(existedvolunteer);
                 database.SaveChanges();
+                result = helper.AddVolunteer(tempnum, tempname);
             }
-            result = helper.AddVolunteer(tempnum, tempname);
             actual = FindVolunteerByStuNum(tempnum);
             if (!VolunteerResult.AreSame(result, VolunteerResult.Success()))
                 Assert.Fail("插入第二个volunteer对象失败.");

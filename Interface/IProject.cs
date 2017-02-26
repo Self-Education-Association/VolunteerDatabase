@@ -8,6 +8,7 @@ namespace VolunteerDatabase.Interface
 {
     public interface IProject
     {
+
         string Name { get; set; }
 
         IUser Manager { get; set; }

@@ -57,6 +57,7 @@
     <Compile Include="BlackListHelper.cs" />
     <Compile Include="BlackListResult.cs" />
     <Compile Include="DealWithExcel.cs" />
+    <Compile Include="BaseHelper.cs" />
     <Compile Include="IAppUserAuthorizeInput.cs" />
     <Compile Include="AppUserIdentityClaims.cs" />
     <Compile Include="IdentityHelper.cs" />

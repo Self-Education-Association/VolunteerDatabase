@@ -17,6 +17,11 @@ namespace VolunteerDatabase.Helper
         public string[] Errors { get { return _errors; } }
         public string ErrorString { get { return _errorstring; } }
         public int ErrorVolunteerNum { get { return _errorvolunteernum; } }
+        /// <summary>
+        /// 使用字符串数组作为错误信息的方法
+        /// </summary>
+        /// <param name="errors"></param>
+        /// <returns></returns>
         public static VolunteerResult Error(params string[] errors)
         {
             if (errors.Count() == 0)
@@ -27,11 +32,12 @@ namespace VolunteerDatabase.Helper
             {
                 _succeeded = false,
                 _errors = errors,
-                _errorstring = errors.ToString()
+                _errorstring = string.Join(",", errors),
+                _errorvolunteernum = 0
             };
             return result;
         }
-        public static VolunteerResult Error(string errors,int num)
+        public static VolunteerResult Error(string errors,int num = 0)
         {
             
             if (errors.Count() == 0)
@@ -43,7 +49,7 @@ namespace VolunteerDatabase.Helper
                 _succeeded = false,
                 _errors = new string[] { errors },
                 _errorvolunteernum = num,
-                _errorstring = errors.ToString()
+                _errorstring = string.Join(",", errors)
             };
             return result;
         }
@@ -134,7 +140,8 @@ namespace VolunteerDatabase.Helper
             {
                 _succeeded = true,
                 _errors = { },
-                _errorstring = ""
+                _errorstring = "",
+                _errorvolunteernum = 0
             };
             return result;
         }

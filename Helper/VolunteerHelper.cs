@@ -9,17 +9,19 @@ using System.Data.Entity.Infrastructure;
 
 namespace VolunteerDatabase.Helper
 {
-    public class VolunteerHelper
+    public class VolunteerHelper : BaseHelper
     {
+
         //增删查改志愿者条目
         //查询某一志愿者
+
         private static VolunteerHelper helper;
         private static readonly object VolunteerLocker = new object();
         private static readonly object helperlocker = new object();
         private const string DEFAULTSTRING = "未填写";
         Database database;
 
-        public static VolunteerHelper GetInstance()
+        public static VolunteerHelper GetInstance(AppUserIdentityClaims claims = null)
         {
             if (helper == null)
             {
@@ -27,24 +29,35 @@ namespace VolunteerDatabase.Helper
                 {
                     if (helper == null)
                     {
-                        helper = new VolunteerHelper();
+                        helper = new VolunteerHelper(claims);
                     }
                 }
             }
             return helper;
         }
-
-        public async Task<VolunteerHelper> GetInstanceAsync()
+        
+        /// <summary>
+        /// 获取单例工厂类的异步方法，*未经测试*
+        /// </summary>
+        /// <param name="claims"></param>
+        /// <returns></returns>
+        public async Task<VolunteerHelper> GetInstanceAsync(AppUserIdentityClaims claims)//不知道这个run()需不需要加入参数，未经测试
         {
             Task<VolunteerHelper> helper = Task.Run(() =>
             {
-                return GetInstance();
+                return GetInstance(claims);
             });
             return await helper;
         }
-        public VolunteerHelper()
+        /// <summary>
+        /// 构造最初单例的方法，在此处把日志的方法注册到事件上
+        /// </summary>
+        public VolunteerHelper(AppUserIdentityClaims claims)
         {
             database = DatabaseContext.GetInstance();
+            logger = LogHelper.GetInstance(claims);
+            Success += logger.Succeeded;
+            Failure += logger.Failed;
         }
         
         public Volunteer FindVolunteer(int num)
@@ -57,7 +70,7 @@ namespace VolunteerDatabase.Helper
             var result = database.Volunteers.Where(v => v.Name == name).ToList();//返回一个集合
             return result;
         }
-        //新建志愿者
+        
         [AppAuthorize]
         public VolunteerResult AddVolunteer(Volunteer v)
         {
@@ -67,9 +80,9 @@ namespace VolunteerDatabase.Helper
                 return VolunteerResult.Error(VolunteerResult.AddVolunteerErrorEnum.EmptyId);
             if (database.Volunteers.Where(o => o.StudentNum == v.StudentNum).Count() != 0)
                 return VolunteerResult.Error(VolunteerResult.AddVolunteerErrorEnum.SameIdVolunteerExisted, v.StudentNum);
-
             else
             {
+                int stunum = v.StudentNum;
                 v.Mobile = v.Mobile == null ? DEFAULTSTRING : v.Mobile;
                 v.Room = v.Room == null ? DEFAULTSTRING : v.Room;
                 v.Name = v.Name == null ? DEFAULTSTRING : v.Name;
@@ -77,6 +90,8 @@ namespace VolunteerDatabase.Helper
                 v.Email = v.Email == null ? DEFAULTSTRING : v.Email;
                 database.Volunteers.Add(v);
                 Save();
+                var target = FindVolunteer(stunum);
+                bool logresult = VolunteerOperationSucceeded(string.Format("已添加学号:[{0}],姓名:[{1}] 的志愿者条目进入数据库.", target.StudentNum, target.Name), target, LogType.EditContact, true);
                 return VolunteerResult.Success();
             }
         }
@@ -110,6 +125,16 @@ namespace VolunteerDatabase.Helper
             v.Room = b.Room;
             v.Email = b.Email;
             Save();
+            Volunteer target = a;
+            Volunteer edited = FindVolunteer(b.StudentNum);
+            if(edited.Mobile!=target.Mobile||edited.Email!=target.Email||edited.Room!=target.Room)
+            {
+                bool logresult = VolunteerOperationSucceeded(string.Format("修改原学号:{0},姓名:{1}的志愿者基本信息.现学号:{2},姓名:{3}", target.StudentNum, target.Name, edited.StudentNum, edited.Name), target, LogType.EditContact, true);
+            }
+            else
+            {
+                bool logresult = VolunteerOperationSucceeded(string.Format("修改原学号:{0},姓名:{1}的志愿者基本信息.现学号:{2},姓名:{3}", target.StudentNum, target.Name, edited.StudentNum, edited.Name), target, LogType.EditVolunteer, true);
+            }
             return VolunteerResult.Success();
         }
         [AppAuthorize]
@@ -127,14 +152,22 @@ namespace VolunteerDatabase.Helper
                 v.Room = (room == DEFAULTSTRING) ? v.Room : room;
                 v.Email = (email == DEFAULTSTRING )? v.Email : email;
                 Save();
+                Volunteer target = a;
+                Volunteer edited = FindVolunteer(num);
+                if (edited.Mobile != target.Mobile || edited.Email != target.Email || edited.Room != target.Room)
+                {
+                    bool logresult = VolunteerOperationSucceeded(string.Format("修改原学号:{0},姓名:{1} (现学号:{2},姓名:{3}) 的志愿者基本信息.", target.StudentNum, target.Name, edited.StudentNum, edited.Name), target, LogType.EditContact, true);
+                }
+                else
+                {
+                    bool logresult = VolunteerOperationSucceeded(string.Format("修改原学号:{0},姓名:{1} (现学号:{2},姓名:{3}) 的志愿者基本信息.", target.StudentNum, target.Name, edited.StudentNum, edited.Name), target, LogType.EditVolunteer, true);
+                }
                 return VolunteerResult.Success();
             }
             else
             {
                 return VolunteerResult.Error(VolunteerResult.EditVolunteerErrorEnum.NonExistingVolunteer);
             }
-
-
         }
         //删除志愿者
         [AppAuthorize]
@@ -142,8 +175,11 @@ namespace VolunteerDatabase.Helper
         {
             if (a != null)
             {
+                int deletedVolunteerStuNum = a.StudentNum;
+                string deletedVolunteerName = a.Name;
                 database.Volunteers.Remove(a);
                 Save();
+                bool logresult = VolunteerOperationSucceeded(string.Format("删除学号:{0},姓名:{1}的志愿者条目.", deletedVolunteerStuNum,deletedVolunteerName),null,LogType.DeleteVolunteer);
                 return VolunteerResult.Success();
             }
             else
@@ -157,8 +193,11 @@ namespace VolunteerDatabase.Helper
             var v = database.Volunteers.SingleOrDefault(o => o.StudentNum == num);
             if (v != null)
             {
+                int deletedVolunteerStuNum = v.StudentNum;
+                string deletedVolunteerName = v.Name;
                 database.Volunteers.Remove(v);
                 Save();
+                bool logresult = VolunteerOperationSucceeded(string.Format("删除学号:{0},姓名:{1}的志愿者条目.", deletedVolunteerStuNum,deletedVolunteerName), null, LogType.DeleteVolunteer);
                 return VolunteerResult.Success();
             }
             else
