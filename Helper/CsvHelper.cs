@@ -44,10 +44,12 @@ namespace VolunteerDatabase.Helper
             });
             return await helper;
         }
+
         public List<string> errorList;
         public List<string> informingMessage;
         public static List<Volunteer> ChangedVols;
 
+        [AppAuthorize(AppRoleEnum.OrgnizationMember)]
         public void MassiveVolunteersInput(OpenFileDialog op,Project Pro)
         {
             errorList.Clear();
@@ -84,7 +86,7 @@ namespace VolunteerDatabase.Helper
                         v.BlackListRecords = null;
                         v.Project.Add(Pro);
                         Temp.Add(v);
-                     }
+                    }
             foreach (var item in Temp)
             {
                 var vol = database.Volunteers.SingleOrDefault(o => o.StudentNum == item.StudentNum);
@@ -98,8 +100,7 @@ namespace VolunteerDatabase.Helper
                 {
                     if (item.StudentNum > 20500000 || item.StudentNum < 20110000)
                     {
-                        string error = string.Format("不合法的学号{0}", item.StudentNum);
-                        errorList.Add(error);
+                        errorList.Add("不合法的学号:"+ item.StudentNum);
                     }
                     else
                     {
@@ -124,6 +125,8 @@ namespace VolunteerDatabase.Helper
                 }               
             }
         }
+
+        [AppAuthorize(AppRoleEnum.OrgnizationMember)]
         public void determChanges(int[]UsingNewInformation)
         {
             foreach (var item in UsingNewInformation)
@@ -137,8 +140,8 @@ namespace VolunteerDatabase.Helper
                 }
                else
                 {
-                    string err = string.Format("学号{0}的志愿者不存在于信息变动的志愿者列表中", item);
-                    errorList.Add(err);
+                    
+                    errorList.Add("学号:"+item+"的志愿者不存在于信息变动的志愿者列表中");
                 }
             }
             Save();
