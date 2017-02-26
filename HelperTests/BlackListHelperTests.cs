@@ -75,7 +75,7 @@ namespace VolunteerDatabase.Helper.Tests
         {
           vhelper.AddVolunteer(TestVolunteer1);
           vhelper.AddVolunteer(TestVolunteer2);
-          phelper.CreatNewProject(org, DateTime.Now,null, "pro", "testplace", "null", 10);
+         // phelper.CreatNewProject(org, DateTime.Now,null, "pro", "testplace", "null", 10);
         }
         [TestMethod()]
         public void GetInstanceTest()
