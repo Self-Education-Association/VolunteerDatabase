@@ -10,18 +10,41 @@ namespace VolunteerDatabase.Helper
 {
     public class ProjectProgressHelper
     {
-        private Database database;
-
+        private static ProjectProgressHelper helper;
+        private static readonly object helperlocker = new object();
+        Database database = new Database();
+        public static ProjectProgressHelper GetInstance()
+        {
+            if (helper == null)
+            {
+                lock (helperlocker)
+                {
+                    if (helper == null)
+                    {
+                        helper = new ProjectProgressHelper();
+                    }
+                }
+            }
+            return helper;
+        }
+        public async Task<ProjectProgressHelper> GetInstanceAsync()
+        {
+            Task<ProjectProgressHelper> helper = Task.Run(() =>
+            {
+                return GetInstance();
+            });
+            return await helper;
+        }
+        public ProjectProgressHelper()
+        {
+            database = DatabaseContext.GetInstance();
+        }
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
-        public List<Project> FindAuthorizedProjectByUser(AppUser user)
+        public List<Project> FindAuthorizedProjectsByUser(AppUser user)
         {
             var Project = from o in database.Projects where o.Managers.Contains(user) select o;
             Project = Project.Where(o => o.Condition == ProjectCondition.Ongoing);
-            List<Project> Projects = new List<Project>();
-            foreach (var item in Project)
-            {
-                Projects.Add(item);
-            }
+            List<Project> Projects = Project.ToList();
             return Projects;
         }
 
@@ -67,7 +90,7 @@ namespace VolunteerDatabase.Helper
         public List<Volunteer> FindSortedVolunteersByProject(Project project)
         {
             var volunteer = from o in database.Volunteers
-                            where o.Project.Equals(project)
+                            where o.Project.Contains(project)
                             select o;
             List<Volunteer> Volunteers = new List<Volunteer>();
             foreach (var item in volunteer)
@@ -115,11 +138,11 @@ namespace VolunteerDatabase.Helper
         public ProgressResult DeleteVolunteerFromProject(Volunteer Vol, Project Pro)
         {
             ProgressResult result;
-            bool? IsInProject = Pro.Volunteer.Contains(Vol);
-            if (IsInProject == null)
+            if (!Pro.Volunteer.Contains(Vol))
             {
                 return ProgressResult.Error("志愿者不在该项目中");
             }
+            else
             lock (database)
             {
                 Pro.Volunteer.Remove(Vol);
@@ -165,10 +188,11 @@ namespace VolunteerDatabase.Helper
         public ProgressResult FinishProject(Project Pro)
         {
             ProgressResult result;
-            if (Pro.Condition != ProjectCondition.Ongoing || Pro.ScoreCondition == ProjectScoreCondition.Scored)
+            if (Pro.Condition == ProjectCondition.Finished || Pro.ScoreCondition == ProjectScoreCondition.UnScored)
             {
                 ProgressResult.Error("项目不满足结项条件，请检查项目状态和评分");
             }
+            else
             lock (database)
             {
                 Pro.Condition = ProjectCondition.Finished;

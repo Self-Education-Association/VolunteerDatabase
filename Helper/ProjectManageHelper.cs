@@ -6,31 +6,55 @@ using System.Threading.Tasks;
 using VolunteerDatabase.Entity;
 using VolunteerDatabase.Interface;
 using System.Data.Entity.Infrastructure;
-using static VolunteerDatabase.Helper.ProjectProgressHelper;
 
 namespace VolunteerDatabase.Helper
 {
     public class ProjectManageHelper
     {
-        private Database database;
-
+        Database database = new Database();
+        private static ProjectManageHelper helper;
+        private static readonly object helperlocker = new object();
+        public static ProjectManageHelper GetInstance()
+        {
+            if (helper == null)
+            {
+                lock (helperlocker)
+                {
+                    if (helper == null)
+                    {
+                        helper = new ProjectManageHelper();
+                    }
+                }
+            }
+            return helper;
+        }
+        public async Task<ProjectManageHelper> GetInstanceAsync()
+        {
+            Task<ProjectManageHelper> helper = Task.Run(() =>
+            {
+                return GetInstance();
+            });
+            return await helper;
+        }
+        public ProjectManageHelper()
+        {
+            database = DatabaseContext.GetInstance();
+        }
         public List<Project> ShowProjectList(Organization org,bool OnGoing)//true时得到正在进行中的项目
         {
             var pro = from o in database.Projects
                       where o.Creater == org
                       select o;
-            if (!OnGoing)
-                pro = pro.Where(o => o.Condition == ProjectCondition.Finished);
-            else
+            if (OnGoing)
                 pro = pro.Where(o => o.Condition == ProjectCondition.Ongoing);
-            List < Project > Projects = new List<Project>();
-            foreach(var item in pro)
-            {
-                Projects.Add(item);
-            }
+            else
+                pro = pro.Where(o => o.Condition == ProjectCondition.Finished);
+            List<Project> Projects = pro.ToList();
             return Projects;
         }
 
+        [AppAuthorize(AppRoleEnum.Administrator)]
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
         public List<AppUser> FindManagerListById(params int[] Ids)
         {
             List<AppUser> Managers = new List<AppUser>();
@@ -41,6 +65,7 @@ namespace VolunteerDatabase.Helper
                 {
                     ProgressResult.Error("用户不存在");
                 }
+                else
                 Managers.Add(Manager);
             }
             return Managers;
@@ -48,17 +73,16 @@ namespace VolunteerDatabase.Helper
 
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public ProgressResult CreatNewProject(Organization org, DateTime? Time=null, List<AppUser> Managers=null, string Name ="", string Place = "",string Detail="", int Maximum = 70)
+        public ProgressResult CreatNewProject(Organization org, string Name ="", string Place = "",string Detail="", int Maximum = 70)
         {
             ProgressResult result;
             lock (database)
             {
                 var Project = new Project();
-                Project.Time = Time;
-                Project.Id = database.Projects.Count() + 1;
+                Project.Time = null;
                 Project.CreatTime = DateTime.Now;
                 Project.Maximum = Maximum;
-                Project.Managers = Managers;
+                Project.Managers = null;
                 Project.Place = Place;
                 Project.Name = Name;
                 Project.Details = Detail;
@@ -76,10 +100,10 @@ namespace VolunteerDatabase.Helper
 
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public ProgressResult ProjectMessageInput(string Name, string Det,string Place, int Max,DateTime? Time, List<AppUser> Managers,Project Pro)
+        public ProgressResult ProjectMessageInput(string Name, string Detail,string Place, int Max,DateTime? Time, List<AppUser> Managers,Project Pro)
         {
             ProgressResult result;
-            if (Name==""|| Det == "" || Place =="" ||Time== null || Managers == null)
+            if (Name==""|| Detail == "" || Place =="" ||Time== null || Managers == null)
             {
                 ProgressResult.Error("信息不完整，无法输入信息");
             }
@@ -87,7 +111,7 @@ namespace VolunteerDatabase.Helper
             Pro.Maximum = Max;
             Pro.Time = Time;
             Pro.Managers = Managers;
-            Pro.Details = Det;
+            Pro.Details = Detail;
             Save();
             result = ProgressResult.Success();
             return result;
@@ -98,7 +122,7 @@ namespace VolunteerDatabase.Helper
         public ProgressResult ProjectDelete(Project Pro)
         {
             ProgressResult result;
-            if(database.Projects.Contains(Pro)||Pro.Condition==ProjectCondition.Ongoing)
+            if(!database.Projects.Contains(Pro)||Pro.Condition==ProjectCondition.Finished)
             {
                 ProgressResult.Error("删除失败，项目不存在或已经结项");
             }
