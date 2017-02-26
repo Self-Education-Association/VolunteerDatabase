@@ -71,6 +71,9 @@ namespace VolunteerDatabase.Helper.Tests
         [TestMethod()]
         public void AddVolunteerTest()
         {
+
+
+
             #region 插入第一个volunteer对象
             int stunum = 888;
             if (database.Volunteers.Where(o => o.StudentNum == stunum).ToList().Count()>0)
