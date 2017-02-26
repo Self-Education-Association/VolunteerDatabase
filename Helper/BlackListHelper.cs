@@ -118,7 +118,7 @@ namespace VolunteerDatabase.Helper
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
         public BlackListResult AddBlackListRecord(BlackListRecord brec)
         {
-            if(brec==null||brec.UID==null)
+            if(brec==null)
             {
                 return BlackListResult.Error(BlackListResult.AddBlackListRecordErrorEnum.NullRecord);
             }
