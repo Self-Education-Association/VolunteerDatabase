@@ -24,7 +24,7 @@
             </Label>
             <Label x:Name="label1" Content="账号" HorizontalAlignment="Left" Margin="285,94,0,0" VerticalAlignment="Top" Height="30" Width="38" FontSize="14" Foreground="#FF170303"/>
             <Label x:Name="label2" Content="密码" HorizontalAlignment="Left" Margin="285,129,0,0" VerticalAlignment="Top" Height="30" Width="38" FontSize="14" Foreground="#FF170303"/>
-            <Image x:Name="image" HorizontalAlignment="Left" Height="94" Margin="32,77,0,0" VerticalAlignment="Top" Width="253" Source="捕获.PNG">
+            <Image x:Name="image" HorizontalAlignment="Left" Height="94" Margin="32,77,0,0" VerticalAlignment="Top" Width="253" Source="SplashScreen.PNG">
             </Image>
         </Grid>
     </Viewbox>

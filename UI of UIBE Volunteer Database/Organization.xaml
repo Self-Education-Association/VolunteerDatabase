@@ -5,17 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApplication1"
         mc:Ignorable="d"
-        Title="机构用户" Height="auto" Width="auto" d:DesignWidth="800" d:DesignHeight="450">
+        Title="机构用户" Height="auto" Width="auto" d:DesignWidth="1366" d:DesignHeight="768">
     <TabPanel>
         <Viewbox Stretch="Fill">
             <TabControl x:Name="Main_Tabcontrol" Height="273" Width="496">
                 <TabItem Header="项目管理">
                     <Grid>
-                        
+
                     </Grid>
                 </TabItem>
                 <TabItem Header="新建项目">
-                    <Grid>
+                    <Grid Height="244">
                         <TextBlock Text="项目名称" Height="23" Width="72" Margin="-188,-79,188,85" />
                         <TextBox x:Name="project_name" Margin="-116,-58,93,106" Height="23" Width="100"/>
                         <TextBlock Text="项目地点" Height="23" Width="72" Margin="-188,-49,188,55"/>
@@ -25,17 +25,20 @@
                         <TextBlock Text="最大人数" Height="23" Width="72" Margin="31,-30,-21,78"/>
                         <TextBox x:Name="max" Height="23" Margin="291,-27,96,76"/>
                         <TextBlock Text="项目详情" Height="23" Width="72" Margin="19,10,395,39"/>
-                        <RichTextBox Margin="88,10,96,-71"></RichTextBox>
-                        <Button x:Name="create_project_button" Content="创建项目" Click="create_project_button_Click" Height="23" Width="72" Margin="390,120,24,-71"/>
+                        <RichTextBox Margin="88,96,96,43"></RichTextBox>
+                        <Button x:Name="create_project_button" Content="创建项目" Click="create_project_button_Click" Height="23" Width="72" Margin="404,211,10,10"/>
                     </Grid>
                 </TabItem>
                 <TabItem Header="志愿者信息" IsEnabled="False"></TabItem>
-                <TabItem Header="用户信息"></TabItem>
+                <TabItem Header="用户信息">
+                    <Grid Height="238" Width="482">
+                        <Label x:Name="label" Content="用户名" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                        <Label x:Name="label1" Content="开通时间" HorizontalAlignment="Left" Margin="10,29,0,0" VerticalAlignment="Top"/>
+                        
+                    </Grid>
+                </TabItem>
 
             </TabControl>
-        </Viewbox>
-        <Viewbox Stretch="Uniform">
-            <Button Margin="438,-272.5,0,520" x:Name="exit_button" Content="退出系统" Click="exit_button_Click" RenderTransformOrigin="0.43,1.738"></Button>
         </Viewbox>
     </TabPanel>
 </Window>
