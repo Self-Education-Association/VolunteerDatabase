@@ -52,6 +52,7 @@ namespace VolunteerDatabase.Helper
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
         public void MassiveVolunteersInput(OpenFileDialog op,Project Pro)
         {
+            op.Filter="csv文件|*.csv";
             errorList.Clear();
             informingMessage.Clear();
             List<Volunteer> Temp = new List<Volunteer>();          
@@ -119,7 +120,7 @@ namespace VolunteerDatabase.Helper
                                                     原邮箱：{5}                            现邮箱{6}
                                                     原宿舍：{7}                            现宿舍{8}
                                                     原班级：{9}                            现班级{10}",
-       item.StudentNum,vol.Name,item.Name,vol.Mobile,item.Mobile,vol.Email,item.Email,vol.Room,item.Room,vol.Class,item.Class);
+item.StudentNum,vol.Name,item.Name,vol.Mobile,item.Mobile,vol.Email,item.Email,vol.Room,item.Room,vol.Class,item.Class);
                     informingMessage.Add(inform);
                     ChangedVols.Add(item);
                 }               
@@ -139,14 +140,15 @@ namespace VolunteerDatabase.Helper
                     database.Volunteers.Add(nv);
                 }
                else
-                {
-                    
+                {                   
                     errorList.Add("学号:"+item+"的志愿者不存在于信息变动的志愿者列表中");
                 }
             }
             Save();
             ChangedVols.Clear();
         }
+      
+        
         #region 封装好的Save方法
         public void Save()
         {
