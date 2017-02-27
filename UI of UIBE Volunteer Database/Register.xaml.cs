@@ -29,6 +29,7 @@ namespace WpfApplication1
 
         private void register_button_Click(object sender, RoutedEventArgs e)
         {
+            IdentityHelper ih = IdentityHelper.GetInstance();
             if (passwordBox.Password == passwordBox1.Password)
             {
                 string passWord = passwordBox.Password;
@@ -37,6 +38,7 @@ namespace WpfApplication1
             {
                 MessageBox.Show("两次密码输入不一致，请进行检查");
             }
+            OrganizationEnum org = ih.Matching(comboBox.Text);
             AppUser au = new AppUser()
             {
                 StudentNum = textBox1.Text,

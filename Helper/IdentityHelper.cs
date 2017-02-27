@@ -48,6 +48,37 @@ namespace VolunteerDatabase.Helper
             database = DatabaseContext.GetInstance();
         }
 
+        public OrganizationEnum Matching(string str)
+        {
+            OrganizationEnum org = new OrganizationEnum();
+                if (OrganizationEnum.中国语言文学学院.ToString() == str)
+                { org = OrganizationEnum.中国语言文学学院; }
+                if (OrganizationEnum.SEA团队.ToString() == str)
+                { org = OrganizationEnum.SEA团队; }
+                if (OrganizationEnum.TestOnly.ToString() == str)
+                { org = OrganizationEnum.TestOnly;                }
+                if (OrganizationEnum.保险学院.ToString() == str)
+                { org = OrganizationEnum.保险学院; }
+                if (OrganizationEnum.信息学院.ToString() == str)
+                { org = OrganizationEnum.信息学院; }
+                if (OrganizationEnum.公共管理学院.ToString() == str)
+                { org = OrganizationEnum.公共管理学院; }
+                if (OrganizationEnum.国际商学院.ToString() == str)
+                { org = OrganizationEnum.国际商学院; }
+                if (OrganizationEnum.国际经济贸易学院.ToString() == str)
+                { org = OrganizationEnum.国际经济贸易学院;}
+                if (OrganizationEnum.校志愿服务中心.ToString() == str)
+                { org = OrganizationEnum.校志愿服务中心;}
+                if (OrganizationEnum.法学院.ToString() == str)
+                { org = OrganizationEnum.法学院; }
+                if (OrganizationEnum.统计学院.ToString() == str)
+                {  org = OrganizationEnum.统计学院;}
+                if (OrganizationEnum.金融学院.ToString() == str)
+                { org = OrganizationEnum.金融学院; }
+            return org;
+         }
+        
+
         public async Task<IdentityResult> CreateUserAsync(AppUser user, string password, AppRoleEnum roleEnum, OrganizationEnum orgEnum)
         {
             var result = Task.Run(() => CreateUser(user: user, password: password, roleEnum: roleEnum, orgEnum: orgEnum));
