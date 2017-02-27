@@ -8,7 +8,7 @@
         Title="管理员" Height="auto" Width="auto" d:DesignWidth="1366" d:DesignHeight="768">
     <Viewbox>
         <Grid>
-            <Button ></Button>
+            
         </Grid>
     </Viewbox>
 </Window>

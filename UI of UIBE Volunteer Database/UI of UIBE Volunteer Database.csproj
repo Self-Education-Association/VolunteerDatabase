@@ -67,19 +67,19 @@
     <Compile Include="Administrator.xaml.cs">
       <DependentUpon>Administrator.xaml</DependentUpon>
     </Compile>
-    <Page Include="BureauBlack.xaml">
+    <Page Include="ResourceDictionary\BureauBlack.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="BureauBlue.xaml">
+    <Page Include="ResourceDictionary\BureauBlue.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ExpressionDark.xaml">
+    <Page Include="ResourceDictionary\ExpressionDark.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ExpressionLight.xaml">
+    <Page Include="ResourceDictionary\ExpressionLight.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -95,11 +95,11 @@
       <DependentUpon>Login.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="ShinyBlue.xaml">
+    <Page Include="ResourceDictionary\ShinyBlue.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ShinyRed.xaml">
+    <Page Include="ResourceDictionary\ShinyRed.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
