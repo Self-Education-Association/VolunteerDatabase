@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -27,10 +28,10 @@ namespace WpfApplication1
 
         private void register_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow Window2 = new MainWindow();
-            Application.Current.MainWindow = Window2;
-            Window2.Show();
+            var Register = new Register();
+            Register.Show();
             this.Hide();
+
         }
 
         private void login_Click(object sender, RoutedEventArgs e)
