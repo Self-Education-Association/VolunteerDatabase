@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace WpfApplication1
 {
     /// <summary>
-    /// UserControl3.xaml 的交互逻辑
+    /// Administrator.xaml 的交互逻辑
     /// </summary>
-    public partial class UserControl3 : UserControl
+    public partial class Administrator : Window
     {
-        public UserControl3()
+        public Administrator()
         {
             InitializeComponent();
         }

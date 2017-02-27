@@ -16,11 +16,11 @@ namespace VolunteerDatabase.Helper
         Database database = new Database();
         public static BlackListHelper GetInstance()
         {
-            if(helper == null)
+            if (helper == null)
             {
-                lock(helperlocker)
+                lock (helperlocker)
                 {
-                    if(helper == null)
+                    if (helper == null)
                     {
                         helper = new BlackListHelper();
                     }
@@ -40,18 +40,20 @@ namespace VolunteerDatabase.Helper
         {
             database = DatabaseContext.GetInstance();
         }
-        public List<BlackListRecord> FindBlackList(Guid uid) {
+        public List<BlackListRecord> FindBlackList(Guid uid)
+        {
             try
             {
                 var result = database.BlackListRecords.Where(b => b.UID == uid).ToList();
                 return result;
             }
-            catch(Exception)
+            catch (Exception)
             {
-               return null;
+                return null;
             }
         }
-        public List<BlackListRecord> FindBlackList(Volunteer v) {
+        public List<BlackListRecord> FindBlackList(Volunteer v)
+        {
             try
             {
                 var result = database.BlackListRecords.Where(b => b.Volunteer.UID == v.UID).ToList();
@@ -62,7 +64,8 @@ namespace VolunteerDatabase.Helper
                 return null;
             }
         }
-        public List<BlackListRecord> FindBlackList(Organization org) {
+        public List<BlackListRecord> FindBlackList(Organization org)
+        {
             try
             {
                 var result = database.BlackListRecords.Where(b => b.Organization.Id == org.Id).ToList();
@@ -73,18 +76,20 @@ namespace VolunteerDatabase.Helper
                 return null;
             }
         }
-        public List<BlackListRecord> FindBlackList(AppUser adder) {
+        public List<BlackListRecord> FindBlackList(AppUser adder)
+        {
             try
             {
                 var result = database.BlackListRecords.Where(b => b.Adder.Id == adder.Id).ToList();
                 return result;
-             }
+            }
             catch (Exception)
             {
                 return null;
             }
         }
-        public List<BlackListRecord> FindBlackList(Project project) {
+        public List<BlackListRecord> FindBlackList(Project project)
+        {
             try
             {
                 var result = database.BlackListRecords.Where(b => b.Project.Id == project.Id).ToList();
@@ -93,19 +98,19 @@ namespace VolunteerDatabase.Helper
             catch (Exception)
             {
                 return null;
-            }   
-          }
-    
-        public List<BlackListRecord> FindBlackListByAddTime(DateTime start,DateTime end)
+            }
+        }
+
+        public List<BlackListRecord> FindBlackListByAddTime(DateTime start, DateTime end)
         {
             if (start > end)
             {
                 return null;
             }
-            var result = database.BlackListRecords.Where(b => b.AddTime<end&&b.AddTime>start ).ToList();
+            var result = database.BlackListRecords.Where(b => b.AddTime < end && b.AddTime > start).ToList();
             return result;
         }
-        public List<BlackListRecord> FindBlackListByEndTime(DateTime start,DateTime end)
+        public List<BlackListRecord> FindBlackListByEndTime(DateTime start, DateTime end)
         {
             if (start > end)
             {
@@ -118,14 +123,19 @@ namespace VolunteerDatabase.Helper
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
         public BlackListResult AddBlackListRecord(BlackListRecord brec)
         {
-            if(brec==null)
+            if (brec == null)
             {
                 return BlackListResult.Error(BlackListResult.AddBlackListRecordErrorEnum.NullRecord);
             }
-            var tempbrec = database.BlackListRecords.Where(b => b.Project == brec.Project);
-            
-           // if (database.BlackListRecords.Where(b=>b.Project==brec.Project).Count()!=0)
-           if(tempbrec != null )
+
+            IEnumerable<BlackListRecord> tempbrec = null;
+            if (brec.Project != null)
+            {
+                tempbrec = database.BlackListRecords.Where(b => b.Project.Id == brec.Project.Id);
+            }
+
+            // if (database.BlackListRecords.Where(b=>b.Project==brec.Project).Count()!=0)
+            if (tempbrec != null)
             {
                 foreach (var eptembrec in tempbrec)
                 {
@@ -133,7 +143,7 @@ namespace VolunteerDatabase.Helper
                         return BlackListResult.Error(BlackListResult.AddBlackListRecordErrorEnum.ExistingRecord);
                     break;
                 }
-             //  return BlackListResult.Error(BlackListResult.AddBlackListRecordErrorEnum.ExistingRecord);
+                //  return BlackListResult.Error(BlackListResult.AddBlackListRecordErrorEnum.ExistingRecord);
             }
             if (brec.EndTime < System.DateTime.Now)
             {
@@ -145,7 +155,7 @@ namespace VolunteerDatabase.Helper
                 database.BlackListRecords.Add(brec);
                 Save();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return BlackListResult.Error("出现错误，错误信息:" + e.Message);
             }
@@ -153,9 +163,9 @@ namespace VolunteerDatabase.Helper
         }
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public BlackListResult AddBlackListRecord(Volunteer volunteer, AppUser adder,DateTime endtime,Organization orgnization = null, Project project = null,BlackListRecordStatus status=BlackListRecordStatus.Enabled)
+        public BlackListResult AddBlackListRecord(Volunteer volunteer, AppUser adder, DateTime endtime, Organization orgnization = null, Project project = null, BlackListRecordStatus status = BlackListRecordStatus.Enabled)
         {
-            if(endtime<System.DateTime.Now)
+            if (endtime < System.DateTime.Now)
             {
                 return BlackListResult.Error(BlackListResult.AddBlackListRecordErrorEnum.WrongTime);
             }
@@ -172,7 +182,7 @@ namespace VolunteerDatabase.Helper
             {
                 AddBlackListRecord(result);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 string error = string.Format("出现错误，错误信息:{0}", e.Message);
                 return BlackListResult.Error(error);
@@ -181,7 +191,7 @@ namespace VolunteerDatabase.Helper
         }
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public BlackListResult EditBlackListRecord(Guid uid,DateTime endtime,BlackListRecordStatus status)
+        public BlackListResult EditBlackListRecord(Guid uid, DateTime endtime, BlackListRecordStatus status)
         {
             var record = database.BlackListRecords.SingleOrDefault(b => b.UID == uid);
             if (uid == null)
@@ -209,7 +219,7 @@ namespace VolunteerDatabase.Helper
         public BlackListResult DeleteBlackListRecord(Guid uid)
         {//异常：id为空,找不到id对应的条目
             var record = database.BlackListRecords.Find(uid);
-            if(record==null)
+            if (record == null)
             {
                 return BlackListResult.Error(BlackListResult.DeleteBlackListRecordErrorEnum.NonExistingRecord);
             }
@@ -218,13 +228,13 @@ namespace VolunteerDatabase.Helper
                 database.BlackListRecords.Remove(record);
                 Save();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return BlackListResult.Error("出现错误，错误信息:" + e.Message);
             }
             return BlackListResult.Success();
         }
-    
+
 
         private void Save()
         {
@@ -239,17 +249,17 @@ namespace VolunteerDatabase.Helper
                 catch (DbUpdateConcurrencyException)
                 {
                     flag = true;
-                    foreach(var entity in database.ChangeTracker.Entries())
+                    foreach (var entity in database.ChangeTracker.Entries())
                     {
                         database.Entry(entity).Reload();
                         flag = false;
                     }
                 }
-                catch(Exception)
+                catch (Exception)
                 {
                     throw;
                 }
-                
+
             } while (flag);
         }
 

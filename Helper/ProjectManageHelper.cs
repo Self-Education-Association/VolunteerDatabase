@@ -55,12 +55,12 @@ namespace VolunteerDatabase.Helper
 
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public List<AppUser> FindManagerListById(params int[] Ids)
+        public List<AppUser> FindManagerListByStudentNum(params string[] StuNums)
         {
             List<AppUser> Managers = new List<AppUser>();
-            foreach (int Id in Ids)
+            foreach (string StuNum in StuNums)
             {
-                var Manager = database.Users.SingleOrDefault(o=>o.Id==Id);
+                var Manager = database.Users.SingleOrDefault(o=>o.StudentNum==StuNum);
                 if(Manager==null)
                 {
                     ProgressResult.Error("用户不存在");
@@ -73,13 +73,17 @@ namespace VolunteerDatabase.Helper
 
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public ProgressResult CreatNewProject(Organization org, string Name ="", string Place = "",string Detail="", int Maximum = 70)
+        public ProgressResult CreatNewProject(Organization org, DateTime Time, string Name = "", string Place = "", string Detail = "", int Maximum = 70)
         {
             ProgressResult result;
+            if (Time == null)
+            {
+                ProgressResult.Error("新项目"+Name+"时间不合法，请重新输入");
+            }
             lock (database)
             {
                 var Project = new Project();
-                Project.Time = null;
+                Project.Time = Time;
                 Project.CreatTime = DateTime.Now;
                 Project.Maximum = Maximum;
                 Project.Managers = null;
@@ -93,9 +97,9 @@ namespace VolunteerDatabase.Helper
                 Project.Volunteer = null;
                 database.Projects.Add(Project);
                 Save();
+                result = ProgressResult.Success();
+                return result;
             }
-            result = ProgressResult.Success();
-            return result;
         }
 
         [AppAuthorize(AppRoleEnum.Administrator)]
