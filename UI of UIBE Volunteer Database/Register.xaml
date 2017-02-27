@@ -1,31 +1,31 @@
-﻿<Window x:Class="WpfApplication1.Window2"
+﻿<Window x:Class="WpfApplication1.Register"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApplication1"
         mc:Ignorable="d"
-        Title="UIBE Volunteer Database-Register" Height="457.059" Width="752.559">
+        Title="注册" Height="auto" Width="auto" d:DesignWidth="1366" d:DesignHeight="768">
     <Viewbox>
         <Grid>
             <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="38,43,0,0" TextWrapping="Wrap" Text="姓名" VerticalAlignment="Top"/>
-            <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="15" Margin="91,42,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="96"/>
+            <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="16" Margin="91,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96" FontSize="6"/>
             <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="38,80,0,0" TextWrapping="Wrap" Text="学号" VerticalAlignment="Top"/>
-            <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="15" Margin="91,80,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="96"/>
+            <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="15" Margin="91,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96" FontSize="6"/>
             <TextBlock x:Name="textBlock3" HorizontalAlignment="Left" Margin="38,119,0,0" TextWrapping="Wrap" Text="账号" VerticalAlignment="Top"/>
-            <TextBox x:Name="textBox2" HorizontalAlignment="Left" Height="15" Margin="91,119,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="96"/>
+            <TextBox x:Name="textBox2" HorizontalAlignment="Left" Height="15" Margin="91,119,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96" FontSize="6"/>
             <TextBlock x:Name="textBlock4" HorizontalAlignment="Left" Margin="38,163,0,0" TextWrapping="Wrap" Text="密码" VerticalAlignment="Top"/>
             <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Margin="91,163,0,0" VerticalAlignment="Top" Width="96" Height="15"/>
-            <TextBlock x:Name="textBlock5" HorizontalAlignment="Left" Margin="38,206,0,0" TextWrapping="Wrap" Text="确认密码" VerticalAlignment="Top"/>
-            <PasswordBox x:Name="passwordBox1" HorizontalAlignment="Left" Margin="91,206,0,0" VerticalAlignment="Top" Width="96" Height="15"/>
-            <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="329,43,0,0" VerticalAlignment="Top" Width="120" Height="14"/>
+            <TextBlock x:Name="textBlock5" HorizontalAlignment="Left" Margin="256,163,0,0" TextWrapping="Wrap" Text="确认密码" VerticalAlignment="Top"/>
+            <PasswordBox x:Name="passwordBox1" HorizontalAlignment="Left" Margin="329,163,0,0" VerticalAlignment="Top" Width="96" Height="15"/>
+            <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="329,43,0,0" VerticalAlignment="Top" Width="96" Height="14"/>
             <TextBlock x:Name="textBlock6" HorizontalAlignment="Left" Margin="256,42,0,0" TextWrapping="Wrap" Text="所属机构" VerticalAlignment="Top"/>
             <TextBlock x:Name="textBlock7" HorizontalAlignment="Left" Margin="256,80,0,0" TextWrapping="Wrap" Text="电话" VerticalAlignment="Top"/>
-            <TextBox x:Name="textBox3" HorizontalAlignment="Left" Height="15" Margin="329,82,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+            <TextBox x:Name="textBox3" HorizontalAlignment="Left" Height="15" Margin="329,82,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96" FontSize="6"/>
             <TextBlock x:Name="textBlock8" HorizontalAlignment="Left" Margin="256,119,0,0" TextWrapping="Wrap" Text="电子邮箱" VerticalAlignment="Top"/>
-            <TextBox x:Name="textBox4" HorizontalAlignment="Left" Height="15" Margin="329,118,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-            <CheckBox x:Name="checkBox" Content="我已同意使用协议" HorizontalAlignment="Left" Margin="256,163,0,0" VerticalAlignment="Top" Foreground="#FF170303"/>
-            <Button x:Name="register_button" Content="注册" HorizontalAlignment="Left" Margin="374,196,0,0" VerticalAlignment="Top" Width="75" Height="25" Click="register_button_Click"/>
+            <TextBox x:Name="textBox4" HorizontalAlignment="Left" Height="15" Margin="329,118,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96" FontSize="6"/>
+            <CheckBox x:Name="checkBox" Content="我已同意使用协议" HorizontalAlignment="Left" Margin="254,196,0,0" VerticalAlignment="Top" Foreground="#FF170303"/>
+            <Button x:Name="register_button" Content="注册" HorizontalAlignment="Left" Margin="374,196,0,0" VerticalAlignment="Top" Width="75" Height="20" Click="register_button_Click"/>
         </Grid>
     </Viewbox>
 </Window>

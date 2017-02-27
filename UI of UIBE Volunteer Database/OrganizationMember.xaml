@@ -8,12 +8,19 @@
         Title="机构成员" Height="auto" Width="auto" d:DesignWidth="1366" d:DesignHeight="768">
     <TabPanel>
         <Viewbox>
-            <TabControl x:Name="Main_Tabcontrol" Width="400" Height="218">
-                <TabItem Header="志愿项目管理"></TabItem>
+            <TabControl x:Name="Main_Tabcontrol" Width="400" Height="220">
+                <TabItem Header="志愿项目管理">
+                    <DataGrid Height="162" Width="400" ScrollViewer.VerticalScrollBarVisibility="Visible">
+                        <DataGridCheckBoxColumn Binding="{Binding Selected, NotifyOnSourceUpdated=True,UpdateSourceTrigger=PropertyChanged}">
+                        </DataGridCheckBoxColumn>
+                    </DataGrid>
+                </TabItem>
                 <TabItem Header="志愿者信息查询"></TabItem>
                 <TabItem Header="用户管理"></TabItem>
-            
-        </TabControl>
+                <TabItem Header="备用按键设计" AccessKeyManager.AccessKeyPressed="TabItem_AccessKeyPressed" IsEnabled="False"/>
+                
+
+            </TabControl>
             </Viewbox>
     </TabPanel>
 </Window>

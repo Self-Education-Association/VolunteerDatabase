@@ -15,18 +15,13 @@ using System.Windows.Shapes;
 namespace WpfApplication1
 {
     /// <summary>
-    /// Organization.xaml 的交互逻辑
+    /// Administrator.xaml 的交互逻辑
     /// </summary>
-    public partial class OrganizationMember : Window
+    public partial class Administrator : Window
     {
-        public OrganizationMember()
+        public Administrator()
         {
             InitializeComponent();
-        }
-
-        private void TabItem_AccessKeyPressed(object sender, AccessKeyPressedEventArgs e)
-        {
-
         }
     }
 }
