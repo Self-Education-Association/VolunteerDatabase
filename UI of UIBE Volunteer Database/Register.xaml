@@ -16,9 +16,9 @@
             <TextBox x:Name="textBox2" HorizontalAlignment="Left" Height="15" Margin="91,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96" FontSize="6"/>
             <TextBlock x:Name="textBlock4" HorizontalAlignment="Left" Margin="38,152,0,0" TextWrapping="Wrap" Text="密码" VerticalAlignment="Top"/>
             <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Margin="91,152,0,0" VerticalAlignment="Top" Width="96" Height="15" FontSize="6"/>
-            <TextBlock x:Name="textBlock5" HorizontalAlignment="Left" Margin="256,152,0,0" TextWrapping="Wrap" Text="确认密码" VerticalAlignment="Top"/>
-            <PasswordBox x:Name="passwordBox1" HorizontalAlignment="Left" Margin="329,152,0,0" VerticalAlignment="Top" Width="96" Height="15" FontSize="6"/>
-            <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="329,31,0,0" VerticalAlignment="Top" Width="96" Height="14" FontSize="6">
+            <TextBlock x:Name="textBlock5" HorizontalAlignment="Left" Margin="232,152,0,0" TextWrapping="Wrap" Text="确认密码" VerticalAlignment="Top"/>
+            <PasswordBox x:Name="passwordBox1" HorizontalAlignment="Left" Margin="285,152,0,0" VerticalAlignment="Top" Width="96" Height="15" FontSize="6"/>
+            <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="285,32,0,0" VerticalAlignment="Top" Width="96" Height="14" FontSize="6">
                 <ComboBoxItem>SEA团队</ComboBoxItem>
                 <ComboBoxItem>校志愿服务中心</ComboBoxItem>
                 <ComboBoxItem>国际经济贸易学院</ComboBoxItem>
@@ -32,13 +32,13 @@
                 <ComboBoxItem>统计学院</ComboBoxItem>
                 <ComboBoxItem>TestOnly</ComboBoxItem>
             </ComboBox>
-            <TextBlock x:Name="textBlock6" HorizontalAlignment="Left" Margin="256,30,0,0" TextWrapping="Wrap" Text="所属机构" VerticalAlignment="Top"/>
-            <TextBlock x:Name="textBlock7" HorizontalAlignment="Left" Margin="256,68,0,0" TextWrapping="Wrap" Text="电话" VerticalAlignment="Top"/>
-            <TextBox x:Name="textBox3" HorizontalAlignment="Left" Height="15" Margin="329,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96" FontSize="6"/>
-            <TextBlock x:Name="textBlock8" HorizontalAlignment="Left" Margin="256,106,0,0" TextWrapping="Wrap" Text="电子邮箱" VerticalAlignment="Top"/>
-            <TextBox x:Name="textBox4" HorizontalAlignment="Left" Height="15" Margin="329,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96" FontSize="6"/>
-            <CheckBox x:Name="checkBox" Content="我已同意使用协议" HorizontalAlignment="Left" Margin="256,200,0,0" VerticalAlignment="Top" Foreground="#FF170303"/>
-            <Button x:Name="register_button" Content="注册" HorizontalAlignment="Left" Margin="376,198,-2,-2" VerticalAlignment="Top" Width="75" Height="20" Click="register_button_Click" IsEnabled="{Binding ElementName=checkBox,Path=IsChecked}"/>
+            <TextBlock x:Name="textBlock6" HorizontalAlignment="Left" Margin="232,30,0,0" TextWrapping="Wrap" Text="所属机构" VerticalAlignment="Top"/>
+            <TextBlock x:Name="textBlock7" HorizontalAlignment="Left" Margin="232,68,0,0" TextWrapping="Wrap" Text="电话" VerticalAlignment="Top"/>
+            <TextBox x:Name="textBox3" HorizontalAlignment="Left" Height="15" Margin="285,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96" FontSize="6"/>
+            <TextBlock x:Name="textBlock8" HorizontalAlignment="Left" Margin="232,106,0,0" TextWrapping="Wrap" Text="电子邮箱" VerticalAlignment="Top"/>
+            <TextBox x:Name="textBox4" HorizontalAlignment="Left" Height="15" Margin="285,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96" FontSize="6"/>
+            <CheckBox x:Name="checkBox" Content="我已同意使用协议" HorizontalAlignment="Left" Margin="232,182,0,0" VerticalAlignment="Top" Foreground="#FF170303"/>
+            <Button x:Name="register_button" Content="注册" Margin="352,180,14,0" VerticalAlignment="Top" Width="48" Height="20" Click="register_button_Click" IsEnabled="{Binding ElementName=checkBox,Path=IsChecked}"/>
         </Grid>
     </Viewbox>
 </Window>
