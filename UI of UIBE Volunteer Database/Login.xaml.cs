@@ -43,6 +43,7 @@ namespace WpfApplication1
             if(claims.IsAuthenticated)
             {
                 MessageBox.Show("登陆成功！");
+
             }
             else
             {
