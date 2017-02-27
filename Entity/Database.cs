@@ -19,7 +19,7 @@
 
             modelBuilder.Entity<AppUser>().HasMany(u => u.Roles).WithMany(r => r.Users);
             modelBuilder.Entity<AppUser>().HasRequired(u => u.Organization).WithMany(o => o.Members);
-            modelBuilder.Entity<AppUser>().HasMany(u => u.AddedLogRecords).WithRequired(r=> r.Adder);
+            modelBuilder.Entity<AppUser>().HasMany(u => u.AddedLogRecords).WithOptional(r=> r.Adder);
             modelBuilder.Entity<AppUser>().HasMany(u => u.TargetedBy).WithOptional(t => t.TargetAppUser);
            
             modelBuilder.Entity<AppUser>().HasMany(u => u.Project).WithMany(o => o.Managers);

@@ -17,7 +17,7 @@ namespace VolunteerDatabase.Entity
         //公开与否（需要令牌/不需令牌）
         public int Id { get; set; }
 
-        public AppUser Adder { get; set; }
+        public virtual AppUser Adder { get; set; }
         public Organization AddOrganization { get { return Adder.Organization; } }//不存进数据库 是从Adder里面派生的
 
         [Required]

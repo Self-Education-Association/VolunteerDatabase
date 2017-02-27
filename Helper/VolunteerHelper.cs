@@ -29,6 +29,7 @@ namespace VolunteerDatabase.Helper
                 {
                     if (helper == null)
                     {
+
                         helper = new VolunteerHelper(claims);
                     }
                 }
@@ -54,8 +55,9 @@ namespace VolunteerDatabase.Helper
         /// </summary>
         public VolunteerHelper(AppUserIdentityClaims claims)
         {
+            Claims = claims;
             database = DatabaseContext.GetInstance();
-            logger = LogHelper.GetInstance(claims);
+            logger = LogHelper.GetInstance(Claims);
             Success += logger.Succeeded;
             Failure += logger.Failed;
         }
@@ -83,11 +85,11 @@ namespace VolunteerDatabase.Helper
             else
             {
                 int stunum = v.StudentNum;
-                v.Mobile = v.Mobile == null ? DEFAULTSTRING : v.Mobile;
-                v.Room = v.Room == null ? DEFAULTSTRING : v.Room;
-                v.Name = v.Name == null ? DEFAULTSTRING : v.Name;
-                v.Class = v.Class == null ? DEFAULTSTRING : v.Class;
-                v.Email = v.Email == null ? DEFAULTSTRING : v.Email;
+                v.Mobile = v.Mobile == DEFAULTSTRING ? DEFAULTSTRING : v.Mobile;
+                v.Room = v.Room == DEFAULTSTRING ? DEFAULTSTRING : v.Room;
+                v.Name = v.Name == DEFAULTSTRING ? DEFAULTSTRING : v.Name;
+                v.Class = v.Class == DEFAULTSTRING ? DEFAULTSTRING : v.Class;
+                v.Email = v.Email == DEFAULTSTRING ? DEFAULTSTRING : v.Email;
                 database.Volunteers.Add(v);
                 Save();
                 var target = FindVolunteer(stunum);
@@ -125,9 +127,11 @@ namespace VolunteerDatabase.Helper
             v.Room = b.Room;
             v.Email = b.Email;
             Save();
-            Volunteer target = a;
-            Volunteer edited = FindVolunteer(b.StudentNum);
-            if(edited.Mobile!=target.Mobile||edited.Email!=target.Email||edited.Room!=target.Room)
+            v = database.Volunteers.SingleOrDefault(o => o.StudentNum == a.StudentNum);
+            Volunteer target = v;
+            Volunteer edited = v;
+            //Volunteer edited = FindVolunteer(b.StudentNum);
+            if(edited.Mobile!=target.Mobile||edited.Email!=target.Email||edited.Room!=target.Room)//日志字符串改成“修改联系方式”，现在联系方式：手机 电子邮件 寝室
             {
                 bool logresult = VolunteerOperationSucceeded(string.Format("修改原学号:{0},姓名:{1}的志愿者基本信息.现学号:{2},姓名:{3}", target.StudentNum, target.Name, edited.StudentNum, edited.Name), target, LogType.EditContact, true);
             }
@@ -177,7 +181,14 @@ namespace VolunteerDatabase.Helper
             {
                 int deletedVolunteerStuNum = a.StudentNum;
                 string deletedVolunteerName = a.Name;
-                database.Volunteers.Remove(a);
+                var volunteer = FindVolunteer(a.StudentNum);
+                var loglist = logger.FindLogRecordByTargetVolunteer(volunteer).ToList();
+                foreach (var log in loglist)
+                {
+                    log.TargetVolunteer = null;
+                }
+                Save();//等待被注释
+                database.Volunteers.Remove(volunteer);
                 Save();
                 bool logresult = VolunteerOperationSucceeded(string.Format("删除学号:{0},姓名:{1}的志愿者条目.", deletedVolunteerStuNum,deletedVolunteerName),null,LogType.DeleteVolunteer);
                 return VolunteerResult.Success();
@@ -191,7 +202,8 @@ namespace VolunteerDatabase.Helper
         public VolunteerResult DeleteVolunteer(int num)
         {
             var v = database.Volunteers.SingleOrDefault(o => o.StudentNum == num);
-            if (v != null)
+            return DeleteVolunteer(v);
+            /*if (v != null)
             {
                 int deletedVolunteerStuNum = v.StudentNum;
                 string deletedVolunteerName = v.Name;
@@ -203,7 +215,7 @@ namespace VolunteerDatabase.Helper
             else
             {
                 return VolunteerResult.Error(VolunteerResult.DeleteVolunteerErrorEnum.NonExistingVolunteer);
-            }
+            }*/
         }
 
         #region Save

@@ -3,7 +3,7 @@ namespace VolunteerDatabase.Entity.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Initial : DbMigration
+    public partial class Init : DbMigration
     {
         public override void Up()
         {
@@ -50,14 +50,30 @@ namespace VolunteerDatabase.Entity.Migrations
                 .Index(t => t.Organization_Id);
             
             CreateTable(
-                "dbo.Organizations",
+                "dbo.LogRecords",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
-                        OrganizationEnum = c.Int(nullable: false),
+                        AddTime = c.DateTime(nullable: false),
+                        IsPulblic = c.Boolean(nullable: false),
+                        Type = c.Int(nullable: false),
+                        TypeNum = c.Int(nullable: false),
+                        Operation = c.String(nullable: false),
+                        LogContent = c.String(nullable: false),
+                        TargetProject_Id = c.Int(),
+                        TargetVolunteer_UID = c.Guid(),
+                        Adder_Id = c.Int(),
+                        TargetAppUser_Id = c.Int(),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Projects", t => t.TargetProject_Id)
+                .ForeignKey("dbo.Volunteers", t => t.TargetVolunteer_UID)
+                .ForeignKey("dbo.AppUsers", t => t.Adder_Id)
+                .ForeignKey("dbo.AppUsers", t => t.TargetAppUser_Id)
+                .Index(t => t.TargetProject_Id)
+                .Index(t => t.TargetVolunteer_UID)
+                .Index(t => t.Adder_Id)
+                .Index(t => t.TargetAppUser_Id);
             
             CreateTable(
                 "dbo.Projects",
@@ -77,6 +93,16 @@ namespace VolunteerDatabase.Entity.Migrations
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Organizations", t => t.Creater_Id)
                 .Index(t => t.Creater_Id);
+            
+            CreateTable(
+                "dbo.Organizations",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(),
+                        OrganizationEnum = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.Volunteers",
@@ -149,15 +175,19 @@ namespace VolunteerDatabase.Entity.Migrations
             DropForeignKey("dbo.BlackListRecords", "Project_Id", "dbo.Projects");
             DropForeignKey("dbo.BlackListRecords", "Organization_Id", "dbo.Organizations");
             DropForeignKey("dbo.BlackListRecords", "Adder_Id", "dbo.AppUsers");
+            DropForeignKey("dbo.LogRecords", "TargetAppUser_Id", "dbo.AppUsers");
             DropForeignKey("dbo.AppUserAppRoles", "AppRole_Id", "dbo.AppRoles");
             DropForeignKey("dbo.AppUserAppRoles", "AppUser_Id", "dbo.AppUsers");
             DropForeignKey("dbo.AppUserProjects", "Project_Id", "dbo.Projects");
             DropForeignKey("dbo.AppUserProjects", "AppUser_Id", "dbo.AppUsers");
+            DropForeignKey("dbo.AppUsers", "Organization_Id", "dbo.Organizations");
+            DropForeignKey("dbo.LogRecords", "Adder_Id", "dbo.AppUsers");
             DropForeignKey("dbo.ProjectVolunteers", "Volunteer_UID", "dbo.Volunteers");
             DropForeignKey("dbo.ProjectVolunteers", "Project_Id", "dbo.Projects");
+            DropForeignKey("dbo.LogRecords", "TargetVolunteer_UID", "dbo.Volunteers");
             DropForeignKey("dbo.BlackListRecords", "Volunteer_UID", "dbo.Volunteers");
+            DropForeignKey("dbo.LogRecords", "TargetProject_Id", "dbo.Projects");
             DropForeignKey("dbo.Projects", "Creater_Id", "dbo.Organizations");
-            DropForeignKey("dbo.AppUsers", "Organization_Id", "dbo.Organizations");
             DropIndex("dbo.AppUserAppRoles", new[] { "AppRole_Id" });
             DropIndex("dbo.AppUserAppRoles", new[] { "AppUser_Id" });
             DropIndex("dbo.AppUserProjects", new[] { "Project_Id" });
@@ -165,6 +195,10 @@ namespace VolunteerDatabase.Entity.Migrations
             DropIndex("dbo.ProjectVolunteers", new[] { "Volunteer_UID" });
             DropIndex("dbo.ProjectVolunteers", new[] { "Project_Id" });
             DropIndex("dbo.Projects", new[] { "Creater_Id" });
+            DropIndex("dbo.LogRecords", new[] { "TargetAppUser_Id" });
+            DropIndex("dbo.LogRecords", new[] { "Adder_Id" });
+            DropIndex("dbo.LogRecords", new[] { "TargetVolunteer_UID" });
+            DropIndex("dbo.LogRecords", new[] { "TargetProject_Id" });
             DropIndex("dbo.AppUsers", new[] { "Organization_Id" });
             DropIndex("dbo.BlackListRecords", new[] { "Project_Id" });
             DropIndex("dbo.BlackListRecords", new[] { "Organization_Id" });
@@ -175,8 +209,9 @@ namespace VolunteerDatabase.Entity.Migrations
             DropTable("dbo.ProjectVolunteers");
             DropTable("dbo.AppRoles");
             DropTable("dbo.Volunteers");
-            DropTable("dbo.Projects");
             DropTable("dbo.Organizations");
+            DropTable("dbo.Projects");
+            DropTable("dbo.LogRecords");
             DropTable("dbo.AppUsers");
             DropTable("dbo.BlackListRecords");
         }
