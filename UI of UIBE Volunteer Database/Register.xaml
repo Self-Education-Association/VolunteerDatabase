@@ -15,9 +15,9 @@
             <TextBlock x:Name="textBlock3" HorizontalAlignment="Left" Margin="38,119,0,0" TextWrapping="Wrap" Text="账号" VerticalAlignment="Top"/>
             <TextBox x:Name="textBox2" HorizontalAlignment="Left" Height="15" Margin="91,119,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96" FontSize="6"/>
             <TextBlock x:Name="textBlock4" HorizontalAlignment="Left" Margin="38,163,0,0" TextWrapping="Wrap" Text="密码" VerticalAlignment="Top"/>
-            <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Margin="91,163,0,0" VerticalAlignment="Top" Width="96" Height="15"/>
+            <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Margin="91,163,0,0" VerticalAlignment="Top" Width="96" Height="15" FontSize="6"/>
             <TextBlock x:Name="textBlock5" HorizontalAlignment="Left" Margin="256,163,0,0" TextWrapping="Wrap" Text="确认密码" VerticalAlignment="Top"/>
-            <PasswordBox x:Name="passwordBox1" HorizontalAlignment="Left" Margin="329,163,0,0" VerticalAlignment="Top" Width="96" Height="15"/>
+            <PasswordBox x:Name="passwordBox1" HorizontalAlignment="Left" Margin="329,163,0,0" VerticalAlignment="Top" Width="96" Height="15" FontSize="6"/>
             <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="329,43,0,0" VerticalAlignment="Top" Width="96" Height="14"/>
             <TextBlock x:Name="textBlock6" HorizontalAlignment="Left" Margin="256,42,0,0" TextWrapping="Wrap" Text="所属机构" VerticalAlignment="Top"/>
             <TextBlock x:Name="textBlock7" HorizontalAlignment="Left" Margin="256,80,0,0" TextWrapping="Wrap" Text="电话" VerticalAlignment="Top"/>
