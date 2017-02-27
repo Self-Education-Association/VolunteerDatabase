@@ -11,6 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using VolunteerDatabase.Entity;
+using VolunteerDatabase.Helper;
+using VolunteerDatabase.Interface;
 
 namespace WpfApplication1
 {
@@ -26,7 +29,22 @@ namespace WpfApplication1
 
         private void register_button_Click(object sender, RoutedEventArgs e)
         {
-
+            if (passwordBox.Password == passwordBox1.Password)
+            {
+                string passWord = passwordBox.Password;
+            }
+            else
+            {
+                MessageBox.Show("两次密码输入不一致，请进行检查");
+            }
+            AppUser au = new AppUser()
+            {
+                StudentNum = textBox1.Text,
+                AccountName = textBox2.Text,
+                Name= textBox.Text,
+                Mobile= textBox3.Text,
+                Email= textBox4.Text
+            };                
         }
     }
 }
