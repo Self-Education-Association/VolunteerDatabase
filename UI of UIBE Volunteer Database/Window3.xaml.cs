@@ -26,6 +26,11 @@ namespace WpfApplication1
 
         private void exit_button_Click(object sender, RoutedEventArgs e)
         {
+            this.Close();
+        }
+
+        private void create_project_button_Click(object sender, RoutedEventArgs e)
+        {
 
         }
     }

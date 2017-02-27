@@ -5,12 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApplication1"
         mc:Ignorable="d"
-        Title="Window3" Height="auto" Width="auto" d:DesignWidth="500" d:DesignHeight="300">
+        Title="Window3" Height="auto" Width="auto" d:DesignWidth="800" d:DesignHeight="450">
     <TabPanel>
         <Viewbox Stretch="Fill">
             <TabControl x:Name="Main_Tabcontrol" Height="273" Width="496">
-                <TabItem Header="志愿者信息">
-                    <Button Height="auto" Width="auto"/>
+                <TabItem Header="项目管理">
+                    <Grid>
+                        
+                    </Grid>
                 </TabItem>
                 <TabItem Header="新建项目">
                     <Grid>
@@ -24,15 +26,16 @@
                         <TextBox x:Name="max" Height="23" Margin="291,-27,96,76"/>
                         <TextBlock Text="项目详情" Height="23" Width="72" Margin="19,10,395,39"/>
                         <RichTextBox Margin="88,10,96,-71"></RichTextBox>
+                        <Button x:Name="create_project_button" Content="创建项目" Click="create_project_button_Click" Height="23" Width="72" Margin="390,120,24,-71"/>
                     </Grid>
                 </TabItem>
-                <TabItem Header="项目管理"></TabItem>
+                <TabItem Header="志愿者信息" IsEnabled="False"></TabItem>
                 <TabItem Header="用户信息"></TabItem>
 
             </TabControl>
         </Viewbox>
-        <Viewbox>
-            <Button Margin="438,-272.5,0,520" x:Name="exit_button" Content="退出系统" Click="exit_button_Click"></Button>
+        <Viewbox Stretch="Uniform">
+            <Button Margin="438,-272.5,0,520" x:Name="exit_button" Content="退出系统" Click="exit_button_Click" RenderTransformOrigin="0.43,1.738"></Button>
         </Viewbox>
     </TabPanel>
 </Window>
