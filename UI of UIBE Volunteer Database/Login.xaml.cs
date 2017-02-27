@@ -13,8 +13,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using VolunteerDatabase.Helper;
-using VolunteerDatabase.Entity;
 
 namespace WpfApplication1
 {
@@ -38,16 +36,7 @@ namespace WpfApplication1
 
         private void login_Click(object sender, RoutedEventArgs e)
         {
-            IdentityHelper ih = IdentityHelper.GetInstance();
-            var claims= ih.CreateClaimsAsync(userid.Text, password.Password.ToString()).Result;
-            if(claims.IsAuthenticated)
-            {
-                MessageBox.Show("登陆成功！");
-            }
-            else
-            {
-                MessageBox.Show("登录失败，请检查用户名和密码！");
-            }
+            
         }
     }
 }
