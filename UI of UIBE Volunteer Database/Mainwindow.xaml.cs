@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace WpfApplication1
 {
     /// <summary>
-    /// Organizaton.xaml 的交互逻辑
+    /// Mainwindow.xaml 的交互逻辑
     /// </summary>
-    public partial class Organization : Window
+    public partial class Mainwindow : Window
     {
-        public Organization()
+        public Mainwindow()
         {
             InitializeComponent();
         }

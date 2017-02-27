@@ -32,7 +32,6 @@ namespace WpfApplication1
         {
             var Register = new Register();
             Register.Show();
-            this.Hide();
 
         }
 
