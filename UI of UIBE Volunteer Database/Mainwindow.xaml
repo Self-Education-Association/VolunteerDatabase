@@ -16,8 +16,19 @@
                             <ComboBoxItem>已完成项目</ComboBoxItem>
                             <ComboBoxItem>进行中项目</ComboBoxItem>
                         </ComboBox>
-                        <DataGrid Margin="0,21,10,10" AutoGenerateColumns="True" x:Name="project_list">
-                            
+                        <DataGrid Margin="0,21,10,10" AutoGenerateColumns="True" x:Name="project_list"
+                                  ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+                            <DataGrid.RowStyle>
+                                <Style TargetType="DataGridRow">
+                                    <Setter Property="Background" Value="LightBlue" />
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="LightGray"/>
+                                            <Setter Property="Foreground" Value="Green"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.RowStyle>
                         </DataGrid>
                     </Grid>
                 </TabItem>
