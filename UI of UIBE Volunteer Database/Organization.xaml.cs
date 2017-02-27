@@ -10,19 +10,28 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace WpfApplication1
 {
     /// <summary>
-    /// UserControl5.xaml 的交互逻辑
+    /// Organizaton.xaml 的交互逻辑
     /// </summary>
-    public partial class UserControl5 : UserControl
+    public partial class Organization : Window
     {
-        public UserControl5()
+        public Organization()
         {
             InitializeComponent();
+        }
+
+        private void exit_button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void create_project_button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
