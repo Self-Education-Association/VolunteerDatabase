@@ -11,20 +11,16 @@ namespace VolunteerDatabase.Helper
     {
         private bool _succeed = false;
         private string[] _errors;
-        private int _errorvolunteerid;
         private string _errorstring;
         public bool Succeeded { get { return _succeed; } }
         public string[] Errors { get { return _errors; } }
         public string ErrorString { get { return _errorstring; } }
-        public int ErrorVolunteerId { get { return _errorvolunteerid; } }
         public static BlackListResult Success()
         {
             var result = new BlackListResult
             {
                 _succeed = true,
                 _errors = {},
-                _errorvolunteerid = 0,
-
             };
             return result;
         }
@@ -53,7 +49,6 @@ namespace VolunteerDatabase.Helper
             {
                 _succeed = false,
                 _errors = errors,
-                _errorvolunteerid = id,
                 _errorstring = errors.ToString()
             };
             return result;
@@ -117,9 +112,6 @@ namespace VolunteerDatabase.Helper
                 return false;
             else if (a.ErrorString == b.ErrorString && a.Succeeded == b.Succeeded)
             {
-                if (a.ErrorVolunteerId == b.ErrorVolunteerId)
-                    return true;
-                else
                     return false;
             }
             else
