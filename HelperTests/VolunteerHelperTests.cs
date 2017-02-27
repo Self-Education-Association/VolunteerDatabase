@@ -31,9 +31,15 @@ namespace VolunteerDatabase.Helper.Tests
                 Email="123@ab.com"
             };
             string password = "VolunteerHelperPassword";
-            AppUser dbUser = database.Users.SingleOrDefault(u => u.AccountName == userName);
+            var dbUser = database.Users.SingleOrDefault(u => u.AccountName == userName);
             if(dbUser!=null)
             {
+                var list = database.LogRecords.Where(l => l.Adder.Id == dbUser.Id).ToList();
+                foreach (var item in list)
+                {
+                    item.Adder = null;
+                }
+                database.SaveChanges();//等一下注释掉这一句
                 database.Users.Remove(dbUser);
                 database.SaveChanges();
             }
@@ -41,6 +47,21 @@ namespace VolunteerDatabase.Helper.Tests
             testclaims = ihelper.CreateClaims(userName, password, userName);
             helper = VolunteerHelper.GetInstance(testclaims);
         }
+
+        //[TestMethod()]
+        public void Clear()
+        {
+            var list = database.Volunteers.Where(o => o.StudentNum != 0).ToList();
+            foreach(Volunteer item in list)
+            {
+                helper.DeleteVolunteer(item);
+            }
+            var user = database.Users.SingleOrDefault(o => o.AccountName == testclaims.Holder.AccountName);
+            database.Users.Remove(user);
+            database.SaveChanges();
+        }
+
+
 
 
         [TestMethod()]
@@ -72,15 +93,12 @@ namespace VolunteerDatabase.Helper.Tests
         public void AddVolunteerTest()
         {
 
-
-
             #region 插入第一个volunteer对象
             int stunum = 888;
             if (database.Volunteers.Where(o => o.StudentNum == stunum).ToList().Count()>0)
             {
                 var existedvolunteer = FindVolunteerByStuNum(stunum);
-                database.Volunteers.Remove(existedvolunteer);
-                database.SaveChanges();
+                helper.DeleteVolunteer(existedvolunteer);
             }
             Volunteer v = new Volunteer
             {
@@ -107,8 +125,7 @@ namespace VolunteerDatabase.Helper.Tests
             if (VolunteerResult.AreSame(result, VolunteerResult.Error(VolunteerResult.AddVolunteerErrorEnum.SameIdVolunteerExisted,tempnum)))
             {
                 var existedvolunteer = FindVolunteerByStuNum(tempnum);
-                database.Volunteers.Remove(existedvolunteer);
-                database.SaveChanges();
+                helper.DeleteVolunteer(existedvolunteer);
                 result = helper.AddVolunteer(tempnum, tempname);
             }
             actual = FindVolunteerByStuNum(tempnum);
@@ -220,6 +237,27 @@ namespace VolunteerDatabase.Helper.Tests
         [TestMethod()]
         public void EditVolunteerTest()
         {
+            #region init
+            IdentityHelper ihelper = IdentityHelper.GetInstance();
+            string userName = "VolunteerHelper";
+            AppUser user = new AppUser
+            {
+                AccountName = userName,
+                Name = "James",
+                Mobile = "1888888888",
+                Email = "123@ab.com"
+            };
+            string password = "VolunteerHelperPassword";
+            AppUser dbUser = database.Users.SingleOrDefault(u => u.AccountName == userName);
+            if (dbUser != null)
+            {
+                database.Users.Remove(dbUser);
+                database.SaveChanges();
+            }
+            IdentityResult result1 = ihelper.CreateUser(user, password, AppRoleEnum.OrgnizationMember, OrganizationEnum.SEA团队);
+            testclaims = ihelper.CreateClaims(userName, password, userName);
+            helper = VolunteerHelper.GetInstance(testclaims);
+            #endregion
             #region 新建一个志愿者对象
             Volunteer v = new Volunteer
             {
@@ -235,7 +273,7 @@ namespace VolunteerDatabase.Helper.Tests
             #region 第一次修改
             v.Name = "ModifiedEditTestName";
             var tempvolunteer = helper.FindVolunteer(v.StudentNum);
-            helper.EditVolunteer(tempvolunteer, v);
+            helper.EditVolunteer(tempvolunteer, v);//需要重建一个volunteer实体，因为实体v在加入数据库之后会自动更新链接到数据库中的条目。
             tempvolunteer = helper.FindVolunteer(v.StudentNum);
             if (!Volunteer.AreSame(v, tempvolunteer))
                 Assert.Fail("修改志愿者信息失败");
@@ -243,6 +281,7 @@ namespace VolunteerDatabase.Helper.Tests
 
             #region 第二次修改
             v.Name = "EditByParamTestName";
+            tempvolunteer = helper.FindVolunteer(v.StudentNum);
             helper.EditVolunteer(tempvolunteer, v.StudentNum, v.Name);
             tempvolunteer = helper.FindVolunteer(v.StudentNum);
             if (!Volunteer.AreSame(v, tempvolunteer))

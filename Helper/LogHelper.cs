@@ -174,14 +174,14 @@ namespace VolunteerDatabase.Helper
             {
                 if (target == null)
                 {
-                    return null;
+                    return new List<LogRecord>();
                 }
-                var result = database.LogRecords.Where(r => r.TargetVolunteer.AreSameWith(target)).ToList();
+                var result = database.LogRecords.Where(r => r.TargetVolunteer.UID==target.UID).ToList();
                 return result;
             }
             catch (Exception)
             {
-                return null;
+                return new List<LogRecord>();
             }
         }
 
@@ -233,7 +233,7 @@ namespace VolunteerDatabase.Helper
 
         public bool Succeeded(string content, bool ispublic,LogType type = LogType.Default, AppUser targetuser = null, Volunteer targetvolunteer = null, Project targetproject = null, [CallerMemberName] string caller = "")
         {
-            AppUser adder = Claims.Holder;
+            AppUser adder = database.Users.SingleOrDefault(u => u.AccountName == Claims.User.AccountName);
             if (caller == "")
                 return false;
             string str = string.Format("操作:[{0}]成功.操作者:{1} " + content, caller,adder.Name);
@@ -242,7 +242,7 @@ namespace VolunteerDatabase.Helper
 
         public bool Failed(string content, bool ispublic,LogType type, AppUser targetuser = null, Volunteer targetvolunteer = null, Project targetproject = null, [CallerMemberName] string caller = "")
         {
-            AppUser adder = Claims.Holder;
+            AppUser adder = database.Users.SingleOrDefault(u => u.AccountName == Claims.User.AccountName);
             if (caller == "")
                 return false;
             string str = string.Format("操作：[{0}]失败.操作者:{1} " + content, caller,adder.Name);
@@ -258,7 +258,7 @@ namespace VolunteerDatabase.Helper
                 LogRecord record = new LogRecord
                 {
                     Type = type,
-                    Adder = adder,
+                    Adder = adder,//
                     AddTime = DateTime.Now,
                     Operation = caller,
                     TargetAppUser = targetuser,

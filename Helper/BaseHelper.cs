@@ -14,6 +14,7 @@ namespace VolunteerDatabase.Helper
     /// </summary>
     public abstract class BaseHelper
     {
+        protected static AppUserIdentityClaims Claims { get; set; }
         protected static LogHelper logger;
         public delegate bool SuccessEventHandler(string content, bool ispublic = false,LogType type = LogType.Default, AppUser targetuser = null, Volunteer targetvolunteer = null, Project targetproject = null,  [CallerMemberName] string caller = "");
         public delegate bool FailureEventHandler(string content, bool ispublic = false,LogType type = LogType.Default, AppUser targetuser = null, Volunteer targetvolunteer = null, Project targetproject = null,  [CallerMemberName] string caller = "");
@@ -53,7 +54,7 @@ namespace VolunteerDatabase.Helper
             }
             else
             {
-                Success(content, ispublic, type, null, targetvolunteer, null);
+                Success(content, ispublic, type, null, targetvolunteer, null,caller);
                 return true;
             }
         }
@@ -66,7 +67,7 @@ namespace VolunteerDatabase.Helper
             }
             else
             {
-                Failure(content, ispublic, type, null, targetvolunteer, null);
+                Failure(content, ispublic, type, null, targetvolunteer, null,caller);
                 return true;
             }
         }

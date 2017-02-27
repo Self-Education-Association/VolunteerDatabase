@@ -58,21 +58,9 @@
     <Compile Include="Database.cs" />
     <Compile Include="DatabaseContext.cs" />
     <Compile Include="LogRecord.cs" />
-    <Compile Include="Migrations\201702090726466_Initial.cs" />
-    <Compile Include="Migrations\201702090726466_Initial.Designer.cs">
-      <DependentUpon>201702090726466_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702250828176_AddLogModule.cs" />
-    <Compile Include="Migrations\201702250828176_AddLogModule.Designer.cs">
-      <DependentUpon>201702250828176_AddLogModule.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702261113575_AddLogModule1.cs" />
-    <Compile Include="Migrations\201702261113575_AddLogModule1.Designer.cs">
-      <DependentUpon>201702261113575_AddLogModule1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702261126181_AddLogModule2.cs" />
-    <Compile Include="Migrations\201702261126181_AddLogModule2.Designer.cs">
-      <DependentUpon>201702261126181_AddLogModule2.cs</DependentUpon>
+    <Compile Include="Migrations\201702271455085_Init.cs" />
+    <Compile Include="Migrations\201702271455085_Init.Designer.cs">
+      <DependentUpon>201702271455085_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Organization.cs" />
@@ -91,17 +79,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201702090726466_Initial.resx">
-      <DependentUpon>201702090726466_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702250828176_AddLogModule.resx">
-      <DependentUpon>201702250828176_AddLogModule.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702261113575_AddLogModule1.resx">
-      <DependentUpon>201702261113575_AddLogModule1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702261126181_AddLogModule2.resx">
-      <DependentUpon>201702261126181_AddLogModule2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201702271455085_Init.resx">
+      <DependentUpon>201702271455085_Init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
