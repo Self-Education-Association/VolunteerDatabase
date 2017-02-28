@@ -9,7 +9,7 @@
     <TabPanel>
         <Viewbox Stretch="Fill">
             <TabControl x:Name="Main_Tabcontrol" Height="273" Width="496">
-                <TabItem Header="项目管理">
+                <TabItem x:Name="ProjectManage" Header="项目管理" IsEnabled="False">
                     <Grid Height="240" Width="490">
                         <Label Content="项目状态" FontSize="12" Margin="351,0,87,224"></Label>
                         <ComboBox FontSize="12" Margin="408,0,10,224">
@@ -32,7 +32,7 @@
                         </DataGrid>
                     </Grid>
                 </TabItem>
-                <TabItem Header="新建项目">
+                <TabItem x:Name="NewProject" Header="新建项目" IsEnabled="False">
                     <Grid Height="244">
                         <TextBlock Text="项目名称" Height="23" Width="72" Margin="-188,-79,188,85" />
                         <TextBox x:Name="project_name" Margin="-116,-58,93,106" Height="23" Width="100"/>
@@ -43,19 +43,19 @@
                         <TextBlock Text="最大人数" Height="23" Width="72" Margin="31,-30,-21,78"/>
                         <TextBox x:Name="max" Height="23" Margin="291,-27,96,76"/>
                         <TextBlock Text="项目详情" Height="23" Width="72" Margin="19,10,395,39"/>
-                        <RichTextBox Margin="88,96,96,43"></RichTextBox>
+                        <RichTextBox x:Name="project_detail" Margin="88,96,96,43"></RichTextBox>
                         <Button x:Name="create_project_button" Content="创建项目" Click="create_project_button_Click" Height="23" Width="72" Margin="404,211,10,10"/>
                     </Grid>
                 </TabItem>
              
-                <TabItem Header="用户信息">
+                <TabItem x:Name="UserInfo" Header="用户信息" IsEnabled="False">
                     <Grid Height="238" Width="482">
                         <Label x:Name="label" Content="用户名" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
                         <Label x:Name="label1" Content="开通时间" HorizontalAlignment="Left" Margin="10,29,0,0" VerticalAlignment="Top"/>
                     </Grid>
                 </TabItem>
-                <TabItem Header="用户审批" IsEnabled="False"></TabItem>
-                <TabItem Header="志愿者信息" IsEnabled="False"></TabItem>
+                <TabItem x:Name="UserApproval" Header="用户审批" IsEnabled="False"></TabItem>
+                <TabItem x:Name="VolunteerInfo" Header="志愿者信息" IsEnabled="True"></TabItem>
             </TabControl>
         </Viewbox>
     </TabPanel>

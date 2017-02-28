@@ -27,26 +27,34 @@ namespace WpfApplication1
             InitializeComponent();
         }
 
-        private void register_button_Click(object sender, RoutedEventArgs e)
+        private async void register_button_Click(object sender, RoutedEventArgs e)
         {
             IdentityHelper ih = IdentityHelper.GetInstance();
-            if (passwordBox.Password == passwordBox1.Password)
-            {
-                string passWord = passwordBox.Password;
-            }
-            else
-            {
-                MessageBox.Show("两次密码输入不一致，请进行检查");
-            }
             OrganizationEnum org = ih.Matching(comboBox.Text);
             AppUser au = new AppUser()
             {
                 StudentNum = textBox1.Text,
                 AccountName = textBox2.Text,
-                Name= textBox.Text,
-                Mobile= textBox3.Text,
-                Email= textBox4.Text
-            };                
+                Name = textBox.Text,
+                Mobile = textBox3.Text,
+                Email = textBox4.Text
+            };
+            if (passwordBox.Password == passwordBox1.Password)
+            {
+                string passWord = passwordBox.Password;
+                var result=await ih.CreateUserAsync(au, passWord, AppRoleEnum.OrgnizationMember, org);
+                if(result.Succeeded)
+                {
+                    var claim =await ih.CreateClaimsAsync(textBlock2.Text, passWord);
+                    Mainwindow mw = new Mainwindow(claim);
+                    mw.Show();
+                }
+            }
+            else
+            {
+                MessageBox.Show("两次密码输入不一致，请进行检查");
+            }
+
         }
     }
 }
