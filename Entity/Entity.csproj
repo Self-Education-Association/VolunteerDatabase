@@ -62,6 +62,10 @@
     <Compile Include="Migrations\201702271455085_Init.Designer.cs">
       <DependentUpon>201702271455085_Init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702281437005_TempFix.cs" />
+    <Compile Include="Migrations\201702281437005_TempFix.Designer.cs">
+      <DependentUpon>201702281437005_TempFix.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Organization.cs" />
     <Compile Include="Project.cs" />
@@ -81,6 +85,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201702271455085_Init.resx">
       <DependentUpon>201702271455085_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702281437005_TempFix.resx">
+      <DependentUpon>201702281437005_TempFix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

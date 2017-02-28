@@ -15,15 +15,16 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using VolunteerDatabase.Helper;
 using VolunteerDatabase.Entity;
+using System.Windows.Media.Animation;
 
 namespace WpfApplication1
 {
     /// <summary>
-    /// MainWindow.xaml 的交互逻辑
+    /// Login.xaml 的交互逻辑
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Login : Window
     {
-        public MainWindow()
+        public Login()
         {
             InitializeComponent();
         }
@@ -41,8 +42,10 @@ namespace WpfApplication1
             var claims= ih.CreateClaimsAsync(userid.Text, password.Password.ToString()).Result;
             if(claims.IsAuthenticated)
             {
-                MessageBox.Show("登陆成功！");
-
+                //MessageBox.Show("登陆成功！");
+                Mainwindow mainwindow = new Mainwindow(claims);
+                mainwindow.Show();
+                this.Close();
             }
             else
             {

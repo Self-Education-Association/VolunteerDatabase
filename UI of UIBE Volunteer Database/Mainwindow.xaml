@@ -9,13 +9,14 @@
     <TabPanel>
         <Viewbox Stretch="Fill">
             <TabControl x:Name="Main_Tabcontrol" Height="273" Width="496">
-                <TabItem Header="项目管理">
+                <TabItem x:Name="Project_Manage" Header="项目管理" IsEnabled="False">
                     <Grid Height="240" Width="490">
-                        <Label Content="项目状态" FontSize="12" Margin="351,0,87,224"></Label>
-                        <ComboBox FontSize="12" Margin="408,0,10,224">
+                        <Label Content="项目状态" FontSize="8" Margin="371,4,87,224"></Label>
+                        <ComboBox FontSize="8" Margin="408,0,10,224">
                             <ComboBoxItem>已完成项目</ComboBoxItem>
                             <ComboBoxItem>进行中项目</ComboBoxItem>
                         </ComboBox>
+                        <Button x:Name="delete_btn" Content="删除项目" Click="delete_btn_Click" Margin="0,0,415,219" FontSize="8" Width="45" Height="18"></Button>
                         <DataGrid Margin="0,21,10,10" AutoGenerateColumns="True" x:Name="project_list"
                                   ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
                             <DataGrid.RowStyle>
@@ -32,7 +33,7 @@
                         </DataGrid>
                     </Grid>
                 </TabItem>
-                <TabItem Header="新建项目">
+                <TabItem x:Name="Project_Add" Header="新建项目" IsEnabled="False">
                     <Grid Height="244">
                         <TextBlock Text="项目名称" Height="23" Width="72" Margin="-188,-79,188,85" />
                         <TextBox x:Name="project_name" Margin="-116,-58,93,106" Height="23" Width="100"/>
@@ -41,21 +42,22 @@
                         <TextBlock Text="项目时间" Height="23" Width="72" Margin="31,-58,-21,106"/>
                         <DatePicker x:Name="project_time" Height="23" Margin="291,-61,96,110"/>
                         <TextBlock Text="最大人数" Height="23" Width="72" Margin="31,-30,-21,78"/>
-                        <TextBox x:Name="max" Height="23" Margin="291,-27,96,76"/>
+                        <TextBox x:Name="project_maximum" Height="23" Margin="291,-27,96,76"/>
                         <TextBlock Text="项目详情" Height="23" Width="72" Margin="19,10,395,39"/>
-                        <RichTextBox Margin="88,96,96,43"></RichTextBox>
+                        <TextBox x:Name="project_details" Margin="89,96,96,46"/>
                         <Button x:Name="create_project_button" Content="创建项目" Click="create_project_button_Click" Height="23" Width="72" Margin="404,211,10,10"/>
                     </Grid>
                 </TabItem>
-             
-                <TabItem Header="用户信息">
+
+
+                <TabItem x:Name="User_Approve" Header="用户审批" IsEnabled="False"></TabItem>
+                <TabItem x:Name="Volunteer_Info" Header="志愿者信息" IsEnabled="False"></TabItem>
+                <TabItem x:Name="User_Info" Header="用户信息" IsEnabled="True">
                     <Grid Height="238" Width="482">
                         <Label x:Name="label" Content="用户名" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
                         <Label x:Name="label1" Content="开通时间" HorizontalAlignment="Left" Margin="10,29,0,0" VerticalAlignment="Top"/>
                     </Grid>
                 </TabItem>
-                <TabItem Header="用户审批" IsEnabled="False"></TabItem>
-                <TabItem Header="志愿者信息" IsEnabled="False"></TabItem>
             </TabControl>
         </Viewbox>
     </TabPanel>
