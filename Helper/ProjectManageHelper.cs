@@ -43,13 +43,13 @@ namespace VolunteerDatabase.Helper
         public List<Project> ShowProjectList(Organization org,bool OnGoing)//true时得到正在进行中的项目
         {
             var pro = from o in database.Projects
-                      where o.Creater == org
+                      where o.Creater.Id == org.Id
                       select o;
             if (OnGoing)
                 pro = pro.Where(o => o.Condition == ProjectCondition.Ongoing);
             else
                 pro = pro.Where(o => o.Condition == ProjectCondition.Finished);
-            List<Project> Projects = pro.ToList();
+            var Projects = pro.ToList();
             return Projects;
         }
 

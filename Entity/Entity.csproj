@@ -62,9 +62,9 @@
     <Compile Include="Migrations\201702271455085_Init.Designer.cs">
       <DependentUpon>201702271455085_Init.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201702280743096_UnknownFix.cs" />
-    <Compile Include="Migrations\201702280743096_UnknownFix.Designer.cs">
-      <DependentUpon>201702280743096_UnknownFix.cs</DependentUpon>
+    <Compile Include="Migrations\201702281437005_TempFix.cs" />
+    <Compile Include="Migrations\201702281437005_TempFix.Designer.cs">
+      <DependentUpon>201702281437005_TempFix.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Organization.cs" />
@@ -86,8 +86,8 @@
     <EmbeddedResource Include="Migrations\201702271455085_Init.resx">
       <DependentUpon>201702271455085_Init.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702280743096_UnknownFix.resx">
-      <DependentUpon>201702280743096_UnknownFix.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201702281437005_TempFix.resx">
+      <DependentUpon>201702281437005_TempFix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

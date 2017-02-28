@@ -27,34 +27,38 @@ namespace WpfApplication1
             InitializeComponent();
         }
 
-        private async void register_button_Click(object sender, RoutedEventArgs e)
+        private void register_button_Click(object sender, RoutedEventArgs e)
         {
             IdentityHelper ih = IdentityHelper.GetInstance();
-            OrganizationEnum org = ih.Matching(comboBox.Text);
-            AppUser au = new AppUser()
-            {
-                StudentNum = textBox1.Text,
-                AccountName = textBox2.Text,
-                Name = textBox.Text,
-                Mobile = textBox3.Text,
-                Email = textBox4.Text
-            };
             if (passwordBox.Password == passwordBox1.Password)
             {
                 string passWord = passwordBox.Password;
-                var result=await ih.CreateUserAsync(au, passWord, AppRoleEnum.OrgnizationMember, org);
-                if(result.Succeeded)
+                OrganizationEnum org = ih.Matching(comboBox.Text);
+                AppUser au = new AppUser()
                 {
-                    var claim =await ih.CreateClaimsAsync(textBlock2.Text, passWord);
-                    Mainwindow mw = new Mainwindow(claim);
-                    mw.Show();
+                    StudentNum = textBox1.Text,
+                    AccountName = textBox2.Text,
+                    Name = textBox.Text,
+                    Mobile = textBox3.Text,
+                    Email = textBox4.Text
+                };
+                IdentityResult result = ih.CreateUser(au, passWord, AppRoleEnum.Administrator, org);
+                if(result.Succeeded == true)
+                {
+                    MessageBox.Show("注册成功！");
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("注册失败，错误信息：" + string.Join(",", result.Errors));
                 }
             }
+
             else
             {
-                MessageBox.Show("两次密码输入不一致，请进行检查");
+                MessageBox.Show("两次密码输入不一致，请进行检查");//前端需要检验：  1所有字段不为空 2字段符合要求（没有非法字符，学号为Numeric） 3用户名是否重复
             }
-
+            
         }
     }
 }
