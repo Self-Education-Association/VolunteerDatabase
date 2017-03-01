@@ -73,7 +73,7 @@ namespace VolunteerDatabase.Helper
 
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public ProgressResult CreatNewProject(Organization org, string Time="", string Name = "", string Place = "", string Detail = "", int Maximum = 70)
+        public ProgressResult CreatNewProject(Organization org, DateTime Time, string Name = "", string Place = "", string Detail = "", int Maximum = 70)
         {
             ProgressResult result;
             if (Time == null)
@@ -104,7 +104,7 @@ namespace VolunteerDatabase.Helper
 
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public ProgressResult ProjectMessageInput(string Name, string Detail,string Place, int Max,string Time, List<AppUser> Managers,Project Pro)
+        public ProgressResult ProjectMessageInput(string Name, string Detail,string Place, int Max,DateTime Time, List<AppUser> Managers,Project Pro)
         {
             ProgressResult result;
             if (Name==""|| Detail == "" || Place =="" ||Time== null || Managers == null)

@@ -34,7 +34,7 @@ namespace WpfApplication1
         private void on_window_Create()
         {
             Projecthelper = ProjectManageHelper.GetInstance();
-            if (Claims.IsInRole(AppRoleEnum.Administrator))
+            if (Claims.IsInRole(AppRoleEnum.Administrator)|| Claims.IsInRole(AppRoleEnum.TestOnly))
             {
                 Project_Manage.IsEnabled = true;
                 Project_Add.IsEnabled = true;
@@ -67,6 +67,7 @@ namespace WpfApplication1
             project_list.ItemsSource = list;
 
             //后台缺少一个FindProjectListByManager方法
+            //并不缺少。。逻辑还要再改一下，之前没有太考虑一个用户持有多个role的情况
         }
 
         private void exit_button_Click(object sender, RoutedEventArgs e)
@@ -83,7 +84,8 @@ namespace WpfApplication1
             else
             {
                 ProgressResult result = Projecthelper.CreatNewProject(Claims.Holder.Organization, project_time.DisplayDate, project_name.Text, project_place.Text, project_details.Text, int.Parse(project_maximum.Text));
-                if(result.Succeeded==true)
+                //这里缺少对最大值是否为数值的检验，看看前端能否实现
+                if (result.Succeeded)
                 {
                     MessageBox.Show("项目创建成功!");
                     project_name.Text = "";
@@ -102,7 +104,7 @@ namespace WpfApplication1
 
         private void delete_btn_Click(object sender, RoutedEventArgs e)
         {
-
+            //删除按键直接写出来感觉有点怪，看看能不能集成在单个project点击进去之后
         }
     }
 }

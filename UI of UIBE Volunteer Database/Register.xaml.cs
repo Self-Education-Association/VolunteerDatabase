@@ -56,7 +56,9 @@ namespace WpfApplication1
 
             else
             {
-                MessageBox.Show("两次密码输入不一致，请进行检查");//前端需要检验：  1所有字段不为空 2字段符合要求（没有非法字符，学号为Numeric） 3用户名是否重复
+                MessageBox.Show("两次密码输入不一致，请进行检查");
+                //前端需要检验：  1所有字段不为空 2字段符合要求（没有非法字符，学号为Numeric） 3用户名是否重复
+                //用户名是否重复已经由createuser函数完成了，非空需要检查
             }
             
         }

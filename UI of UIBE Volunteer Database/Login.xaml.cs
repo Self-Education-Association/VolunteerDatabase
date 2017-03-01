@@ -38,6 +38,7 @@ namespace WpfApplication1
         private async void login_Click(object sender, RoutedEventArgs e)
         {
             IdentityHelper ih = IdentityHelper.GetInstance();
+            //应验证用户名和密码非空，空则不与数据库交互而是弹出提示
             var claims= await ih.CreateClaimsAsync(userid.Text, password.Password.ToString());
             
             if (claims.IsAuthenticated)
