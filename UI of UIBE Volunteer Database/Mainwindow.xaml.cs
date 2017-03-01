@@ -35,7 +35,7 @@ namespace WpfApplication1
         private void on_window_Create()
         {
             ProjectManageHelper = ProjectManageHelper.GetInstance();
-            if (Claims.IsInRole(AppRoleEnum.Administrator)|| Claims.IsInRole(AppRoleEnum.TestOnly))
+            if (Claims.IsInRole(AppRoleEnum.Administrator) || Claims.IsInRole(AppRoleEnum.TestOnly))
             {
                 Project_Manage.IsEnabled = true;
                 Project_Add.IsEnabled = true;
@@ -43,7 +43,7 @@ namespace WpfApplication1
                 Volunteer_Info.IsEnabled = true;
                 User_Info.IsEnabled = true;
             }
-           if(Claims.IsInRole(AppRoleEnum.OrgnizationAdministrator))
+            if (Claims.IsInRole(AppRoleEnum.OrgnizationAdministrator))
             {
                 Project_Manage.IsEnabled = true;
                 Project_Add.IsEnabled = true;
@@ -51,7 +51,7 @@ namespace WpfApplication1
                 Volunteer_Info.IsEnabled = true;
                 User_Info.IsEnabled = true;
             }
-            if(Claims.IsInRole(AppRoleEnum.OrgnizationMember))
+            if (Claims.IsInRole(AppRoleEnum.OrgnizationMember))
             {
                 Project_Manage.IsEnabled = true;
                 Volunteer_Info.IsEnabled = true;
@@ -62,7 +62,7 @@ namespace WpfApplication1
                 MessageBox.Show("用户身份非法,请重新登陆后再试.");
                 Main_Tabcontrol.IsEnabled = false;
             }
-            if(Claims.Roles.Contains(AppRoleEnum.OrgnizationMember))
+            if (Claims.Roles.Contains(AppRoleEnum.OrgnizationMember))
             {
                 PrijectProgressHelper = ProjectProgressHelper.GetInstance();
                 var list = PrijectProgressHelper.FindAuthorizedProjectsByUser(Claims.User);
@@ -83,7 +83,7 @@ namespace WpfApplication1
         private void create_project_button_Click(object sender, RoutedEventArgs e)
         {
             TextRange textRange = new TextRange(project_details.Document.ContentStart, project_details.Document.ContentEnd);
-            if (project_name.Text ==""||project_place.Text==""||project_time.DisplayDate==null||project_time.DisplayDate<DateTime.Now.AddYears(-20)||project_place.Text==""||project_maximum.Text==""||textRange.Text=="")
+            if (project_name.Text == "" || project_place.Text == "" || project_time.DisplayDate == null || project_time.DisplayDate < DateTime.Now.AddYears(-20) || project_place.Text == "" || project_maximum.Text == "" || textRange.Text == "")
             {
                 MessageBox.Show("请完整输入所有项目.");
             }
@@ -110,6 +110,19 @@ namespace WpfApplication1
         private void delete_btn_Click(object sender, RoutedEventArgs e)
         {
             //删除按键直接写出来感觉有点怪，看看能不能集成在单个project点击进去之后
+        }
+
+        private void project_maximum_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (!((e.Key >= Key.D0 && e.Key <= Key.D9) || (e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9)))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void Label_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+
         }
     }
 }
