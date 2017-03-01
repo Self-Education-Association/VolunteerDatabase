@@ -190,6 +190,15 @@ namespace VolunteerDatabase.Helper.Tests
             #endregion
 
             #region 由id 删除志愿者条目
+            v = new Volunteer
+            {
+                StudentNum = tempnum,
+                Name = "DeleteTest",
+                Class = "TestClass",
+                Email = "test@test.com",
+                Room = "testroom",
+                Mobile = "testmobilenumber"
+            };
             helper.AddVolunteer(v);
             helper.DeleteVolunteer(tempnum);
             result = FindVolunteerByStuNum(tempnum);
