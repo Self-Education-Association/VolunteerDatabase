@@ -24,16 +24,27 @@ namespace WpfApplication1
         private AppUserIdentityClaims Claims { get; set; }
         private ProjectManageHelper ProjectManageHelper { get; set; }
         private ProjectProgressHelper PrijectProgressHelper { get; set; }
+        private bool flag = true;
         public Mainwindow(AppUserIdentityClaims claims)
         {
             InitializeComponent();
             Claims = claims;
             on_window_Create();
-
+            ShowUserMessage();
+        }
+        private void ShowUserMessage()
+        {
+            account_name.Text = Claims.User.AccountName;
+            org.Text = Claims.User.Organization.ToString();
+            tel.Text = Claims.User.Mobile;
+            roles.Text = Claims.Roles.ToString();
+            userid.Text = Claims.User.StudentNum;
+            email.Text = Claims.User.Email;
+            dormitary.Text = Claims.User.Room;
         }
 
         private void on_window_Create()
-        {
+        {        
             ProjectManageHelper = ProjectManageHelper.GetInstance();
             if (Claims.IsInRole(AppRoleEnum.Administrator) || Claims.IsInRole(AppRoleEnum.TestOnly))
             {
@@ -42,7 +53,8 @@ namespace WpfApplication1
                 User_Approve.IsEnabled = true;
                 Volunteer_Info.IsEnabled = true;
                 User_Info.IsEnabled = true;
-            }
+                flag = false;
+    }
             if (Claims.IsInRole(AppRoleEnum.OrgnizationAdministrator))
             {
                 Project_Manage.IsEnabled = true;
@@ -50,18 +62,21 @@ namespace WpfApplication1
                 User_Approve.IsEnabled = true;
                 Volunteer_Info.IsEnabled = true;
                 User_Info.IsEnabled = true;
+                flag = false;
             }
             if (Claims.IsInRole(AppRoleEnum.OrgnizationMember))
             {
                 Project_Manage.IsEnabled = true;
                 Volunteer_Info.IsEnabled = true;
                 User_Info.IsEnabled = true;
+                flag = false;
             }
-            else
+            if(flag)
             {
                 MessageBox.Show("用户身份非法,请重新登陆后再试.");
                 Main_Tabcontrol.IsEnabled = false;
             }
+            //防止出现无role用户
             if (Claims.Roles.Contains(AppRoleEnum.OrgnizationMember))
             {
                 PrijectProgressHelper = ProjectProgressHelper.GetInstance();
@@ -73,6 +88,7 @@ namespace WpfApplication1
                 var list = ProjectManageHelper.ShowProjectList(Claims.Holder.Organization, true);
                 project_list.ItemsSource = list;
             }
+          
         }
 
         private void exit_button_Click(object sender, RoutedEventArgs e)
@@ -91,7 +107,6 @@ namespace WpfApplication1
             {
                 //可以在这里对RichTextBox做美化               
                 ProgressResult result = ProjectManageHelper.CreatNewProject(Claims.Holder.Organization, project_time.DisplayDate, project_name.Text, project_place.Text, textRange.Text, int.Parse(project_maximum.Text));
-                //这里缺少对最大值是否为数值的检验，看看前端能否实现
                 if (result.Succeeded)
                 {
                     MessageBox.Show("项目创建成功!");
