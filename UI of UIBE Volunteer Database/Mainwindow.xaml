@@ -17,7 +17,7 @@
                             <ComboBoxItem>进行中项目</ComboBoxItem>
                         </ComboBox>
                         <Button x:Name="delete_btn" Content="删除项目" Click="delete_btn_Click" Margin="0,0,415,219" FontSize="8" Width="45" Height="18"></Button>
-                        <DataGrid Margin="0,21,10,10" AutoGenerateColumns="False" x:Name="project_list"
+                        <DataGrid Margin="0,21,10,10" AutoGenerateColumns="True" x:Name="project_list"
                                   ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
                             <DataGrid.RowStyle>
                                 <Style TargetType="DataGridRow">
@@ -67,8 +67,22 @@
                 <TabItem x:Name="Volunteer_Info" Header="志愿者信息" IsEnabled="False"></TabItem>
                 <TabItem x:Name="User_Info" Header="用户信息" IsEnabled="True">
                     <Grid Height="238" Width="482">
-                        <Label x:Name="label" Content="用户名" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                        <Label x:Name="label1" Content="开通时间" HorizontalAlignment="Left" Margin="10,29,0,0" VerticalAlignment="Top"/>
+                        <Label x:Name="label" Content="用户名" HorizontalAlignment="Left" Margin="10,29,0,0" VerticalAlignment="Top"/>
+                        <TextBlock x:Name="account_name" Margin="85,29,312,194"/>
+                        <Label x:Name="label1" Content="所属组织" HorizontalAlignment="Left" Margin="8,77,0,0" VerticalAlignment="Top"/>
+                        <TextBlock x:Name="org" Margin="85,77,312,146"/>
+                        <Label Content="联系电话" Margin="10,130,426,91"/>
+                        <TextBlock x:Name="tel" Margin="85,130,312,91"/>
+                        <Label Content="ID" Margin="210,29,226,194"></Label>
+                        <TextBlock x:Name="userid" Margin="299,29,98,192"/>
+                        <Label Content="电子邮箱" Margin="210,77,226,146"/>
+                        <TextBlock x:Name="email" Margin="299,77,98,146"/>
+                        <Image x:Name="usertouxiang" Margin="402,29,0,129" Height="80" Width="80">
+                            <Image.Source>
+                                ResourceDictionary/haha.jpg
+                            </Image.Source>
+                        </Image>
+
                     </Grid>
                 </TabItem>
             </TabControl>

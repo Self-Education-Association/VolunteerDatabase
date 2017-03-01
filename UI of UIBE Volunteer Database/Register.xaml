@@ -34,7 +34,7 @@
             </ComboBox>
             <TextBlock x:Name="textBlock6" HorizontalAlignment="Left" Margin="232,30,0,0" TextWrapping="Wrap" Text="所属机构" VerticalAlignment="Top"/>
             <TextBlock x:Name="textBlock7" HorizontalAlignment="Left" Margin="232,68,0,0" TextWrapping="Wrap" Text="电话" VerticalAlignment="Top"/>
-            <TextBox x:Name="textBox3" HorizontalAlignment="Left" Height="15" Margin="285,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96" FontSize="6"/>
+            <TextBox x:Name="textBox3" HorizontalAlignment="Left" Height="15" Margin="285,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96" FontSize="6" ToolTip="请输入有效的电话号码" MaxLength="13" KeyDown="textBox3_KeyDown"/>
             <TextBlock x:Name="textBlock8" HorizontalAlignment="Left" Margin="232,106,0,0" TextWrapping="Wrap" Text="电子邮箱" VerticalAlignment="Top"/>
             <TextBox x:Name="textBox4" HorizontalAlignment="Left" Height="15" Margin="285,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96" FontSize="6"/>
             <CheckBox x:Name="checkBox" Content="我已同意使用协议" HorizontalAlignment="Left" Margin="232,182,0,0" VerticalAlignment="Top" Foreground="#FF170303"/>
