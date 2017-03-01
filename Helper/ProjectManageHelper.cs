@@ -11,7 +11,7 @@ namespace VolunteerDatabase.Helper
 {
     public class ProjectManageHelper
     {
-        Database database = new Database();
+        Database database;
         private static ProjectManageHelper helper;
         private static readonly object helperlocker = new object();
         public static ProjectManageHelper GetInstance()
