@@ -16,6 +16,8 @@ namespace VolunteerDatabase.Interface
     public enum AppUserStatus
     {
         Enabled,
+        NotApproved,
+        Rejected,
         Disabled,
         Banned
     }

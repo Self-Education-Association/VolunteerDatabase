@@ -51,6 +51,7 @@
         public virtual DbSet<Project> Projects { get; set; }
 
         public virtual DbSet<LogRecord> LogRecords { get; set; }
+        public virtual DbSet<ApprovalRecord> ApprovalRecords { get; set; }
 
     }
 }
