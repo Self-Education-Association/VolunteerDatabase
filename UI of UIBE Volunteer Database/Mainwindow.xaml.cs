@@ -88,7 +88,7 @@ namespace WpfApplication1
                 var list = ProjectManageHelper.ShowProjectList(Claims.Holder.Organization, true);
                 project_list.ItemsSource = list;
             }
-          
+            //此处输出略显暴力，待改善
         }
 
         private void exit_button_Click(object sender, RoutedEventArgs e)
