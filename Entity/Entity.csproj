@@ -67,6 +67,10 @@
     <Compile Include="Migrations\201702281437005_TempFix.Designer.cs">
       <DependentUpon>201702281437005_TempFix.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703011355214_ApprovalRecordPUpdate.cs" />
+    <Compile Include="Migrations\201703011355214_ApprovalRecordPUpdate.Designer.cs">
+      <DependentUpon>201703011355214_ApprovalRecordPUpdate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Organization.cs" />
     <Compile Include="Project.cs" />
@@ -89,6 +93,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702281437005_TempFix.resx">
       <DependentUpon>201702281437005_TempFix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703011355214_ApprovalRecordPUpdate.resx">
+      <DependentUpon>201703011355214_ApprovalRecordPUpdate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
