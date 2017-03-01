@@ -22,7 +22,8 @@ namespace WpfApplication1
     public partial class Mainwindow : Window
     {
         private AppUserIdentityClaims Claims { get; set; }
-        private ProjectManageHelper Projecthelper { get; set; }
+        private ProjectManageHelper ProjectManageHelper { get; set; }
+        private ProjectProgressHelper PrijectProgressHelper { get; set; }
         public Mainwindow(AppUserIdentityClaims claims)
         {
             InitializeComponent();
@@ -33,7 +34,7 @@ namespace WpfApplication1
 
         private void on_window_Create()
         {
-            Projecthelper = ProjectManageHelper.GetInstance();
+            ProjectManageHelper = ProjectManageHelper.GetInstance();
             if (Claims.IsInRole(AppRoleEnum.Administrator)|| Claims.IsInRole(AppRoleEnum.TestOnly))
             {
                 Project_Manage.IsEnabled = true;
@@ -42,7 +43,7 @@ namespace WpfApplication1
                 Volunteer_Info.IsEnabled = true;
                 User_Info.IsEnabled = true;
             }
-            else if(Claims.IsInRole(AppRoleEnum.OrgnizationAdministrator))
+           if(Claims.IsInRole(AppRoleEnum.OrgnizationAdministrator))
             {
                 Project_Manage.IsEnabled = true;
                 Project_Add.IsEnabled = true;
@@ -50,11 +51,9 @@ namespace WpfApplication1
                 Volunteer_Info.IsEnabled = true;
                 User_Info.IsEnabled = true;
             }
-            else if(Claims.IsInRole(AppRoleEnum.OrgnizationMember))
+            if(Claims.IsInRole(AppRoleEnum.OrgnizationMember))
             {
                 Project_Manage.IsEnabled = true;
-                Project_Add.IsEnabled = false;
-                User_Approve.IsEnabled = false;
                 Volunteer_Info.IsEnabled = true;
                 User_Info.IsEnabled = true;
             }
@@ -63,11 +62,17 @@ namespace WpfApplication1
                 MessageBox.Show("用户身份非法,请重新登陆后再试.");
                 Main_Tabcontrol.IsEnabled = false;
             }
-            var list = Projecthelper.ShowProjectList(Claims.Holder.Organization, true);
-            project_list.ItemsSource = list;
-
-            //后台缺少一个FindProjectListByManager方法
-            //并不缺少。。逻辑还要再改一下，之前没有太考虑一个用户持有多个role的情况
+            if(Claims.Roles.Contains(AppRoleEnum.OrgnizationMember))
+            {
+                PrijectProgressHelper = ProjectProgressHelper.GetInstance();
+                var list = PrijectProgressHelper.FindAuthorizedProjectsByUser(Claims.User);
+                project_list.ItemsSource = list;
+            }
+            if (Claims.Roles.Contains(AppRoleEnum.OrgnizationAdministrator))
+            {
+                var list = ProjectManageHelper.ShowProjectList(Claims.Holder.Organization, true);
+                project_list.ItemsSource = list;
+            }
         }
 
         private void exit_button_Click(object sender, RoutedEventArgs e)
@@ -77,29 +82,29 @@ namespace WpfApplication1
 
         private void create_project_button_Click(object sender, RoutedEventArgs e)
         {
-            if(project_name.Text ==""||project_place.Text==""||project_time.DisplayDate==null||project_time.DisplayDate<DateTime.Now.AddYears(-20)||project_place.Text==""||project_maximum.Text==""||project_details.Text=="")
+            TextRange textRange = new TextRange(project_details.Document.ContentStart, project_details.Document.ContentEnd);
+            if (project_name.Text ==""||project_place.Text==""||project_time.DisplayDate==null||project_time.DisplayDate<DateTime.Now.AddYears(-20)||project_place.Text==""||project_maximum.Text==""||textRange.Text=="")
             {
                 MessageBox.Show("请完整输入所有项目.");
             }
             else
             {
-                ProgressResult result = Projecthelper.CreatNewProject(Claims.Holder.Organization, project_time.DisplayDate, project_name.Text, project_place.Text, project_details.Text, int.Parse(project_maximum.Text));
+                //可以在这里对RichTextBox做美化               
+                ProgressResult result = ProjectManageHelper.CreatNewProject(Claims.Holder.Organization, project_time.DisplayDate, project_name.Text, project_place.Text, textRange.Text, int.Parse(project_maximum.Text));
                 //这里缺少对最大值是否为数值的检验，看看前端能否实现
                 if (result.Succeeded)
                 {
                     MessageBox.Show("项目创建成功!");
-                    project_name.Text = "";
-                    project_place.Text = "";
-                    project_maximum.Text = "";
-                    project_details.Text = "";
+                    project_name.Clear();
+                    project_place.Clear();
+                    project_maximum.Clear();
+                    project_details.Document.Blocks.Clear();
                 }
                 else
                 {
                     MessageBox.Show("项目创建失败!错误信息" + string.Join(",", result.Errors));
                 }
             }
-
-                    //找一下text是哪一个
         }
 
         private void delete_btn_Click(object sender, RoutedEventArgs e)
