@@ -55,7 +55,7 @@
                         <TextBlock Text="项目时间" Height="23" Width="72" Margin="31,-58,-21,106"/>
                         <DatePicker x:Name="project_time" Height="23" Margin="291,-61,96,110"/>
                         <TextBlock Text="最大人数" Height="23" Width="72" Margin="31,-30,-21,78"/>
-                        <TextBox x:Name="project_maximum" Height="23" Margin="291,-27,96,76"/>
+                        <TextBox x:Name="project_maximum" Height="23" Margin="291,-27,96,76" KeyDown="project_maximum_KeyDown"/>
                         <TextBlock Text="项目详情" Height="23" Width="72" Margin="19,10,395,39"/>
                         <RichTextBox x:Name="project_details" Margin="89,96,96,46"/>
                         <Button x:Name="create_project_button" Content="创建项目" Click="create_project_button_Click" Height="23" Width="72" Margin="404,211,10,10"/>
@@ -73,10 +73,15 @@
                         <TextBlock x:Name="org" Margin="85,77,312,146"/>
                         <Label Content="联系电话" Margin="10,130,426,91"/>
                         <TextBlock x:Name="tel" Margin="85,130,312,91"/>
-                        <Label Content="ID" Margin="210,29,226,194"></Label>
+                        <Label Content="学号" Margin="210,29,226,194"></Label>
                         <TextBlock x:Name="userid" Margin="299,29,98,192"/>
                         <Label Content="电子邮箱" Margin="210,77,226,146"/>
                         <TextBlock x:Name="email" Margin="299,77,98,146"/>
+                        <Label Content="宿舍" Margin="210,130,226,91" IsVisibleChanged="Label_IsVisibleChanged"/>
+                        <TextBlock x:Name="dormitary" Margin="299,130,98,91"/>
+                        <Label Content="用户身份" Margin="10,180,426,40"/>
+                        <TextBlock x:Name="roles" Margin="85,180,312,40"/>
+
                         <Image x:Name="usertouxiang" Margin="402,29,0,129" Height="80" Width="80">
                             <Image.Source>
                                 ResourceDictionary/haha.jpg
