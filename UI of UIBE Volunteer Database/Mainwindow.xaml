@@ -17,7 +17,7 @@
                             <ComboBoxItem>进行中项目</ComboBoxItem>
                         </ComboBox>
                         <Button x:Name="delete_btn" Content="删除项目" Click="delete_btn_Click" Margin="0,0,415,219" FontSize="8" Width="45" Height="18"></Button>
-                        <DataGrid Margin="0,21,10,10" AutoGenerateColumns="True" x:Name="project_list"
+                        <DataGrid Margin="0,21,10,10" AutoGenerateColumns="False" x:Name="project_list"
                                   ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
                             <DataGrid.RowStyle>
                                 <Style TargetType="DataGridRow">
@@ -30,6 +30,19 @@
                                     </Style.Triggers>
                                 </Style>
                             </DataGrid.RowStyle>
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn Header=" " Width="20">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <CheckBox/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Header="项目名称" Width="80"></DataGridTextColumn>
+                                <DataGridTextColumn Header="地点信息" Width="90"></DataGridTextColumn>
+                                <DataGridTextColumn Header="最大人数" Width="60"></DataGridTextColumn>
+                                <DataGridTextColumn Header="项目详情" Width="*"></DataGridTextColumn>
+                            </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
                 </TabItem>
