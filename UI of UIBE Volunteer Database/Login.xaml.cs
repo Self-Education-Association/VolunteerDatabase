@@ -14,16 +14,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using VolunteerDatabase.Helper;
+using VolunteerDatabase.Interface;
 using VolunteerDatabase.Entity;
 
 namespace WpfApplication1
 {
     /// <summary>
-    /// MainWindow.xaml 的交互逻辑
+    /// Login.xaml 的交互逻辑
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Login : Window
     {
-        public MainWindow()
+        public Login()
         {
             InitializeComponent();
         }
@@ -32,18 +33,20 @@ namespace WpfApplication1
         {
             var Register = new Register();
             Register.Show();
-            this.Hide();
-
         }
 
-        private void login_Click(object sender, RoutedEventArgs e)
+        private async void login_Click(object sender, RoutedEventArgs e)
         {
             IdentityHelper ih = IdentityHelper.GetInstance();
-            var claims= ih.CreateClaimsAsync(userid.Text, password.Password.ToString()).Result;
-            if(claims.IsAuthenticated)
+            //应验证用户名和密码非空，空则不与数据库交互而是弹出提示
+            var claims= await ih.CreateClaimsAsync(userid.Text, password.Password.ToString());
+            
+            if (claims.IsAuthenticated)
             {
-                MessageBox.Show("登陆成功！");
-
+                //MessageBox.Show("登陆成功！");
+                Mainwindow mainwindow = new Mainwindow(claims);
+                mainwindow.Show();
+                this.Close();
             }
             else
             {

@@ -100,7 +100,6 @@ namespace VolunteerDatabase.Helper
                 return null;
             }
         }
-
         public List<BlackListRecord> FindBlackListByAddTime(DateTime start, DateTime end)
         {
             if (start > end)
@@ -127,6 +126,7 @@ namespace VolunteerDatabase.Helper
             {
                 return BlackListResult.Error(BlackListResult.AddBlackListRecordErrorEnum.NullRecord);
             }
+            // var tempbrec = database.BlackListRecords.Where(b =>  b.Project.Id == brec.Project.Id).ToList();
 
             IEnumerable<BlackListRecord> tempbrec = null;
             if (brec.Project != null)
@@ -136,12 +136,14 @@ namespace VolunteerDatabase.Helper
 
             // if (database.BlackListRecords.Where(b=>b.Project==brec.Project).Count()!=0)
             if (tempbrec != null)
+            //matk!!!! 空的记录判断为非空/！
             {
-                foreach (var eptembrec in tempbrec)
+                foreach (var eptempbrec in tempbrec)
                 {
-                    if (AreSame(eptembrec, brec))
+                    if (AreSame(eptempbrec, brec))
+                    {
                         return BlackListResult.Error(BlackListResult.AddBlackListRecordErrorEnum.ExistingRecord);
-                    break;
+                    }
                 }
                 //  return BlackListResult.Error(BlackListResult.AddBlackListRecordErrorEnum.ExistingRecord);
             }
@@ -157,7 +159,7 @@ namespace VolunteerDatabase.Helper
             }
             catch (Exception e)
             {
-                return BlackListResult.Error("出现错误，错误信息:" + e.Message);
+                return BlackListResult.Error("出现错误，错误信息:{0}", e.Message);
             }
             return BlackListResult.Success();
         }
@@ -184,8 +186,7 @@ namespace VolunteerDatabase.Helper
             }
             catch (Exception e)
             {
-                string error = string.Format("出现错误，错误信息:{0}", e.Message);
-                return BlackListResult.Error(error);
+                return BlackListResult.Error("出现错误，错误信息:{0}", e.Message);
             }
             return BlackListResult.Success();
         }
@@ -210,7 +211,7 @@ namespace VolunteerDatabase.Helper
             }
             catch (Exception e)
             {
-                return BlackListResult.Error("出现错误，错误信息:" + e.Message);
+                return BlackListResult.Error("出现错误，错误信息:{0}", e.Message);
             }
             return BlackListResult.Success();
         }
@@ -230,7 +231,7 @@ namespace VolunteerDatabase.Helper
             }
             catch (Exception e)
             {
-                return BlackListResult.Error("出现错误，错误信息:" + e.Message);
+                return BlackListResult.Error("出现错误，错误信息:{0}", e.Message);
             }
             return BlackListResult.Success();
         }
@@ -270,7 +271,7 @@ namespace VolunteerDatabase.Helper
                 return true;
             if ((a == null && b != null) || (a != null && b == null))
                 return false;
-            else if (a.Adder == b.Adder && a.AddTime == b.AddTime && a.EndTime == b.AddTime && a.Volunteer == b.Volunteer && a.Project == b.Project && a.Organization == b.Organization && a.Status == b.Status)
+            else if (a.Adder.AccountName == b.Adder.AccountName && a.EndTime == b.EndTime && a.Volunteer.StudentNum == b.Volunteer.StudentNum && a.Project.Id == b.Project.Id && a.Organization.Id == b.Organization.Id && a.Status == b.Status)
             {
 
                 return true;

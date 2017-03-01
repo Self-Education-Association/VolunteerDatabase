@@ -19,7 +19,7 @@ namespace VolunteerDatabase.Entity
 
         public string Details { get; set; }
 
-        public DateTime? Time { get; set; }
+        public DateTime Time { get; set; }
 
         public DateTime? CreatTime { get; set; }
 
