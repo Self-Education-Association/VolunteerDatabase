@@ -237,6 +237,108 @@ namespace VolunteerDatabase.Helper
             return result;
         }
 
+        //显示所有通过审批的成员
+        public List<AppUser> ShowApprovedMembers(Organization org)
+        {
+            return org.Members.Where(m => m.Status == AppUserStatus.Enabled).ToList();
+        }
+        
+        public List<AppUser> ShowNotApprovedMembers(Organization org)
+        {
+            return org.Members.Where(m => m.Status == AppUserStatus.NotApproved).ToList();
+        }
+
+        public IdentityResult ApproveRegisterRequest(AppUser user)
+        {
+            if (user == null)
+            {
+                return IdentityResult.Error("待审批的用户为空,请查询后重试!");
+            }
+            try
+            {
+                user.Status = AppUserStatus.Enabled;
+                Save();
+                return IdentityResult.Success();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public IdentityResult ApproveRegisterRequest(List<AppUser> users)
+        {
+            if(users == null)
+            {
+                return IdentityResult.Error("生成的用户列表为空,请查询后重试!");
+            }
+            try
+            {
+                foreach (var user in users)
+                {
+                    if (user == null)
+                    {
+                        return IdentityResult.Error("待审批的某个用户为空,请查询后重试!");
+                    }
+                    user.Status = AppUserStatus.Enabled;
+                }
+                Save();
+                return IdentityResult.Success();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public IdentityResult RejectRegisterRequest(AppUser user,string note = "无")
+        {
+            if(user == null)
+            {
+                return IdentityResult.Error("待拒绝的用户为空,用户实体非法,请查询后重试!");
+            }
+            if(user.Id == 0)
+            {
+                return IdentityResult.Error("用户实体非法,请查询后重试!");
+            }
+            try
+            {
+                var approvalrecord = database.ApprovalRecords.SingleOrDefault(r => r.User.Id == user.Id);
+                if (approvalrecord == null)
+                {
+                    return IdentityResult.Error("没有找到对应用户的审批记录!");
+                }
+                approvalrecord.IsApproved = false;
+                approvalrecord.ExpireTime = DateTime.Now.AddDays(3);
+                approvalrecord.Note = note;
+                database.ApprovalRecords.Add(approvalrecord);
+                Save();
+                return IdentityResult.Success();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public ApprovalRecord GetApprovalRecord(AppUser user)
+        {
+            var result = database.ApprovalRecords.SingleOrDefault(r => r.User.Id == user.Id);
+            if(result == null)
+            {
+                return null;
+            }
+            try
+            {
+                return result;
+            }
+            catch(Exception)
+            {
+                throw;
+            }
+        }
+
+
         private void Save()
         {
             bool flag = false;
