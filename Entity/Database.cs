@@ -20,9 +20,10 @@
             modelBuilder.Entity<AppUser>().HasMany(u => u.Roles).WithMany(r => r.Users);
             modelBuilder.Entity<AppUser>().HasRequired(u => u.Organization).WithMany(o => o.Members);
             modelBuilder.Entity<AppUser>().HasMany(u => u.AddedLogRecords).WithOptional(r=> r.Adder);
+            modelBuilder.Entity<AppUser>().HasMany(u => u.Underlings).WithMany(u => u.Superiors);
             modelBuilder.Entity<AppUser>().HasMany(u => u.TargetedBy).WithOptional(t => t.TargetAppUser);
            
-            modelBuilder.Entity<AppUser>().HasMany(u => u.Project).WithMany(o => o.Managers);
+            modelBuilder.Entity<AppUser>().HasMany(u => u.Projects).WithMany(o => o.Managers);
             modelBuilder.Entity<Project>().HasMany(u => u.Volunteers).WithMany(r => r.Project);
             modelBuilder.Entity<Project>().HasMany(p => p.TargetedBy).WithOptional(t => t.TargetProject);
 
@@ -51,7 +52,10 @@
         public virtual DbSet<Project> Projects { get; set; }
 
         public virtual DbSet<LogRecord> LogRecords { get; set; }
+
         public virtual DbSet<ApprovalRecord> ApprovalRecords { get; set; }
+
+        public virtual DbSet<CreditRecord> CreditRecords { get; set; }
 
     }
 }
