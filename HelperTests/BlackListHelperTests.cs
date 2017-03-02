@@ -6,77 +6,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VolunteerDatabase.Interface;
 
 namespace VolunteerDatabase.Helper.Tests
 {
     [TestClass()]
     public class BlackListHelperTests
     {
-        Database database = new Database();
+        Database database = DatabaseContext.GetInstance();
         BlackListHelper helper = BlackListHelper.GetInstance();
-        VolunteerHelper vhelper = VolunteerHelper.GetInstance();
-        ProjectManageHelper phelper = ProjectManageHelper.GetInstance();
-        #region 创建第一个Volunteer
-        Volunteer TestVolunteer1 = new Volunteer
-        {
-            //Id = 000,
-            StudentNum = 998,
-            Mobile = "1234567890-",
-            Name = "TestVolunteer1",
-            Email = "AddTest@test.com",
-            Class = "AddTestClass",
-            Room = "AddTestRoom"
-        };
-        #endregion
-        #region 创建第二个Volunteer
-        Volunteer TestVolunteer2 = new Volunteer
-        {
-            //Id = 001,
-            StudentNum = 899,
-            Mobile = "-0987654321",
-            Name = "TestVolunteer2",
-            Email = "AddTest@test.com",
-            Class = "AddTestClass",
-            Room = "AddTestRoom"
-        };
-            #endregion
-            #region 创建第一个Adder
-            AppUser Testadder1 = new AppUser()
-            {
-                Name = "testadder1"
-            };
-            #endregion
-            #region 创建第二个Adder
-            AppUser Testadder2 = new AppUser()
-            {
-                Name = "testadder2"
-            };
-            #endregion
-            #region 创建Organization
-            Organization org = new Organization()
-            {
+        VolunteerHelper volunteerhelper = VolunteerHelper.GetInstance();
+        ProjectManageHelper projectmanagerhelper = ProjectManageHelper.GetInstance();
+        IdentityHelper identityhelper = IdentityHelper.GetInstance();
 
-                Name = "TestOnly",
-                OrganizationEnum = OrganizationEnum.TestOnly
-            };
-            #endregion
-            #region 创建一个Project
-            Project pro = new Project()
-            {
-                Name = "testpro"
-
-            };
-            #endregion
-       
-        
-
-       [TestMethod()]
-        public void preparations()
-        {
-          vhelper.AddVolunteer(TestVolunteer1);
-          vhelper.AddVolunteer(TestVolunteer2);
-          //phelper.CreatNewProject(org, DateTime.Now,null, "pro", "testplace", "null", 10);
-        }
         [TestMethod()]
         public void GetInstanceTest()
         {
@@ -86,72 +28,59 @@ namespace VolunteerDatabase.Helper.Tests
         [TestMethod()]
         public void AddBlackListTest()
         {
-          
-            #region 添加第一条黑名单记录
+            // 创建第一个volunteer
+            Volunteer v1 = CreateVolunteer();
+            database.Volunteers.Add(v1);
+            // 创建一个adder
+            AppUser adder = CreateUser();
+            database.Users.Add(adder);
+            // 创建一个org
+            Organization org = identityhelper.CreateOrFindOrganization(OrganizationEnum.TestOnly);
+            // 创建一个pro
+            Project pro = CreateProject();
+            // 添加第一条黑名单记录
             BlackListRecord testaddrecord1 = new BlackListRecord
             {
                 //Id = 1234567890,
-                Volunteer = TestVolunteer1,
-                Adder = Testadder1,
+                Volunteer = database.Volunteers.Single(b => b.StudentNum == v1.StudentNum ),
+                Adder = database.Users.Single(b => b.StudentNum == adder.StudentNum ),
                 Status = BlackListRecordStatus.Enabled,
                 Organization = org,
                 EndTime = new DateTime(2090 / 2 / 11),
                 AddTime = System.DateTime.Now,
-                Project = pro
+                Project = database.Projects.Single(b => b.Name == pro.Name)
             };
-            /* var result = helper.AddBlackListRecord(testaddrecord1);
-               if (result == BlackListResult.Error(BlackListResult.AddBlackListRecordErrorEnum.ExistingRecord))
+            BlackListResult result = helper.AddBlackListRecord(testaddrecord1);
+               if ( !result.Succeeded )
                {
-                   var existedrecord = database.BlackListRecords.Find(testaddrecord1.UID);
-                   database.BlackListRecords.Remove(existedrecord);
-                   database.SaveChanges();
-               } */
-            helper.AddBlackListRecord(testaddrecord1);
-            var actual1 = helper.FindBlackList(Testadder1);
-            //Assert.AreEqual(result, actual1);
-            //if (testaddrecord1 == actual1)
-            Assert.IsNotNull(helper.FindBlackList(Testadder1), "添加第一条记录为空！");
-            #endregion
-
-            #region 添加第二条黑名单记录
-            BlackListRecord testaddrecord2 = new BlackListRecord
+                Assert.Fail("返回错误结果！请检查后重试");
+               }
+            var actual = helper.FindBlackList(v1);
+            if ( actual == null )
             {
-                //Id = 0987654321,
-                Volunteer = TestVolunteer2,
-                Adder = Testadder2,
-                Status = BlackListRecordStatus.Enabled,
-                Organization = org,
-                EndTime = new DateTime(2090 / 2 / 10),
-                AddTime = System.DateTime.Now,
-                Project = pro
-            };
-            helper.AddBlackListRecord(testaddrecord2);
-            var actual2 = helper.FindBlackList(Testadder2);
-            Assert.IsNotNull(actual2, "添加第二条黑名单记录失败！");
-            #endregion
+                Assert.Fail("记录添加失败！数据库无此记录！");
+            }
 
-            #region   测试ExistingRecord
+            // 测试ExistingRecord
             BlackListRecord testaddrecord3 = new BlackListRecord
             {
                 //Id = 0987654321
-                Volunteer = TestVolunteer1,
-                Adder = Testadder1,
+                Volunteer = v1,
+                Adder = adder,
                 Status = BlackListRecordStatus.Enabled,
                 Organization = org,
                 EndTime = new DateTime(2090 / 2 / 11),
                 AddTime = System.DateTime.Now,
                 Project = pro
             };
-            var existingrecordresult = helper.AddBlackListRecord(testaddrecord3);
+            BlackListResult existingrecordresult = helper.AddBlackListRecord(testaddrecord3);
             //Assert.AreEqual(existingrecordresult, BlackListResult.AddBlackListRecordErrorEnum.ExistingRecord, "检验existingrecord失败！");
             if (!BlackListResult.AreSame(BlackListResult.Error(BlackListResult.AddBlackListRecordErrorEnum.ExistingRecord), existingrecordresult))
             {
                 Assert.Fail();
             }
 
-            #endregion
-
-            #region 测试WrongTime
+            // 测试WrongTime
             BlackListRecord testaddrecord4 = new BlackListRecord
             {
                 EndTime = new DateTime(2017 / 2 / 1),
@@ -164,9 +93,7 @@ namespace VolunteerDatabase.Helper.Tests
                 Assert.Fail();
             }
 
-            #endregion
-
-            #region 测试Nullrecord
+            // 测试Nullrecord
             BlackListRecord testaddrecord5 = new BlackListRecord();
             var nullrecordresult = helper.AddBlackListRecord(testaddrecord5);
             //Assert.AreEqual(nullrecordresult, BlackListResult.AddBlackListRecordErrorEnum.NullRecord, "测试nullrecord失败！");
@@ -174,172 +101,248 @@ namespace VolunteerDatabase.Helper.Tests
             {
                 Assert.Fail();
             }
-
-            #endregion
         }
 
         [TestMethod()]
         public void FindBlackListTest()
         {
-            #region AddNewRecord
-            BlackListRecord testaddrecord1 = new BlackListRecord
+            //创建两条新的黑名单记录
+            Volunteer v1 = CreateVolunteer();
+            database.Volunteers.Add(v1);
+            AppUser adder1 = CreateUser();
+            database.Users.Add(adder1);
+            Organization org = identityhelper.CreateOrFindOrganization(OrganizationEnum.TestOnly);
+            Project pro1 = CreateProject();
+            database.Projects.Add(pro1);
+            BlackListRecord blacklistrecord = new BlackListRecord
             {
                 // Id = 1234567890,
-                Volunteer = TestVolunteer1,
-                Adder = Testadder1,
+                Volunteer = database.Volunteers.Single(b => b.StudentNum == v1.StudentNum ),
+                Adder = database.Users.Single(b => b.StudentNum == adder1.StudentNum ),
                 Status = BlackListRecordStatus.Enabled,
                 Organization = org,
-                EndTime = new DateTime(2090 / 2 / 11),
+                EndTime = new DateTime(2090,2,11),
                 AddTime = System.DateTime.Now,
-                Project = pro
+                Project = database.Projects.Single(b => b.Name == pro1.Name )
             };
-         /*   var result = helper.AddBlackListRecord(testaddrecord1);
-            if (result == BlackListResult.Error(BlackListResult.AddBlackListRecordErrorEnum.ExistingRecord))
+            database.BlackListRecords.Add(blacklistrecord);
+            Project pro2 = CreateProject();
+            database.Projects.Add(pro2);
+            BlackListRecord blacklistrecord2 = new BlackListRecord
             {
-                var existedrecord = helper.FindBlackList(Testadder2);
-               database.BlackListRecords.Remove(existedrecord);
-                database.SaveChanges();
-            }*/
-            #endregion
+                // Id = 1234567890,
+                Volunteer = database.Volunteers.Single(b => b.StudentNum == v1.StudentNum),
+                Adder = database.Users.Single(b => b.StudentNum == adder1.StudentNum),
+                Status = BlackListRecordStatus.Enabled,
+                Organization = org,
+                EndTime = new DateTime(2050,11,13),
+                AddTime = System.DateTime.Now,
+                Project = database.Projects.Single(b => b.Name == pro2.Name)
+            };
+            database.BlackListRecords.Add(blacklistrecord2);
+            // 测试FindBlackListByVolunteer
+            var findbyvolunteer = helper.FindBlackList(v1);
+            if ( findbyvolunteer == null )
+            {
+                Assert.Fail("找不到记录！");
+            }
+            else if ( findbyvolunteer.Count() != 2)
+            {
+                Assert.Fail("测试方法findbyvolunteer失败！");
+            }
 
-           /* #region FindRecordById
-            Guid testfindbyid = testaddrecord1.UID;
-            Assert.IsNotNull(database.BlackListRecords.Find(testfindbyid), "无法通过id查找！");
-            #endregion*/
+            //测试FindBlackListByOrg
+            var findbyorg = helper.FindBlackList(org);
+            if( findbyorg == null )
+            {
+                Assert.Fail("找不到记录！");
+            }
+            else if (findbyvolunteer.Count() != 2)
+            {
+                Assert.Fail("测试方法findbyorg失败！");
+            }
 
-            #region  FindRecordByVolunteer
-            Volunteer testfindbyvolunteer1 = TestVolunteer1;
-            Assert.IsNotNull(helper.FindBlackList(testfindbyvolunteer1), "无法通过volunteer查找！");
-            #endregion
+            //测试FindBlackListByPro
+            var findbypro1 = helper.FindBlackList(pro1);
+            var findbypro2 = helper.FindBlackList(pro2);
+            if ( findbypro1.Count != 1 && findbypro2.Count !=1)
+            {
+                Assert.Fail("测试方法FindBlackListByPro失败！返回值与预期值不符！");
+            }
 
-            #region FindRecordByOrg
-            Organization testfindbyorg = org;
-            Assert.IsNotNull(helper.FindBlackList(org), "无法通过org查找！");
-            #endregion
+            //测试FindBlackListByAdder
+            var findbyadder = helper.FindBlackList(adder1);
+            if (findbyadder == null)
+            {
+                Assert.Fail("找不到记录！");
+            }
+            else if (findbyadder.Count() != 2)
+            {
+                Assert.Fail("测试方法findbyadder失败！");
+            }
 
-            #region FindRecordByPro
-            Project testfindbypro = pro;
-            Assert.IsNotNull(helper.FindBlackList(pro), "无法通过pro查找！");
-            #endregion
+            //测试FindBlackListByAddTime
+            var findbyaddtime = helper.FindBlackListByAddTime(blacklistrecord.AddTime, blacklistrecord.EndTime);
+            if (findbyaddtime == null)
+            {
+                Assert.Fail("找不到记录！");
+            }
+            else if (findbyaddtime.Count() != 1 )
+            {
+                Assert.Fail("测试方法findbyaddtime失败！");
+            }
 
-            #region FindRecordByadder
-            AppUser testfindbyadder = Testadder1;
-            Assert.IsNotNull(helper.FindBlackList(testfindbyadder), "无法通过adder查找！");
-            #endregion
+            //测试FindBlackListByEndTime
+            var findbyendtime = helper.FindBlackListByEndTime(blacklistrecord.AddTime, blacklistrecord2.EndTime);
+            if ( findbyendtime == null )
+            {
+                Assert.Fail("找不到记录！");
+            }
+            else if ( findbyendtime.Count() != 2 )
+            {
+                Assert.Fail("测试方法findbyendtime失败");
+            }
 
-            #region FindRecordByAddTime
-            DateTime testfindbyaddtime = System.DateTime.Now;
-            Assert.IsNotNull(helper.FindBlackListByAddTime(testfindbyaddtime, new DateTime(2090 / 2 / 11)), "无法通过addtime查找！");
-            #endregion
-
-            #region FindRecordByEndTime
-            Assert.IsNotNull(helper.FindBlackListByEndTime(DateTime.Now, new DateTime(2090 / 2 / 11)), "无法通过endtime查找");
-            #endregion
-
-            //是否为同一条记录
-          /*  Assert.AreSame(database.BlackListRecords.Find(testfindbyid), database.BlackListRecords.Find(testfindbyvolunteer1), "声明失败不是同一条记录！");*/
+            //清空数据库
 
         }
 
         [TestMethod()]
         public void EditBlackListTest()
         {
-           #region AddNewRecord
-           
-            BlackListRecord testaddrecord1 = new BlackListRecord
+            //添加新的记录
+            Volunteer v = CreateVolunteer();
+            database.Volunteers.Add(v);
+            AppUser adder = CreateUser();
+            database.Users.Add(adder);
+            Organization org = identityhelper.CreateOrFindOrganization(OrganizationEnum.TestOnly);
+            Project pro = CreateProject();
+            database.Projects.Add(pro);
+            BlackListRecord blacklistrecord = new BlackListRecord
             {
-                //Id = 1234567890,
-                Volunteer = TestVolunteer1,
-                Adder = Testadder1,
+                // Id = 1234567890,
+                Volunteer = database.Volunteers.Single(b => b.StudentNum == v.StudentNum),
+                Adder = database.Users.Single(b => b.StudentNum == adder.StudentNum),
                 Status = BlackListRecordStatus.Enabled,
                 Organization = org,
-                EndTime = new DateTime(2090 / 2 / 11),
+                EndTime = new DateTime(2090, 2, 11),
                 AddTime = System.DateTime.Now,
-                Project = pro
+                Project = database.Projects.Single(b => b.Name == pro.Name)
             };
-            /*
-           var result = helper.AddBlackListRecord(testaddrecord1);
-           if (result == BlackListResult.Error(BlackListResult.AddBlackListRecordErrorEnum.ExistingRecord))
-           {
-               var existedrecord = database.BlackListRecords.Find(testaddrecord1.UID);
-               database.BlackListRecords.Remove(existedrecord);
-               database.SaveChanges();
-           }*/
-            #endregion
-
-            #region EmptyId
-            //int tempid = testaddrecord1.Id--;
-            var tempendtime = new DateTime(2090 / 2 / 11);
-          /*  BlackListRecord tempid = new BlackListRecord()
+            database.BlackListRecords.Add(blacklistrecord);
+            var tempblacklist = helper.FindBlackList(v);
+            BlackListRecord blacklist = tempblacklist.First();
+            // 测试 EmptyId
+            var tempendtime = new DateTime( 2020,2,11 );
+            BlackListResult testresult = helper.EditBlackListRecord(blacklistrecord.UID  , tempendtime, BlackListRecordStatus.Enabled);
+            if ( testresult.Succeeded )
             {
-                EndTime = tempendtime
-            };
-            if (database.BlackListRecords.Find(tempid) == null)
-            {
-                Assert.IsNotNull(database.BlackListRecords.Find(tempendtime), "editemptyid 此条记录不在数据库中");
-                Assert.AreEqual(helper.EditBlackListRecord(tempid.UID, tempendtime, BlackListRecordStatus.Enabled), BlackListResult.EditBlackListRecordErrorEnum.EmptyId);
+                Assert.Fail("返回结果异常！");
             }
-            else
+            //测试EditRecord
+           BlackListResult result = helper.EditBlackListRecord(blacklist.UID, tempendtime , BlackListRecordStatus.Enabled);
+            var actual = helper.FindBlackListByEndTime(blacklistrecord.AddTime, tempendtime);
+            var actualendtime = actual.First();
+          if ( !result.Succeeded )
             {
-                Assert.Fail("Edit部分EmptyID已有记录！");
-            }*/
-            #endregion
-
-            #region NoExistingRecord
-            BlackListRecord testeditnoexistence = new BlackListRecord()
-            {
-                Volunteer = TestVolunteer1
-            };
-            var editresult = helper.EditBlackListRecord(testeditnoexistence.UID, tempendtime, BlackListRecordStatus.Enabled);
-        if(!BlackListResult.AreSame(editresult, BlackListResult.Error(BlackListResult.EditBlackListRecordErrorEnum.NoExistingRecord)))
-                {
-                Assert.Fail();
+                Assert.Fail("结果返回异常！");
             }
-            #endregion
-
-            #region Editrecord
-            var editorigin = database.BlackListRecords.Find (testaddrecord1);
-            var modifiedendtime = new DateTime(2090 / 1 / 11);
-            helper.EditBlackListRecord(testaddrecord1.UID, modifiedendtime, BlackListRecordStatus.Enabled);
-            var editresult1 = database.BlackListRecords .Find(testaddrecord1);
-           if(BlackListHelperTests.AreSame(editresult1,editorigin))
+          else if ( actualendtime.EndTime != tempendtime  )
             {
-                Assert.Fail();
+                Assert.Fail("edit方法失败！");
             }
-            #endregion
-
-
         }
 
         [TestMethod()]
         public void DeleteBlackListTest()
         {
-            #region addrecord
-            BlackListRecord testdeleterecord = new BlackListRecord
+            //添加新的记录
+            Volunteer v = CreateVolunteer();
+            database.Volunteers.Add(v);
+            AppUser adder = CreateUser();
+            database.Users.Add(adder);
+            Organization org = identityhelper.CreateOrFindOrganization(OrganizationEnum.TestOnly);
+            Project pro = CreateProject();
+            database.Projects.Add(pro);
+            BlackListRecord blacklistrecord = new BlackListRecord
             {
-                //Id = 0987654321,
-                Volunteer = TestVolunteer2,
-                Adder = Testadder2,
+                // Id = 1234567890,
+                Volunteer = database.Volunteers.Single(b => b.StudentNum == v.StudentNum),
+                Adder = database.Users.Single(b => b.StudentNum == adder.StudentNum),
                 Status = BlackListRecordStatus.Enabled,
                 Organization = org,
-                EndTime = new DateTime(2090 / 2 / 10),
+                EndTime = new DateTime(2090, 2, 11),
                 AddTime = System.DateTime.Now,
-                Project = pro
+                Project = database.Projects.Single(b => b.Name == pro.Name)
             };
-            #endregion
-
-            if (helper .FindBlackList(Testadder2) == null)
+            database.BlackListRecords.Add(blacklistrecord);
+            var tempblacklist = helper.FindBlackList(adder);
+            var blacklist = tempblacklist.First();
+            if ( helper.FindBlackList(adder) != null )
             {
-                helper.AddBlackListRecord(testdeleterecord);
+                Assert.Fail("记录添加失败！");
             }
-           var testdeleterecord1 = database.BlackListRecords.Find(testdeleterecord);
-            /*else
+            // 测试delete方法
+            var result = helper.DeleteBlackListRecord(blacklist.UID);
+            if ( !result.Succeeded )
             {
-                testdeleterecord = helper.FindBlackList(Testadder2);
-            }*/
-            helper.DeleteBlackListRecord(testdeleterecord1.UID);
-            var testdeleteresult = database.BlackListRecords.Find(testdeleterecord1.UID);
-            Assert.IsNull(testdeleterecord);
+                Assert.Fail("返回结果异常！");
+            }
+            var actual = helper.FindBlackList(adder);
+            if ( actual != null )
+            {
+                Assert.Fail("方法测试失败！");
+            }
+        }
+
+        private Volunteer CreateVolunteer ( )
+        {
+            Random tempnum = new Random();
+            int studentnum = tempnum.Next(000, 999);
+            Guid uid = Guid.NewGuid();
+            string name = uid.ToString();
+            Volunteer volunteer = new Volunteer
+            {
+                //Id = 000,
+                StudentNum = studentnum,
+                Mobile = "1234567890-",
+                Name = name,
+                Email = "AddTest@test.com",
+                Class = "AddTestClass",
+                Room = "AddTestRoom"
+            };
+            return volunteer;
+        }
+
+        private AppUser CreateUser( )
+        {
+            Guid temp = Guid.NewGuid();
+            string name = temp.ToString();
+            Random tempnum = new Random();
+            string studentnum = tempnum.ToString();
+            AppUser user = new AppUser()
+            {
+                AccountName = name,
+                StudentNum = studentnum,
+                Mobile = "1234567890",
+                Email = "test@test.com"
+            };
+            return user;
+        }
+
+        private Project CreateProject( )
+        {
+            Organization org = identityhelper.CreateOrFindOrganization(OrganizationEnum.TestOnly);
+            Guid uid = Guid.NewGuid();
+            string name = uid.ToString();
+            Project project = new Project()
+            {
+                Name = name,
+                Place = "testplace",
+                Creater = org
+            };
+            return project;
+
         }
 
         public static bool AreSame(BlackListRecord a, BlackListRecord b)
