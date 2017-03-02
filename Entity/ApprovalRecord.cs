@@ -12,6 +12,7 @@ namespace VolunteerDatabase.Entity
         public bool IsApproved { get; set; }
         public DateTime RequestTime { get; set; }
         public DateTime ExpireTime { get; set; }
+        public Organization Organization { get; set; }
         public string Note { get; set; }
         public AppUser User { get; set; }//这个需要打开CascedeDelete
     }

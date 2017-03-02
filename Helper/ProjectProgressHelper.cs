@@ -12,7 +12,7 @@ namespace VolunteerDatabase.Helper
     {
         private static ProjectProgressHelper helper;
         private static readonly object helperlocker = new object();
-        Database database = new Database();
+        Database database ;
         public static ProjectProgressHelper GetInstance()
         {
             if (helper == null)
@@ -66,21 +66,18 @@ namespace VolunteerDatabase.Helper
             {
                 ProgressResult.Error("志愿者信息不完整");
             }
-            lock (database)
-            {
-                Volunteer Vol = new Volunteer();
-                Vol.Project.Add(Pro);
-                Vol.StudentNum = num;
-                Vol.Email = email;
-                Vol.Mobile = Phone;
-                Vol.Name = Name;
-                Vol.Room = Room;
-                Vol.Score = 0;
-                //Vol.Records = null;
-                Vol.BlackListRecords = null;
-                database.Volunteers.Add(Vol);
-                Save();
-            }
+            Volunteer Vol = new Volunteer();
+            Vol.Project.Add(Pro);
+            Vol.StudentNum = num;
+            Vol.Email = email;
+            Vol.Mobile = Phone;
+            Vol.Name = Name;
+            Vol.Room = Room;
+            Vol.Score = 0;
+            //Vol.Records = null;
+            Vol.BlackListRecords = null;
+            database.Volunteers.Add(Vol);
+            Save();
             result = ProgressResult.Success();
             return result;
         }
@@ -120,14 +117,14 @@ namespace VolunteerDatabase.Helper
             {
                 return ProgressResult.Error("志愿者不存在于数据库中");
             }
-            if(Pro.Maximum<=Pro.Volunteer.Count)
+            if(Pro.Maximum<=Pro.Volunteers.Count)
             {
                 return ProgressResult.Error("已达项目人数上限，添加失败");
             }
             lock (database)
             {
                 var Project = Pro;
-                Project.Volunteer.Add(Volunteer);
+                Project.Volunteers.Add(Volunteer);
                 Save();
             }
             result = ProgressResult.Success();
@@ -138,14 +135,14 @@ namespace VolunteerDatabase.Helper
         public ProgressResult DeleteVolunteerFromProject(Volunteer Vol, Project Pro)
         {
             ProgressResult result;
-            if (!Pro.Volunteer.Contains(Vol))
+            if (!Pro.Volunteers.Contains(Vol))
             {
                 return ProgressResult.Error("志愿者不在该项目中");
             }
             else
             lock (database)
             {
-                Pro.Volunteer.Remove(Vol);
+                Pro.Volunteers.Remove(Vol);
                 Save();
             }
             result = ProgressResult.Success();

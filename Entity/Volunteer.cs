@@ -30,9 +30,7 @@ namespace VolunteerDatabase.Entity
         public virtual List<Project> Project{ get; set; }
         public virtual List<BlackListRecord> BlackListRecords { get; set; }
         public virtual List<LogRecord> TargetedBy { get; set; }
-
-        public int Score { get; set; }
-
+        public int Score { get; set; }//以后改成double
         public bool AreSameWith(Volunteer b)
         {
             if (b == null)
@@ -71,7 +69,7 @@ namespace VolunteerDatabase.Entity
             }
         }
 
-        public int CompareTo(Volunteer obj)
+        public int CompareTo(Volunteer obj)//Volunteer里存double平均分，加个CreditRecord来存单次的分数
         {
             int result;
             if((this.Score/this.Project.Count)==(obj.Score/obj.Project.Count))
