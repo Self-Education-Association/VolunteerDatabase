@@ -112,7 +112,7 @@ namespace VolunteerDatabase.Helper
                 return false;
             else if (a.ErrorString == b.ErrorString && a.Succeeded == b.Succeeded)
             {
-                    return false;
+                    return true;
             }
             else
                 return false;

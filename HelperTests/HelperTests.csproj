@@ -61,6 +61,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="BlackListHelperTests.cs" />
     <Compile Include="IdentityHelperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SecurityHelperTests.cs" />
