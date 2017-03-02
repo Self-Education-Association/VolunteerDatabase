@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using VolunteerDatabase.Helper;
 using VolunteerDatabase.Interface;
 using VolunteerDatabase.Entity;
+using MahApps.Metro.Controls;
 
 namespace WpfApplication1
 {
@@ -38,20 +39,25 @@ namespace WpfApplication1
         private async void login_Click(object sender, RoutedEventArgs e)
         {
             IdentityHelper ih = IdentityHelper.GetInstance();
-            //应验证用户名和密码非空，空则不与数据库交互而是弹出提示
-            var claims= await ih.CreateClaimsAsync(userid.Text, password.Password.ToString());
-            
-            if (claims.IsAuthenticated)
+            if(userid.Text==""||password.Password.ToString()=="")
             {
-                //MessageBox.Show("登陆成功！");
-                Mainwindow mainwindow = new Mainwindow(claims);
-                mainwindow.Show();
-                this.Close();
+
             }
             else
             {
-                MessageBox.Show("登录失败，请检查用户名和密码！");
-            }
+                var claims = await ih.CreateClaimsAsync(userid.Text, password.Password.ToString());
+                if (claims.IsAuthenticated)
+                {
+                    //MessageBox.Show("登陆成功！");
+                    MainWindow mainwindow = new MainWindow(claims);
+                    mainwindow.Show();
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("登录失败，请检查用户名和密码！");
+                }
+            }           
         }
     }
 }

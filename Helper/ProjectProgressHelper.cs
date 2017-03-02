@@ -12,7 +12,7 @@ namespace VolunteerDatabase.Helper
     {
         private static ProjectProgressHelper helper;
         private static readonly object helperlocker = new object();
-        Database database ;
+        Database database;
         public static ProjectProgressHelper GetInstance()
         {
             if (helper == null)

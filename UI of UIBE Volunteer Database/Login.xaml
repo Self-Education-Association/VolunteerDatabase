@@ -8,11 +8,11 @@
         Title="UIBE Volinteer Database" Height="auto" Width="auto">
     <Viewbox>
         <Grid x:Name="LoginGrid">
-            <TextBox x:Name="userid" HorizontalAlignment="Left" Margin="328,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" Width="160" Background="#FFF1ECFF"/>
-            <PasswordBox x:Name="password" HorizontalAlignment="Left" Margin="328,129,0,0"  VerticalAlignment="Top" Height="30" Width="160" Background="#FFF1ECFF"/>
-            <Button x:Name="login" Content="登录" HorizontalAlignment="Left" Margin="328,164,0,0" VerticalAlignment="Top" Width="75" Click="login_Click"/>
-            <Button x:Name="register" Content="注册" HorizontalAlignment="Left" Margin="413,164,0,0" VerticalAlignment="Top" Width="75" Click="register_Click"/>
-            <Label x:Name="copyrightlabel" Content="© UIBE SEA" HorizontalAlignment="Left" Margin="412,286,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Background="#FF4D4AD5" Foreground="#FF170303">
+            <TextBox x:Name="userid" HorizontalAlignment="Left" Margin="296,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" Width="160" Background="#FFF1ECFF"/>
+            <PasswordBox x:Name="password" HorizontalAlignment="Left" Margin="296,129,0,0"  VerticalAlignment="Top" Height="30" Width="160" Background="#FFF1ECFF"/>
+            <Button x:Name="login" Content="登录" HorizontalAlignment="Left" Margin="296,164,0,0" VerticalAlignment="Top" Width="75" Click="login_Click"/>
+            <Button x:Name="register" Content="注册" HorizontalAlignment="Left" Margin="379,164,0,0" VerticalAlignment="Top" Width="75" Click="register_Click"/>
+            <Label x:Name="copyrightlabel" Content="© UIBE SEA" HorizontalAlignment="Left" Margin="389,285,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Foreground="#FF170303">
                 <Label.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -22,9 +22,9 @@
                     </TransformGroup>
                 </Label.RenderTransform>
             </Label>
-            <Label x:Name="label1" Content="账号" HorizontalAlignment="Left" Margin="285,94,0,0" VerticalAlignment="Top" Height="30" Width="38" FontSize="14" Foreground="#FF170303"/>
-            <Label x:Name="label2" Content="密码" HorizontalAlignment="Left" Margin="285,129,0,0" VerticalAlignment="Top" Height="30" Width="38" FontSize="14" Foreground="#FF170303"/>
-            <Image x:Name="image" HorizontalAlignment="Left" Height="94" Margin="32,77,0,0" VerticalAlignment="Top" Width="253" Source="ResourceDictionary/SplashScreen.PNG">
+            <Label x:Name="label1" Content="账号" HorizontalAlignment="Left" Margin="253,94,0,0" VerticalAlignment="Top" Height="30" Width="38" FontSize="14" Foreground="#FF170303"/>
+            <Label x:Name="label2" Content="密码" HorizontalAlignment="Left" Margin="258,129,0,0" VerticalAlignment="Top" Height="30" Width="38" FontSize="14" Foreground="#FF170303"/>
+            <Image x:Name="image" HorizontalAlignment="Left" Height="94" Margin="0,65,0,0" VerticalAlignment="Top" Width="253" Source="ResourceDictionary/SplashScreen.PNG">
             </Image>
         </Grid>
     </Viewbox>

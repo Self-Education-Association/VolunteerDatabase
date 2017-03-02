@@ -15,7 +15,7 @@ namespace VolunteerDatabase.Helper
 {
     public class CsvHelper
     {
-        Database database = new Database();
+        Database database;
         private CsvHelper()
         {
             database = DatabaseContext.GetInstance();

@@ -29,38 +29,69 @@ namespace WpfApplication1
 
         private void register_button_Click(object sender, RoutedEventArgs e)
         {
-            IdentityHelper ih = IdentityHelper.GetInstance();
-            if (passwordBox.Password == passwordBox1.Password)
+            if (textBox.Text == "" || textBox1.Text == "" || textBox2.Text == "" || textBox3.Text == "" || textBox4.Text == "" || textBox5.Text == "" || passwordBox.Password == "" || comboBox.Text == "")
             {
-                string passWord = passwordBox.Password;
-                OrganizationEnum org = ih.Matching(comboBox.Text);
-                AppUser au = new AppUser()
+                //存在空白，信息不完整
+            }
+            else
+            {
+                IdentityHelper ih = IdentityHelper.GetInstance();
+                if (passwordBox.Password == passwordBox1.Password)
                 {
-                    StudentNum = textBox1.Text,
-                    AccountName = textBox2.Text,
-                    Name = textBox.Text,
-                    Mobile = textBox3.Text,
-                    Email = textBox4.Text
-                };
-                IdentityResult result = ih.CreateUser(au, passWord, AppRoleEnum.Administrator, org);
-                if(result.Succeeded == true)
-                {
-                    MessageBox.Show("注册成功！");
-                    this.Close();
+                    string passWord = passwordBox.Password;
+                    OrganizationEnum org = ih.Matching(comboBox.Text);
+                    AppUser au = new AppUser()
+                    {
+                        StudentNum = textBox1.Text,
+                        AccountName = textBox2.Text,
+                        Name = textBox.Text,
+                        Mobile = textBox3.Text,
+                        Email = textBox4.Text,
+                        Room = textBlock5.Text
+                    };
+                    IdentityResult result = ih.CreateUser(au, passWord, AppRoleEnum.Administrator, org);
+                    if (result.Succeeded == true)
+                    {
+                        MessageBox.Show("注册成功！");
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("注册失败，错误信息：" + string.Join(",", result.Errors));
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("注册失败，错误信息：" + string.Join(",", result.Errors));
+                    MessageBox.Show("两次密码输入不一致，请进行检查");
+                    //用MessageBox太丑了，待改
                 }
             }
-
-            else
-            {
-                MessageBox.Show("两次密码输入不一致，请进行检查");
-                //前端需要检验：  1所有字段不为空 2字段符合要求（没有非法字符，学号为Numeric） 3用户名是否重复
-                //用户名是否重复已经由createuser函数完成了，非空需要检查
-            }
-            
         }
+
+        private void textBox3_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (!((e.Key >= Key.D0 && e.Key <= Key.D9) || (e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9)))
+            {
+                e.Handled = true;
+            }
+
+        }
+
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (!((e.Key >= Key.D0 && e.Key <= Key.D9) || (e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9)))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void textBox2_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (!((e.Key >= Key.D0 && e.Key <= Key.D9) || (e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9)))
+            {
+                e.Handled = true;
+            }
+        }
+        //此处限制了键盘输入必须为数字，但是无法检查输入法的中文输入，待解决
     }
 }
