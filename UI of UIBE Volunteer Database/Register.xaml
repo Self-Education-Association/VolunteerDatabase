@@ -9,16 +9,16 @@
     <Viewbox>
         <Grid>
             <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="38,30,0,0" TextWrapping="Wrap" Text="姓名" VerticalAlignment="Top"/>
-            <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="16" Margin="91,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96" FontSize="6"/>
+            <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="15" Margin="91,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96"/>
             <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="38,68,0,0" TextWrapping="Wrap" Text="学号" VerticalAlignment="Top"/>
-            <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="15" Margin="91,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96" FontSize="6" KeyDown="textBox1_KeyDown"/>
+            <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="15" Margin="91,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96" KeyDown="textBox1_KeyDown"/>
             <TextBlock x:Name="textBlock3" HorizontalAlignment="Left" Margin="38,106,0,0" TextWrapping="Wrap" Text="账号" VerticalAlignment="Top"/>
-            <TextBox x:Name="textBox2" HorizontalAlignment="Left" Height="15" Margin="91,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96" FontSize="6" MaxLength="16" ToolTip="请输入16位以内英文或数字" KeyDown="textBox2_KeyDown"/>
+            <TextBox x:Name="textBox2" HorizontalAlignment="Left" Height="15" Margin="91,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96" MaxLength="16" ToolTip="请输入16位以内英文或数字" KeyDown="textBox2_KeyDown"/>
             <TextBlock x:Name="textBlock4" HorizontalAlignment="Left" Margin="38,140,0,0" TextWrapping="Wrap" Text="密码" VerticalAlignment="Top"/>
-            <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Margin="91,140,0,0" VerticalAlignment="Top" Width="96" Height="15" FontSize="6"/>
+            <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Margin="91,140,0,0" VerticalAlignment="Top" Width="96" Height="15"/>
             <TextBlock x:Name="textBlock5" HorizontalAlignment="Left" Margin="38,173,0,0" TextWrapping="Wrap" Text="确认密码" VerticalAlignment="Top"/>
-            <PasswordBox x:Name="passwordBox1" HorizontalAlignment="Left" Margin="91,175,0,0" VerticalAlignment="Top" Width="96" Height="15" FontSize="6"/>
-            <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="285,32,0,0" VerticalAlignment="Top" Width="96" Height="14" FontSize="6">
+            <PasswordBox x:Name="passwordBox1" HorizontalAlignment="Left" Margin="91,175,0,0" VerticalAlignment="Top" Width="96" Height="18"/>
+            <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="285,32,0,0" VerticalAlignment="Top" Width="96" Height="14">
                 <ComboBoxItem>SEA团队</ComboBoxItem>
                 <ComboBoxItem>校志愿服务中心</ComboBoxItem>
                 <ComboBoxItem>国际经济贸易学院</ComboBoxItem>
@@ -34,9 +34,9 @@
             </ComboBox>
             <TextBlock x:Name="textBlock6" HorizontalAlignment="Left" Margin="232,30,0,0" TextWrapping="Wrap" Text="所属机构" VerticalAlignment="Top"/>
             <TextBlock x:Name="textBlock7" HorizontalAlignment="Left" Margin="232,68,0,0" TextWrapping="Wrap" Text="电话" VerticalAlignment="Top"/>
-            <TextBox x:Name="textBox3" HorizontalAlignment="Left" Height="15" Margin="285,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96" FontSize="6" ToolTip="请输入有效的电话号码" MaxLength="13" KeyDown="textBox3_KeyDown"/>
+            <TextBox x:Name="textBox3" HorizontalAlignment="Left" Height="15" Margin="285,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96" ToolTip="请输入有效的电话号码" MaxLength="13" KeyDown="textBox3_KeyDown"/>
             <TextBlock x:Name="textBlock8" HorizontalAlignment="Left" Margin="232,106,0,0" TextWrapping="Wrap" Text="电子邮箱" VerticalAlignment="Top"/>
-            <TextBox x:Name="textBox4" HorizontalAlignment="Left" Height="15" Margin="285,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96" FontSize="6"/>
+            <TextBox x:Name="textBox4" HorizontalAlignment="Left" Height="15" Margin="285,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96"/>
             <CheckBox x:Name="checkBox" Content="我同意使用协议" HorizontalAlignment="Left" Margin="232,175,0,0" VerticalAlignment="Top" Foreground="#FF170303"/>
             <Button x:Name="register_button" Content="注册" Margin="340,171,26,0" VerticalAlignment="Top" Width="48" Height="20" Click="register_button_Click" IsEnabled="{Binding ElementName=checkBox,Path=IsChecked}"/>
             <TextBlock Text="宿舍" Margin="232,140,153,47"/>
