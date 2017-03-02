@@ -13,19 +13,22 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using VolunteerDatabase.Helper;
 using VolunteerDatabase.Interface;
+using MahApps.Metro.Controls;
+
+
 
 namespace WpfApplication1
 {
     /// <summary>
-    /// Mainwindow.xaml 的交互逻辑
+    /// Mainindow.xaml 的交互逻辑
     /// </summary>
-    public partial class Mainwindow : Window
+    public partial class MainWindow : MetroWindow
     {
         private AppUserIdentityClaims Claims { get; set; }
         private ProjectManageHelper ProjectManageHelper { get; set; }
         private ProjectProgressHelper PrijectProgressHelper { get; set; }
         private bool flag = true;
-        public Mainwindow(AppUserIdentityClaims claims)
+        public MainWindow(AppUserIdentityClaims claims)
         {
             InitializeComponent();
             Claims = claims;

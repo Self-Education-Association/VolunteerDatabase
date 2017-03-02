@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using VolunteerDatabase.Helper;
 using VolunteerDatabase.Interface;
 using VolunteerDatabase.Entity;
+using MahApps.Metro.Controls;
 
 namespace WpfApplication1
 {
@@ -48,7 +49,7 @@ namespace WpfApplication1
                 if (claims.IsAuthenticated)
                 {
                     //MessageBox.Show("登陆成功！");
-                    Mainwindow mainwindow = new Mainwindow(claims);
+                    MainWindow mainwindow = new MainWindow(claims);
                     mainwindow.Show();
                     this.Close();
                 }
