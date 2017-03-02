@@ -309,9 +309,15 @@ namespace VolunteerDatabase.Helper
                     return IdentityResult.Error("没有找到对应用户的审批记录!");
                 }
                 approvalrecord.IsApproved = false;
-                approvalrecord.ExpireTime = DateTime.Now.AddDays(3);
-                approvalrecord.Note = note;
+                approvalrecord.ExpireTime = DateTime.Now.AddDays(3);//最近的审批记录
+                approvalrecord.Note = "拒绝学号为["+approvalrecord.User.StudentNum.ToString()+"]用户名为["+approvalrecord.User.AccountName+"]的账号注册请求.";
                 database.ApprovalRecords.Add(approvalrecord);
+                approvalrecord.User = null;
+                if(database.Entry(user).State == System.Data.Entity.EntityState.Detached)
+                {
+                    database.Users.Attach(user);
+                }
+                database.Users.Remove(user);
                 Save();
                 return IdentityResult.Success();
             }
@@ -321,7 +327,7 @@ namespace VolunteerDatabase.Helper
             }
         }
 
-        public ApprovalRecord GetApprovalRecord(AppUser user)
+        public ApprovalRecord GetApprovalRecordByRequestedUser(AppUser user)
         {
             var result = database.ApprovalRecords.SingleOrDefault(r => r.User.Id == user.Id);
             if(result == null)
@@ -336,6 +342,12 @@ namespace VolunteerDatabase.Helper
             {
                 throw;
             }
+        }
+
+        public List<ApprovalRecord> GetApprovalRecordByOrganization(Organization org)
+        {
+            List<ApprovalRecord> result = database.ApprovalRecords.Where(r => r.Organization.Id == org.Id).ToList();
+            return result;
         }
 
 
