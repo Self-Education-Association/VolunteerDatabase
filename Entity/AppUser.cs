@@ -7,7 +7,8 @@ using VolunteerDatabase.Interface;
 
 namespace VolunteerDatabase.Entity
 {
-    public class AppUser : IUser
+    public class AppUser : IUser, IEqualityComparer<AppUser>
+
     {
         public int Id { get; set; }
 
@@ -59,6 +60,23 @@ namespace VolunteerDatabase.Entity
             {
                 return false;
             }
+        }
+
+        public bool Equals(AppUser x, AppUser y)
+        {
+            if (x.Id == y.Id)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            };
+        }
+
+        public int GetHashCode(AppUser obj)
+        {
+            return GetHashCode(obj);
         }
     }
 }

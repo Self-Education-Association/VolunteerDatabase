@@ -11,7 +11,7 @@ namespace VolunteerDatabase.Helper
 {
     public class ProjectManageHelper
     {
-        Database database;
+        Database database = DatabaseContext.GetInstance();
         private static ProjectManageHelper helper;
         private static readonly object helperlocker = new object();
         public static ProjectManageHelper GetInstance()
@@ -78,7 +78,7 @@ namespace VolunteerDatabase.Helper
             ProgressResult result;
             if (Time == null)
             {
-                ProgressResult.Error("新项目"+Name+"时间不合法，请重新输入");
+                return ProgressResult.Error("新项目"+Name+"时间不合法，请重新输入");
             }
             lock (database)
             {
@@ -104,12 +104,12 @@ namespace VolunteerDatabase.Helper
 
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public ProgressResult ProjectMessageInput(string Name, string Detail,string Place, int Max,DateTime Time, List<AppUser> Managers,Project Pro)
+        public ProgressResult ProjectMessageInput(string Name, string Detail,string Place, int Max,DateTime? Time, List<AppUser> Managers,Project Pro)
         {
             ProgressResult result;
             if (Name==""|| Detail == "" || Place =="" ||Time== null || Managers == null)
             {
-                ProgressResult.Error("信息不完整，无法输入信息");
+               return   ProgressResult.Error("信息不完整，无法输入信息"); 
             }
             Pro.Place = Place;
             Pro.Maximum = Max;
@@ -126,20 +126,24 @@ namespace VolunteerDatabase.Helper
         public ProgressResult ProjectDelete(Project Pro)
         {
             ProgressResult result;
-            if(!database.Projects.Contains(Pro)||Pro.Condition==ProjectCondition.Finished)
+            var projectInDb = database.Projects.SingleOrDefault(p => p.Id == Pro.Id);
+            if(projectInDb == null || Pro.Condition==ProjectCondition.Finished)  //此上下文仅支持基元类型或枚举类型
+          //  if ( database.Projects.Where(p => p.Name == Pro.Name) == null || Pro.Condition == ProjectCondition.Finished)
             {
-                ProgressResult.Error("删除失败，项目不存在或已经结项");
+               return ProgressResult.Error("删除失败，项目不存在或已经结项");
             }
-                lock(database)
-                {
-                    database.Projects.Remove(Pro);
-                    Save();
-                    result = ProgressResult.Success();
-                }
-
+            var logRecordList = database.LogRecords.Where(l => l.TargetProject.Id == projectInDb.Id).ToList();
+            foreach (var item in logRecordList)
+            {
+                item.TargetProject = null;
+            }
+            database.Projects.Remove(projectInDb);
+            Save();
+            result = ProgressResult.Success();
             return result;
         }
         #region 封装好的Save方法
+
         private void Save()
         {
             bool flag = false;

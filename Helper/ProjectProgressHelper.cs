@@ -12,7 +12,7 @@ namespace VolunteerDatabase.Helper
     {
         private static ProjectProgressHelper helper;
         private static readonly object helperlocker = new object();
-        Database database;
+        Database database = DatabaseContext.GetInstance();
         public static ProjectProgressHelper GetInstance()
         {
             if (helper == null)
@@ -42,9 +42,8 @@ namespace VolunteerDatabase.Helper
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
         public List<Project> FindAuthorizedProjectsByUser(AppUser user)
         {
-            var Project = from o in database.Projects where o.Managers.Contains(user) select o;
-            Project = Project.Where(o => o.Condition == ProjectCondition.Ongoing);
-            List<Project> Projects = Project.ToList();
+            var Project=database.Projects.Where(t=>t.Managers.Contains(user)); 
+            var Projects = Project.Where(o => o.Condition == ProjectCondition.Ongoing).ToList();
             return Projects;
         }
 
@@ -56,31 +55,37 @@ namespace VolunteerDatabase.Helper
             {
                 ProgressResult.Error("项目不存在");
             }
-            return Project;
+            return Project;                                       
         }
 
-        public ProgressResult CreatVolunteer(Project Pro, int num, string Room, string Name, string email, string Phone)
+      /*  public ProgressResult CreatVolunteer(Project Pro, int num, string Room, string Name, string email, string Phone)
         {
             ProgressResult result;
-            if (Room == "" | Name == "" || email == "" || Phone == "")
+            if (Room == "" || Name == "" || email == "" || Phone == "")
             {
                 ProgressResult.Error("志愿者信息不完整");
             }
-            Volunteer Vol = new Volunteer();
-            Vol.Project.Add(Pro);
-            Vol.StudentNum = num;
-            Vol.Email = email;
-            Vol.Mobile = Phone;
-            Vol.Name = Name;
-            Vol.Room = Room;
-            Vol.Score = 0;
-            //Vol.Records = null;
-            Vol.BlackListRecords = null;
-            database.Volunteers.Add(Vol);
-            Save();
+            lock (database)
+            {
+                Volunteer Vol = new Volunteer();
+                Vol.Project.Add(Pro);   //这句话 System.nullReferenceException
+              //  Vol.Project = Pro ;
+                Vol.StudentNum = num;
+                Vol.Email = email;
+                Vol.Mobile = Phone;
+                Vol.Name = Name;
+                Vol.Room = Room;
+                Vol.Score = 0;
+                //Vol.Records = null;
+                Vol.BlackListRecords = null;
+                database.Volunteers.Add(Vol);
+                Save();
+            }
             result = ProgressResult.Success();
-            return result;
-        }
+            return result;                                          
+        }*/ 
+        
+            //需要一个将volunteer 添加至 project 的方法；
 
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
@@ -94,7 +99,7 @@ namespace VolunteerDatabase.Helper
             {
                 Volunteers.Add(item);
             }
-            Volunteers.Sort(); //根据AvgSocre降序排列
+            Volunteers.Sort(); //根据Score平均值降序排列
             return Volunteers;
         }
 
@@ -117,14 +122,14 @@ namespace VolunteerDatabase.Helper
             {
                 return ProgressResult.Error("志愿者不存在于数据库中");
             }
-            if(Pro.Maximum<=Pro.Volunteers.Count)
+            if(Pro.Maximum<=Pro.Volunteer.Count)
             {
                 return ProgressResult.Error("已达项目人数上限，添加失败");
             }
             lock (database)
             {
                 var Project = Pro;
-                Project.Volunteers.Add(Volunteer);
+                Project.Volunteer.Add(Volunteer);
                 Save();
             }
             result = ProgressResult.Success();
@@ -135,14 +140,14 @@ namespace VolunteerDatabase.Helper
         public ProgressResult DeleteVolunteerFromProject(Volunteer Vol, Project Pro)
         {
             ProgressResult result;
-            if (!Pro.Volunteers.Contains(Vol))
+            if (!Pro.Volunteer.Contains(Vol))
             {
                 return ProgressResult.Error("志愿者不在该项目中");
             }
             else
             lock (database)
             {
-                Pro.Volunteers.Remove(Vol);
+                Pro.Volunteer.Remove(Vol);
                 Save();
             }
             result = ProgressResult.Success();
@@ -153,7 +158,7 @@ namespace VolunteerDatabase.Helper
         public ProgressResult Scoring4ForVolunteers(Project Pro)
         {
             ProgressResult result;
-            var Volunteers = database.Volunteers.Where(o => o.Project.Contains(Pro));
+            var Volunteers = database.Volunteers.Where(o => o.Project.Contains(Pro));     //找不到怎么办？异常处理？？还是返回空？
             lock (database)
             {
                 foreach (var item in Volunteers)
@@ -173,7 +178,7 @@ namespace VolunteerDatabase.Helper
             ProgressResult result;
             if (Score < 1 || Score > 5)
             {
-                ProgressResult.Error("分数超出合法范围");
+              return  ProgressResult.Error("分数超出合法范围");
             }
             Vol.Score = Vol.Score + Score - 4;
             Save();
@@ -187,7 +192,7 @@ namespace VolunteerDatabase.Helper
             ProgressResult result;
             if (Pro.Condition == ProjectCondition.Finished || Pro.ScoreCondition == ProjectScoreCondition.UnScored)
             {
-                ProgressResult.Error("项目不满足结项条件，请检查项目状态和评分");
+               return  ProgressResult.Error("项目不满足结项条件，请检查项目状态和评分");
             }
             else
             lock (database)
