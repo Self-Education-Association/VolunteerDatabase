@@ -42,7 +42,7 @@ namespace WpfApplication1
                     OrganizationEnum org = ih.Matching(comboBox.Text);
                     AppUser au = new AppUser()
                     {
-                        StudentNum = textBox1.Text,
+                        StudentNum = int.Parse(textBox1.Text),
                         AccountName = textBox2.Text,
                         Name = textBox.Text,
                         Mobile = textBox3.Text,

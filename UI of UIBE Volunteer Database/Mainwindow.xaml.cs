@@ -41,7 +41,7 @@ namespace WpfApplication1
             org.Text = Claims.User.Organization.ToString();
             tel.Text = Claims.User.Mobile;
             roles.Text = Claims.Roles.ToString();
-            userid.Text = Claims.User.StudentNum;
+            userid.Text = Claims.User.StudentNum.ToString();
             email.Text = Claims.User.Email;
             dormitary.Text = Claims.User.Room;
         }
