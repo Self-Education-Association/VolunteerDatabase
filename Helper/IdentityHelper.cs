@@ -350,6 +350,21 @@ namespace VolunteerDatabase.Helper
             return result;
         }
 
+        public List<AppUser> GetUnderlingsList(AppUser superior)
+        {
+            if(superior==null)
+            {
+                return null;
+            }
+            try
+            {
+                return superior.Underlings;
+            }
+            catch(Exception)
+            {
+                throw;
+            }
+        }
 
         private void Save()
         {

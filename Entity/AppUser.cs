@@ -11,7 +11,7 @@ namespace VolunteerDatabase.Entity
     {
         public int Id { get; set; }
 
-        public int StudentNum { get; set; }
+        public int? StudentNum { get; set; }
 
         public string AccountName { get; set; }
 
