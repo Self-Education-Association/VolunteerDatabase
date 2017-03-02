@@ -9,7 +9,7 @@ using VolunteerDatabase.Interface;
 
 namespace VolunteerDatabase.Entity
 {
-    public class Volunteer:IComparable<Volunteer>
+    public class Volunteer:IComparable<Volunteer>, IEqualityComparer<Volunteer>
     {
         //[Required]
         public int StudentNum { get; set;}//学号
@@ -88,6 +88,20 @@ namespace VolunteerDatabase.Entity
                 result = 1;
             }
             return result;
+        }
+
+        public bool Equals(Volunteer x, Volunteer y)
+        {
+            if (x.UID == y.UID)
+            {
+                return true;
+            }
+            else return false; ;
+        }
+
+        public int GetHashCode(Volunteer obj)
+        {
+            return GetHashCode(obj);
         }
     }
 }
