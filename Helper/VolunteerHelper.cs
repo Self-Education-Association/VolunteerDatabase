@@ -182,12 +182,12 @@ namespace VolunteerDatabase.Helper
                 int deletedVolunteerStuNum = a.StudentNum;
                 string deletedVolunteerName = a.Name;
                 var volunteer = FindVolunteer(a.StudentNum);
-                var loglist = logger.FindLogRecordByTargetVolunteer(volunteer).ToList();
-                foreach (var log in loglist)
-                {
-                    log.TargetVolunteer = null;
-                }
-                Save();//等待被注释
+                //var loglist = logger.FindLogRecordByTargetVolunteer(volunteer).ToList();
+                //foreach (var log in loglist)
+                //{
+                //    log.TargetVolunteer = null;
+                //}
+                //Save();//等待被注释
                 database.Volunteers.Remove(volunteer);
                 Save();
                 bool logresult = VolunteerOperationSucceeded(string.Format("删除学号:{0},姓名:{1}的志愿者条目.", deletedVolunteerStuNum,deletedVolunteerName),null,LogType.DeleteVolunteer);
@@ -201,7 +201,7 @@ namespace VolunteerDatabase.Helper
         [AppAuthorize]
         public VolunteerResult DeleteVolunteer(int num)
         {
-            var v = database.Volunteers.SingleOrDefault(o => o.StudentNum == num);
+            var v = database.Volunteers.Include("Project.TargetedBy").SingleOrDefault(o => o.StudentNum == num);
             return DeleteVolunteer(v);
             /*if (v != null)
             {

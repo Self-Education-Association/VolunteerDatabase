@@ -55,10 +55,10 @@ namespace VolunteerDatabase.Helper
 
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public List<AppUser> FindManagerListByStudentNum(params string[] StuNums)
+        public List<AppUser> FindManagerListByStudentNum(params int[] StuNums)
         {
             List<AppUser> Managers = new List<AppUser>();
-            foreach (string StuNum in StuNums)
+            foreach (int StuNum in StuNums)
             {
                 var Manager = database.Users.SingleOrDefault(o=>o.StudentNum==StuNum);
                 if(Manager==null)
@@ -93,8 +93,7 @@ namespace VolunteerDatabase.Helper
                 Project.Condition = ProjectCondition.Ongoing;
                 Project.ScoreCondition = ProjectScoreCondition.UnScored;
                 Project.Creater = org;
-                Project.BlackListRecords = null;
-                Project.Volunteer = null;
+                Project.Volunteers = null;
                 database.Projects.Add(Project);
                 Save();
                 result = ProgressResult.Success();
@@ -119,26 +118,23 @@ namespace VolunteerDatabase.Helper
             Save();
             result = ProgressResult.Success();
             return result;
-        }
+        }//修改Project信息
 
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
         public ProgressResult ProjectDelete(Project Pro)
         {
             ProgressResult result;
-            if(!database.Projects.Contains(Pro)||Pro.Condition==ProjectCondition.Finished)
+            if(!database.Projects.Contains(Pro)||Pro.Condition==ProjectCondition.Finished)//可以用contains?
             {
                 ProgressResult.Error("删除失败，项目不存在或已经结项");
             }
-                lock(database)
-                {
-                    database.Projects.Remove(Pro);
-                    Save();
-                    result = ProgressResult.Success();
-                }
-
+            database.Projects.Remove(Pro);
+            Save();
+            result = ProgressResult.Success();
             return result;
         }
+
         #region 封装好的Save方法
         private void Save()
         {

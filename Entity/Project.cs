@@ -29,12 +29,11 @@ namespace VolunteerDatabase.Entity
 
         public Organization Creater { get; set; }
 
-        public virtual List<Volunteer> Volunteer{ get; set; }
+        public virtual List<Volunteer> Volunteers{ get; set; }
 
         public virtual List<AppUser>   Managers { get; set; }
 
-        public virtual List<BlackListRecord> BlackListRecords { get; set; }
-
+        //public virtual List<BlackListRecord> BlackListRecords { get; set; } 因为黑名单来自于volunteers，所以Project里不需要加入黑名单列表
         public virtual List<LogRecord> TargetedBy { get; set; }
 
         public bool AreSameWith(Project b)
