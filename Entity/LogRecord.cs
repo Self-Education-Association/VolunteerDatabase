@@ -25,7 +25,7 @@ namespace VolunteerDatabase.Entity
 
         public bool IsPulblic { get; set; }
 
-        public LogType Type { get { return (LogType)TypeNum; } set { TypeNum = (int)value; } }//存不进数据库
+        public LogType Type { get { return (LogType)TypeNum; } set { TypeNum = (int)value; } }//enum其实是可以存进数据库的
 
         public int TypeNum { get; set; }
 
