@@ -33,7 +33,11 @@ namespace VolunteerDatabase.Entity
 
         public virtual Organization Organization { get; set; }
 
-        public virtual List<Project> Project { get; set; }
+        public virtual List<AppUser> Underlings { get; set; }//下属
+
+        public virtual List<AppUser> Superiors { get; set; }
+
+        public virtual List<Project> Projects { get; set; }//管理的项目
 
         public virtual List<BlackListRecord> BlackListRecords { get; set; }
 

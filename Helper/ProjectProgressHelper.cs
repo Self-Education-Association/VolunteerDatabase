@@ -94,7 +94,7 @@ namespace VolunteerDatabase.Helper
             {
                 Volunteers.Add(item);
             }
-            Volunteers.Sort(); //根据Score平均值降序排列
+            Volunteers.Sort(); //根据AvgSocre降序排列
             return Volunteers;
         }
 

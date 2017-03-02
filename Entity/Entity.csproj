@@ -56,6 +56,7 @@
     <Compile Include="ApprovalRecord.cs" />
     <Compile Include="AppUser.cs" />
     <Compile Include="BlackListRecord.cs" />
+    <Compile Include="CreditRecord.cs" />
     <Compile Include="Database.cs" />
     <Compile Include="DatabaseContext.cs" />
     <Compile Include="LogRecord.cs" />
