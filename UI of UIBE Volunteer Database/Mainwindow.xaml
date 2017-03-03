@@ -68,17 +68,17 @@
                 <Grid Margin="10,0,6.5,-3" Background="#FFF1ECE4">
                     <Label x:Name="label" Content="用户名" HorizontalAlignment="Left" Margin="158,34,0,0" VerticalAlignment="Top" Height="48" Width="136" FontSize="30"/>
                     <TextBlock x:Name="account_name" Margin="405,34,545,650" FontSize="30"/>
-                    <Label x:Name="label1" Content="所属组织" HorizontalAlignment="Left" Margin="159,130,0,0" VerticalAlignment="Top" Height="48" Width="135" FontSize="30"/>
+                    <Label x:Name="label1" Content="组织" HorizontalAlignment="Left" Margin="159,130,0,0" VerticalAlignment="Top" Height="48" Width="135" FontSize="30"/>
                     <TextBlock x:Name="org" Margin="405,130,545,549" FontSize="30"/>
-                    <Label Content="联系电话" Margin="145,233,916,446" Height="48" Width="135" FontSize="30"/>
+                    <Label Content="电话" Margin="145,233,916,446" Height="48" Width="135" FontSize="30"/>
                     <TextBlock x:Name="tel" Margin="405,230,545,446" FontSize="30"/>
                     <Label Content="学号" Margin="145,669,916,10" Height="48" Width="135" FontSize="30"></Label>
                     <TextBlock x:Name="userid" Margin="405,669,545,10" FontSize="30"/>
-                    <Label Content="电子邮箱" Margin="145,549,916,130" Height="48" Width="135" FontSize="30"/>
+                    <Label Content="邮箱" Margin="145,549,916,130" Height="48" Width="135" FontSize="30"/>
                     <TextBlock x:Name="email" Margin="405,554,545,120" FontSize="30"/>
                     <Label Content="宿舍" Margin="145,451,916,228" IsVisibleChanged="Label_IsVisibleChanged" Height="48" Width="135" FontSize="30"/>
                     <TextBlock x:Name="dormitary" Margin="405,451,545,225" FontSize="30"/>
-                    <Label Content="用户身份" Margin="145,336,916,343" Height="48" Width="135" FontSize="30"/>
+                    <Label Content="身份" Margin="145,336,916,343" Height="48" Width="135" FontSize="30"/>
                     <TextBlock x:Name="roles" Margin="405,336,545,340" FontSize="30"/>
 
                     <Image x:Name="usertouxiang" Margin="823,34,98,445">
