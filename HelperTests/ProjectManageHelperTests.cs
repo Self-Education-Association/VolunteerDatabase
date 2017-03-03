@@ -75,27 +75,16 @@ namespace VolunteerDatabase.Helper.Tests
         public void FindManagerListByStudentNumTest()
         {
             // 创建一个originalmanager
-            Guid tempnum = Guid.NewGuid();
-            string studentnum = tempnum.ToString();
-            Guid tempnmame = Guid.NewGuid();
-            string accountname = tempnmame.ToString();
-            AppUser originalmanager = new AppUser
-            {
-                StudentNum = studentnum ,
-                AccountName = accountname ,
-                Name = "test",
-                Room = "888",
-                Mobile = "123456789"
-            };
+            AppUser originalmanager = CreateUser();
             identityhelper.CreateUser(originalmanager, "zxcvbnm,./", Interface.AppRoleEnum.OrgnizationMember, OrganizationEnum.TestOnly);
             var addmanager = database.Users.Where(u => u.AccountName == originalmanager.AccountName).ToList();
             if (addmanager == null)
             {
                 Assert.Fail("添加manager失败！");
             }
-            
-           // 测试FindManageListByStudentNum
-            var result = helper.FindManagerListByStudentNum(studentnum).ToList();
+
+            // 测试FindManageListByStudentNum
+            var result = helper.FindManagerListByStudentNum(originalmanager.StudentNum).ToList();
             if (result == null)
             {
                 Assert.Fail("未能成功找到managelist，方法调用失败！");
@@ -170,18 +159,7 @@ namespace VolunteerDatabase.Helper.Tests
         public void ProjectMessageInputTest()
         {
             // 创建一个manager
-            Guid tempnum = Guid.NewGuid();
-            string studentnum = tempnum.ToString();
-            Guid tempnmame = Guid.NewGuid();
-            string accountname = tempnmame.ToString();
-            AppUser manager = new AppUser
-            {
-                StudentNum = studentnum,
-                AccountName = accountname,
-                Name = "test",
-                Room = "888",
-                Mobile = "123456789"
-            };
+            AppUser manager = CreateUser();
             identityhelper.CreateUser(manager, "zxcvbnm,./", Interface.AppRoleEnum.OrgnizationMember, OrganizationEnum.TestOnly);
             var addmanager = database.Users.Where(u => u.AccountName == manager.AccountName).ToList();
             if( addmanager == null )
@@ -217,12 +195,12 @@ namespace VolunteerDatabase.Helper.Tests
             string place = "testplace";
             var promanager = database.Users.Where(m => m.StudentNum == manager.StudentNum).ToList();
             ProgressResult result = helper.ProjectMessageInput(name, detail, place, 20, DateTime.Now, promanager, pro);
-           // 测试  ProgressResult.Error信息不完整
-            result = helper.ProjectMessageInput(name, "", place, 0, null, promanager, pro);
-            if (result.Succeeded)
-            {
-                Assert.Fail("无法判断空字段异常");
-            }
+           // 测试  ProgressResult.Error信息不完整 --因无法传入空参数，因此无法进行此处测试
+            //result = helper.ProjectMessageInput(name, "", place, 0, null, promanager, pro);
+            //if (result.Succeeded)
+            //{
+            //    Assert.Fail("无法判断空字段异常");
+            //}
             
            // 测试ProjectMessageInput
 
@@ -282,6 +260,7 @@ namespace VolunteerDatabase.Helper.Tests
             
         }
 
+
         [TestMethod()]
         public void ProjectDeleteTest()
         {
@@ -335,13 +314,63 @@ namespace VolunteerDatabase.Helper.Tests
             
         }
 
+        private Volunteer CreateVolunteer()
+        {
+            Random tempnum = new Random();
+            int studentnum = tempnum.Next(000, 999);
+            Guid uid = Guid.NewGuid();
+            string name = uid.ToString();
+            Volunteer volunteer = new Volunteer
+            {
+                //Id = 000,
+                StudentNum = studentnum,
+                Mobile = "1234567890-",
+                Name = name,
+                Email = "AddTest@test.com",
+                Class = "AddTestClass",
+                Room = "AddTestRoom"
+            };
+            return volunteer;
+        }
+
+        private AppUser CreateUser()
+        {
+            Guid temp = Guid.NewGuid();
+            string name = temp.ToString();
+            Random tempnum = new Random();
+            int studentnum = tempnum.Next(000, 999);
+            AppUser user = new AppUser()
+            {
+                AccountName = name,
+                StudentNum = studentnum,
+                Mobile = "1234567890",
+                Email = "test@test.com"
+            };
+            return user;
+        }
+
+        private Project CreateProject()
+        {
+            Organization org = identityhelper.CreateOrFindOrganization(OrganizationEnum.TestOnly);
+            Guid uid = Guid.NewGuid();
+            string name = uid.ToString();
+            Project project = new Project()
+            {
+                Name = name,
+                Place = "testplace",
+                Creater = org
+            };
+            return project;
+
+        }
+
         public void DeleteProject(Project pro)
         {
-            pro.Volunteer.Clear();
+            pro.Volunteers.Clear();
             var list = database.Users.Where(u => u.Organization.Id == pro.Id).ToList();
             foreach (var item in list)
             {
-                item.Project = null;
+                item.Projects = null;
             }
             var blacklist = database.BlackListRecords.Where(u => u.Organization.Id == pro.Id).ToList();
             foreach (var item in blacklist)

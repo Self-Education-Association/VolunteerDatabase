@@ -55,10 +55,11 @@ namespace VolunteerDatabase.Helper
 
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public List<AppUser> FindManagerListByStudentNum(params string[] StuNums)
+        //      public List<AppUser> FindManagerListByStudentNum(params string[] StuNums)  //将原本是string类型的参数改为 int
+        public List<AppUser> FindManagerListByStudentNum(params int[] StuNums)
         {
             List<AppUser> Managers = new List<AppUser>();
-            foreach (string StuNum in StuNums)
+            foreach (int StuNum in StuNums)
             {
                 var Manager = database.Users.SingleOrDefault(o=>o.StudentNum==StuNum);
                 if(Manager==null)
@@ -93,8 +94,7 @@ namespace VolunteerDatabase.Helper
                 Project.Condition = ProjectCondition.Ongoing;
                 Project.ScoreCondition = ProjectScoreCondition.UnScored;
                 Project.Creater = org;
-                Project.BlackListRecords = null;
-                Project.Volunteer = null;
+                Project.Volunteers = null;
                 database.Projects.Add(Project);
                 Save();
                 result = ProgressResult.Success();
@@ -104,7 +104,7 @@ namespace VolunteerDatabase.Helper
 
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public ProgressResult ProjectMessageInput(string Name, string Detail,string Place, int Max,DateTime? Time, List<AppUser> Managers,Project Pro)
+        public ProgressResult ProjectMessageInput(string Name, string Detail,string Place, int Max,DateTime Time, List<AppUser> Managers,Project Pro)
         {
             ProgressResult result;
             if (Name==""|| Detail == "" || Place =="" ||Time== null || Managers == null)
