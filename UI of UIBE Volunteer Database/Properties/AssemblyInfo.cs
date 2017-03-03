@@ -3,6 +3,7 @@ using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Media;
 
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
@@ -30,6 +31,7 @@ using System.Windows;
 
 //[assembly: NeutralResourcesLanguage("en-US", UltimateResourceFallbackLocation.Satellite)]
 
+[assembly: DisableDpiAwareness]
 
 [assembly: ThemeInfo(
     ResourceDictionaryLocation.None, //主题特定资源词典所处位置
