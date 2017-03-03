@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace WpfApplication1
 {
     /// <summary>
-    /// Administrator.xaml 的交互逻辑
+    /// Interaction logic for TabPage1.xaml
     /// </summary>
-    public partial class Administrator : Window
+    public partial class TabPage1 : UserControl
     {
-        public Administrator()
+        public TabPage1()
         {
             InitializeComponent();
         }

@@ -4,12 +4,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="600">
     <Grid Style="{StaticResource ContentRoot}">
         <ScrollViewer>
-            <StackPanel MinWidth="200">
-                <TextBlock Text="TODO: add content" />
-            </StackPanel>
+            <Canvas MinWidth="200">
+                <TextBlock Text="欢迎使用对外经贸大学志愿者信息系统" HorizontalAlignment="Left" Height="30" Width="340" FontSize="20"/>
+                <Label x:Name="label1" Content="账号" HorizontalAlignment="Left" Height="30" Width="38" FontSize="14" Canvas.Left="183" Canvas.Top="78"/>
+                <TextBox x:Name="userid" HorizontalAlignment="Center" TextWrapping="Wrap" Height="30" Width="160" Background="#FFF1ECFF" Canvas.Left="291" Canvas.Top="78"/>
+                <Label x:Name="label2" Content="密码" HorizontalAlignment="Left" Height="30" Width="38" FontSize="14" Canvas.Left="183" Canvas.Top="127"/>
+                <PasswordBox x:Name="password" HorizontalAlignment="Center" Height="30" Width="160" Background="#FFF1ECFF" Canvas.Left="291" Canvas.Top="127"/>
+                <Button x:Name="login" Content="登录" HorizontalAlignment="Left" Width="75" Canvas.Left="291" Canvas.Top="221"/>
+                <Button x:Name="register" Content="注册" HorizontalAlignment="Left" Width="75" Canvas.Left="376" Canvas.Top="221"/>
+            </Canvas>
         </ScrollViewer>
     </Grid>
 </UserControl>

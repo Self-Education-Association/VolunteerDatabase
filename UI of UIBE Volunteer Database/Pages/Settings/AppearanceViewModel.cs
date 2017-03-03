@@ -15,8 +15,8 @@ namespace ModernUINavigationApp1.Pages.Settings
     public class AppearanceViewModel
         : NotifyPropertyChanged
     {
-        private const string FontSmall = "small";
-        private const string FontLarge = "large";
+        private const string FontSmall = "小 small";
+        private const string FontLarge = "大 large";
 
         // 9 accent colors from metro design principles
         /*private Color[] accentColors = new Color[]{
@@ -52,7 +52,12 @@ namespace ModernUINavigationApp1.Pages.Settings
             Color.FromRgb(0x6d, 0x87, 0x64),   // olive
             Color.FromRgb(0x64, 0x76, 0x87),   // steel
             Color.FromRgb(0x76, 0x60, 0x8a),   // mauve
+
             Color.FromRgb(0x87, 0x79, 0x4e),   // taupe
+            Color.FromRgb(0x33, 0x99, 0xff),   // blue
+            Color.FromRgb(0x00, 0xab, 0xa9),   // teal
+            Color.FromRgb(0xff, 0x45, 0x00),   // orange red
+            Color.FromRgb(0xa2, 0x00, 0xff),   // purple
         };
 
         private Color selectedAccentColor;
@@ -63,8 +68,8 @@ namespace ModernUINavigationApp1.Pages.Settings
         public AppearanceViewModel()
         {
             // add the default themes
-            this.themes.Add(new Link { DisplayName = "dark", Source = AppearanceManager.DarkThemeSource });
-            this.themes.Add(new Link { DisplayName = "light", Source = AppearanceManager.LightThemeSource });
+            this.themes.Add(new Link { DisplayName = "暗色 dark", Source = AppearanceManager.DarkThemeSource });
+            this.themes.Add(new Link { DisplayName = "亮色 light", Source = AppearanceManager.LightThemeSource });
 
             this.SelectedFontSize = AppearanceManager.Current.FontSize == FontSize.Large ? FontLarge : FontSmall;
             SyncThemeAndColor();

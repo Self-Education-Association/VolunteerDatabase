@@ -90,8 +90,8 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Administrator.xaml.cs">
-      <DependentUpon>Administrator.xaml</DependentUpon>
+    <Compile Include="TabPage1.xaml.cs">
+      <DependentUpon>TabPage1.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow1.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -161,7 +161,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Administrator.xaml">
+    <Page Include="TabPage1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
