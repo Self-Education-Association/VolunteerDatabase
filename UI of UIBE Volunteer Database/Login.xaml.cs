@@ -16,7 +16,6 @@ using System.Windows.Shapes;
 using VolunteerDatabase.Helper;
 using VolunteerDatabase.Interface;
 using VolunteerDatabase.Entity;
-using MahApps.Metro.Controls;
 
 namespace WpfApplication1
 {
