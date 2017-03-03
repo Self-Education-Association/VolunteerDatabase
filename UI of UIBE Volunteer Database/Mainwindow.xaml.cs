@@ -13,7 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using VolunteerDatabase.Helper;
 using VolunteerDatabase.Interface;
-using MahApps.Metro.Controls;
 
 
 
@@ -22,7 +21,7 @@ namespace WpfApplication1
     /// <summary>
     /// Mainindow.xaml 的交互逻辑
     /// </summary>
-    public partial class MainWindow : MetroWindow
+    public partial class MainWindow : Window
     {
         private AppUserIdentityClaims Claims { get; set; }
         private ProjectManageHelper ProjectManageHelper { get; set; }
