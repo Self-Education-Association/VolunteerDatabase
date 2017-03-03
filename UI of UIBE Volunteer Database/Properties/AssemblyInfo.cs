@@ -8,11 +8,11 @@ using System.Windows.Media;
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("WpfApplication1")]
+[assembly: AssemblyTitle("UI of UIBE Volunteer Database")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("WpfApplication1")]
+[assembly: AssemblyCompany("UIBE SEA")]
+[assembly: AssemblyProduct("UIBE Volunteer Database")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
