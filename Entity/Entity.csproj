@@ -76,6 +76,10 @@
     <Compile Include="Migrations\201703021621443_AddCreditRecord.Designer.cs">
       <DependentUpon>201703021621443_AddCreditRecord.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703031055423_ChangeNullableStudentNum.cs" />
+    <Compile Include="Migrations\201703031055423_ChangeNullableStudentNum.Designer.cs">
+      <DependentUpon>201703031055423_ChangeNullableStudentNum.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Organization.cs" />
     <Compile Include="Project.cs" />
@@ -104,6 +108,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703021621443_AddCreditRecord.resx">
       <DependentUpon>201703021621443_AddCreditRecord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703031055423_ChangeNullableStudentNum.resx">
+      <DependentUpon>201703031055423_ChangeNullableStudentNum.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

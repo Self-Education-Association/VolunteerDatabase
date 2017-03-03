@@ -122,14 +122,15 @@ namespace VolunteerDatabase.Helper
             {
                 return ProgressResult.Error("志愿者不存在于数据库中");
             }
-            if(Pro.Maximum<=Pro.Volunteer.Count)
+            int volunteerscount = Pro.Volunteers.Count;
+            if(Pro.Maximum <= volunteerscount)
             {
                 return ProgressResult.Error("已达项目人数上限，添加失败");
             }
             lock (database)
             {
                 var Project = Pro;
-                Project.Volunteer.Add(Volunteer);
+                Project.Volunteers.Add(Volunteer);
                 Save();
             }
             result = ProgressResult.Success();
@@ -140,14 +141,14 @@ namespace VolunteerDatabase.Helper
         public ProgressResult DeleteVolunteerFromProject(Volunteer Vol, Project Pro)
         {
             ProgressResult result;
-            if (!Pro.Volunteer.Contains(Vol))
+            if (!Pro.Volunteers.Contains(Vol))
             {
                 return ProgressResult.Error("志愿者不在该项目中");
             }
             else
             lock (database)
             {
-                Pro.Volunteer.Remove(Vol);
+                Pro.Volunteers.Remove(Vol);
                 Save();
             }
             result = ProgressResult.Success();
