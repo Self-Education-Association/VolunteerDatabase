@@ -318,8 +318,9 @@ namespace VolunteerDatabase.Helper.Tests
         {
             Guid temp = Guid.NewGuid();
             string name = temp.ToString();
-            Random tempnum = new Random();
-            string studentnum = tempnum.ToString();
+            Random rnd = new Random();
+            int tempnum = rnd.Next();
+            int studentnum = tempnum;
             AppUser user = new AppUser()
             {
                 AccountName = name,

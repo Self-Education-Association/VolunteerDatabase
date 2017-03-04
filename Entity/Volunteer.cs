@@ -29,6 +29,7 @@ namespace VolunteerDatabase.Entity
 
         public virtual List<Project> Project{ get; set; }
         public virtual List<BlackListRecord> BlackListRecords { get; set; }
+        public virtual List<CreditRecord> CreditRecords { get; set; }
         public virtual List<LogRecord> TargetedBy { get; set; }
         public int Score { get; set; }//以后改成double
         public int ProjectCount { get; set; }

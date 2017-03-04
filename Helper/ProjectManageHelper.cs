@@ -129,6 +129,8 @@ namespace VolunteerDatabase.Helper
             {
                 ProgressResult.Error("删除失败，项目不存在或已经结项");
             }
+            List<LogRecord> loglist = database.LogRecords.Where(l => l.TargetProject.Id == Pro.Id).ToList();
+            List<BlackListRecord> blacklist = database.BlackListRecords.Where(b => b.Project.Id == Pro.Id).ToList();
             database.Projects.Remove(Pro);
             Save();
             result = ProgressResult.Success();

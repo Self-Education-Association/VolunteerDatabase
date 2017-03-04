@@ -198,7 +198,50 @@ namespace VolunteerDatabase.Helper
             result = ProgressResult.Success();
             return result;
         }
+        
+        public ProgressResult EditScore(Volunteer volunteer,Project project,int score)
+        {
+            CreditRecord crecord = database.CreditRecords.SingleOrDefault(r => r.Participant.UID == volunteer.UID && r.Project.Id == project.Id);
+            if(crecord == null)
+            {
+                return ProgressResult.Error("不存在对应的征信记录.");
+            }
+            else
+            {
+                try
+                {
+                    volunteer.Score -= crecord.Score;
+                    volunteer.Score += score;
+                    crecord.Score = score;
+                    return ProgressResult.Success();
+                }
+                catch(Exception)
+                {
+                    throw;
+                }
+            }
+        }
 
+        public ProgressResult DeleteCreditRecord(CreditRecord crecord)
+        {
+            if(crecord == null)
+            {
+                return ProgressResult.Error("不存在对应的征信记录.");
+            }
+            else
+            {
+                try
+                {
+                    database.CreditRecords.Remove(crecord);//多对多的中间表，应该可以直接删除.
+                    return ProgressResult.Success();
+                }
+                catch(Exception)
+                {
+                    throw;
+                }
+            }
+
+        }
 
         #region 封装好的Save方法
         private void Save()

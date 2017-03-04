@@ -182,7 +182,8 @@ namespace VolunteerDatabase.Helper
                 int deletedVolunteerStuNum = a.StudentNum;
                 string deletedVolunteerName = a.Name;
                 var volunteer = FindVolunteer(a.StudentNum);
-                //var loglist = logger.FindLogRecordByTargetVolunteer(volunteer).ToList();
+                List<LogRecord> loglist = logger.FindLogRecordByTargetVolunteer(volunteer).ToList();
+                List<BlackListRecord> blacklist = database.BlackListRecords.Where(b => b.Volunteer.UID == volunteer.UID).ToList();
                 //foreach (var log in loglist)
                 //{
                 //    log.TargetVolunteer = null;
