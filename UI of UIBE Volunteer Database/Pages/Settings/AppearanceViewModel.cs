@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace ModernUINavigationApp1.Pages.Settings
+namespace Desktop.Pages.Settings
 {
     /// <summary>
     /// A simple view model for configuring theme, font and accent colors.

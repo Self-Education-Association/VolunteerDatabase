@@ -1,4 +1,4 @@
-﻿<mui:ModernWindow x:Class="ModernUINavigationApp1.MainWindow"
+﻿<mui:ModernWindow x:Class="Desktop.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mui="http://firstfloorsoftware.com/ModernUI"
@@ -7,9 +7,9 @@
         ContentSource="/Pages/Home.xaml">
 
     <mui:ModernWindow.MenuLinkGroups>
-        <mui:LinkGroup DisplayName="welcome">
+        <mui:LinkGroup DisplayName="Login">
             <mui:LinkGroup.Links>
-                <mui:Link DisplayName="home" Source="/Pages/Home.xaml" />
+                <mui:Link DisplayName="welcome" Source="/Pages/Home.xaml" />
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
         <mui:LinkGroup DisplayName="settings" GroupKey="settings">
@@ -17,9 +17,9 @@
                 <mui:Link DisplayName="software" Source="/Pages/SettingsPage.xaml" />
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
-        <mui:LinkGroup DisplayName="Main Tab">
+        <mui:LinkGroup DisplayName="Main">
             <mui:LinkGroup.Links>
-                <mui:Link DisplayName="test" Source="TabPage1.xaml"/>
+                <mui:Link DisplayName="Volunteer Database" Source="Pages/MainTab.xaml"/>
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
     </mui:ModernWindow.MenuLinkGroups>
@@ -27,6 +27,6 @@
     <mui:ModernWindow.TitleLinks>
         <mui:Link DisplayName="设置 settings" Source="/Pages/SettingsPage.xaml" />
         <!--<mui:Link DisplayName="help" Source="https://github.com/firstfloorsoftware/mui" />-->
-        <mui:Link DisplayName="用户信息 user info"/>
+        <mui:Link DisplayName="用户信息 user info" Source="/Pages/UserInfo.xaml"/>
     </mui:ModernWindow.TitleLinks>
 </mui:ModernWindow>

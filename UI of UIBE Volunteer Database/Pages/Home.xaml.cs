@@ -12,8 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VolunteerDatabase.Helper;
 
-namespace ModernUINavigationApp1.Pages
+namespace Desktop.Pages
 {
     /// <summary>
     /// Interaction logic for Home.xaml
@@ -23,6 +24,34 @@ namespace ModernUINavigationApp1.Pages
         public Home()
         {
             InitializeComponent();
+        }
+
+        //private void register_Click(object sender, RoutedEventArgs e)
+        //{
+        //    var Register = new Register();
+        //    Register.Show();
+        //}
+
+        private async void login_Click(object sender, RoutedEventArgs e)
+        {
+            IdentityHelper ih = IdentityHelper.GetInstance();
+            if (userid.Text == "" || password.Password.ToString() == "")
+            {
+
+            }
+            else
+            {
+                var claims = await ih.CreateClaimsAsync(userid.Text, password.Password.ToString());
+                if (claims.IsAuthenticated)
+                {
+                    //MessageBox.Show("登陆成功！");
+                }
+                else
+                {
+                    MessageBox.Show("登录失败，请检查用户名和密码！");
+                }
+            }
+            
         }
     }
 }

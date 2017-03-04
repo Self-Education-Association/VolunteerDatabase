@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Desktop.Pages
 {
     /// <summary>
-    /// Interaction logic for SettingsPage.xaml
+    /// Interaction logic for MainTab.xaml
     /// </summary>
-    public partial class SettingsPage : UserControl
+    public partial class MainTab : UserControl
     {
-        public SettingsPage()
+        public MainTab()
         {
             InitializeComponent();
         }
