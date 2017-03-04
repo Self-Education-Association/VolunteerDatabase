@@ -230,6 +230,24 @@ namespace VolunteerDatabase.Helper
             }
         }
 
+        public List<LogRecord> FindLogRecordBySuperior(AppUser superior)
+        {
+            List<AppUser> underlings = superior.Underlings;
+            List<LogRecord> loglist = new List<LogRecord>();
+            foreach (AppUser underling in underlings)
+            {
+                List<LogRecord> log = FindLogRecord(underling);
+                if(log == null)
+                {
+                    continue;
+                }
+                else
+                {
+                    loglist.AddRange(log);
+                }
+            }
+            return loglist;
+        }
 
         public bool Succeeded(string content, bool ispublic,LogType type = LogType.Default, AppUser targetuser = null, Volunteer targetvolunteer = null, Project targetproject = null, [CallerMemberName] string caller = "")
         {

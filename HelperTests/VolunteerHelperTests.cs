@@ -34,12 +34,7 @@ namespace VolunteerDatabase.Helper.Tests
             var dbUser = database.Users.SingleOrDefault(u => u.AccountName == userName);
             if(dbUser!=null)
             {
-                var list = database.LogRecords.Where(l => l.Adder.Id == dbUser.Id).ToList();
-                foreach (var item in list)
-                {
-                    item.Adder = null;
-                }
-                database.SaveChanges();//等一下注释掉这一句
+//等一下注释掉这一句
                 database.Users.Remove(dbUser);
                 database.SaveChanges();
             }

@@ -31,6 +31,9 @@ namespace VolunteerDatabase.Entity
 
         public virtual List<Volunteer> Volunteers{ get; set; }
 
+        public virtual List<CreditRecord> CreditRecords { get; set; }
+        public virtual List<BlackListRecord> BlackListRecords { get; set; }
+
         public virtual List<AppUser>   Managers { get; set; }
 
         //public virtual List<BlackListRecord> BlackListRecords { get; set; } 因为黑名单来自于volunteers，所以Project里不需要加入黑名单列表
