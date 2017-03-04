@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helper", "Helper\Helper.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelperTests", "HelperTests\HelperTests.csproj", "{E8ED6CA4-EF6A-4B90-89F3-D5135ED146EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI of UIBE Volunteer Database", "UI of UIBE Volunteer Database\UI of UIBE Volunteer Database.csproj", "{FE4658AC-DE28-4912-99B6-F9F0F76EDACB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Desktop", "UI of UIBE Volunteer Database\Desktop.csproj", "{FE4658AC-DE28-4912-99B6-F9F0F76EDACB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

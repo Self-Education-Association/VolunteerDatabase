@@ -13,16 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WpfApplication1
+namespace Desktop.Pages
 {
     /// <summary>
-    /// Interaction logic for TabPage1.xaml
+    /// Interaction logic for UserApproval.xaml
     /// </summary>
-    public partial class TabPage1 : UserControl
+    public partial class UserApproval : UserControl
     {
-        public TabPage1()
+        public UserApproval()
         {
             InitializeComponent();
-        }
+        }        
     }
 }

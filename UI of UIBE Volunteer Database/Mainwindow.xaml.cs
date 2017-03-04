@@ -16,7 +16,7 @@ using VolunteerDatabase.Interface;
 
 
 
-namespace WpfApplication1
+namespace Desktop
 {
     /// <summary>
     /// Mainindow.xaml 的交互逻辑
@@ -95,11 +95,6 @@ namespace WpfApplication1
                 project_list.ItemsSource = list;
             }
             //此处输出略显暴力，待改善
-        }
-
-        private void exit_button_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
         }
 
         private void create_project_button_Click(object sender, RoutedEventArgs e)

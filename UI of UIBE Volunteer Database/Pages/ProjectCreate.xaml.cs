@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WpfApplication1
+namespace Desktop.Pages
 {
     /// <summary>
-    /// Page1.xaml 的交互逻辑
+    /// Interaction logic for ProjectCreate.xaml
     /// </summary>
-    public partial class Page1 : Page
+    public partial class ProjectCreate : UserControl
     {
-        public Page1()
+        public ProjectCreate()
         {
             InitializeComponent();
         }

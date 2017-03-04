@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="WpfApplication1.TabPage1"
+﻿<UserControl x:Class="Desktop.Pages.MainTab"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -11,8 +11,18 @@
         <mui:ModernTab Layout="Tab">
             <mui:ModernTab.Links>
                 <!-- TODO: set @Source -->
-                <mui:Link DisplayName="Item 1" />
-                <mui:Link DisplayName="Item 2" />
+                <mui:Link DisplayName="项目管理">
+                    <mui:Link.Source>
+                        Pages/ProjectManage.xaml
+                    </mui:Link.Source>
+                </mui:Link>
+                <mui:Link DisplayName="创建项目" >
+                    <mui:Link.Source>
+                        Pages/ProjectCreate.xaml
+                    </mui:Link.Source>
+                </mui:Link>
+                <mui:Link DisplayName="用户审批" Source="Pages/UserApproval"/>
+                <mui:Link DisplayName="志愿者库" Source="Pages/VolunteerData"/>
             </mui:ModernTab.Links>
         </mui:ModernTab>
     </Grid>

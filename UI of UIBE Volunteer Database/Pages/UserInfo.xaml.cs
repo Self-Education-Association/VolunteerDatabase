@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Desktop.Pages
+namespace WpfApplication1.Pages
 {
     /// <summary>
-    /// Interaction logic for SettingsPage.xaml
+    /// Interaction logic for UserInfo.xaml
     /// </summary>
-    public partial class SettingsPage : UserControl
+    public partial class UserInfo : UserControl
     {
-        public SettingsPage()
+        public UserInfo()
         {
             InitializeComponent();
         }

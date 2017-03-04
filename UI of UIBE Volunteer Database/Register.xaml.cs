@@ -15,7 +15,7 @@ using VolunteerDatabase.Entity;
 using VolunteerDatabase.Helper;
 using VolunteerDatabase.Interface;
 
-namespace WpfApplication1
+namespace Desktop
 {
     /// <summary>
     /// Register.xaml 的交互逻辑
