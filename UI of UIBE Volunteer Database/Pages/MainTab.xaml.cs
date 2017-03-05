@@ -21,13 +21,32 @@ namespace Desktop.Pages
     /// </summary>
     public partial class MainTab : UserControl
     {
-        BasePage basepage;
+        AppUserIdentityClaims claims;
 
         public MainTab()
+            :this(null)
         {
             InitializeComponent();
-            basepage = BasePage.GetInstance();
-            
+        }
+
+        public MainTab(AppUserIdentityClaims claims)
+        {
+            if (claims == null)
+            {
+                Login.GetClaims(sendClaimsEventHandler);
+                IsEnabled = false;
+            }
+            else
+            {
+                this.claims = claims;
+            }
+        }
+
+        public void sendClaimsEventHandler(AppUserIdentityClaims claims)
+        {
+            IsEnabled = true;
+            this.claims = claims;
+            MessageBox.Show("收到令牌啦！");
         }
     }
 }
