@@ -109,7 +109,7 @@ namespace VolunteerDatabase.Helper
             ProgressResult result;
             if (Name==""|| Detail == "" || Place =="" ||Time== null || Managers == null)
             {
-               return   ProgressResult.Error("信息不完整，无法输入信息"); 
+                ProgressResult.Error("信息不完整，无法输入信息");
             }
             Pro.Place = Place;
             Pro.Maximum = Max;
@@ -126,24 +126,19 @@ namespace VolunteerDatabase.Helper
         public ProgressResult ProjectDelete(Project Pro)
         {
             ProgressResult result;
-            var projectInDb = database.Projects.SingleOrDefault(p => p.Id == Pro.Id);
-            if(projectInDb == null || Pro.Condition==ProjectCondition.Finished)  //此上下文仅支持基元类型或枚举类型
-          //  if ( database.Projects.Where(p => p.Name == Pro.Name) == null || Pro.Condition == ProjectCondition.Finished)
+            if(!database.Projects.Contains(Pro)||Pro.Condition==ProjectCondition.Finished)//可以用contains?
             {
-               return ProgressResult.Error("删除失败，项目不存在或已经结项");
+                ProgressResult.Error("删除失败，项目不存在或已经结项");
             }
-            var logRecordList = database.LogRecords.Where(l => l.TargetProject.Id == projectInDb.Id).ToList();
-            foreach (var item in logRecordList)
-            {
-                item.TargetProject = null;
-            }
-            database.Projects.Remove(projectInDb);
+            List<LogRecord> loglist = database.LogRecords.Where(l => l.TargetProject.Id == Pro.Id).ToList();
+            List<BlackListRecord> blacklist = database.BlackListRecords.Where(b => b.Project.Id == Pro.Id).ToList();
+            database.Projects.Remove(Pro);
             Save();
             result = ProgressResult.Success();
             return result;
         }
-        #region 封装好的Save方法
 
+        #region 封装好的Save方法
         private void Save()
         {
             bool flag = false;

@@ -7,13 +7,13 @@ namespace VolunteerDatabase.Entity.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddCreditRecord : IMigrationMetadata
+    public sealed partial class Init : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddCreditRecord));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Init));
         
         string IMigrationMetadata.Id
         {
-            get { return "201703021621443_AddCreditRecord"; }
+            get { return "201703051432531_Init"; }
         }
         
         string IMigrationMetadata.Source

@@ -316,10 +316,11 @@ namespace VolunteerDatabase.Helper.Tests
 
         private AppUser CreateUser( )
         {
-            Guid temp = Guid.NewGuid( );
-            string name = temp.ToString( );
-            Random tempnum = new Random();
-            int studentnum = tempnum.Next(000,999);
+            Guid temp = Guid.NewGuid();
+            string name = temp.ToString();
+            Random rnd = new Random();
+            int tempnum = rnd.Next();
+            int studentnum = tempnum;
             AppUser user = new AppUser()
             {
                 AccountName = name,

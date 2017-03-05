@@ -21,6 +21,11 @@ namespace VolunteerDatabase.Helper
         private const string DEFAULTSTRING = "未填写";
         Database database;
 
+        [AppAuthorize(AppRoleEnum.Administrator)]
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
+        [AppAuthorize(AppRoleEnum.LogViewer)]
+        [AppAuthorize(AppRoleEnum.OrgnizationMember)]
+        [AppAuthorize(AppRoleEnum.TestOnly)]
         public static VolunteerHelper GetInstance(AppUserIdentityClaims claims = null)
         {
             if (helper == null)
@@ -36,12 +41,17 @@ namespace VolunteerDatabase.Helper
             }
             return helper;
         }
-        
+
         /// <summary>
         /// 获取单例工厂类的异步方法，*未经测试*
         /// </summary>
         /// <param name="claims"></param>
         /// <returns></returns>
+        [AppAuthorize(AppRoleEnum.Administrator)]
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
+        [AppAuthorize(AppRoleEnum.LogViewer)]
+        [AppAuthorize(AppRoleEnum.OrgnizationMember)]
+        [AppAuthorize(AppRoleEnum.TestOnly)]
         public async Task<VolunteerHelper> GetInstanceAsync(AppUserIdentityClaims claims)//不知道这个run()需不需要加入参数，未经测试
         {
             Task<VolunteerHelper> helper = Task.Run(() =>
@@ -50,6 +60,7 @@ namespace VolunteerDatabase.Helper
             });
             return await helper;
         }
+
         /// <summary>
         /// 构造最初单例的方法，在此处把日志的方法注册到事件上
         /// </summary>
@@ -61,19 +72,31 @@ namespace VolunteerDatabase.Helper
             Success += logger.Succeeded;
             Failure += logger.Failed;
         }
-        
+
+
+        [AppAuthorize(AppRoleEnum.Administrator)]
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
+        [AppAuthorize(AppRoleEnum.LogViewer)]
+        [AppAuthorize(AppRoleEnum.OrgnizationMember)]
+        [AppAuthorize(AppRoleEnum.TestOnly)]
         public Volunteer FindVolunteer(int num)
         {
             var result = database.Volunteers.SingleOrDefault( v => v.StudentNum == num);
             return result;
         }
+
+        [AppAuthorize(AppRoleEnum.Administrator)]
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
+        [AppAuthorize(AppRoleEnum.LogViewer)]
+        [AppAuthorize(AppRoleEnum.OrgnizationMember)]
+        [AppAuthorize(AppRoleEnum.TestOnly)]
         public List<Volunteer> FindVolunteer(string name)
         {
             var result = database.Volunteers.Where(v => v.Name == name).ToList();//返回一个集合
             return result;
         }
-        
-        [AppAuthorize]
+
+        [AppAuthorize(AppRoleEnum.Administrator)]
         public VolunteerResult AddVolunteer(Volunteer v)
         {
             if(v==null)
@@ -97,7 +120,8 @@ namespace VolunteerDatabase.Helper
                 return VolunteerResult.Success();
             }
         }
-        [AppAuthorize]
+
+        [AppAuthorize(AppRoleEnum.Administrator)]
         public VolunteerResult AddVolunteer(int num,string name=DEFAULTSTRING,string c=DEFAULTSTRING,string mobile=DEFAULTSTRING,string room=DEFAULTSTRING,string email=DEFAULTSTRING)
         {
             if(num==0)
@@ -114,7 +138,7 @@ namespace VolunteerDatabase.Helper
             return AddVolunteer(v);
         }
         //编辑志愿者
-        [AppAuthorize]
+        [AppAuthorize(AppRoleEnum.Administrator)]
         public VolunteerResult EditVolunteer(Volunteer a,Volunteer b)
         {
             if (a == null || a.StudentNum == 0)
@@ -141,7 +165,8 @@ namespace VolunteerDatabase.Helper
             }
             return VolunteerResult.Success();
         }
-        [AppAuthorize]
+
+        [AppAuthorize(AppRoleEnum.Administrator)]
         public VolunteerResult EditVolunteer(Volunteer a, int num, string name = DEFAULTSTRING,string c= DEFAULTSTRING, string mobile = DEFAULTSTRING, string room = DEFAULTSTRING, string email = DEFAULTSTRING)
         {
             if (num == 0)
@@ -174,7 +199,7 @@ namespace VolunteerDatabase.Helper
             }
         }
         //删除志愿者
-        [AppAuthorize]
+        [AppAuthorize(AppRoleEnum.Administrator)]
         public VolunteerResult DeleteVolunteer(Volunteer a)
         {
             if (a != null)
@@ -182,7 +207,8 @@ namespace VolunteerDatabase.Helper
                 int deletedVolunteerStuNum = a.StudentNum;
                 string deletedVolunteerName = a.Name;
                 var volunteer = FindVolunteer(a.StudentNum);
-                //var loglist = logger.FindLogRecordByTargetVolunteer(volunteer).ToList();
+                List<LogRecord> loglist = logger.FindLogRecordByTargetVolunteer(volunteer).ToList();
+                List<BlackListRecord> blacklist = database.BlackListRecords.Where(b => b.Volunteer.UID == volunteer.UID).ToList();
                 //foreach (var log in loglist)
                 //{
                 //    log.TargetVolunteer = null;
@@ -198,7 +224,8 @@ namespace VolunteerDatabase.Helper
                 return VolunteerResult.Error(VolunteerResult.DeleteVolunteerErrorEnum.NonExistingVolunteer);
             }
         }
-        [AppAuthorize]
+
+        [AppAuthorize(AppRoleEnum.Administrator)]
         public VolunteerResult DeleteVolunteer(int num)
         {
             var v = database.Volunteers.Include("Project.TargetedBy").SingleOrDefault(o => o.StudentNum == num);

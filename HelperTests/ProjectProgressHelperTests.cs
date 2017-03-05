@@ -334,7 +334,7 @@ namespace VolunteerDatabase.Helper.Tests
             volunteerhelper.AddVolunteer(v);
             
            // 测试 FindVolunteerById
-           var result =  helper.FindVolunteerById(studentnum);
+           var result =  volunteerhelper.FindVolunteer(studentnum);
             var actual = volunteerhelper.FindVolunteer(studentnum);
             if ( result != actual )
             {

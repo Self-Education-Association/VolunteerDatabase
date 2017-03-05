@@ -131,7 +131,8 @@ namespace VolunteerDatabase.Helper
         {
             NullRecord,
             ExistingRecord,
-            WrongTime
+            WrongTime,
+            NotAuthorized
         }
         public enum EditBlackListRecordErrorEnum
         {
