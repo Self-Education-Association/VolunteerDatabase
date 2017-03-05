@@ -21,8 +21,8 @@
                         Pages/ProjectCreate.xaml
                     </mui:Link.Source>
                 </mui:Link>
-                <mui:Link DisplayName="用户审批" Source="Pages/UserApproval"/>
-                <mui:Link DisplayName="志愿者库" Source="Pages/VolunteerData"/>
+                <mui:Link DisplayName="用户审批" Source="Pages/UserApproval.xaml"/>
+                <mui:Link DisplayName="志愿者库" Source="Pages/VolunteerData.xaml"/>
             </mui:ModernTab.Links>
         </mui:ModernTab>
     </Grid>

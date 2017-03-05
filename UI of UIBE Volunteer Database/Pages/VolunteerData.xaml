@@ -9,8 +9,11 @@
     <Grid Style="{StaticResource ContentRoot}">
         <ScrollViewer>
             <StackPanel MinWidth="200">
-                <TextBlock Text="BASIC PAGE" Style="{StaticResource Heading2}" />
-                <TextBlock Text="Content goes here" />
+                <TextBlock Text="Volunteer Data" Style="{StaticResource Heading2}" />
+                <CheckBox Content="黑名单" Width="60" Height="25" HorizontalAlignment="Left"/>
+                <DataGrid>
+                    <DataGrid AutoGenerateColumns="True"></DataGrid>
+                </DataGrid>
             </StackPanel>
         </ScrollViewer>
     </Grid>

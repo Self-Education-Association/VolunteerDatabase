@@ -20,7 +20,7 @@ namespace Desktop
     /// <summary>
     /// Register.xaml 的交互逻辑
     /// </summary>
-    public partial class Register : Window
+    public partial class Register : UserControl
     {
         public Register()
         {
@@ -53,7 +53,7 @@ namespace Desktop
                     if (result.Succeeded == true)
                     {
                         MessageBox.Show("注册成功！");
-                        this.Close();
+                        //this.Close();
                     }
                     else
                     {

@@ -9,8 +9,10 @@
     <Grid Style="{StaticResource ContentRoot}">
         <ScrollViewer>
             <StackPanel MinWidth="200">
-                <TextBlock Text="BASIC PAGE" Style="{StaticResource Heading2}" />
-                <TextBlock Text="Content goes here" />
+                <TextBlock Text="User Approval" Style="{StaticResource Heading2}" />
+                <DataGrid>
+                    <DataGrid AutoGenerateColumns="True"/>
+                </DataGrid>
             </StackPanel>
         </ScrollViewer>
     </Grid>
