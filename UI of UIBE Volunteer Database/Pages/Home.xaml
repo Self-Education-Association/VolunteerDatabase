@@ -14,6 +14,9 @@
                 <Label x:Name="label2" Content="密码" HorizontalAlignment="Left" Height="30" Width="38" FontSize="14" Canvas.Left="183" Canvas.Top="127"/>
                 <PasswordBox x:Name="password" HorizontalAlignment="Center" Height="30" Width="160" Background="#FFF1ECFF" Canvas.Left="291" Canvas.Top="127"/>
                 <Button x:Name="login" Content="登录" HorizontalAlignment="Left" Width="160" Canvas.Left="291" Canvas.Top="221" Click="login_Click"/>
+                <TextBlock Height="20" Width="150" Canvas.Left="291" Canvas.Top="196">
+                    <Hyperlink NavigateUri="Register.xaml">没有账户？点击这里注册</Hyperlink>
+                </TextBlock>
             </Canvas>
         </ScrollViewer>
     </Grid>
