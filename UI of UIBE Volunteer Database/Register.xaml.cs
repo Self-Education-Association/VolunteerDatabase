@@ -20,7 +20,7 @@ namespace Desktop
     /// <summary>
     /// Register.xaml 的交互逻辑
     /// </summary>
-    public partial class Register : UserControl
+    public partial class Register : Window
     {
         public Register()
         {
