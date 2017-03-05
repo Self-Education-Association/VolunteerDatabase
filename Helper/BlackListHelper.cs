@@ -14,6 +14,12 @@ namespace VolunteerDatabase.Helper
         private static BlackListHelper helper;
         private static readonly object helperlocker = new object();
         Database database = DatabaseContext.GetInstance();
+
+        [AppAuthorize(AppRoleEnum.Administrator)]
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
+        [AppAuthorize(AppRoleEnum.LogViewer)]
+        [AppAuthorize(AppRoleEnum.OrgnizationMember)]
+        [AppAuthorize(AppRoleEnum.TestOnly)]
         public static BlackListHelper GetInstance()
         {
             if (helper == null)
@@ -28,6 +34,12 @@ namespace VolunteerDatabase.Helper
             }
             return helper;
         }
+
+        [AppAuthorize(AppRoleEnum.Administrator)]
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
+        [AppAuthorize(AppRoleEnum.LogViewer)]
+        [AppAuthorize(AppRoleEnum.OrgnizationMember)]
+        [AppAuthorize(AppRoleEnum.TestOnly)]
         public async Task<BlackListHelper> GetInstanceAsync()
         {
             Task<BlackListHelper> helper = Task.Run(() =>
@@ -40,6 +52,12 @@ namespace VolunteerDatabase.Helper
         {
             database = DatabaseContext.GetInstance();
         }
+
+        [AppAuthorize(AppRoleEnum.Administrator)]
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
+        [AppAuthorize(AppRoleEnum.LogViewer)]
+        [AppAuthorize(AppRoleEnum.OrgnizationMember)]
+        [AppAuthorize(AppRoleEnum.TestOnly)]
         public List<BlackListRecord> FindBlackList(Guid uid)
         {
             try
@@ -52,6 +70,12 @@ namespace VolunteerDatabase.Helper
                 return null;
             }
         }
+
+        [AppAuthorize(AppRoleEnum.Administrator)]
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
+        [AppAuthorize(AppRoleEnum.LogViewer)]
+        [AppAuthorize(AppRoleEnum.OrgnizationMember)]
+        [AppAuthorize(AppRoleEnum.TestOnly)]
         public List<BlackListRecord> FindBlackList(Volunteer v)
         {
             try
@@ -64,6 +88,12 @@ namespace VolunteerDatabase.Helper
                 return null;
             }
         }
+
+        [AppAuthorize(AppRoleEnum.Administrator)]
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
+        [AppAuthorize(AppRoleEnum.LogViewer)]
+        [AppAuthorize(AppRoleEnum.OrgnizationMember)]
+        [AppAuthorize(AppRoleEnum.TestOnly)]
         public List<BlackListRecord> FindBlackList(Organization org)
         {
             try
@@ -76,6 +106,12 @@ namespace VolunteerDatabase.Helper
                 return null;
             }
         }
+
+        [AppAuthorize(AppRoleEnum.Administrator)]
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
+        [AppAuthorize(AppRoleEnum.LogViewer)]
+        [AppAuthorize(AppRoleEnum.OrgnizationMember)]
+        [AppAuthorize(AppRoleEnum.TestOnly)]
         public List<BlackListRecord> FindBlackList(AppUser adder)
         {
             try
@@ -88,6 +124,12 @@ namespace VolunteerDatabase.Helper
                 return null;
             }
         }
+
+        [AppAuthorize(AppRoleEnum.Administrator)]
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
+        [AppAuthorize(AppRoleEnum.LogViewer)]
+        [AppAuthorize(AppRoleEnum.OrgnizationMember)]
+        [AppAuthorize(AppRoleEnum.TestOnly)]
         public List<BlackListRecord> FindBlackList(Project project)
         {
             try
@@ -100,6 +142,12 @@ namespace VolunteerDatabase.Helper
                 return null;
             }
         }
+
+        [AppAuthorize(AppRoleEnum.Administrator)]
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
+        [AppAuthorize(AppRoleEnum.LogViewer)]
+        [AppAuthorize(AppRoleEnum.OrgnizationMember)]
+        [AppAuthorize(AppRoleEnum.TestOnly)]
         public List<BlackListRecord> FindBlackListByAddTime(DateTime start, DateTime end)
         {
             if (start > end)
@@ -109,6 +157,12 @@ namespace VolunteerDatabase.Helper
             var result = database.BlackListRecords.Where(b => b.AddTime < end && b.AddTime > start).ToList();
             return result;
         }
+
+        [AppAuthorize(AppRoleEnum.Administrator)]
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
+        [AppAuthorize(AppRoleEnum.LogViewer)]
+        [AppAuthorize(AppRoleEnum.OrgnizationMember)]
+        [AppAuthorize(AppRoleEnum.TestOnly)]
         public List<BlackListRecord> FindBlackListByEndTime(DateTime start, DateTime end)
         {
             if (start > end)
@@ -118,8 +172,9 @@ namespace VolunteerDatabase.Helper
             var result = database.BlackListRecords.Where(b => b.EndTime < end && b.EndTime > start).ToList();
             return result;
         }
+
         [AppAuthorize(AppRoleEnum.Administrator)]
-        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]//必须是被授权管理某个project的
         public BlackListResult AddBlackListRecord(BlackListRecord brec)
         {
             if (brec == null)
@@ -163,8 +218,10 @@ namespace VolunteerDatabase.Helper
             }
             return BlackListResult.Success();
         }
+
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
+        //[AppAuthorize(AppRoleEnum.OrgnizationMember)]//必须被授权为该项目管理员 => 拿到机构管理员的令牌
         public BlackListResult AddBlackListRecord(Volunteer volunteer, AppUser adder, DateTime endtime, Organization orgnization = null, Project project = null, BlackListRecordStatus status = BlackListRecordStatus.Enabled)
         {
             if (endtime < System.DateTime.Now)

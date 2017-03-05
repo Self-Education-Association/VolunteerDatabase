@@ -14,6 +14,7 @@
                         <ComboBoxItem Content="进行中"></ComboBoxItem>
                         <ComboBoxItem Content="已完成"></ComboBoxItem>
                     </ComboBox>
+                <Button x:Name="test111"/>
                 <DataGrid x:Name="ProjectList" AutoGenerateColumns="True" Width="auto" Height="auto"
                                   ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
                     <DataGrid.RowStyle>

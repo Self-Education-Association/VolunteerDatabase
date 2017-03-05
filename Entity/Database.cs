@@ -16,7 +16,7 @@
             base.OnModelCreating(modelBuilder);
             //modelBuilder.Entity<Volunteer>().Property(v => v.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
             modelBuilder.Entity<AppUser>().HasMany(u => u.Roles).WithMany(r => r.Users);
-            modelBuilder.Entity<AppUser>().HasRequired(u => u.Organization).WithMany(o => o.Members);
+            modelBuilder.Entity<AppUser>().HasRequired(u => u.Organization).WithMany(o => o.Members).WillCascadeOnDelete(false);
             modelBuilder.Entity<AppUser>().HasMany(u => u.Underlings).WithMany(u => u.Superiors);
 
             modelBuilder.Entity<AppUser>().HasMany(u => u.Projects).WithMany(o => o.Managers);
@@ -34,8 +34,10 @@
             modelBuilder.Entity<LogRecord>().HasOptional(l => l.TargetProject).WithMany(t => t.TargetedBy);
             modelBuilder.Entity<LogRecord>().HasOptional(l => l.TargetVolunteer).WithMany(t => t.TargetedBy);
 
+            modelBuilder.Entity<Organization>().HasMany(o => o.BlackListRecords).WithRequired(o => o.Organization);
+
             modelBuilder.Entity<BlackListRecord>().HasKey(b => b.UID).Property(v => v.UID).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            modelBuilder.Entity<BlackListRecord>().HasRequired(b => b.Organization).WithMany(o => o.BlackListRecords);//这里为何不能WillCascedeOnDelete
+            //modelBuilder.Entity<BlackListRecord>().HasRequired(b => b.Organization).WithMany(o => o.BlackListRecords);//这里为何不能WillCascedeOnDelete
             modelBuilder.Entity<BlackListRecord>().HasRequired(b => b.Adder).WithMany(a => a.BlackListRecords).WillCascadeOnDelete(true);
             modelBuilder.Entity<BlackListRecord>().HasRequired(b => b.Project).WithMany(p=>p.BlackListRecords).WillCascadeOnDelete(true);
 

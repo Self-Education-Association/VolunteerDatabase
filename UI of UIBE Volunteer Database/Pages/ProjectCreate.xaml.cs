@@ -24,5 +24,6 @@ namespace Desktop.Pages
         {
             InitializeComponent();
         }
+        
     }
 }
