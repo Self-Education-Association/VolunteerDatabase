@@ -13,7 +13,7 @@ namespace VolunteerDatabase.Helper
     {
         private static BlackListHelper helper;
         private static readonly object helperlocker = new object();
-        Database database;
+        Database database = DatabaseContext.GetInstance();
         public static BlackListHelper GetInstance()
         {
             if (helper == null)

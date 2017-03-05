@@ -10,18 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WpfApplication1
+namespace Desktop.Pages
 {
     /// <summary>
-    /// Administrator.xaml 的交互逻辑
+    /// Interaction logic for UserApproval.xaml
     /// </summary>
-    public partial class Administrator : Window
+    public partial class UserApproval : UserControl
     {
-        public Administrator()
+        public UserApproval()
         {
             InitializeComponent();
-        }
+        }        
     }
 }

@@ -13,16 +13,15 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using VolunteerDatabase.Helper;
 using VolunteerDatabase.Interface;
-using MahApps.Metro.Controls;
 
 
 
-namespace WpfApplication1
+namespace Desktop
 {
     /// <summary>
     /// Mainindow.xaml 的交互逻辑
     /// </summary>
-    public partial class MainWindow : MetroWindow
+    public partial class MainWindow : Window
     {
         private AppUserIdentityClaims Claims { get; set; }
         private ProjectManageHelper ProjectManageHelper { get; set; }
@@ -37,10 +36,14 @@ namespace WpfApplication1
         }
         private void ShowUserMessage()
         {
+            string[] orgstring = Claims.User.Organization.OrganizationEnum.ToString().Split('.');
+            string orgdetail = orgstring.Last();
+            string[] rolestring = Claims.Roles.ToString().Split('.');
+            string roledetail = rolestring.Last();
             account_name.Text = Claims.User.AccountName;
-            org.Text = Claims.User.Organization.ToString();
+            org.Text = orgdetail;
             tel.Text = Claims.User.Mobile;
-            roles.Text = Claims.Roles.ToString();
+            roles.Text = roledetail;
             userid.Text = Claims.User.StudentNum.ToString();
             email.Text = Claims.User.Email;
             dormitary.Text = Claims.User.Room;
@@ -92,11 +95,6 @@ namespace WpfApplication1
                 project_list.ItemsSource = list;
             }
             //此处输出略显暴力，待改善
-        }
-
-        private void exit_button_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
         }
 
         private void create_project_button_Click(object sender, RoutedEventArgs e)

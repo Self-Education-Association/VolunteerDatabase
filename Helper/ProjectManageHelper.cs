@@ -11,7 +11,7 @@ namespace VolunteerDatabase.Helper
 {
     public class ProjectManageHelper
     {
-        Database database;
+        Database database = DatabaseContext.GetInstance();
         private static ProjectManageHelper helper;
         private static readonly object helperlocker = new object();
         public static ProjectManageHelper GetInstance()
@@ -55,6 +55,7 @@ namespace VolunteerDatabase.Helper
 
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
+        //      public List<AppUser> FindManagerListByStudentNum(params string[] StuNums)  //将原本是string类型的参数改为 int
         public List<AppUser> FindManagerListByStudentNum(params int[] StuNums)
         {
             List<AppUser> Managers = new List<AppUser>();
@@ -78,7 +79,7 @@ namespace VolunteerDatabase.Helper
             ProgressResult result;
             if (Time == null)
             {
-                ProgressResult.Error("新项目"+Name+"时间不合法，请重新输入");
+                return ProgressResult.Error("新项目"+Name+"时间不合法，请重新输入");
             }
             lock (database)
             {
@@ -118,7 +119,7 @@ namespace VolunteerDatabase.Helper
             Save();
             result = ProgressResult.Success();
             return result;
-        }//修改Project信息
+        }
 
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]

@@ -92,7 +92,7 @@ namespace VolunteerDatabase.Helper
                 v.Email = v.Email == DEFAULTSTRING ? DEFAULTSTRING : v.Email;
                 database.Volunteers.Add(v);
                 Save();
-                var target = FindVolunteer(stunum);
+                Volunteer target = FindVolunteer(stunum);
                 bool logresult = VolunteerOperationSucceeded(string.Format("已添加学号:[{0}],姓名:[{1}] 的志愿者条目进入数据库.", target.StudentNum, target.Name), target, LogType.EditContact, true);
                 return VolunteerResult.Success();
             }

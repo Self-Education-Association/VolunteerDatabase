@@ -76,13 +76,9 @@
     <Compile Include="Migrations\201703021621443_AddCreditRecord.Designer.cs">
       <DependentUpon>201703021621443_AddCreditRecord.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201703031624242_ModifyFKConstraint.cs" />
-    <Compile Include="Migrations\201703031624242_ModifyFKConstraint.Designer.cs">
-      <DependentUpon>201703031624242_ModifyFKConstraint.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703031659013_DeleteCascedeOnDeleteOfBlackRecord.cs" />
-    <Compile Include="Migrations\201703031659013_DeleteCascedeOnDeleteOfBlackRecord.Designer.cs">
-      <DependentUpon>201703031659013_DeleteCascedeOnDeleteOfBlackRecord.cs</DependentUpon>
+    <Compile Include="Migrations\201703031055423_ChangeNullableStudentNum.cs" />
+    <Compile Include="Migrations\201703031055423_ChangeNullableStudentNum.Designer.cs">
+      <DependentUpon>201703031055423_ChangeNullableStudentNum.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Organization.cs" />
@@ -113,11 +109,8 @@
     <EmbeddedResource Include="Migrations\201703021621443_AddCreditRecord.resx">
       <DependentUpon>201703021621443_AddCreditRecord.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703031624242_ModifyFKConstraint.resx">
-      <DependentUpon>201703031624242_ModifyFKConstraint.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703031659013_DeleteCascedeOnDeleteOfBlackRecord.resx">
-      <DependentUpon>201703031659013_DeleteCascedeOnDeleteOfBlackRecord.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201703031055423_ChangeNullableStudentNum.resx">
+      <DependentUpon>201703031055423_ChangeNullableStudentNum.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

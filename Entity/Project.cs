@@ -7,7 +7,7 @@ using VolunteerDatabase.Interface;
 
 namespace VolunteerDatabase.Entity
 {
-    public class Project
+    public class Project : IEqualityComparer<Project>
     {
         public string Name { get; set; }
 
@@ -53,6 +53,20 @@ namespace VolunteerDatabase.Entity
             {
                 return false;
             }
+        }
+
+        public bool Equals(Project x, Project y)
+        {
+            if (x.Id == y.Id)
+            {
+                return true;
+            }
+            else return false;
+        }
+
+        public int GetHashCode(Project obj)
+        {
+           return GetHashCode(obj);
         }
     }
 
