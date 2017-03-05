@@ -1,11 +1,11 @@
-﻿<Window x:Class="Desktop.Register"
+﻿<UserControl x:Class="Desktop.Register"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Desktop"
         mc:Ignorable="d"
-        Title="注册" Height="auto" Width="auto" d:DesignWidth="1366" d:DesignHeight="768">
+        Height="auto" Width="auto" d:DesignWidth="1366" d:DesignHeight="768">
     <Viewbox>
         <Grid>
             <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="38,30,0,0" TextWrapping="Wrap" Text="姓名" VerticalAlignment="Top"/>
@@ -17,7 +17,7 @@
             <TextBlock x:Name="textBlock4" HorizontalAlignment="Left" Margin="38,140,0,0" TextWrapping="Wrap" Text="密码" VerticalAlignment="Top"/>
             <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Margin="91,140,0,0" VerticalAlignment="Top" Width="96" Height="15"/>
             <TextBlock x:Name="textBlock5" HorizontalAlignment="Left" Margin="38,173,0,0" TextWrapping="Wrap" Text="确认密码" VerticalAlignment="Top"/>
-            <PasswordBox x:Name="passwordBox1" HorizontalAlignment="Left" Margin="91,175,0,0" VerticalAlignment="Top" Width="96" Height="18"/>
+            <PasswordBox x:Name="passwordBox1" HorizontalAlignment="Left" Margin="91,175,0,0" VerticalAlignment="Top" Width="96" Height="13"/>
             <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="285,32,0,0" VerticalAlignment="Top" Width="96" Height="14">
                 <ComboBoxItem>SEA团队</ComboBoxItem>
                 <ComboBoxItem>校志愿服务中心</ComboBoxItem>
@@ -38,9 +38,9 @@
             <TextBlock x:Name="textBlock8" HorizontalAlignment="Left" Margin="232,106,0,0" TextWrapping="Wrap" Text="电子邮箱" VerticalAlignment="Top"/>
             <TextBox x:Name="textBox4" HorizontalAlignment="Left" Height="15" Margin="285,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96"/>
             <CheckBox x:Name="checkBox" Content="我同意使用协议" HorizontalAlignment="Left" Margin="232,175,0,0" VerticalAlignment="Top" Foreground="#FF170303"/>
-            <Button x:Name="register_button" Content="注册" Margin="340,171,26,0" VerticalAlignment="Top" Width="48" Height="20" Click="register_button_Click" IsEnabled="{Binding ElementName=checkBox,Path=IsChecked}"/>
+            <Button x:Name="register_button" Content="注册" Margin="340,171,10,0" VerticalAlignment="Top" Height="31" Click="register_button_Click" IsEnabled="{Binding ElementName=checkBox,Path=IsChecked}"/>
             <TextBlock Text="宿舍" Margin="232,140,153,47"/>
             <TextBox x:Name="textBox5" HorizontalAlignment="Left" Height="15" Width="96" Margin="285,140,0,47"/>
         </Grid>
     </Viewbox>
-</Window>
+</UserControl>

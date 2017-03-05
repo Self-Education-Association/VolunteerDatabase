@@ -9,7 +9,7 @@
     <Grid Style="{StaticResource ContentRoot}">
         <ScrollViewer>
             <Canvas MinWidth="200">
-                <TextBlock Text="BASIC PAGE" Style="{StaticResource Heading2}" />
+                <TextBlock Text="Add Project" Style="{StaticResource Heading2}" />
                 <TextBlock Text="项目名称" Width="60" Height="30" FontSize="14" Canvas.Left="10" Canvas.Top="37"/>
                 <TextBox x:Name="project_name" Width="114" Height="25" FontSize="14" Canvas.Left="75" Canvas.Top="37"/>
                 <TextBlock Text="项目地点" Width="60" Height="30" FontSize="14" Canvas.Left="10" Canvas.Top="72"/>
