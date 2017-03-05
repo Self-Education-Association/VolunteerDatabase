@@ -58,13 +58,17 @@ namespace VolunteerDatabase.Helper
                     return true;
                 }
             }
-            if (typeof(IProject).IsAssignableFrom(input.Data.GetType()))
+            if (typeof(Project).IsAssignableFrom(input.Data.GetType()))
             {
-                var project = input.Data as IProject;
-                if (project.Manager.AccountName == input.Claims.User.AccountName)
+                var project = input.Data as Project;
+                bool flag = false;
+                List<AppUser> managerlist = project.Managers;
+                foreach (AppUser manager in managerlist)
                 {
-                    return true;
+                    if (manager.AccountName == input.Claims.User.AccountName)
+                        flag = true;
                 }
+                return flag;
             }
             return false;
         }

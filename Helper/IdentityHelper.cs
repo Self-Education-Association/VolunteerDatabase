@@ -238,16 +238,22 @@ namespace VolunteerDatabase.Helper
         }
 
         //显示所有通过审批的成员
+        [AppAuthorize(AppRoleEnum.Administrator)]
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
         public List<AppUser> ShowApprovedMembers(Organization org)
         {
             return org.Members.Where(m => m.Status == AppUserStatus.Enabled).ToList();
         }
-        
+
+        [AppAuthorize(AppRoleEnum.Administrator)]
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
         public List<AppUser> ShowNotApprovedMembers(Organization org)
         {
             return org.Members.Where(m => m.Status == AppUserStatus.NotApproved).ToList();
         }
 
+        [AppAuthorize(AppRoleEnum.Administrator)]
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
         public IdentityResult ApproveRegisterRequest(AppUser user)
         {
             if (user == null)
@@ -266,6 +272,8 @@ namespace VolunteerDatabase.Helper
             }
         }
 
+        [AppAuthorize(AppRoleEnum.Administrator)]
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
         public IdentityResult ApproveRegisterRequest(List<AppUser> users)
         {
             if(users == null)
@@ -291,6 +299,8 @@ namespace VolunteerDatabase.Helper
             }
         }
 
+        [AppAuthorize(AppRoleEnum.Administrator)]
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
         public IdentityResult RejectRegisterRequest(AppUser user,string note = "无")
         {
             if(user == null)
@@ -327,6 +337,8 @@ namespace VolunteerDatabase.Helper
             }
         }
 
+        [AppAuthorize(AppRoleEnum.Administrator)]
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
         public ApprovalRecord GetApprovalRecordByRequestedUser(AppUser user)
         {
             var result = database.ApprovalRecords.SingleOrDefault(r => r.User.Id == user.Id);
@@ -344,12 +356,16 @@ namespace VolunteerDatabase.Helper
             }
         }
 
+        [AppAuthorize(AppRoleEnum.Administrator)]
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
         public List<ApprovalRecord> GetApprovalRecordByOrganization(Organization org)
         {
             List<ApprovalRecord> result = database.ApprovalRecords.Where(r => r.Organization.Id == org.Id).ToList();
             return result;
         }
 
+        [AppAuthorize(AppRoleEnum.Administrator)]
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
         public List<AppUser> GetUnderlingsList(AppUser superior)
         {
             if(superior==null)

@@ -13,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VolunteerDatabase.Entity;
+using VolunteerDatabase.Helper;
 
 namespace Desktop
 {
@@ -25,5 +27,8 @@ namespace Desktop
         {
             InitializeComponent();
         }
+        private AppUserIdentityClaims Claims { get; set; }
+
     }
+
 }

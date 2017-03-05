@@ -25,7 +25,11 @@ namespace Desktop.Pages
         {
             InitializeComponent();
         }
-        
+
+
+
+      
+
         //private void create_project_button_Click(object sender, RoutedEventArgs e)
         //{
         //    TextRange textRange = new TextRange(ProjectList.Document.ContentStart, project_details.Document.ContentEnd);
@@ -44,7 +48,7 @@ namespace Desktop.Pages
         //            project_place.Clear();
         //            project_maximum.Clear();
         //            project_details.Document.Blocks.Clear();
-                    
+
         //        }
         //        else
         //        {

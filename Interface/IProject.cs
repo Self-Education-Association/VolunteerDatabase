@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+
 using System.Threading.Tasks;
 
 namespace VolunteerDatabase.Interface
@@ -11,7 +12,7 @@ namespace VolunteerDatabase.Interface
 
         string Name { get; set; }
 
-        IUser Manager { get; set; }
+        List<IUser> Managers { get; set; }
 
         ProjectCondition Condition { get; set; }
     }

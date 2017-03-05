@@ -13,6 +13,12 @@ namespace VolunteerDatabase.Helper
         private static ProjectProgressHelper helper;
         private static readonly object helperlocker = new object();
         Database database = DatabaseContext.GetInstance();
+
+        [AppAuthorize(AppRoleEnum.Administrator)]
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
+        [AppAuthorize(AppRoleEnum.LogViewer)]
+        [AppAuthorize(AppRoleEnum.OrgnizationMember)]
+        [AppAuthorize(AppRoleEnum.TestOnly)]
         public static ProjectProgressHelper GetInstance()
         {
             if (helper == null)
@@ -27,6 +33,12 @@ namespace VolunteerDatabase.Helper
             }
             return helper;
         }
+
+        [AppAuthorize(AppRoleEnum.Administrator)]
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
+        [AppAuthorize(AppRoleEnum.LogViewer)]
+        [AppAuthorize(AppRoleEnum.OrgnizationMember)]
+        [AppAuthorize(AppRoleEnum.TestOnly)]
         public async Task<ProjectProgressHelper> GetInstanceAsync()
         {
             Task<ProjectProgressHelper> helper = Task.Run(() =>
@@ -39,6 +51,7 @@ namespace VolunteerDatabase.Helper
         {
             database = DatabaseContext.GetInstance();
         }
+
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
         public List<Project> FindAuthorizedProjectsByUser(AppUser user)
         {
@@ -103,17 +116,7 @@ namespace VolunteerDatabase.Helper
             return Volunteers;
         }
 
-        public Volunteer FindVolunteerById(int num)
-        {
-            var volunteer = database.Volunteers.SingleOrDefault(r => r.StudentNum == num);
-            if (volunteer == null)
-            {
-                ProgressResult.Error("志愿者不存在于数据库中");
-            }
-            return volunteer;
-        }
-
-        [AppAuthorize(AppRoleEnum.OrgnizationMember)]
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
         public ProgressResult SingleVolunteerInputById(int num, Project Pro)
         {
             ProgressResult result;
@@ -137,7 +140,7 @@ namespace VolunteerDatabase.Helper
             return result;
         }
 
-        [AppAuthorize(AppRoleEnum.OrgnizationMember)]
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
         public ProgressResult DeleteVolunteerFromProject(Volunteer Vol, Project Pro)
         {
             ProgressResult result;
@@ -155,7 +158,7 @@ namespace VolunteerDatabase.Helper
             return result;
         }
 
-        [AppAuthorize(AppRoleEnum.OrgnizationMember)]
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
         public ProgressResult Scoring4ForVolunteers(Project Pro)
         {
             ProgressResult result;
@@ -173,7 +176,7 @@ namespace VolunteerDatabase.Helper
             return result;
         }
 
-        [AppAuthorize(AppRoleEnum.OrgnizationMember)]
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
         public ProgressResult ScoreSingleVolunteer(int Score, Volunteer Vol)
         {
             ProgressResult result;
@@ -187,7 +190,7 @@ namespace VolunteerDatabase.Helper
             return result;
         }
 
-        [AppAuthorize(AppRoleEnum.OrgnizationMember)]
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
         public ProgressResult FinishProject(Project Pro)
         {
             ProgressResult result;
@@ -204,7 +207,8 @@ namespace VolunteerDatabase.Helper
             result = ProgressResult.Success();
             return result;
         }
-        
+
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
         public ProgressResult EditScore(Volunteer volunteer,Project project,int score)
         {
             CreditRecord crecord = database.CreditRecords.SingleOrDefault(r => r.Participant.UID == volunteer.UID && r.Project.Id == project.Id);
@@ -228,6 +232,7 @@ namespace VolunteerDatabase.Helper
             }
         }
 
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
         public ProgressResult DeleteCreditRecord(CreditRecord crecord)
         {
             if(crecord == null)
