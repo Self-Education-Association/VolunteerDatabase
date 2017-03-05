@@ -21,7 +21,7 @@ namespace Desktop.Pages
     /// </summary>
     public partial class Login : Window
     {
-        BasePage basepage;
+        private static AppUserIdentityClaims claims;
 
         public Login()
         {
@@ -36,6 +36,11 @@ namespace Desktop.Pages
 
         private async void login_btn_Click(object sender, RoutedEventArgs e)
         {
+            if (claims != null && claims.IsAuthenticated == true)
+            {
+                SendClaimsEvent(claims);
+                return;
+            }
             IdentityHelper ih = IdentityHelper.GetInstance();
             if (userid.Text == "" || password.Password.ToString() == "")
             {
@@ -47,8 +52,9 @@ namespace Desktop.Pages
                 if (claims.IsAuthenticated)
                 {
                     MessageBox.Show("登陆成功！");
-                    basepage = BasePage.GetInstance(claims);
-                    
+                    SendClaimsEvent(claims);
+                    Close();
+
                     //消去login 加上头像 退出登录 
                 }
                 else
@@ -56,7 +62,25 @@ namespace Desktop.Pages
                     MessageBox.Show("登录失败，请检查用户名和密码！");
                 }
             }
-            
+
         }
+
+        public static void GetClaims(SendClaimsDelegate sendClaims)
+        {
+            if (claims?.IsAuthenticated == true)
+            {
+                SendClaimsEvent(claims);
+                return;
+            }
+
+            Login loginWindow = new Login();
+            loginWindow.Show();
+            SendClaimsEvent += sendClaims;
+            return;
+        }
+
+        public delegate void SendClaimsDelegate(AppUserIdentityClaims claims);
+
+        public static event SendClaimsDelegate SendClaimsEvent;
     }
 }
