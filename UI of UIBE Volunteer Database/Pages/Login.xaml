@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Desktop.Pages.Home"
+﻿<Window x:Class="Desktop.Pages.Login"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -22,4 +22,4 @@
             </Canvas>
         </ScrollViewer>
     </Grid>
-</UserControl>
+</Window>

@@ -17,11 +17,13 @@ using VolunteerDatabase.Helper;
 namespace Desktop.Pages
 {
     /// <summary>
-    /// Interaction logic for Home.xaml
+    /// Interaction logic for Login.xaml
     /// </summary>
-    public partial class Home : UserControl
+    public partial class Login : Window
     {
-        public Home()
+        BasePage basepage;
+
+        public Login()
         {
             InitializeComponent();
         }
@@ -41,10 +43,13 @@ namespace Desktop.Pages
             }
             else
             {
-                var claims = await ih.CreateClaimsAsync(userid.Text, password.Password.ToString());
+                var claims = await ih.CreateClaimsAsync(userid.Text, password.Password.ToString());//输入合法性验证
                 if (claims.IsAuthenticated)
                 {
-                    //MessageBox.Show("登陆成功！");
+                    MessageBox.Show("登陆成功！");
+                    basepage = BasePage.GetInstance(claims);
+                    
+                    //消去login 加上头像 退出登录 
                 }
                 else
                 {

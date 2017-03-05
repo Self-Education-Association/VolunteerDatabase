@@ -31,7 +31,7 @@ namespace Desktop
         {
             if (textBox.Text == "" || textBox1.Text == "" || textBox2.Text == "" || textBox3.Text == "" || textBox4.Text == "" || textBox5.Text == "" || passwordBox.Password == "" || comboBox.Text == "")
             {
-                //存在空白，信息不完整
+                //MessageBox.Show("信息输入不完整,请检查后重试.");//存在空白，信息不完整
             }
             else
             {
@@ -40,6 +40,14 @@ namespace Desktop
                 {
                     string passWord = passwordBox.Password;
                     OrganizationEnum org = ih.Matching(comboBox.Text);
+                    try
+                    {
+                        int studentnum = int.Parse(textBox1.Text);
+                    }
+                    catch(Exception)
+                    {
+                        MessageBox.Show("学号输入非法,仅能输入数字.");
+                    }
                     AppUser au = new AppUser()
                     {
                         StudentNum = int.Parse(textBox1.Text),
@@ -53,7 +61,7 @@ namespace Desktop
                     if (result.Succeeded == true)
                     {
                         MessageBox.Show("注册成功！");
-                        //this.Close();
+                        this.Close();
                     }
                     else
                     {
@@ -93,5 +101,6 @@ namespace Desktop
             }
         }
         //此处限制了键盘输入必须为数字，但是无法检查输入法的中文输入，待解决
+        //动态展现：用户名已经被占用
     }
 }

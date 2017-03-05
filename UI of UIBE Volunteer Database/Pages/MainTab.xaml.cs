@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VolunteerDatabase.Helper;
 
 namespace Desktop.Pages
 {
@@ -20,9 +21,13 @@ namespace Desktop.Pages
     /// </summary>
     public partial class MainTab : UserControl
     {
+        BasePage basepage;
+
         public MainTab()
         {
             InitializeComponent();
+            basepage = BasePage.GetInstance();
+            
         }
     }
 }
