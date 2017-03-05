@@ -26,13 +26,13 @@ namespace Desktop.Pages
             InitializeComponent();
         }
 
-        //private void register_Click(object sender, RoutedEventArgs e)
-        //{
-        //    var Register = new Register();
-        //    Register.Show();
-        //}
+        private void register_Click(object sender, RoutedEventArgs e)
+        {
+            var Register = new Register();
+            Register.Show();
+        }
 
-        private async void login_Click(object sender, RoutedEventArgs e)
+        private async void login_btn_Click(object sender, RoutedEventArgs e)
         {
             IdentityHelper ih = IdentityHelper.GetInstance();
             if (userid.Text == "" || password.Password.ToString() == "")
