@@ -3,22 +3,24 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="600">
+             xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+             mc:Ignorable="d"
+             Width="400" Height="300"
+             d:DesignHeight="300" d:DesignWidth="400">
     <Grid Style="{StaticResource ContentRoot}">
         <ScrollViewer>
             <Canvas MinWidth="200">
                 <TextBlock Text="欢迎使用对外经贸大学志愿者信息系统" HorizontalAlignment="Left" Height="30" Width="340" FontSize="20"/>
-                <Label x:Name="label1" Content="账号" HorizontalAlignment="Left" Height="30" Width="38" FontSize="14" Canvas.Left="183" Canvas.Top="78"/>
-                <TextBox x:Name="userid" HorizontalAlignment="Center" TextWrapping="Wrap" Height="30" Width="160" Background="#FFF1ECFF" Canvas.Left="291" Canvas.Top="78"/>
-                <Label x:Name="label2" Content="密码" HorizontalAlignment="Left" Height="30" Width="38" FontSize="14" Canvas.Left="183" Canvas.Top="127"/>
-                <PasswordBox x:Name="password" HorizontalAlignment="Center" Height="30" Width="160" Background="#FFF1ECFF" Canvas.Left="291" Canvas.Top="127"/>
-                <Button x:Name="login_btn" Content="登录" HorizontalAlignment="Left" Width="160" Canvas.Left="291" Canvas.Top="199" Click="login_btn_Click"/>
+                <Label x:Name="label1" Content="账号" HorizontalAlignment="Left" Height="30" Width="38" FontSize="14" Canvas.Left="64" Canvas.Top="78"/>
+                <TextBox x:Name="userid" HorizontalAlignment="Center" TextWrapping="Wrap" Height="30" Width="160" Background="#FFF1ECFF" Canvas.Left="128" Canvas.Top="78" MaxLength="32"/>
+                <Label x:Name="label2" Content="密码" HorizontalAlignment="Left" Height="30" Width="38" FontSize="14" Canvas.Left="64" Canvas.Top="127"/>
+                <PasswordBox x:Name="password" HorizontalAlignment="Center" Height="30" Width="160" Background="#FFF1ECFF" Canvas.Left="128" Canvas.Top="127"/>
+                <mui:ModernButton x:Name="login_btn" Content="登录" HorizontalAlignment="Left" Width="60" Canvas.Left="191" Canvas.Top="194" Click="login_btn_Click"/>
                 <!--<TextBlock Height="20" Width="150" Canvas.Left="291" Canvas.Top="196">
                     <Hyperlink NavigateUri="Register.xaml">没有账户？点击这里注册</Hyperlink>
                 </TextBlock>-->
                 <!--以下为临时注册窗口、完成新的注册页后删除-->
-                <Button x:Name="register_btn" Content="注册" Width="160" HorizontalAlignment="Left" Canvas.Left="291" Canvas.Top="229" Click="register_Click" Height="27"/>
+                <mui:ModernButton x:Name="register_btn" Content="注册" Width="60" HorizontalAlignment="Left" Canvas.Left="291" Canvas.Top="192" Click="register_Click" Height="26"/>
             </Canvas>
         </ScrollViewer>
     </Grid>
