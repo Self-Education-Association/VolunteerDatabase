@@ -15,8 +15,8 @@
                         <ComboBoxItem Content="已完成"></ComboBoxItem>
                     </ComboBox>
                 <!--<Button x:Name="WhiteDivide"/>-->
-                <DataGrid x:Name="project_list" AutoGenerateColumns="True" Width="568" Height="201"
-                                  ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Canvas.Top="55">
+                <DataGrid x:Name="project_list" AutoGenerateColumns="True" Width="auto" Height="auto"
+                                  ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Canvas.Top="55" IsReadOnly="True">
                     <DataGrid.RowStyle>
                         <Style TargetType="DataGridRow">
                             <Setter Property="Background" Value="LightBlue" />
