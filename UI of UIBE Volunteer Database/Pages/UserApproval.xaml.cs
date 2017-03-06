@@ -28,10 +28,15 @@ namespace Desktop.Pages
             Claims = identitypage.Claims;
             InitializeComponent();
         }
-        private void sendClaimsEventHandler(AppUserIdentityClaims claims)
+
+        private void search_volunteer_TextChanged(object sender, TextChangedEventArgs e)
         {
-            this.Claims = claims;
-            MessageBox.Show("用户审批模块收到令牌.");
+
+        }
+
+        private void ModernButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

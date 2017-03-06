@@ -8,7 +8,7 @@
              d:DesignHeight="300" d:DesignWidth="600">
     <Grid Style="{StaticResource ContentRoot}">
         <ScrollViewer>
-            <StackPanel MinWidth="200">
+            <Canvas MinWidth="200">
                 <TextBlock Name="Status" Text="项目状态" Style="{StaticResource Heading2}" />
                 <ComboBox x:Name="StatusSwitch"  Width="100" Height="20" HorizontalAlignment="Left" FontSize="12">
                         <ComboBoxItem Content="进行中"></ComboBoxItem>
@@ -38,7 +38,9 @@
                         </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
-            </StackPanel>
+                <mui:ModernButton Content="查找" Width="60" Height="25" Canvas.Left="498" Canvas.Top="27" Click="ModernButton_Click"/>
+                <TextBox x:Name="search_project" Width="90" Height="25" Canvas.Left="403" Canvas.Top="27"/>
+            </Canvas>
         </ScrollViewer>
     </Grid>
 </UserControl>

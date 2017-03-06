@@ -35,6 +35,11 @@ namespace Desktop.Pages
             MessageBox.Show("用户信息模块收到令牌.");
         }
 
+        private void ChangePassword_btn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         //private void ShowUserMessage()
         //{
         //    string[] orgstring = Claims.User.Organization.OrganizationEnum.ToString().Split('.');
