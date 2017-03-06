@@ -55,9 +55,16 @@ namespace VolunteerDatabase.Helper
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
         public List<Project> FindAuthorizedProjectsByUser(AppUser user)
         {
-            var Project=database.Projects.Where(t=>t.Managers.Contains(user)); 
-            var Projects = Project.Where(o => o.Condition == ProjectCondition.Ongoing).ToList();
-            return Projects;
+            List<Project> projectlist = database.Projects.Where(p => p.Managers.Count() > 0).ToList();
+            List<Project> authorizedprojectlist = new List<Project>();
+            foreach (Project item in projectlist)
+            {
+                if (item.Managers.Contains(user))
+                {
+                    authorizedprojectlist.Add(item);
+                }
+            }
+            return authorizedprojectlist;
         }
 
         [AppAuthorize(AppRoleEnum.Administrator)]
