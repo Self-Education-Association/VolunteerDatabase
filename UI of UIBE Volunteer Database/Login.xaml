@@ -16,9 +16,9 @@
                 <Label x:Name="label2" Content="密码" HorizontalAlignment="Left" Height="30" Width="38" FontSize="14" Canvas.Left="24" Canvas.Top="127"/>
                 <PasswordBox x:Name="password" HorizontalAlignment="Center" Height="30" Width="160" Background="#FFF1ECFF" Canvas.Left="67" Canvas.Top="127"/>
                 <mui:ModernButton x:Name="login_btn" Content="登录" HorizontalAlignment="Left" Width="60" Canvas.Left="24" Canvas.Top="260" Click="login_btn_Click"/>
-                <!--<TextBlock Height="20" Width="150" Canvas.Left="291" Canvas.Top="196">
-                    <Hyperlink NavigateUri="Register.xaml">没有账户？点击这里注册</Hyperlink>
-                </TextBlock>-->
+                <TextBlock x:Name="Tips_block" Height="25" Width="150" Canvas.Left="67" Canvas.Top="162">
+                    <TextBlock Text="请输入用户名和密码=_=" Visibility="Hidden"/>
+                </TextBlock>
                 <!--以下为临时注册窗口、完成新的注册页后删除-->
                 <mui:ModernButton x:Name="register_btn" Content="注册" Width="60" HorizontalAlignment="Left" Canvas.Left="167" Canvas.Top="260" Click="register_Click" Height="26"/>
             </Canvas>

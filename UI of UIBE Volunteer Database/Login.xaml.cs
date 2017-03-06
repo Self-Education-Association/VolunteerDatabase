@@ -14,7 +14,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using VolunteerDatabase.Helper;
 using FirstFloor.ModernUI.Windows.Controls;
-using Desktop.Pages;
 
 namespace Desktop
 {
@@ -24,6 +23,7 @@ namespace Desktop
     public partial class Login : Window
     {
         private static AppUserIdentityClaims claims;
+
         public Login()
         {
             InitializeComponent();
@@ -37,28 +37,36 @@ namespace Desktop
 
         private async void login_btn_Click(object sender, RoutedEventArgs e)
         {
-            if (claims != null && claims.IsAuthenticated == true)
+            if (userid.Text == "" ||password.Password == "")
             {
-                SendClaimsEvent(claims);
-                return;
-            }
-            IdentityHelper ih = IdentityHelper.GetInstance();
-            if (userid.Text == "" || password.Password.ToString() == "")
-            {
-                //可视化提示
+                Tips_block.Visibility = Visibility.Visible;
             }
             else
-            {
-                var claims = await ih.CreateClaimsAsync(userid.Text, password.Password.ToString());//输入合法性验证
-                if (claims.IsAuthenticated)
+            { 
+                if (claims != null && claims.IsAuthenticated == true)
                 {
-                    MessageBox.Show("登陆成功！");
                     SendClaimsEvent(claims);
-                    Close();
+                    return;
+                }
+                IdentityHelper ih = IdentityHelper.GetInstance();
+                if (userid.Text == "" || password.Password.ToString() == "")
+                {
+
                 }
                 else
                 {
-                    MessageBox.Show("登录失败，请检查用户名和密码！");
+                    var claims = await ih.CreateClaimsAsync(userid.Text, password.Password.ToString());//输入合法性验证
+                    if (claims.IsAuthenticated)
+                    {
+                        MessageBox.Show("登陆成功！");
+                        SendClaimsEvent(claims);
+                        Close();
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("登录失败，请检查用户名和密码！");
+                    }
                 }
             }
 
@@ -71,7 +79,6 @@ namespace Desktop
                 SendClaimsEvent(claims);
                 return;
             }
-
 
             Login loginWindow = new Login();
             loginWindow.Show();
