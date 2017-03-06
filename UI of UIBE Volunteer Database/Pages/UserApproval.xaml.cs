@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using VolunteerDatabase.Helper;
 
 namespace Desktop.Pages
 {
@@ -21,17 +20,19 @@ namespace Desktop.Pages
     /// </summary>
     public partial class UserApproval : UserControl
     {
-        private IdentityPage identitypage = IdentityPage.GetInstance();
-        private AppUserIdentityClaims Claims { get; set; }
         public UserApproval()
         {
-            Claims = identitypage.Claims;
             InitializeComponent();
         }
-        private void sendClaimsEventHandler(AppUserIdentityClaims claims)
+
+        private void search_volunteer_TextChanged(object sender, TextChangedEventArgs e)
         {
-            this.Claims = claims;
-            MessageBox.Show("用户审批模块收到令牌.");
+
+        }
+
+        private void ModernButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
