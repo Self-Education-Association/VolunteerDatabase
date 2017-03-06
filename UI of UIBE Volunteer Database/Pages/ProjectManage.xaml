@@ -8,15 +8,14 @@
              d:DesignHeight="300" d:DesignWidth="600">
     <Grid Style="{StaticResource ContentRoot}">
         <ScrollViewer>
-            <StackPanel MinWidth="200">
+            <Canvas MinWidth="200">
                 <TextBlock Name="Status" Text="项目状态" Style="{StaticResource Heading2}" />
-                <ComboBox Width="100" Height="20" HorizontalAlignment="Left" FontSize="12">
-                        <ComboBoxItem Content="进行中"></ComboBoxItem>
-                        <ComboBoxItem Content="已完成"></ComboBoxItem>
-                    </ComboBox>
-                <Button x:Name="test111"/>
-                <DataGrid x:Name="ProjectList" AutoGenerateColumns="True" Width="auto" Height="auto"
-                                  ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+                <ComboBox Width="100" Height="20" HorizontalAlignment="Left" FontSize="12" Canvas.Top="27">
+                    <ComboBoxItem Content="进行中"></ComboBoxItem>
+                    <ComboBoxItem Content="已完成"></ComboBoxItem>
+                </ComboBox>
+                <DataGrid x:Name="ProjectList" AutoGenerateColumns="True" Width="568" Height="204"
+                                  ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Canvas.Top="52">
                     <DataGrid.RowStyle>
                         <Style TargetType="DataGridRow">
                             <Setter Property="Background" Value="LightBlue" />
@@ -38,7 +37,9 @@
                         </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
-            </StackPanel>
+                <mui:ModernButton Content="查找" Width="60" Height="25" Canvas.Left="498" Canvas.Top="27" Click="ModernButton_Click"/>
+                <TextBox x:Name="search_volunteer" Width="90" Height="25" Canvas.Left="403" Canvas.Top="27"/>
+            </Canvas>
         </ScrollViewer>
     </Grid>
 </UserControl>
