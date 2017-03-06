@@ -23,6 +23,16 @@ namespace Desktop.Pages
         public UserApproval()
         {
             InitializeComponent();
-        }        
+        }
+
+        private void search_volunteer_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void ModernButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

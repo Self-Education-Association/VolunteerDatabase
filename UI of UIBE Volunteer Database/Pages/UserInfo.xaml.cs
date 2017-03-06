@@ -26,6 +26,11 @@ namespace WpfApplication1.Pages
             InitializeComponent();
         }
 
+        private void ChangePassword_btn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         //private void ShowUserMessage()
         //{
         //    string[] orgstring = Claims.User.Organization.OrganizationEnum.ToString().Split('.');
