@@ -13,17 +13,26 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using VolunteerDatabase.Interface;
+using VolunteerDatabase.Helper;
 
-namespace WpfApplication1.Pages
+namespace Desktop.Pages
 {
     /// <summary>
     /// Interaction logic for UserInfo.xaml
     /// </summary>
     public partial class UserInfo : UserControl
     {
+        private IdentityPage identitypage = IdentityPage.GetInstance();
+        private AppUserIdentityClaims Claims { get; set; }
         public UserInfo()
         {
+            Claims = identitypage.Claims;
             InitializeComponent();
+        }
+        private void sendClaimsEventHandler(AppUserIdentityClaims claims)
+        {
+            this.Claims = claims;
+            MessageBox.Show("用户信息模块收到令牌.");
         }
 
         //private void ShowUserMessage()

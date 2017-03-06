@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VolunteerDatabase.Helper;
 
 namespace Desktop.Pages
 {
@@ -20,15 +21,18 @@ namespace Desktop.Pages
     /// </summary>
     public partial class ProjectManage : UserControl
     {
-
+        IdentityPage identitypage = IdentityPage.GetInstance();
+        private AppUserIdentityClaims Claims { get; set; }
         public ProjectManage()
         {
+            Claims = identitypage.Claims;
+           // Login.GetClaims(sendClaimsEventHandler);
             InitializeComponent();
         }
 
 
 
-      
+
 
         //private void create_project_button_Click(object sender, RoutedEventArgs e)
         //{

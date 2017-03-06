@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using VolunteerDatabase.Helper;
 using FirstFloor.ModernUI.Windows.Controls;
+using Desktop.Pages;
 
 namespace Desktop
 {
@@ -23,7 +24,6 @@ namespace Desktop
     public partial class Login : Window
     {
         private static AppUserIdentityClaims claims;
-
         public Login()
         {
             InitializeComponent();
@@ -45,7 +45,7 @@ namespace Desktop
             IdentityHelper ih = IdentityHelper.GetInstance();
             if (userid.Text == "" || password.Password.ToString() == "")
             {
-
+                //可视化提示
             }
             else
             {
@@ -55,7 +55,6 @@ namespace Desktop
                     MessageBox.Show("登陆成功！");
                     SendClaimsEvent(claims);
                     Close();
-
                 }
                 else
                 {
@@ -72,6 +71,7 @@ namespace Desktop
                 SendClaimsEvent(claims);
                 return;
             }
+
 
             Login loginWindow = new Login();
             loginWindow.Show();

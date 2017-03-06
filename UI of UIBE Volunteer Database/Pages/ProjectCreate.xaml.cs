@@ -21,12 +21,18 @@ namespace Desktop.Pages
     /// </summary>
     public partial class ProjectCreate : UserControl
     {
+        private IdentityPage basepage = IdentityPage.GetInstance();
+        private AppUserIdentityClaims Claims { get; set; }
         public ProjectCreate()
         {
+            Claims = basepage.Claims;
+            //Login.GetClaims(sendClaimsEventHandler);
             InitializeComponent();
         }
 
 
+
+        
 
 
 

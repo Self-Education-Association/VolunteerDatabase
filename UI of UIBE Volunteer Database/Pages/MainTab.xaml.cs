@@ -21,7 +21,7 @@ namespace Desktop.Pages
     /// </summary>
     public partial class MainTab : UserControl
     {
-        AppUserIdentityClaims claims;
+        private AppUserIdentityClaims claims;
 
         public MainTab()
             :this(null)
@@ -46,6 +46,7 @@ namespace Desktop.Pages
         {
             IsEnabled = true;
             this.claims = claims;
+            IdentityPage identitypage = IdentityPage.GetInstance(claims);
             MessageBox.Show("收到令牌啦！");
         }
     }

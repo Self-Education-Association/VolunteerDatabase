@@ -25,7 +25,8 @@ namespace VolunteerDatabase.Interface
 
     public enum ProjectScoreCondition
     {
-        Scored,
-        UnScored
+        UnScored,
+        Scored
+        
     }
 }
