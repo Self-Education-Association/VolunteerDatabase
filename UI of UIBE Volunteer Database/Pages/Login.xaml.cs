@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using VolunteerDatabase.Helper;
+using FirstFloor.ModernUI.Windows.Controls;
 
 namespace Desktop.Pages
 {
