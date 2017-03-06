@@ -9,7 +9,7 @@
     <Grid Style="{StaticResource ContentRoot}">
         <ScrollViewer>
             <Canvas MinWidth="200">
-                <TextBlock Text="Add Project" Style="{StaticResource Heading2}" />
+                <TextBlock Text="创建项目" Style="{StaticResource Heading2}" />
                 <TextBlock Text="项目名称" Width="60" Height="30" FontSize="14" Canvas.Left="10" Canvas.Top="37"/>
                 <TextBox x:Name="project_name" Width="114" Height="25" FontSize="14" Canvas.Left="75" Canvas.Top="37"/>
                 <TextBlock Text="项目地点" Width="60" Height="30" FontSize="14" Canvas.Left="10" Canvas.Top="72"/>
@@ -20,7 +20,7 @@
                 <TextBox x:Name="project_maximum" Width="118" Height="25" FontSize="14" Canvas.Left="364" Canvas.Top="72"/>
                 <TextBlock Text="项目详情" Width="60" Height="30" FontSize="14" Canvas.Left="10" Canvas.Top="128"/>
                 <RichTextBox x:Name="project_details" Width="488" Height="83" FontSize="20" Canvas.Left="70" Canvas.Top="128"/>
-                <Button x:Name="create_project_button" Content="创建项目" Width="89" Height="30" FontSize="14" Canvas.Top="216" Canvas.Left="469"/>
+                <mui:ModernButton x:Name="create_project_button" Content="创建项目" Width="89" Height="30" FontSize="14" Canvas.Top="216" Canvas.Left="469"/>
                 <!--Click="create_project_button_Click"-->
             </Canvas>
         </ScrollViewer>
