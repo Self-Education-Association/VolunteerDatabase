@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VolunteerDatabase.Helper;
+using VolunteerDatabase.Entity;
+using VolunteerDatabase.Interface;
 
 namespace Desktop.Pages
 {
@@ -20,47 +23,75 @@ namespace Desktop.Pages
     /// </summary>
     public partial class ProjectManage : UserControl
     {
-
+        IdentityPage identitypage = IdentityPage.GetInstance();
+        ProjectProgressHelper helper;
+        private AppUserIdentityClaims Claims { get; set; }
         public ProjectManage()
         {
             InitializeComponent();
+            Claims = identitypage.Claims;
+            helper = ProjectProgressHelper.GetInstance();
+            // Login.GetClaims(sendClaimsEventHandler);
+            project_list.ItemsSource = testCreateProjectList();
+            //project_list.ItemsSource = helper.FindAuthorizedProjectsByUser(Claims.User);
         }
 
-        private void ModernButton_Click(object sender, RoutedEventArgs e)
+        private List<Project> testCreateProjectList()
         {
+            //ProjectManageHelper helper1 = ProjectManageHelper.GetInstance();
+            // ProjectProgressHelper helper2 = ProjectProgressHelper.GetInstance();
 
+            Volunteer v1 = new Volunteer
+            {
+                StudentNum = 5551,
+                Mobile = "13812345678",
+                Name = "AddTest",
+                Email = "AddTest@test.com",
+                Class = "AddTestClass",
+                Room = "AddTestRoom"
+            };
+
+            Volunteer v2 = new Volunteer
+            {
+                StudentNum = 5552,
+                Mobile = "13812345671",
+                Name = "AddTest2",
+                Email = "AddTest2@test.com",
+                Class = "AddTestClass2",
+                Room = "AddTestRoom2"
+            };
+            List<Volunteer> list = new List<Volunteer>();
+            list.Add(v1);
+            list.Add(v2);
+
+            Project p = new Project
+            {
+                Id = 999,
+                CreatTime = DateTime.MinValue,
+                Name = "A Project",
+                Condition = ProjectCondition.Ongoing,
+                Creater = Claims.User.Organization,
+                Time = DateTime.MinValue,
+                Details = "A Test Project.",
+                Maximum = 70,
+                Place = "UIBE",
+                Volunteers = list,
+                Managers = new List<AppUser>()
+
+
+            };
+            
+            p.Managers.Add(Claims.User);
+
+            List<Project> projects = new List<Project>();
+            projects.Add(p);
+            return projects;
         }
 
 
 
 
 
-        //private void create_project_button_Click(object sender, RoutedEventArgs e)
-        //{
-        //    TextRange textRange = new TextRange(ProjectList.Document.ContentStart, project_details.Document.ContentEnd);
-        //    if (project_name.Text == "" || project_place.Text == "" || project_time.DisplayDate == null || project_time.DisplayDate < DateTime.Now.AddYears(-20) || project_place.Text == "" || project_maximum.Text == "" || textRange.Text == "")
-        //    {
-        //        MessageBox.Show("请完整输入所有项目.");
-        //    }
-        //    else
-        //    {
-        //        //可以在这里对RichTextBox做美化               
-        //        ProgressResult result = ProjectManageHelper.CreatNewProject(Claims.Holder.Organization, project_time.DisplayDate, project_name.Text, project_place.Text, textRange.Text, int.Parse(project_maximum.Text));
-        //        if (result.Succeeded)
-        //        {
-        //            MessageBox.Show("项目创建成功!");
-        //            project_name.Clear();
-        //            project_place.Clear();
-        //            project_maximum.Clear();
-        //            project_details.Document.Blocks.Clear();
-
-        //        }
-        //        else
-        //        {
-        //            MessageBox.Show("项目创建失败!错误信息" + string.Join(",", result.Errors));
-        //        }
-        //    }
-        //}
 
     }
 }

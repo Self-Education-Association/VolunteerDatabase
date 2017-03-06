@@ -27,6 +27,10 @@ namespace Desktop.Pages
 
         public static IdentityPage GetInstance()
         {
+            if(identitypage == null)
+            {
+                IdentityError();
+            }
             return identitypage;
         }
 

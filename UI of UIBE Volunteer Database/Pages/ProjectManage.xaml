@@ -8,14 +8,15 @@
              d:DesignHeight="300" d:DesignWidth="600">
     <Grid Style="{StaticResource ContentRoot}">
         <ScrollViewer>
-            <Canvas MinWidth="200">
+            <StackPanel MinWidth="200">
                 <TextBlock Name="Status" Text="项目状态" Style="{StaticResource Heading2}" />
-                <ComboBox Width="100" Height="20" HorizontalAlignment="Left" FontSize="12" Canvas.Top="27">
-                    <ComboBoxItem Content="进行中"></ComboBoxItem>
-                    <ComboBoxItem Content="已完成"></ComboBoxItem>
-                </ComboBox>
-                <DataGrid x:Name="ProjectList" AutoGenerateColumns="True" Width="568" Height="204"
-                                  ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Canvas.Top="52">
+                <ComboBox x:Name="StatusSwitch"  Width="100" Height="20" HorizontalAlignment="Left" FontSize="12">
+                        <ComboBoxItem Content="进行中"></ComboBoxItem>
+                        <ComboBoxItem Content="已完成"></ComboBoxItem>
+                    </ComboBox>
+                <Button x:Name="WhiteDivide"/>
+                <DataGrid x:Name="project_list" AutoGenerateColumns="True" Width="auto" Height="auto"
+                                  ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
                     <DataGrid.RowStyle>
                         <Style TargetType="DataGridRow">
                             <Setter Property="Background" Value="LightBlue" />
@@ -37,9 +38,7 @@
                         </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
-                <mui:ModernButton Content="查找" Width="60" Height="25" Canvas.Left="498" Canvas.Top="27" Click="ModernButton_Click"/>
-                <TextBox x:Name="search_project" Width="90" Height="25" Canvas.Left="403" Canvas.Top="27"/>
-            </Canvas>
+            </StackPanel>
         </ScrollViewer>
     </Grid>
 </UserControl>
