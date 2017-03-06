@@ -123,10 +123,39 @@ namespace VolunteerDatabase.Helper
 
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
+        public ProgressResult AddManager(AppUser Manager, Project Pro)
+        {
+            if(Pro==null||Pro.Condition==ProjectCondition.Finished)
+            {
+                return ProgressResult.Error("修改项目时失败!项目不存在或已结项.");
+            }
+            if(Manager == null||Manager.Status!=AppUserStatus.Enabled)
+            {
+                return ProgressResult.Error("待加入的用户身份非法.");
+            }
+
+            Pro.Managers.Add(Manager);
+            Save();
+            return ProgressResult.Success();
+        }
+
+        [AppAuthorize(AppRoleEnum.Administrator)]
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
+        public List<ProgressResult> AddManager(List<AppUser> managers,Project project)
+        {
+            List<ProgressResult> resultlist = new List<ProgressResult>();
+            foreach (AppUser manager in managers)
+            {
+                resultlist.Add(AddManager(manager, project));
+            }
+            return resultlist;
+        }
+        [AppAuthorize(AppRoleEnum.Administrator)]
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
         public ProgressResult ProjectDelete(Project Pro)
         {
             ProgressResult result;
-            if(!database.Projects.Contains(Pro)||Pro.Condition==ProjectCondition.Finished)//可以用contains?
+            if(database.Projects.Where( p => p.Id == Pro.Id).Count() == 0 ||Pro.Condition==ProjectCondition.Finished)//可以用contains?
             {
                 ProgressResult.Error("删除失败，项目不存在或已经结项");
             }

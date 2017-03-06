@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using VolunteerDatabase.Helper;
 using FirstFloor.ModernUI.Windows.Controls;
+using Desktop.Pages;
 
 namespace Desktop
 {
@@ -23,7 +24,6 @@ namespace Desktop
     public partial class Login : Window
     {
         private static AppUserIdentityClaims claims;
-
         public Login()
         {
             InitializeComponent();
@@ -79,6 +79,7 @@ namespace Desktop
                 SendClaimsEvent(claims);
                 return;
             }
+
 
             Login loginWindow = new Login();
             loginWindow.Show();

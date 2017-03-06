@@ -10,28 +10,28 @@ using System.Windows.Controls;
 
 namespace Desktop.Pages
 {
-    public class BasePage
+    public class IdentityPage
     {
-        private static BasePage basepage;
+        private static IdentityPage identitypage;
         
         public AppUserIdentityClaims Claims { get; private set; }
 
-        public static BasePage GetInstance(AppUserIdentityClaims claims)
+        public static IdentityPage GetInstance(AppUserIdentityClaims claims)
         {
-            if(basepage == null)
+            if(identitypage == null)
             {
-                basepage = new BasePage(claims);
+                identitypage = new IdentityPage(claims);
             }
-            return basepage;
+            return identitypage;
         }
 
-        public static BasePage GetInstance()
+        public static IdentityPage GetInstance()
         {
-            if(basepage == null)
+            if(identitypage == null)
             {
                 IdentityError();
             }
-            return basepage;
+            return identitypage;
         }
 
         public static void IdentityError()
@@ -39,7 +39,7 @@ namespace Desktop.Pages
             MessageBox.Show("用户非法，请重新登录");
         }
 
-        public BasePage(AppUserIdentityClaims claims)
+        public IdentityPage(AppUserIdentityClaims claims)
         {
             Claims = claims;
         }
