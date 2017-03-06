@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 using VolunteerDatabase.Helper;
 using FirstFloor.ModernUI.Windows.Controls;
 
-namespace Desktop.Pages
+namespace Desktop
 {
     /// <summary>
     /// Interaction logic for Login.xaml
@@ -56,7 +56,6 @@ namespace Desktop.Pages
                     SendClaimsEvent(claims);
                     Close();
 
-                    //消去login 加上头像 退出登录 
                 }
                 else
                 {

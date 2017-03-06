@@ -72,7 +72,7 @@
       <DependentUpon>MainWindow1.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\BasePage.cs" />
-    <Compile Include="Pages\Login.xaml.cs">
+    <Compile Include="Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\ProjectCreate.xaml.cs">
@@ -110,7 +110,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\Login.xaml">
+    <Page Include="Login.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -6,42 +6,44 @@
         xmlns:local="clr-namespace:Desktop"
         xmlns:mui="http://firstfloorsoftware.com/ModernUI"
         mc:Ignorable="d"
-        Height="auto" Width="auto" d:DesignWidth="1366" d:DesignHeight="768">
-    <Viewbox>
-        <Grid>
-            <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="38,30,0,0" TextWrapping="Wrap" Text="姓名" VerticalAlignment="Top"/>
-            <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="15" Margin="91,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96"/>
-            <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="38,68,0,0" TextWrapping="Wrap" Text="学号" VerticalAlignment="Top"/>
-            <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="15" Margin="91,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96" KeyDown="textBox1_KeyDown"/>
-            <TextBlock x:Name="textBlock3" HorizontalAlignment="Left" Margin="38,106,0,0" TextWrapping="Wrap" Text="账号" VerticalAlignment="Top"/>
-            <TextBox x:Name="textBox2" HorizontalAlignment="Left" Height="15" Margin="91,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96" MaxLength="16" ToolTip="请输入16位以内英文或数字" KeyDown="textBox2_KeyDown"/>
-            <TextBlock x:Name="textBlock4" HorizontalAlignment="Left" Margin="38,140,0,0" TextWrapping="Wrap" Text="密码" VerticalAlignment="Top"/>
-            <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Margin="91,140,0,0" VerticalAlignment="Top" Width="96" Height="15"/>
-            <TextBlock x:Name="textBlock5" HorizontalAlignment="Left" Margin="38,173,0,0" TextWrapping="Wrap" Text="确认密码" VerticalAlignment="Top"/>
-            <PasswordBox x:Name="passwordBox1" HorizontalAlignment="Left" Margin="91,175,0,0" VerticalAlignment="Top" Width="96" Height="13"/>
-            <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="285,32,0,0" VerticalAlignment="Top" Width="96" Height="14">
-                <ComboBoxItem>SEA团队</ComboBoxItem>
-                <ComboBoxItem>校志愿服务中心</ComboBoxItem>
-                <ComboBoxItem>国际经济贸易学院</ComboBoxItem>
-                <ComboBoxItem>金融学院</ComboBoxItem>
-                <ComboBoxItem>国际商学院</ComboBoxItem>
-                <ComboBoxItem>公共管理学院</ComboBoxItem>
-                <ComboBoxItem>法学院</ComboBoxItem>
-                <ComboBoxItem>中国语言文学学院</ComboBoxItem>
-                <ComboBoxItem>保险学院</ComboBoxItem>
-                <ComboBoxItem>信息学院</ComboBoxItem>
-                <ComboBoxItem>统计学院</ComboBoxItem>
-                <ComboBoxItem>TestOnly</ComboBoxItem>
-            </ComboBox>
-            <TextBlock x:Name="textBlock6" HorizontalAlignment="Left" Margin="232,30,0,0" TextWrapping="Wrap" Text="所属机构" VerticalAlignment="Top"/>
-            <TextBlock x:Name="textBlock7" HorizontalAlignment="Left" Margin="232,68,0,0" TextWrapping="Wrap" Text="电话" VerticalAlignment="Top"/>
-            <TextBox x:Name="textBox3" HorizontalAlignment="Left" Height="15" Margin="285,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96" ToolTip="请输入有效的电话号码" MaxLength="13" KeyDown="textBox3_KeyDown"/>
-            <TextBlock x:Name="textBlock8" HorizontalAlignment="Left" Margin="232,106,0,0" TextWrapping="Wrap" Text="电子邮箱" VerticalAlignment="Top"/>
-            <TextBox x:Name="textBox4" HorizontalAlignment="Left" Height="15" Margin="285,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96"/>
-            <CheckBox x:Name="checkBox" Content="我同意使用协议" HorizontalAlignment="Left" Margin="232,175,0,0" VerticalAlignment="Top" Foreground="#FF170303"/>
-            <TextBlock Text="宿舍" Margin="232,140,153,47"/>
-            <TextBox x:Name="textBox5" HorizontalAlignment="Left" Height="15" Width="96" Margin="285,140,0,47"/>
-            <mui:ModernButton x:Name="register_button" Content="注册" Margin="340,171,10,0" VerticalAlignment="Top" Height="31" Click="register_button_Click" IsEnabled="{Binding ElementName=checkBox,Path=IsChecked}"/>
-        </Grid>
-    </Viewbox>
+        Height="400" Width="300" d:DesignWidth="400" d:DesignHeight="300">
+    <Grid Style="{StaticResource ContentRoot}">
+        <ScrollViewer>
+            <Canvas>
+                <TextBlock x:Name="textBlock1" TextWrapping="Wrap" Text="姓名" Width="40" Height="25" Canvas.Left="25" Canvas.Top="24"/>
+                <TextBox x:Name="wholename" TextWrapping="Wrap" Width="100" Height="25" Canvas.Left="100" Canvas.Top="24"/>
+                <TextBlock x:Name="textBlock2" TextWrapping="Wrap" Text="学号" Width="40" Height="25" Canvas.Left="25" Canvas.Top="54"/>
+                <TextBox x:Name="studentid" TextWrapping="Wrap" Width="100" Height="25" KeyDown="studentid_KeyDown" Canvas.Left="100" Canvas.Top="54"/>
+                <TextBlock x:Name="textBlock3" TextWrapping="Wrap" Text="账号" Width="40" Height="25" Canvas.Left="25" Canvas.Top="84"/>
+                <TextBox x:Name="accountname" TextWrapping="Wrap" Width="100" Height="25" MaxLength="16" ToolTip="请输入16位以内英文或数字" Canvas.Left="100" Canvas.Top="84"/>
+                <TextBlock x:Name="textBlock4" TextWrapping="Wrap" Text="密码" Width="40" Height="25" Canvas.Left="25" Canvas.Top="114"/>
+                <PasswordBox x:Name="passwordBox" Width="100" Height="25" Canvas.Left="100" Canvas.Top="114"/>
+                <TextBlock x:Name="textBlock5" TextWrapping="Wrap" Text="确认密码" Width="60" Height="25" Canvas.Left="25" Canvas.Top="144"/>
+                <PasswordBox x:Name="passwordBox1" Width="100" Height="25" Canvas.Left="100" Canvas.Top="144"/>
+                <TextBlock x:Name="textBlock6" TextWrapping="Wrap" Text="所属机构" Width="60" Height="25" Canvas.Left="25" Canvas.Top="174"/>
+                <ComboBox x:Name="comboBox" Width="100" Height="25" Canvas.Left="100" Canvas.Top="174">
+                    <ComboBoxItem>SEA团队</ComboBoxItem>
+                    <ComboBoxItem>校志愿服务中心</ComboBoxItem>
+                    <ComboBoxItem>国际经济贸易学院</ComboBoxItem>
+                    <ComboBoxItem>金融学院</ComboBoxItem>
+                    <ComboBoxItem>国际商学院</ComboBoxItem>
+                    <ComboBoxItem>公共管理学院</ComboBoxItem>
+                    <ComboBoxItem>法学院</ComboBoxItem>
+                    <ComboBoxItem>中国语言文学学院</ComboBoxItem>
+                    <ComboBoxItem>保险学院</ComboBoxItem>
+                    <ComboBoxItem>信息学院</ComboBoxItem>
+                    <ComboBoxItem>统计学院</ComboBoxItem>
+                    <ComboBoxItem>TestOnly</ComboBoxItem>
+                </ComboBox>
+                <TextBlock x:Name="textBlock7" TextWrapping="Wrap" Text="电话" Width="40" Height="25" Canvas.Left="25" Canvas.Top="204"/>
+                <TextBox x:Name="telephonenumber" TextWrapping="Wrap" Width="100" Height="25" ToolTip="请输入有效的电话号码" MaxLength="13" KeyDown="telephonenumber_KeyDown" Canvas.Left="100" Canvas.Top="204"/>
+                <TextBlock x:Name="textBlock8" TextWrapping="Wrap" Text="电子邮箱" Width="50" Height="25" Canvas.Left="25" Canvas.Top="234"/>
+                <TextBox x:Name="emailadress"  TextWrapping="Wrap" Width="100" Height="25" Canvas.Left="100" Canvas.Top="234"/>
+                <TextBlock Text="宿舍" Width="40" Height="25" Canvas.Left="25" Canvas.Top="264"/>
+                <TextBox x:Name="dormitaryadress" Width="100" Height="25" Canvas.Left="100" Canvas.Top="264"/>
+                <CheckBox x:Name="checkBox" Content="我同意使用协议" Canvas.Left="10" Canvas.Top="294"/>
+                <mui:ModernButton x:Name="register_button" Content="注册" Click="register_button_Click" IsEnabled="{Binding ElementName=checkBox,Path=IsChecked}" Canvas.Left="201" Canvas.Top="294"/>
+            </Canvas>
+        </ScrollViewer>
+    </Grid>
 </Window>
