@@ -127,7 +127,7 @@ namespace VolunteerDatabase.Helper.Tests
                 Details = "nothing",
                 Time = DateTime.Now,
                 Condition = Interface.ProjectCondition.Ongoing,
-                Creater = org
+                Organization = org
             };
             projectmanagehelper.CreatNewProject(org, DateTime.Now, name, "uibe", "nothing", 20);
             var addresult = database.Projects.Where(b => b.Name == name);
@@ -186,7 +186,7 @@ namespace VolunteerDatabase.Helper.Tests
                    Details = "nothing",
                    Time = DateTime.Now,
                    Condition = Interface.ProjectCondition.Ongoing,
-                   Creater = org
+                   Organization = org
                };
                projectmanagehelper.CreatNewProject(org, DateTime.Now, name, "uibe", "nothing", 20);
                var addresult = database.Projects.Where(b => b.Name == name);
@@ -256,7 +256,7 @@ namespace VolunteerDatabase.Helper.Tests
                 Details = "nothing",
                 Time = DateTime.Now,
                 Condition = Interface.ProjectCondition.Ongoing,
-                Creater = org
+                Organization = org
             };
             projectmanagehelper.CreatNewProject(org, DateTime.Now, name, "uibe", "nothing", 20);
             pro = database.Projects.Single(p => p.Name == pro.Name);
@@ -542,7 +542,7 @@ namespace VolunteerDatabase.Helper.Tests
                 Details = "nothing",
                 Time = DateTime.Now,
                 Condition = Interface.ProjectCondition.Ongoing,
-                Creater = org
+                Organization = org
             };
             projectmanagehelper.CreatNewProject(org, DateTime.Now, name, "uibe", "nothing", 2);
             var addresult = database.Projects.Where(b => b.Name == name);
@@ -679,7 +679,7 @@ namespace VolunteerDatabase.Helper.Tests
                 Maximum = 1,
                 Details = "nothing",
                 Time = DateTime.Now,
-                Creater = org,
+                Organization = org,
                 //    ScoreCondition = Interface.ProjectScoreCondition.UnScored
             };
             projectmanagehelper.CreatNewProject(org, DateTime.Now, name, "uibe", "nothing", 1); //unsocred 条件 突然变成scored
@@ -759,7 +759,7 @@ namespace VolunteerDatabase.Helper.Tests
             {
                 database.Users.Remove(item);
             }
-            var projectList = database.Projects.Where(p => p.Creater.Id == org.Id).ToList();
+            var projectList = database.Projects.Where(p => p.Organization.Id == org.Id).ToList();
             foreach (var item in projectList)
             {
                 database.Projects.Remove(item);
@@ -819,7 +819,7 @@ namespace VolunteerDatabase.Helper.Tests
             {
                 Name = name,
                 Place = "testplace",
-                Creater = org
+                Organization = org
             };
             return project;
 
