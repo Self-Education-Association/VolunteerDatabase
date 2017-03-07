@@ -55,14 +55,25 @@ namespace VolunteerDatabase.Helper.Tests
             }
 
             // 删除数据库的有关数据[org pro]
-            DeleteOrgnization(org);
+            var deletepro = database.Projects.SingleOrDefault(p => p.Name == name1);
+            if (deletepro != null)
+            {
+                helper.ProjectDelete(deletepro);
+            }
+            var deleteorg = database.Organizations.Where(o => o.OrganizationEnum == org.OrganizationEnum).ToList();
+            if (deleteorg != null)
+            {
+                foreach (var item in deleteorg)
+                {
+                    DeleteOrgnization(item);
+                }
+            }
         }           
 
         [TestMethod()]
         public void FindManagerListByStudentNumTest()
         {
             // 创建一个originalmanager
-            Organization org = identityhelper.CreateOrFindOrganization(OrganizationEnum.TestOnly);
             Guid tempuser = Guid.NewGuid();
             string username = tempuser.ToString();
             Random tempusernum = new Random();
@@ -98,7 +109,15 @@ namespace VolunteerDatabase.Helper.Tests
                 }
             }
             // 删除数据库中添加的数据[users]
-            DeleteOrgnization(org);
+            var deletemanager = database.Users.Where(m => m.AccountName == originalmanager.AccountName).ToList();
+            if (deletemanager != null)
+            {
+                foreach (var item in deletemanager)
+                {
+                    database.Users.Remove(item);
+                    database.SaveChanges();
+                }
+            }
 
         }
 
@@ -109,7 +128,6 @@ namespace VolunteerDatabase.Helper.Tests
             Organization org = identityhelper.CreateOrFindOrganization(Entity.OrganizationEnum.TestOnly);
 
             // 测试CreateNewProject
-            //创建一个pro
             Guid tempname = Guid.NewGuid();
             string projectname = tempname.ToString();
             ProgressResult result = helper.CreatNewProject(org, DateTime.Now, projectname, "uibe", "nothing", 20);
@@ -124,7 +142,27 @@ namespace VolunteerDatabase.Helper.Tests
             }
 
             // 删除数据库中添加的数据[org pro]
-            DeleteOrgnization(org);
+            var deletepro = database.Projects.Where(p => p.Name == projectname);
+            if (deletepro != null)
+            {
+                foreach (var item in deletepro)
+                {
+                    database.Projects.Remove(item);
+                }
+                database.SaveChanges();
+            }
+
+            var deleteorg = database.Organizations.Where(o => o.Id == org.Id).ToList();
+            if (deleteorg != null)
+            {
+                foreach (var item in deleteorg)
+                {
+                    DeleteOrgnization(item);
+                }
+                database.SaveChanges();
+            }
+
+
         }
 
         [TestMethod()]
@@ -212,7 +250,33 @@ namespace VolunteerDatabase.Helper.Tests
             }
 
             // 删除数据库中添加的数据[users org pro]
-            DeleteOrgnization(org);
+            var deletemanager = database.Users.Where(m => m.AccountName == manager.AccountName).ToList();
+            if (deletemanager != null)
+            {
+                foreach (var item in deletemanager)
+                {
+                    database.Users.Remove(item);
+                }
+                Save();
+            }
+            var deleteorg = database.Organizations.Where(o => o.Id == org.Id).ToList();
+            if (deleteorg != null)
+            {
+                foreach (var item in deleteorg)
+                {
+                    DeleteOrgnization(item);
+                }
+                //      database.SaveChanges();
+            }
+            var deletepro = database.Projects.Where(p => p.Place.ToString() == "uibe");
+            if (deletepro != null)
+            {
+                foreach (var item in deletepro)
+                {
+                    database.Projects.Remove(item);
+                }
+                Save();
+            }
 
         }
 
@@ -319,8 +383,23 @@ namespace VolunteerDatabase.Helper.Tests
 
         }
 
-    
-         public void DeleteOrgnization(Organization org)
+        public void DeleteProject(Project pro)
+        {
+            pro.Volunteers.Clear();
+            var list = database.Users.Where(u => u.Organization.Id == pro.Id).ToList();
+            foreach (var item in list)
+            {
+                database.Users.Remove(item);
+            }
+            var blacklist = database.BlackListRecords.Where(u => u.Organization.Id == pro.Id).ToList();
+            foreach (var item in blacklist)
+            {
+                database.BlackListRecords.Remove(item);
+            }
+            database.Projects.Remove(pro);
+            Save();
+        }
+        public void DeleteOrgnization(Organization org)
         {
 
             var list = database.Users.Where(u => u.Organization.Id == org.Id).ToList();
@@ -342,10 +421,6 @@ namespace VolunteerDatabase.Helper.Tests
             database.Organizations.Remove(org);
             Save();
         }
-
-      
-
-
         private void Save()
         {
             bool flag = false;
