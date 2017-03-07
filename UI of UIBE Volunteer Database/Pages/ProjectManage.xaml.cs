@@ -150,6 +150,12 @@ namespace Desktop.Pages
             var AddManager = new AddManager();
             AddManager.Show();
         }
+
+        private void AddVolunteer_btn_Click(object sender, RoutedEventArgs e)
+        {
+            var AddVolunteer = new AddVolunteer();
+            AddVolunteer.Show();
+        }
     }
 }
 #endregion

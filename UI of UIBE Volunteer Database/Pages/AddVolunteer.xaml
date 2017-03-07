@@ -1,14 +1,12 @@
-﻿<Window x:Class="Desktop.Pages.AddManager"
+﻿<Window x:Class="Desktop.Pages.AddVolunteer"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Desktop.Pages"
-        xmlns:mui="http://firstfloorsoftware.com/ModernUI"
         mc:Ignorable="d"
-        Title="AddManager" Height="300" Width="300">
+        Title="AddVolunteer" Height="300" Width="300">
     <StackPanel>
-        
         <DataGrid>
             <DataGrid.Columns>
                 <DataGridTemplateColumn>
@@ -20,7 +18,7 @@
                 </DataGridTemplateColumn>
                 <DataGridTextColumn Header="姓名"/>
                 <DataGridTextColumn Header="学号"/>
-                
+                <DataGridTextColumn Header="评分"/>
             </DataGrid.Columns>
         </DataGrid>
         <Button Content="添加" Width="60" Height="25" HorizontalAlignment="Right"/>

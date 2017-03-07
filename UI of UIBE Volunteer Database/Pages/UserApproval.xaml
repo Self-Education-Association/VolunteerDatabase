@@ -22,10 +22,10 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTextColumn Header="用户名" Binding="{Binding AccountName}" Width="100"/>
-                        <DataGridTextColumn Header="学号" Binding="{Binding StudentNum}" Width="100"/>
-                        <DataGridTextColumn Header="姓名" Binding="{Binding Name}" Width="100"/>
-                        <DataGridTextColumn Header="所属组织" Binding="{Binding Organization.Name}"/>
+                        <DataGridTextColumn Header="用户名" Binding="{Binding AccountName}" Width="100" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="学号" Binding="{Binding StudentNum}" Width="100" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="姓名" Binding="{Binding Name}" Width="100" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="所属组织" Binding="{Binding Organization.Name}" IsReadOnly="True"/>
                         <DataGridTemplateColumn>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
