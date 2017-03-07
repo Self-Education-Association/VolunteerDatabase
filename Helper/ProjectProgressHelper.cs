@@ -105,15 +105,11 @@ namespace VolunteerDatabase.Helper
             return result;                                          
         }*/ 
         
-            //需要一个将volunteer 添加至 project 的方法；
 
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
         public List<Volunteer> FindSortedVolunteersByProject(Project project)
         {
-            //var volunteer = from o in database.Volunteers
-            //                where o.Project.Contains(project)
-            //                select o;
             List<Volunteer> Volunteers = new List<Volunteer>();
             foreach (var item in project.Volunteers)
             {
@@ -167,7 +163,7 @@ namespace VolunteerDatabase.Helper
         }
 
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public ProgressResult Scoring4ForVolunteers(Project Pro)
+        public ProgressResult ScoringDefaultForVolunteers(Project Pro,int Score)
         {
             ProgressResult result;
             Pro = database.Projects.SingleOrDefault(p => p.Id == Pro.Id);
@@ -188,7 +184,7 @@ namespace VolunteerDatabase.Helper
             {
                 foreach (var item in selectedvolunteers)
                 {
-                    item.Score += 4;
+                    item.Score += Score;
                 }
                 Pro.ScoreCondition = ProjectScoreCondition.Scored;
                 Save();

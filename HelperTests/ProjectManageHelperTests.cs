@@ -413,7 +413,7 @@ namespace VolunteerDatabase.Helper.Tests
             var projectList = database.Projects.Where(p => p.Creater.Id == org.Id).ToList();
                foreach (var item in projectList)
                {
-                   item.Creater = null;
+                   database.Projects.Remove(item);
                }
                var blacklist = database.BlackListRecords.Where(u => u.Organization.Id == org.Id).ToList();
                foreach (var item in blacklist)
