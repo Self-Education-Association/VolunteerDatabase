@@ -123,8 +123,9 @@ namespace VolunteerDatabase.Helper
 
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public ProgressResult AddManager(AppUser Manager, Project Pro)
+        public ProgressResult AddManager(int StuNum, Project Pro)
         {
+            var Manager = database.Users.SingleOrDefault(o => o.StudentNum == StuNum);       
             if(Pro==null||Pro.Condition==ProjectCondition.Finished)
             {
                 return ProgressResult.Error("修改项目时失败!项目不存在或已结项.");
@@ -146,7 +147,7 @@ namespace VolunteerDatabase.Helper
             List<ProgressResult> resultlist = new List<ProgressResult>();
             foreach (AppUser manager in managers)
             {
-                resultlist.Add(AddManager(manager, project));
+                resultlist.Add(AddManager(manager.StudentNum, project));
             }
             return resultlist;
         }
