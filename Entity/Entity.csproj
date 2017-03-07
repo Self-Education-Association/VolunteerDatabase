@@ -64,6 +64,10 @@
     <Compile Include="Migrations\201703071658057_Init.Designer.cs">
       <DependentUpon>201703071658057_Init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703071737530_LJWforTest.cs" />
+    <Compile Include="Migrations\201703071737530_LJWforTest.Designer.cs">
+      <DependentUpon>201703071737530_LJWforTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Organization.cs" />
     <Compile Include="Project.cs" />
@@ -83,6 +87,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201703071658057_Init.resx">
       <DependentUpon>201703071658057_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703071737530_LJWforTest.resx">
+      <DependentUpon>201703071737530_LJWforTest.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
