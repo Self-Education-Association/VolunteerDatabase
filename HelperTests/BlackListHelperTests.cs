@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VolunteerDatabase.Interface;
+using System.Data.Entity.Infrastructure;
 
 namespace VolunteerDatabase.Helper.Tests
 {
@@ -70,6 +71,7 @@ namespace VolunteerDatabase.Helper.Tests
                 Room = "AddTestRoom"
             };
             volunteerhelper.AddVolunteer(v1);
+            v1 = database.Volunteers.Single(b => b.StudentNum == v1.StudentNum);
             // 创建一个adder
             Guid temp = Guid.NewGuid();
             string appusername = temp.ToString();
@@ -84,18 +86,20 @@ namespace VolunteerDatabase.Helper.Tests
                 Email = "test@test.com"
             };
             identityhelper.CreateUser(adder, "23457890-", AppRoleEnum.OrgnizationMember, OrganizationEnum.TestOnly);
+            adder = database.Users.Single(a => a.AccountName == adder.AccountName);
             // 创建一个org
             Organization org = identityhelper.CreateOrFindOrganization(OrganizationEnum.TestOnly);
             // 创建一个pro
             Guid prouid = Guid.NewGuid();
-            string proname = prouid.ToString();
+            string proname = uid.ToString();
             Project pro = new Project()
             {
                 Name = proname,
                 Place = "testplace",
-                Organization = org
+                Creater = org
             };
             projectmanagerhelper.CreatNewProject(org, System.DateTime.Now, pro.Name, pro.Place, "", 70);
+            pro = database.Projects.Single(p => p.Name == pro.Name);
             // 添加第一条黑名单记录
             BlackListRecord testaddrecord1 = new BlackListRecord
             {
@@ -160,20 +164,18 @@ namespace VolunteerDatabase.Helper.Tests
                 Assert.Fail();
             }
             //清空数据库
-            v1.BlackListRecords.Clear();
-            v1.CreditRecords.Clear();
-            v1.Project.Clear();
-            volunteerhelper.DeleteVolunteer(v1);
-            database.SaveChanges();
+            DeleteOrgnization(org); // 清空org 同时清空了blacklistrecord和org下的project，users
+            volunteerhelper.DeleteVolunteer(v1.StudentNum);
+
         }
 
         [TestMethod()]
         public void FindBlackListTest()
         {
             //创建两条新的黑名单记录
+            //创建志愿者v1
             Random tempnum = new Random();
             int studentnum = tempnum.Next(000, 999);
-          
             Guid uid = Guid.NewGuid();
             string name = uid.ToString();
             Volunteer v1 = new Volunteer()
@@ -188,6 +190,7 @@ namespace VolunteerDatabase.Helper.Tests
             };
             volunteerhelper.AddVolunteer(v1);
             v1 = database.Volunteers.Single(b => b.StudentNum == v1.StudentNum);
+            //创建adder1
             Guid temp = Guid.NewGuid();
             string appusername = temp.ToString();
             Random rnd = new Random();
@@ -202,17 +205,20 @@ namespace VolunteerDatabase.Helper.Tests
             };
             identityhelper.CreateUser(adder1, "23457890-", AppRoleEnum.OrgnizationMember, OrganizationEnum.TestOnly);
             adder1 = database.Users.Single(b => b.AccountName == adder1.AccountName);
+            //创建org
             Organization org = identityhelper.CreateOrFindOrganization(OrganizationEnum.TestOnly);
             Guid prouid = Guid.NewGuid();
             string proname = uid.ToString();
+            //创建pro1
             Project pro1 = new Project()
             {
                 Name = proname,
                 Place = "testplace",
-                Organization = org
+                Creater = org
             };
             projectmanagerhelper.CreatNewProject(org, System.DateTime.Now, pro1.Name, pro1.Place, "", 20);
             pro1 = database.Projects.Single(b => b.Name == pro1.Name);
+            //创建黑名单blacklistrecord
             BlackListRecord blacklistrecord = new BlackListRecord
             {
                 // Id = 1234567890,
@@ -225,16 +231,18 @@ namespace VolunteerDatabase.Helper.Tests
                 Project = database.Projects.Single(b => b.Name == pro1.Name )
             };
             helper.AddBlackListRecord(blacklistrecord);
+            //创建项目pro2
             Guid prouid2 = Guid.NewGuid();
             string proname2 = prouid2.ToString();
             Project pro2 = new Project()
             {
                 Name = proname2,
                 Place = "testplace",
-                Organization = org
+                Creater = org
             };
             projectmanagerhelper.CreatNewProject(org, System.DateTime.Now, pro2.Name, pro2.Place, "", 20);
             pro2 = database.Projects.Single(b => b.Name == pro2.Name);
+            //创建blacklistrecord2
             BlackListRecord blacklistrecord2 = new BlackListRecord
             {
                 // Id = 1234567890,
@@ -311,17 +319,16 @@ namespace VolunteerDatabase.Helper.Tests
             }
 
             //清空数据库
-            v1.BlackListRecords.Clear();
-            v1.CreditRecords.Clear();
-            v1.Project.Clear();
-            volunteerhelper.DeleteVolunteer(v1);
-            database.SaveChanges();
+            DeleteOrgnization(org); // 清空org 同时清空了blacklistrecord和org下的project，users
+            volunteerhelper.DeleteVolunteer(v1.StudentNum);
+            
         }
 
         [TestMethod()]
         public void EditBlackListTest()
         {
             //添加新的记录
+            //创建volunteer v
             Random tempnum = new Random();
             int studentnum = tempnum.Next(000, 999);
             Guid uid = Guid.NewGuid();
@@ -338,6 +345,7 @@ namespace VolunteerDatabase.Helper.Tests
             };
             volunteerhelper.AddVolunteer(v);
             v = database.Volunteers.Single(b => b.StudentNum == v.StudentNum);
+            //创建adder
             Guid temp = Guid.NewGuid();
             string appusername = temp.ToString();
             Random rnd = new Random();
@@ -352,15 +360,17 @@ namespace VolunteerDatabase.Helper.Tests
             };
             identityhelper.CreateUser(adder, "23457890-", AppRoleEnum.OrgnizationMember, OrganizationEnum.TestOnly);
             Organization org = identityhelper.CreateOrFindOrganization(OrganizationEnum.TestOnly);
+            //创建pro 
             Guid prouid = Guid.NewGuid();
             string proname = uid.ToString();
             Project pro = new Project()
             {
                 Name = proname,
                 Place = "testplace",
-                Organization = org
+                Creater = org
             };
             projectmanagerhelper.CreatNewProject(org, System.DateTime.Now, pro.Name, pro.Place, "", 20);
+            //创建blacklistrecord
             BlackListRecord blacklistrecord = new BlackListRecord
             {
                 // Id = 1234567890,
@@ -396,17 +406,15 @@ namespace VolunteerDatabase.Helper.Tests
                 Assert.Fail("edit方法失败！");
             }
             //清空数据库
-            v.BlackListRecords.Clear();
-            v.CreditRecords.Clear();
-            v.Project.Clear();
-            volunteerhelper.DeleteVolunteer(v);
-            database.SaveChanges();
+            DeleteOrgnization(org); // 清空org 同时清空了blacklistrecord和org下的project，users
+            volunteerhelper.DeleteVolunteer(v.StudentNum);
         }
 
         [TestMethod()]
         public void DeleteBlackListTest()
         {
             //添加新的记录
+            //创建volunteer v
             Random tempnum = new Random();
             int studentnum = tempnum.Next(000, 999);
             Guid uid = Guid.NewGuid();
@@ -422,6 +430,7 @@ namespace VolunteerDatabase.Helper.Tests
                 Room = "AddTestRoom"
             };
             volunteerhelper.AddVolunteer(v);
+            //创建adder
             Guid temp = Guid.NewGuid();
             string appusername = temp.ToString();
             Random rnd = new Random();
@@ -436,13 +445,14 @@ namespace VolunteerDatabase.Helper.Tests
             };
             identityhelper.CreateUser(adder, "23457890-", AppRoleEnum.OrgnizationMember, OrganizationEnum.TestOnly);
             Organization org = identityhelper.CreateOrFindOrganization(OrganizationEnum.TestOnly);
+            //创建pro
             Guid prouid = Guid.NewGuid();
             string proname = uid.ToString();
             Project pro = new Project()
             {
                 Name = proname,
                 Place = "testplace",
-                Organization = org
+                Creater = org
             };
             projectmanagerhelper.CreatNewProject(org, System.DateTime.Now, pro.Name, pro.Place, "", 20);
             BlackListRecord blacklistrecord = new BlackListRecord
@@ -460,42 +470,86 @@ namespace VolunteerDatabase.Helper.Tests
             var tempblacklist = helper.FindBlackList(adder);
             var blacklist = tempblacklist.First();
             adder = database.Users.Single(u => u.AccountName == adder.AccountName);
-            if (helper.FindBlackList(adder) == null)
+            if ( helper.FindBlackList(adder) == null )
             {
                 Assert.Fail("记录添加失败！");
             }
             // 测试delete方法
             var result = helper.DeleteBlackListRecord(blacklist.UID);
-            if (!result.Succeeded)
+            if ( !result.Succeeded )
             {
                 Assert.Fail("返回结果异常！");
             }
             var actual = helper.FindBlackList(adder);
-            if (actual.Count != 0)
+            if ( actual.Count != 0 )
             {
                 Assert.Fail("方法测试失败！");
             }
             //清空数据库
-            v.BlackListRecords.Clear();
-            v.CreditRecords.Clear();
-            v.Project.Clear();
-            volunteerhelper.DeleteVolunteer(v);
-            database.SaveChanges();
-            
+            DeleteOrgnization(org); // 清空org 同时清空了blacklistrecord和org下的project，users
+            volunteerhelper.DeleteVolunteer(v.StudentNum);
         }
 
 
+        public void DeleteOrgnization(Organization org)
+        {
 
+            var list = database.Users.Where(u => u.Organization.Id == org.Id).ToList();
+            foreach (var item in list)
+            {
+                database.Users.Remove(item);
+            }
+            var projectList = database.Projects.Where(p => p.Creater.Id == org.Id).ToList();
+            foreach (var item in projectList)
+            {
+                database.Projects.Remove(item);
+            }
+            var blacklist = database.BlackListRecords.Where(u => u.Organization.Id == org.Id).ToList();
+            foreach (var item in blacklist)
+            {
+                database.BlackListRecords.Remove(item);
+            }
+            //var orgInDb = database.Organizations.SingleOrDefault(o => o.Name == org.Name);
+            database.Organizations.Remove(org);
+            Save();
+        }
 
+        [TestCleanup()]
+        public void DeleteClaimsUsers()
+        {
+            var dbUser = database.Users.SingleOrDefault(u => u.AccountName == "BlackListRecordHelper");
+            if (dbUser != null)
+            { 
+                database.Users.Remove(dbUser);
+                database.SaveChanges();
+            }
+        }
 
-        //private void DeleteVolunteer (Volunteer v)
-        //{
-        //    v.BlackListRecords.Clear();
-        //    //v.Project.Clear();
-        //    database.Volunteers.Remove(v);
-        //    database.SaveChanges();
-        //}
-
+        private void Save()
+        {
+            bool flag = false;
+            do
+            {
+                try
+                {
+                    database.SaveChanges();
+                    flag = false;
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    flag = true;
+                    foreach (var entity in database.ChangeTracker.Entries())
+                    {
+                        database.Entry(entity).Reload();
+                        flag = false;
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            } while (flag);
+        }
         public static bool AreSame(BlackListRecord a, BlackListRecord b)
         {
             if (a == null && b == null)
