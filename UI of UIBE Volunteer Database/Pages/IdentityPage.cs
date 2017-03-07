@@ -36,6 +36,7 @@ namespace Desktop.Pages
 
         public static void IdentityError()
         {
+#warning "把这些MessageBox.Show()改成友好的窗口或者Tips"
             MessageBox.Show("用户非法，请重新登录");
         }
 
