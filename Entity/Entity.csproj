@@ -64,10 +64,6 @@
     <Compile Include="Migrations\201703071658057_Init.Designer.cs">
       <DependentUpon>201703071658057_Init.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201703071545266_test1.cs" />
-    <Compile Include="Migrations\201703071545266_test1.Designer.cs">
-      <DependentUpon>201703071545266_test1.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Organization.cs" />
     <Compile Include="Project.cs" />
