@@ -11,17 +11,45 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using VolunteerDatabase.Entity;
+using VolunteerDatabase.Helper;
 
 namespace Desktop.Pages
 {
     /// <summary>
-    /// AddVolunteer.xaml 的交互逻辑
+    /// AddManager.xaml 的交互逻辑
     /// </summary>
-    public partial class AddVolunteer : Window
+    public partial class AddManager : Window
     {
-        public AddVolunteer()
+        private IdentityPage identitypage = IdentityPage.GetInstance();
+        AppUserIdentityClaims Claims { get; set; }
+
+        ProjectManageHelper helper;
+
+        IdentityHelper identityhelper;
+
+        Project sourceproject;
+
+        List<AppUser> availableuserlist = new List<AppUser>();
+        public AddManager(Project project)
         {
+            sourceproject = project;
+            helper = ProjectManageHelper.GetInstance();
+            identityhelper = IdentityHelper.GetInstance();
+            Claims = identitypage.Claims;
+            availableuserlist = identityhelper.GetUnderlingsList(Claims.User);
             InitializeComponent();
+            availableUsers.ItemsSource = availableuserlist;
         }
+
+        private void addButton_Click(object sender, RoutedEventArgs e)
+        {
+            foreach ( item in collection)
+            {
+
+            }
+        }
+
+
     }
 }
