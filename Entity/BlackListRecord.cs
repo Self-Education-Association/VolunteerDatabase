@@ -20,7 +20,7 @@ namespace VolunteerDatabase.Entity
         public virtual Organization Organization { get; set; }
         public virtual AppUser Adder { get; set; }
         public virtual Volunteer Volunteer { get; set; }
-        public virtual Project Project { get; set; }
+        public virtual Project Project { get; set; } 
 
     }
     public enum BlackListRecordStatus
