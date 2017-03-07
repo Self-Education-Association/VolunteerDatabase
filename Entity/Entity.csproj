@@ -68,6 +68,10 @@
     <Compile Include="Migrations\201703071249542_AddSkillColumn.Designer.cs">
       <DependentUpon>201703071249542_AddSkillColumn.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703071405249_AddProjectsToOrganization.cs" />
+    <Compile Include="Migrations\201703071405249_AddProjectsToOrganization.Designer.cs">
+      <DependentUpon>201703071405249_AddProjectsToOrganization.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Organization.cs" />
     <Compile Include="Project.cs" />
@@ -90,6 +94,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703071249542_AddSkillColumn.resx">
       <DependentUpon>201703071249542_AddSkillColumn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703071405249_AddProjectsToOrganization.resx">
+      <DependentUpon>201703071405249_AddProjectsToOrganization.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

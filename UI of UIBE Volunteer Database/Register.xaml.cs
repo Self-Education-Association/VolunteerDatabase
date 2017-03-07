@@ -47,6 +47,7 @@ namespace Desktop
                     }
                     catch(Exception)
                     {
+#warning "把这些MessageBox.Show()改成友好的窗口或者Tips"
                         MessageBox.Show("学号输入非法,仅能输入数字.");
                     }
                     AppUser au = new AppUser()
@@ -61,16 +62,19 @@ namespace Desktop
                     IdentityResult result = ih.CreateUser(au, passWord, AppRoleEnum.Administrator, org);
                     if (result.Succeeded == true)
                     {
+#warning "把这些MessageBox.Show()改成友好的窗口或者Tips"
                         MessageBox.Show("注册成功！");
                         this.Close();
                     }
                     else
                     {
+#warning "把这些MessageBox.Show()改成友好的窗口或者Tips"
                         MessageBox.Show("注册失败，错误信息：" + string.Join(",", result.Errors));
                     }
                 }
                 else
                 {
+#warning "把这些MessageBox.Show()改成友好的窗口或者Tips"
                     MessageBox.Show("两次密码输入不一致，请核对");
                     //用MessageBox太丑了，待改
                 }

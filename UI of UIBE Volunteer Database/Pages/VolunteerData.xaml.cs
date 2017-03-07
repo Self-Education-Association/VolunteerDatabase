@@ -31,6 +31,7 @@ namespace Desktop.Pages
         private void sendClaimsEventHandler(AppUserIdentityClaims claims)
         {
             this.Claims = claims;
+#warning "把这些MessageBox.Show()改成友好的窗口或者Tips"
             MessageBox.Show("志愿者库模块收到令牌.");
         }
     }
