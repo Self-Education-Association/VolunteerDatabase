@@ -526,7 +526,7 @@ namespace VolunteerDatabase.Helper.Tests
         }
 
         [TestMethod()]
-        public void Scoring4ForVolunteersTest()
+        public void ScoringDefaultForVolunteersTest()
         {
             // 创建org
             Organization org = identityhelper.CreateOrFindOrganization(Entity.OrganizationEnum.TestOnly);
@@ -579,7 +579,7 @@ namespace VolunteerDatabase.Helper.Tests
             helper.SingleVolunteerInputById(v2.StudentNum, pro); // progressSingle Input Byi
 
             // 测试Scoring4ForVolunteers
-            ProgressResult result = helper.Scoring4ForVolunteers(pro);
+            ProgressResult result = helper.ScoringDefaultForVolunteers(pro,4);
             if (!result.Succeeded && pro.ScoreCondition == Interface.ProjectScoreCondition.Scored)
             {
                 Assert.Fail("结果返回异常！");

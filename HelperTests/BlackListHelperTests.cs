@@ -88,7 +88,7 @@ namespace VolunteerDatabase.Helper.Tests
             Organization org = identityhelper.CreateOrFindOrganization(OrganizationEnum.TestOnly);
             // 创建一个pro
             Guid prouid = Guid.NewGuid();
-            string proname = uid.ToString();
+            string proname = prouid.ToString();
             Project pro = new Project()
             {
                 Name = proname,
