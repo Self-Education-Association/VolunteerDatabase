@@ -98,15 +98,11 @@ namespace VolunteerDatabase.Helper.Tests
                 }
                 database.SaveChanges();
             }
-            var deletemanager = database.Users.Where(m => m.AccountName == originalmanager.AccountName).ToList();
-            if (deletemanager != null)
-            {
-                foreach (var item in deletemanager)
-                {
-                    database.Users.Remove(item);
-                }
+            var deletemanager = database.Users.Single(m => m.AccountName == originalmanager.AccountName);
+
+                database.Users.Remove(deletemanager);
                 database.SaveChanges();
-            }
+            
 
         } //Helper 45行
 
@@ -144,7 +140,7 @@ namespace VolunteerDatabase.Helper.Tests
             }
 
             // 删除数据库的有关数据[pro org]
-            /* var deleteorg = database.Organizations.Where(o => o.Id == org.Id).ToList();
+             var deleteorg = database.Organizations.Where(o => o.Id == org.Id).ToList();
              if (deleteorg != null)
              {
                  foreach (var item in deleteorg)
@@ -160,7 +156,7 @@ namespace VolunteerDatabase.Helper.Tests
                      database.Projects.Remove(item);
                  }
                  database.SaveChanges();
-             }*/
+             }
 
             //修改删除方法，删除方法中无法完全清空别处引用
         }
@@ -332,8 +328,6 @@ namespace VolunteerDatabase.Helper.Tests
                     DeleteOrgnization(item);
                 }
             }
-
-            //修改删除方法，删除方法中无法完全清空别处引用
         }
 
 
@@ -434,8 +428,6 @@ namespace VolunteerDatabase.Helper.Tests
                         DeleteOrgnization(item);
                     }
                 }
-
-            //修改删除方法，删除方法中无法完全清空别处引用
         }
 
         [TestMethod()]
@@ -576,9 +568,7 @@ namespace VolunteerDatabase.Helper.Tests
             volunteerhelper.AddVolunteer(v2);
             pro = database.Projects.SingleOrDefault(b => b.Name == pro.Name);
             helper.SingleVolunteerInputById(v1.StudentNum, pro);
-            helper.SingleVolunteerInputById(v2.StudentNum, pro); // progressSingle Input Byi
-
-            // 测试Scoring4ForVolunteers
+            helper.SingleVolunteerInputById(v2.StudentNum, pro); 
             ProgressResult result = helper.ScoringDefaultForVolunteers(pro,4);
             if (!result.Succeeded && pro.ScoreCondition == Interface.ProjectScoreCondition.Scored)
             {
@@ -613,9 +603,6 @@ namespace VolunteerDatabase.Helper.Tests
                       DeleteOrgnization(item);
                   }
               }
-
-            //修改删除方法，删除方法中无法完全清空别处引用
-
         }
 
         [TestMethod()]
@@ -655,7 +642,6 @@ namespace VolunteerDatabase.Helper.Tests
 
             // 删除数据库的有关数据[vol]
               DeleteVolunteer(v);
-            //修改删除方法，删除方法中无法完全清空别处引用
         }
 
         [TestMethod()]
@@ -733,9 +719,6 @@ namespace VolunteerDatabase.Helper.Tests
                      DeleteOrgnization(item);
                  }
              }
-
-            //修改删除方法，删除方法中无法完全清空别处引用
-
         }
 
 
@@ -821,11 +804,6 @@ namespace VolunteerDatabase.Helper.Tests
         }
         public void DeleteVolunteer(Volunteer vol)
         {
-            //var list = database.BlackListRecords.Where(u => u.Volunteer.UID == vol.UID).ToList();
-            //foreach (var item in list)
-            //{
-            //    item.Volunteer = null;
-            //}
             lock (database)
             {
                 vol.BlackListRecords.Clear();

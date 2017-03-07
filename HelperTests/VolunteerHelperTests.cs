@@ -111,6 +111,7 @@ namespace VolunteerDatabase.Helper.Tests
             //Assert.AreEqual(v, actual);
             if (!VolunteerResult.AreSame(result, VolunteerResult.Success()))
                 Assert.Fail("插入第一个volunteer对象失败");
+            database.Volunteers.Remove(actual);//Remove
             #endregion
 
             #region 插入第二个volunteer对象
@@ -130,6 +131,7 @@ namespace VolunteerDatabase.Helper.Tests
             {
                 Assert.Fail();
             }
+            database.Volunteers.Remove(actual);//Remove
             #endregion
 
             #region 插入null志愿者对象
@@ -236,6 +238,8 @@ namespace VolunteerDatabase.Helper.Tests
             if (!flag)
                 Assert.Fail("通过Name查找志愿者失败");
             #endregion
+            var result3 = helper.FindVolunteer(v.StudentNum);
+            database.Volunteers.Remove(result3);//Remove
         }
 
         [TestMethod()]
@@ -291,6 +295,8 @@ namespace VolunteerDatabase.Helper.Tests
             if (!Volunteer.AreSame(v, tempvolunteer))
                 Assert.Fail("第二次修改志愿者信息失败");
             #endregion
+            var result3 = helper.FindVolunteer(v.StudentNum);
+            database.Volunteers.Remove(result3);//Remove
         }
 
         [TestMethod()]
@@ -320,6 +326,7 @@ namespace VolunteerDatabase.Helper.Tests
             var r2 = helper.SearchVolunteer("te", VolunteerHelper.SearchVolunteerPosition.Name | VolunteerHelper.SearchVolunteerPosition.Room);
 
             helper.DeleteVolunteer(0901);
+            helper.DeleteVolunteer(0902);
         }
     }
 }
