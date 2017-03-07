@@ -24,7 +24,6 @@ namespace Desktop.Pages
     /// </summary>
     public partial class ProjectInformation : Window
     {
-        private AppUserIdentityClaims claims;
         private Project Pro;
         public ProjectInformation(Project pro)
         {
@@ -34,10 +33,10 @@ namespace Desktop.Pages
             {
                 endproject.IsEnabled = false;
             }
+            ProInfoShow();
         }
         private void ProInfoShow()
         {
-            Project Pro = new Project();
             org.Text = Pro.Organization.ToString();
             project_name.Text = Pro.Name;
             project_id.Text = Pro.Id.ToString();
@@ -115,6 +114,11 @@ namespace Desktop.Pages
             {
                 e.Handled = true;
             }
+        }
+
+        private void AddManager_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }
