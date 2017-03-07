@@ -33,6 +33,7 @@ namespace Desktop.Pages
             helper = ProjectProgressHelper.GetInstance();
             // Login.GetClaims(sendClaimsEventHandler);
             project_list.ItemsSource = testCreateProjectList();
+
             //project_list.ItemsSource = helper.FindAuthorizedProjectsByUser(Claims.User);
         }
 
