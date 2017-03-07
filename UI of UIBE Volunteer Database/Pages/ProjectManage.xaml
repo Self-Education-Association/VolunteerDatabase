@@ -47,7 +47,7 @@
                         <DataGridTemplateColumn Header="添加管理者">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Click="Button_Click"/>
+                                    <ComboBox x:Name="managerSwitch"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
