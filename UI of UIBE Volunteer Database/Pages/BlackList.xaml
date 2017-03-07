@@ -1,0 +1,31 @@
+﻿<Window x:Class="Desktop.Pages.BlackList"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="600">
+    <Grid Style="{StaticResource ContentRoot}">
+        <ScrollViewer>
+            <StackPanel MinWidth="200">
+                <TextBlock Text="Black List" Style="{StaticResource Heading2}" />
+                <DataGrid>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="添加时间" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="状态"/>
+                        <DataGridTextColumn Header="项目" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="添加者" IsReadOnly="True"/>
+                        <DataGridTemplateColumn Header="详情">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock x:Name="bldetails" TextWrapping="Wrap"></TextBlock>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>
