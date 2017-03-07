@@ -160,7 +160,11 @@ namespace VolunteerDatabase.Helper.Tests
                 Assert.Fail();
             }
             //清空数据库
-            //volunteerhelper.DeleteVolunteer(v1);
+            v1.BlackListRecords.Clear();
+            v1.CreditRecords.Clear();
+            v1.Project.Clear();
+            volunteerhelper.DeleteVolunteer(v1);
+            database.SaveChanges();
         }
 
         [TestMethod()]
@@ -307,7 +311,11 @@ namespace VolunteerDatabase.Helper.Tests
             }
 
             //清空数据库
-            ////volunteerhelper.DeleteVolunteer(v1);
+            v1.BlackListRecords.Clear();
+            v1.CreditRecords.Clear();
+            v1.Project.Clear();
+            volunteerhelper.DeleteVolunteer(v1);
+            database.SaveChanges();
         }
 
         [TestMethod()]
@@ -388,7 +396,11 @@ namespace VolunteerDatabase.Helper.Tests
                 Assert.Fail("edit方法失败！");
             }
             //清空数据库
-            //volunteerhelper.DeleteVolunteer(v);
+            v.BlackListRecords.Clear();
+            v.CreditRecords.Clear();
+            v.Project.Clear();
+            volunteerhelper.DeleteVolunteer(v);
+            database.SaveChanges();
         }
 
         [TestMethod()]
@@ -448,26 +460,31 @@ namespace VolunteerDatabase.Helper.Tests
             var tempblacklist = helper.FindBlackList(adder);
             var blacklist = tempblacklist.First();
             adder = database.Users.Single(u => u.AccountName == adder.AccountName);
-            if ( helper.FindBlackList(adder) == null )
+            if (helper.FindBlackList(adder) == null)
             {
                 Assert.Fail("记录添加失败！");
             }
             // 测试delete方法
             var result = helper.DeleteBlackListRecord(blacklist.UID);
-            if ( !result.Succeeded )
+            if (!result.Succeeded)
             {
                 Assert.Fail("返回结果异常！");
             }
             var actual = helper.FindBlackList(adder);
-            if ( actual.Count != 0 )
+            if (actual.Count != 0)
             {
                 Assert.Fail("方法测试失败！");
             }
             //清空数据库
-            ////volunteerhelper.DeleteVolunteer(v);
+            v.BlackListRecords.Clear();
+            v.CreditRecords.Clear();
+            v.Project.Clear();
+            volunteerhelper.DeleteVolunteer(v);
+            database.SaveChanges();
+            
         }
 
-        
+
 
 
 
