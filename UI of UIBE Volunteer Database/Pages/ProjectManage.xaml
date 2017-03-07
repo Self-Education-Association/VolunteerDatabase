@@ -53,7 +53,7 @@
                         </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
-                <mui:ModernButton Content="查找" Width="60" Height="25" Canvas.Left="498" Canvas.Top="27"/>
+                <mui:ModernButton Content="查找" Width="60" Height="25" Canvas.Left="498" Canvas.Top="27" Click="ModernButton_Click"/>
                 <TextBox x:Name="search_project" Width="90" Height="25" Canvas.Left="403" Canvas.Top="27"/>
             </Canvas>
         </ScrollViewer>

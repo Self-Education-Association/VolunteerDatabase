@@ -1,4 +1,4 @@
-﻿<Window x:Class="Desktop.Pages.AddManager"
+﻿<Window x:Class="Desktop.Pages.ProjectInformation"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -87,13 +87,14 @@
                     </DataGrid.Columns>
                 </DataGrid>
                 <!--<Label Content="添加管理者" HorizontalAlignment="Left" Height="20" Width="60"/>-->
-                <TextBox x:Name="AddManager"/>
-                <mui:ModernButton x:Name="AddManager_btn" Content="点我 并在上方框中输入学号 以添加本项目管理者" HorizontalAlignment="Right"/>
-                <TextBox x:Name="AddVolunteer"/>
-                <mui:ModernButton x:Name="AddVolunteer_btn" Content="点我 并在上方框中输入学号 以添加本项目志愿者" HorizontalAlignment="Right"/>
+                <TextBox x:Name="AddManager" KeyDown="AddManager_KeyDown" MaxLength="9"/>
+                <mui:ModernButton x:Name="AddManager_btn" Content="在上方框中输入学号后点我 以添加本项目管理者" HorizontalAlignment="Right" Click="AddManager_btn_Click"/>
+                <TextBox x:Name="AddVolunteer" KeyDown="AddVolunteer_KeyDown" MaxLength="9"/>
+                <mui:ModernButton x:Name="AddVolunteer_btn" Content="在上方框中输入学号后点我 以添加本项目志愿者" HorizontalAlignment="Right" Click="AddVolunteer_btn_Click"/>
                 <mui:ModernButton x:Name="piliang" Content="批量添加志愿者" Click="piliang_Click" />
                 <mui:ModernButton x:Name="yijianpingfen" Content="一键评分" Click="yijianpingfen_Click"/>
                 <mui:ModernButton x:Name="endproject" Content="结项" Click="endproject_Click"/>
+                <mui:ModernButton x:Name="deleteproject_btn" Content="删除项目" Click="deleteproject_btn_Click"/>
 
             </StackPanel>
         </ScrollViewer>
