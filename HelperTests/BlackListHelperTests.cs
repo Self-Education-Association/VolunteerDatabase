@@ -55,15 +55,46 @@ namespace VolunteerDatabase.Helper.Tests
         public void AddBlackListTest()
         {
             // 创建第一个volunteer
-            Volunteer v1 = CreateVolunteer();
+            Random tempnum = new Random();
+            int studentnum = tempnum.Next(000, 999);
+            Guid uid = Guid.NewGuid();
+            string name = uid.ToString();
+            Volunteer v1 = new Volunteer()
+            {
+                //Id = 000,
+                StudentNum = studentnum,
+                Mobile = "1234567890-",
+                Name = name,
+                Email = "AddTest@test.com",
+                Class = "AddTestClass",
+                Room = "AddTestRoom"
+            };
             volunteerhelper.AddVolunteer(v1);
             // 创建一个adder
-            AppUser adder = CreateUser();
+            Guid temp = Guid.NewGuid();
+            string appusername = temp.ToString();
+            Random rnd = new Random();
+            int usertempnum = rnd.Next(000,999);
+            int usernum = usertempnum;
+            AppUser adder = new AppUser()
+            {
+                AccountName = appusername,
+                StudentNum = usernum,
+                Mobile = "1234567890",
+                Email = "test@test.com"
+            };
             identityhelper.CreateUser(adder, "23457890-", AppRoleEnum.OrgnizationMember, OrganizationEnum.TestOnly);
             // 创建一个org
             Organization org = identityhelper.CreateOrFindOrganization(OrganizationEnum.TestOnly);
             // 创建一个pro
-            Project pro = CreateProject();
+            Guid prouid = Guid.NewGuid();
+            string proname = prouid.ToString();
+            Project pro = new Project()
+            {
+                Name = proname,
+                Place = "testplace",
+                Organization = org
+            };
             projectmanagerhelper.CreatNewProject(org, System.DateTime.Now, pro.Name, pro.Place, "", 70);
             // 添加第一条黑名单记录
             BlackListRecord testaddrecord1 = new BlackListRecord
@@ -136,14 +167,46 @@ namespace VolunteerDatabase.Helper.Tests
         public void FindBlackListTest()
         {
             //创建两条新的黑名单记录
-            Volunteer v1 = CreateVolunteer();
+            Random tempnum = new Random();
+            int studentnum = tempnum.Next(000, 999);
+          
+            Guid uid = Guid.NewGuid();
+            string name = uid.ToString();
+            Volunteer v1 = new Volunteer()
+            {
+                //Id = 000,
+                StudentNum = studentnum,
+                Mobile = "1234567890-",
+                Name = name,
+                Email = "AddTest@test.com",
+                Class = "AddTestClass",
+                Room = "AddTestRoom"
+            };
             volunteerhelper.AddVolunteer(v1);
             v1 = database.Volunteers.Single(b => b.StudentNum == v1.StudentNum);
-            AppUser adder1 = CreateUser();
+            Guid temp = Guid.NewGuid();
+            string appusername = temp.ToString();
+            Random rnd = new Random();
+            int usertempnum = rnd.Next(000, 999);
+            int usernum = usertempnum;
+            AppUser adder1 = new AppUser()
+            {
+                AccountName = appusername,
+                StudentNum = usernum,
+                Mobile = "1234567890",
+                Email = "test@test.com"
+            };
             identityhelper.CreateUser(adder1, "23457890-", AppRoleEnum.OrgnizationMember, OrganizationEnum.TestOnly);
             adder1 = database.Users.Single(b => b.AccountName == adder1.AccountName);
             Organization org = identityhelper.CreateOrFindOrganization(OrganizationEnum.TestOnly);
-            Project pro1 = CreateProject();
+            Guid prouid = Guid.NewGuid();
+            string proname = uid.ToString();
+            Project pro1 = new Project()
+            {
+                Name = proname,
+                Place = "testplace",
+                Organization = org
+            };
             projectmanagerhelper.CreatNewProject(org, System.DateTime.Now, pro1.Name, pro1.Place, "", 20);
             pro1 = database.Projects.Single(b => b.Name == pro1.Name);
             BlackListRecord blacklistrecord = new BlackListRecord
@@ -158,7 +221,14 @@ namespace VolunteerDatabase.Helper.Tests
                 Project = database.Projects.Single(b => b.Name == pro1.Name )
             };
             helper.AddBlackListRecord(blacklistrecord);
-            Project pro2 = CreateProject();
+            Guid prouid2 = Guid.NewGuid();
+            string proname2 = prouid2.ToString();
+            Project pro2 = new Project()
+            {
+                Name = proname2,
+                Place = "testplace",
+                Organization = org
+            };
             projectmanagerhelper.CreatNewProject(org, System.DateTime.Now, pro2.Name, pro2.Place, "", 20);
             pro2 = database.Projects.Single(b => b.Name == pro2.Name);
             BlackListRecord blacklistrecord2 = new BlackListRecord
@@ -244,14 +314,45 @@ namespace VolunteerDatabase.Helper.Tests
         public void EditBlackListTest()
         {
             //添加新的记录
-            Volunteer v = CreateVolunteer();
+            Random tempnum = new Random();
+            int studentnum = tempnum.Next(000, 999);
+            Guid uid = Guid.NewGuid();
+            string name = uid.ToString();
+            Volunteer v = new Volunteer()
+            {
+                //Id = 000,
+                StudentNum = studentnum,
+                Mobile = "1234567890-",
+                Name = name,
+                Email = "AddTest@test.com",
+                Class = "AddTestClass",
+                Room = "AddTestRoom"
+            };
             volunteerhelper.AddVolunteer(v);
             v = database.Volunteers.Single(b => b.StudentNum == v.StudentNum);
-            AppUser adder = CreateUser();
-             identityhelper.CreateUser(adder, "23457890-", AppRoleEnum.OrgnizationMember, OrganizationEnum.TestOnly);
+            Guid temp = Guid.NewGuid();
+            string appusername = temp.ToString();
+            Random rnd = new Random();
+            int usertempnum = rnd.Next(000, 999);
+            int usernum = usertempnum;
+            AppUser adder = new AppUser()
+            {
+                AccountName = appusername,
+                StudentNum = usernum,
+                Mobile = "1234567890",
+                Email = "test@test.com"
+            };
+            identityhelper.CreateUser(adder, "23457890-", AppRoleEnum.OrgnizationMember, OrganizationEnum.TestOnly);
             Organization org = identityhelper.CreateOrFindOrganization(OrganizationEnum.TestOnly);
-            Project pro = CreateProject();
-         projectmanagerhelper.CreatNewProject(org, System.DateTime.Now, pro.Name, pro.Place, "", 20);
+            Guid prouid = Guid.NewGuid();
+            string proname = uid.ToString();
+            Project pro = new Project()
+            {
+                Name = proname,
+                Place = "testplace",
+                Organization = org
+            };
+            projectmanagerhelper.CreatNewProject(org, System.DateTime.Now, pro.Name, pro.Place, "", 20);
             BlackListRecord blacklistrecord = new BlackListRecord
             {
                 // Id = 1234567890,
@@ -294,13 +395,44 @@ namespace VolunteerDatabase.Helper.Tests
         public void DeleteBlackListTest()
         {
             //添加新的记录
-            Volunteer v = CreateVolunteer();
+            Random tempnum = new Random();
+            int studentnum = tempnum.Next(000, 999);
+            Guid uid = Guid.NewGuid();
+            string name = uid.ToString();
+            Volunteer v = new Volunteer()
+            {
+                //Id = 000,
+                StudentNum = studentnum,
+                Mobile = "1234567890-",
+                Name = name,
+                Email = "AddTest@test.com",
+                Class = "AddTestClass",
+                Room = "AddTestRoom"
+            };
             volunteerhelper.AddVolunteer(v);
-            AppUser adder = CreateUser();
-             identityhelper.CreateUser(adder, "23457890-", AppRoleEnum.OrgnizationMember, OrganizationEnum.TestOnly);
+            Guid temp = Guid.NewGuid();
+            string appusername = temp.ToString();
+            Random rnd = new Random();
+            int usertempnum = rnd.Next(000, 999);
+            int usernum = usertempnum;
+            AppUser adder = new AppUser()
+            {
+                AccountName = appusername,
+                StudentNum = usernum,
+                Mobile = "1234567890",
+                Email = "test@test.com"
+            };
+            identityhelper.CreateUser(adder, "23457890-", AppRoleEnum.OrgnizationMember, OrganizationEnum.TestOnly);
             Organization org = identityhelper.CreateOrFindOrganization(OrganizationEnum.TestOnly);
-            Project pro = CreateProject();
-         projectmanagerhelper.CreatNewProject(org, System.DateTime.Now, pro.Name, pro.Place, "", 20);
+            Guid prouid = Guid.NewGuid();
+            string proname = uid.ToString();
+            Project pro = new Project()
+            {
+                Name = proname,
+                Place = "testplace",
+                Organization = org
+            };
+            projectmanagerhelper.CreatNewProject(org, System.DateTime.Now, pro.Name, pro.Place, "", 20);
             BlackListRecord blacklistrecord = new BlackListRecord
             {
                 // Id = 1234567890,
@@ -335,56 +467,9 @@ namespace VolunteerDatabase.Helper.Tests
             ////volunteerhelper.DeleteVolunteer(v);
         }
 
-        private Volunteer CreateVolunteer ( )
-        {
-            Random tempnum = new Random();
-            int studentnum = tempnum.Next(000, 999);
-            Guid uid = Guid.NewGuid();
-            string name = uid.ToString();
-            Volunteer volunteer = new Volunteer
-            {
-                //Id = 000,
-                StudentNum = studentnum,
-                Mobile = "1234567890-",
-                Name = name,
-                Email = "AddTest@test.com",
-                Class = "AddTestClass",
-                Room = "AddTestRoom"
-            };
-            return volunteer;
-        }
+        
 
-        private AppUser CreateUser( )
-        {
-            Guid temp = Guid.NewGuid();
-            string name = temp.ToString();
-            Random rnd = new Random();
-            int tempnum = rnd.Next();
-            int studentnum = tempnum;
-            AppUser user = new AppUser()
-            {
-                AccountName = name,
-                StudentNum = studentnum,
-                Mobile = "1234567890",
-                Email = "test@test.com"
-            };
-            return user;
-        }
 
-        private Project CreateProject( )
-        {
-            Organization org = identityhelper.CreateOrFindOrganization(OrganizationEnum.TestOnly);
-            Guid uid = Guid.NewGuid();
-            string name = uid.ToString();
-            Project project = new Project()
-            {
-                Name = name,
-                Place = "testplace",
-                Creater = org
-            };
-            return project;
-
-        }
 
         //private void DeleteVolunteer (Volunteer v)
         //{

@@ -43,7 +43,7 @@ namespace VolunteerDatabase.Helper
         public List<Project> ShowProjectList(Organization org,bool OnGoing)//true时得到正在进行中的项目
         {
             var pro = from o in database.Projects
-                      where o.Creater.Id == org.Id
+                      where o.Organization.Id == org.Id
                       select o;
             if (OnGoing)
                 pro = pro.Where(o => o.Condition == ProjectCondition.Ongoing);
@@ -93,7 +93,7 @@ namespace VolunteerDatabase.Helper
                 Project.Details = Detail;
                 Project.Condition = ProjectCondition.Ongoing;
                 Project.ScoreCondition = ProjectScoreCondition.UnScored;
-                Project.Creater = org;
+                Project.Organization = org;
                 Project.Volunteers = null;
                 database.Projects.Add(Project);
                 Save();
