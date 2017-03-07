@@ -148,17 +148,20 @@ namespace Desktop.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var pi = new ProjectInformation();
-            pi.Show();
-            //此处应传入Pro
+            Button senderButton = sender as Button;
+            if(senderButton.DataContext is Project)
+            {
+                Project project = (Project)senderButton.DataContext;
+                var ProjectInformation = new ProjectInformation(project);
+                ProjectInformation.Show();
+            }          
         }
-
         private void ModernButton_Click(object sender, RoutedEventArgs e)
         {
             List<Project> Pros = new List<Project>();
             Pros.Add(helper.FindProjectByProjectId(int.Parse(search_project.Text)));
             allprojectlist = Pros;
-            //这里缺少前端要求键入的项目Id为数字，待添加
         }
+
     }
 }

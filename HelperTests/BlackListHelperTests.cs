@@ -393,7 +393,7 @@ namespace VolunteerDatabase.Helper.Tests
             //    Assert.Fail("返回结果异常！");
             //}
             //测试EditRecord
-            BlackListResult result = helper.EditBlackListRecord(blacklist.UID, tempendtime, BlackListRecordStatus.Enabled);
+            BlackListResult result = helper.EditBlackListRecord("没啥理由", blacklist.UID, tempendtime, BlackListRecordStatus.Enabled);
             blacklist = helper.FindBlackList(v).First();
             var actual = helper.FindBlackListByEndTime(blacklist.AddTime, tempendtime);
             var actualendtime = actual.First();
