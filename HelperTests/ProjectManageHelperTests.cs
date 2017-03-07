@@ -42,7 +42,7 @@ namespace VolunteerDatabase.Helper.Tests
             
            // 测试ShowProjectList
             var result =  helper.ShowProjectList(org,true);
-            var actual = database.Projects.Where(b => b.Creater.Id == org.Id).ToList();
+            var actual = database.Projects.Where(b => b.Creater.Id == org.Id && b.Condition == Interface.ProjectCondition.Ongoing).ToList();
             int resultcout = result.Count();
             int actualcount = actual.Count();
             if ( result.Count()==0 && actual.Count()==0)
@@ -75,7 +75,17 @@ namespace VolunteerDatabase.Helper.Tests
         public void FindManagerListByStudentNumTest()
         {
             // 创建一个originalmanager
-            AppUser originalmanager = CreateUser();
+            Guid tempuser = Guid.NewGuid();
+            string username = tempuser.ToString();
+            Random tempusernum = new Random();
+            int userstudentnum = tempusernum.Next(000, 999);
+            AppUser originalmanager = new AppUser()
+            {
+                AccountName = username,
+                StudentNum = userstudentnum,
+                Mobile = "1234567890",
+                Email = "test@test.com"
+            };
             identityhelper.CreateUser(originalmanager, "zxcvbnm,./", Interface.AppRoleEnum.OrgnizationMember, OrganizationEnum.TestOnly);
             var addmanager = database.Users.Where(u => u.AccountName == originalmanager.AccountName).ToList();
             if (addmanager == null)
@@ -160,7 +170,17 @@ namespace VolunteerDatabase.Helper.Tests
         public void ProjectMessageInputTest()
         {
             // 创建一个manager
-            AppUser manager = CreateUser();
+            Guid tempuser = Guid.NewGuid();
+            string username = tempuser.ToString();
+            Random tempusernum = new Random();
+            int userstudentnum = tempusernum.Next(000, 999);
+            AppUser manager = new AppUser()
+            {
+                AccountName = username,
+                StudentNum = userstudentnum,
+                Mobile = "1234567890",
+                Email = "test@test.com"
+            };
             identityhelper.CreateUser(manager, "zxcvbnm,./", Interface.AppRoleEnum.OrgnizationMember, OrganizationEnum.TestOnly);
             var addmanager = database.Users.Where(u => u.AccountName == manager.AccountName).ToList();
             if( addmanager == null )
@@ -336,14 +356,14 @@ namespace VolunteerDatabase.Helper.Tests
 
         private AppUser CreateUser()
         {
-            Guid temp = Guid.NewGuid();
-            string name = temp.ToString();
-            Random tempnum = new Random();
-            int studentnum = tempnum.Next(000, 999);
+            Guid tempuser = Guid.NewGuid();
+            string username = tempuser.ToString();
+            Random tempusernum = new Random();
+            int userstudentnum = tempusernum.Next(000, 999);
             AppUser user = new AppUser()
             {
-                AccountName = name,
-                StudentNum = studentnum,
+                AccountName = username,
+                StudentNum = userstudentnum,
                 Mobile = "1234567890",
                 Email = "test@test.com"
             };
