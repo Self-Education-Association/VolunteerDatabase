@@ -74,9 +74,6 @@
     <Compile Include="Pages\ProjectDetails.xaml.cs">
       <DependentUpon>ProjectDetails.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\AddVolunteer.xaml.cs">
-      <DependentUpon>AddVolunteer.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\BlackList.xaml.cs">
       <DependentUpon>BlackList.xaml</DependentUpon>
     </Compile>
@@ -124,10 +121,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\ProjectDetails.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\AddVolunteer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
