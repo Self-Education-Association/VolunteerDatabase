@@ -145,7 +145,6 @@ namespace Desktop.Pages
             projects.Add(p2);
             return projects;
         }
-        #endregion
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -153,10 +152,16 @@ namespace Desktop.Pages
             if(senderButton.DataContext is Project)
             {
                 Project project = (Project)senderButton.DataContext;
-            }
-
-            var AddManager = new AddManager(Project);
-            AddManager.Show();
+                var ProjectInformation = new ProjectInformation(project);
+                ProjectInformation.Show();
+            }          
         }
+        private void ModernButton_Click(object sender, RoutedEventArgs e)
+        {
+            List<Project> Pros = new List<Project>();
+            Pros.Add(helper.FindProjectByProjectId(int.Parse(search_project.Text)));
+            allprojectlist = Pros;
+        }
+
     }
 }

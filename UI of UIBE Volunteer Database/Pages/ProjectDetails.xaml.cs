@@ -25,9 +25,10 @@ namespace Desktop.Pages
     public partial class ProjectInformation : Window
     {
         private AppUserIdentityClaims claims;
-        private Project Pro = new Project();
-        public ProjectInformation() : this(null)
+        private Project Pro;
+        public ProjectInformation(Project pro)
         {
+            Pro = pro;
             InitializeComponent();
             if (Pro.ScoreCondition != ProjectScoreCondition.Scored)
             {
@@ -44,25 +45,6 @@ namespace Desktop.Pages
             project_status.Text = Pro.Condition.ToString();
             project_time.Text = Pro.Time.ToString();
             project_accomodation.Text = Pro.Volunteers.Count() + "/" + Pro.Maximum.ToString();
-        }
-        public void sendClaimsEventHandler(AppUserIdentityClaims claims)
-        {
-            IsEnabled = true;
-            this.claims = claims;
-            IdentityPage identitypage = IdentityPage.GetInstance(claims);
-            MessageBox.Show("收到令牌啦！");
-        }
-        public ProjectInformation(AppUserIdentityClaims claims)
-        {
-            if (claims == null)
-            {
-                Login.GetClaims(sendClaimsEventHandler);
-                IsEnabled = false;
-            }
-            else
-            {
-                this.claims = claims;
-            }
         }
 
         private void piliang_Click(object sender, RoutedEventArgs e)
