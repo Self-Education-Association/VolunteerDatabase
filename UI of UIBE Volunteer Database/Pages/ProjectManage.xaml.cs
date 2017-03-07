@@ -111,7 +111,7 @@ namespace Desktop.Pages
                 CreatTime = DateTime.MinValue,
                 Name = "A Project",
                 Condition = ProjectCondition.Ongoing,
-                Creater = Claims.User.Organization,
+                Organization = Claims.User.Organization,
                 Time = DateTime.MinValue,
                 Details = "A Test Project.",
                 Maximum = 70,
@@ -128,7 +128,7 @@ namespace Desktop.Pages
                 CreatTime = DateTime.MinValue,
                 Name = "A Finished Project",
                 Condition = ProjectCondition.Finished,
-                Creater = Claims.User.Organization,
+                Organization = Claims.User.Organization,
                 Time = DateTime.MinValue,
                 Details = "A Test Project.",
                 Maximum = 70,
@@ -145,7 +145,11 @@ namespace Desktop.Pages
             projects.Add(p2);
             return projects;
         }
-# endregion
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var AddManager = new AddManager();
+            AddManager.Show();
+        }
     }
 }

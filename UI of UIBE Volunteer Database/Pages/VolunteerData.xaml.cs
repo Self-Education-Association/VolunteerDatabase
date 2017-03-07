@@ -27,6 +27,51 @@ namespace Desktop.Pages
         {
             Claims = identitypage.Claims;
             InitializeComponent();
+
+            //InitialData();
+
+
+        //    this.fivePointStarGroup1.SelectCountChangeEvent +=
+        //    new RoutedEventHandler(fivePointStarGroup1_SelectCountChangeEvent);
+        //}
+
+
+        //private void InitialData()
+        //{
+        //    this.textBox1.Text = this.fivePointStarGroup1.SelectCount.ToString();
+
+
+        //    this.textBox2.Text = this.fivePointStarGroup1.ItemsCount.ToString();
+        //}
+
+
+        //void fivePointStarGroup1_SelectCountChangeEvent(object sender, RoutedEventArgs e)
+        //{
+        //    InitialData();
+        //}
+
+
+        //private void button1_Click(object sender, RoutedEventArgs e)
+        //{
+        //    int selectCount = Convert.ToInt32(this.textBox1.Text);
+
+
+        //    int allCount = Convert.ToInt32(this.textBox2.Text);
+
+
+        //    if (allCount < selectCount)
+        //    {
+        //        MessageBox.Show("参数设置错误!");
+
+
+        //        return;
+        //    }
+
+
+        //    this.fivePointStarGroup1.ItemsCount = allCount;
+
+
+        //    this.fivePointStarGroup1.SelectCount = selectCount;
         }
         private void sendClaimsEventHandler(AppUserIdentityClaims claims)
         {

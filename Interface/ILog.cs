@@ -24,7 +24,7 @@ namespace VolunteerDatabase.Interface
         AddToRole,
         CreateClaims,
         ChangePassword,
-        CreateRole,
+        Organizationole,
         CreateOrganization,
         #endregion
 

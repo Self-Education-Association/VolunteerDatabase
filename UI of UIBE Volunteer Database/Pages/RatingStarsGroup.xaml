@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="TestFivePointStarLikeTaobao.FivePointStarGroup"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TestFivePointStarLikeTaobao"
+             mc:Ignorable="d">
+    <Grid x:Name="groupGrid" Background="Transparent">
+        <ListBox x:Name="lsbchildCategory" ItemsSource="{Binding ChildCategoryList,IsAsync=True}"
+                     Background="WhiteSmoke" BorderThickness="0">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <local:FivePointStar Radius="{Binding Radius}" CurrentPart="{Binding CurrentValue}" Tag="{Binding ID}"
+                                         SelectBackground="{Binding SelectBackground}" UnSelectBackground="{Binding UnselectBackgroud}"
+                                         MouseDown="FivePointStar_MouseDown"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel  VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Center"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+        </ListBox>
+    </Grid>
+</UserControl>

@@ -132,7 +132,7 @@ namespace VolunteerDatabase.Helper.Tests
             var org = database.Organizations.SingleOrDefault(o => o.OrganizationEnum == OrganizationEnum.TestOnly);
             if (org != null)
             {
-                var projects = database.Projects.Where(p => p.Creater.Id == org.Id).ToList();
+                var projects = database.Projects.Where(p => p.Organization.Id == org.Id).ToList();
                 foreach (var p in projects)
                 {
                     database.Projects.Remove(p);
