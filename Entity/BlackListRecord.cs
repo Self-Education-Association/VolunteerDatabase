@@ -15,6 +15,7 @@ namespace VolunteerDatabase.Entity
         public Guid UID { get; set; }
         public DateTime AddTime { get; set; }
         public DateTime EndTime { get; set; }
+        public string Detail { get; set; }
         public BlackListRecordStatus Status { get; set; }
         public virtual Organization Organization { get; set; }
         public virtual AppUser Adder { get; set; }
