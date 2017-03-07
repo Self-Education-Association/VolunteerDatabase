@@ -110,7 +110,7 @@ namespace VolunteerDatabase.Helper.Tests
                 Organization = org,
                 EndTime = new DateTime(2090, 2, 11),
                 AddTime = System.DateTime.Now,
-                Project = database.Projects.Single(b => b.Name == pro.Name)
+                Project = database.Projects.FirstOrDefault(b => b.Name == pro.Name)
             };
             BlackListResult result = helper.AddBlackListRecord(testaddrecord1);
             if (!result.Succeeded)
