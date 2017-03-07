@@ -28,6 +28,7 @@ namespace Desktop.Pages
         {
             Claims = identitypage.Claims;
             InitializeComponent();
+            ShowUserMessage();
         }
         private void sendClaimsEventHandler(AppUserIdentityClaims claims)
         {
