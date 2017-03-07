@@ -21,7 +21,13 @@
                         <DataGridTextColumn Header="邮箱"/>
                         <DataGridTextColumn Header="学院"/>
                         <DataGridTextColumn Header="黑名单记录"/>
-                        <DataGridTextColumn Header="评分"/>
+                        <DataGridTemplateColumn Header="评分">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>

@@ -42,7 +42,7 @@ namespace VolunteerDatabase.Helper.Tests
 
             // 测试ShowProjectList
             var result = helper.ShowProjectList(org, true);
-            var actual = database.Projects.Where(b => b.Creater.Id == org.Id).ToList();
+            var actual = database.Projects.Where(b => b.Organization.Id == org.Id).ToList();
             int resultcout = result.Count();
             int actualcount = actual.Count();
             if (result.Count() == 0 && actual.Count() == 0)
@@ -68,8 +68,13 @@ namespace VolunteerDatabase.Helper.Tests
                     DeleteOrgnization(item);
                 }
             }
-
-        }
+            database.Projects.Remove(deletepro);
+            foreach (var item in deleteorg)
+            {
+                database.Organizations.Remove(item);
+            }
+            database.SaveChanges();
+        }           
 
         [TestMethod()]
         public void FindManagerListByStudentNumTest()
@@ -87,7 +92,7 @@ namespace VolunteerDatabase.Helper.Tests
                 Email = "test@test.com"
             };
             identityhelper.CreateUser(originalmanager, "zxcvbnm,./", Interface.AppRoleEnum.OrgnizationMember, OrganizationEnum.TestOnly);
-            var addmanager = database.Users.Where(u => u.AccountName == originalmanager.AccountName).ToList();
+            var addmanager = database.Users.Single(u => u.AccountName == originalmanager.AccountName);
             if (addmanager == null)
             {
                 Assert.Fail("添加manager失败！");
@@ -202,7 +207,7 @@ namespace VolunteerDatabase.Helper.Tests
                 Details = "nothing",
                 Time = DateTime.Now,
                 Condition = Interface.ProjectCondition.Ongoing,
-                Creater = org
+                Organization = org
             };
             helper.CreatNewProject(org, DateTime.Now, uiniqueName, "uibe", "nothing", 20);
             var addresult = database.Projects.Where(b => b.Name.ToString() == uiniqueName);
@@ -299,7 +304,7 @@ namespace VolunteerDatabase.Helper.Tests
                 Details = "nothing",
                 Time = DateTime.Now,
                 Condition = Interface.ProjectCondition.Ongoing,
-                Creater = org
+                Organization = org
             };
             helper.CreatNewProject(org, DateTime.Now, uiniqueName, "uibe", "nothing", 20);
             var addresult = database.Projects.SingleOrDefault(b => b.Name == uiniqueName);
@@ -322,16 +327,15 @@ namespace VolunteerDatabase.Helper.Tests
                     Assert.Fail("记录删除失败！记录依旧存在！");
                 }
             }
-
-            // 删除数据库中添加的数据[org]
-            //var deleteorg = database.Organizations.Where(o => o.Id == org.Id).ToList();
-            //if (deleteorg != null)
-            //{
-            //    foreach (var item in deleteorg)
-            //    {
-            //        DeleteOrgnization(item);
-            //    }
-            //}
+            var deleteorg = database.Organizations.Where(o => o.Id == org.Id).ToList();
+            if (deleteorg != null)
+            {
+                foreach (var item in deleteorg)
+                {
+                    DeleteOrgnization(item);
+                }
+            }
+            database.SaveChanges();
 
         }
 
@@ -379,7 +383,7 @@ namespace VolunteerDatabase.Helper.Tests
             {
                 Name = name,
                 Place = "testplace",
-                Creater = org
+                Organization = org
             };
             return project;
 
@@ -398,7 +402,6 @@ namespace VolunteerDatabase.Helper.Tests
             {
                 database.BlackListRecords.Remove(item);
             }
-            //var orgInDb = database.Organizations.SingleOrDefault(o => o.Name == org.Name);
             database.Projects.Remove(pro);
             Save();
         }
@@ -410,7 +413,7 @@ namespace VolunteerDatabase.Helper.Tests
             {
                 database.Users.Remove(item);
             }
-            var projectList = database.Projects.Where(p => p.Creater.Id == org.Id).ToList();
+            var projectList = database.Projects.Where(p => p.Organization.Id == org.Id).ToList();
             foreach (var item in projectList)
             {
                 database.Projects.Remove(item);

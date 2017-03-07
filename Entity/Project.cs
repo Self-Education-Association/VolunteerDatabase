@@ -27,7 +27,7 @@ namespace VolunteerDatabase.Entity
 
         public ProjectScoreCondition ScoreCondition { get; set; }
 
-        public Organization Creater { get; set; }
+        public Organization Organization { get; set; }
 
         public virtual List<Volunteer> Volunteers{ get; set; }
 
