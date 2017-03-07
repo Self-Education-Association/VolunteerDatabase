@@ -53,6 +53,7 @@ namespace VolunteerDatabase.Helper
             return Projects;
         }
 
+
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
         //      public List<AppUser> FindManagerListByStudentNum(params string[] StuNums)  //将原本是string类型的参数改为 int
