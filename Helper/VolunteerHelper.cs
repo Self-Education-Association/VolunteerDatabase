@@ -69,8 +69,8 @@ namespace VolunteerDatabase.Helper
             Claims = claims;
             database = DatabaseContext.GetInstance();
             logger = LogHelper.GetInstance(Claims);
-            Success += logger.Succeeded;
-            Failure += logger.Failed;
+            //Success += logger.Succeeded;
+            //Failure += logger.Failed;
         }
 
 

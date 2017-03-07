@@ -86,7 +86,7 @@ namespace VolunteerDatabase.Helper
             return await result;
         }
 
-        public IdentityResult CreateUser(AppUser user, string password, AppRoleEnum roleEnum, OrganizationEnum orgEnum)
+        public IdentityResult CreateUser(AppUser user, string password, AppRoleEnum roleEnum = AppRoleEnum.OrgnizationMember, OrganizationEnum orgEnum = OrganizationEnum.TestOnly)
         {
             lock (database)
             {
