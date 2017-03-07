@@ -27,6 +27,8 @@ namespace VolunteerDatabase.Entity
 
         public string Class { get; set; }
 
+        public string Skill { get; set; }
+
         public virtual List<Project> Project{ get; set; }
         public virtual List<BlackListRecord> BlackListRecords { get; set; }
         public virtual List<CreditRecord> CreditRecords { get; set; }
