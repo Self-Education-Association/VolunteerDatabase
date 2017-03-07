@@ -68,12 +68,6 @@ namespace VolunteerDatabase.Helper.Tests
                     DeleteOrgnization(item);
                 }
             }
-            database.Projects.Remove(deletepro);
-            foreach (var item in deleteorg)
-            {
-                database.Organizations.Remove(item);
-            }
-            database.SaveChanges();
         }           
 
         [TestMethod()]
