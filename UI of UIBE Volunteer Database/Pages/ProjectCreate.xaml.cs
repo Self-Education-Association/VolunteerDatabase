@@ -34,17 +34,19 @@ namespace Desktop.Pages
 
         private void create_project_button_Click(object sender, RoutedEventArgs e)
         {
-                TextRange textRange = new TextRange(project_details.Document.ContentStart, project_details.Document.ContentEnd);
-                if (project_name.Text == "" || project_place.Text == "" || project_time.DisplayDate == null || project_time.DisplayDate < DateTime.Now.AddYears(-20) || project_place.Text == "" || project_maximum.Text == "" || textRange.Text == "")
-                {
-                    MessageBox.Show("请完整输入所有项目.");
-                }
-                else
-                {
+            TextRange textRange = new TextRange(project_details.Document.ContentStart, project_details.Document.ContentEnd);
+            if (project_name.Text == "" || project_place.Text == "" || project_time.DisplayDate == null || project_time.DisplayDate < DateTime.Now.AddYears(-20) || project_place.Text == "" || project_maximum.Text == "" || textRange.Text == "")
+            {
+#warning "把这些MessageBox.Show()改成友好的窗口或者Tips"
+                MessageBox.Show("请完整输入所有项目.");
+            }
+            else
+            {
                 //可以在这里对RichTextBox做美化               
                 ProgressResult result = helper.CreatNewProject(Claims.Holder.Organization, project_time.DisplayDate, project_name.Text, project_place.Text, textRange.Text, int.Parse(project_maximum.Text));
                 if (result.Succeeded)
                 {
+#warning "把这些MessageBox.Show()改成友好的窗口或者Tips"
                     MessageBox.Show("项目创建成功!");
                     project_name.Clear();
                     project_place.Clear();
@@ -54,6 +56,7 @@ namespace Desktop.Pages
                 }
                 else
                 {
+#warning "把这些MessageBox.Show()改成友好的窗口或者Tips"
                     MessageBox.Show("项目创建失败!错误信息" + string.Join(",", result.Errors));
                 }
             }

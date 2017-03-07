@@ -51,33 +51,33 @@ namespace VolunteerDatabase.Helper
         public OrganizationEnum Matching(string str)
         {
             OrganizationEnum org = new OrganizationEnum();
-                if (OrganizationEnum.中国语言文学学院.ToString() == str)
-                { org = OrganizationEnum.中国语言文学学院; }
-                if (OrganizationEnum.SEA团队.ToString() == str)
-                { org = OrganizationEnum.SEA团队; }
-                if (OrganizationEnum.TestOnly.ToString() == str)
-                { org = OrganizationEnum.TestOnly;                }
-                if (OrganizationEnum.保险学院.ToString() == str)
-                { org = OrganizationEnum.保险学院; }
-                if (OrganizationEnum.信息学院.ToString() == str)
-                { org = OrganizationEnum.信息学院; }
-                if (OrganizationEnum.公共管理学院.ToString() == str)
-                { org = OrganizationEnum.公共管理学院; }
-                if (OrganizationEnum.国际商学院.ToString() == str)
-                { org = OrganizationEnum.国际商学院; }
-                if (OrganizationEnum.国际经济贸易学院.ToString() == str)
-                { org = OrganizationEnum.国际经济贸易学院;}
-                if (OrganizationEnum.校志愿服务中心.ToString() == str)
-                { org = OrganizationEnum.校志愿服务中心;}
-                if (OrganizationEnum.法学院.ToString() == str)
-                { org = OrganizationEnum.法学院; }
-                if (OrganizationEnum.统计学院.ToString() == str)
-                {  org = OrganizationEnum.统计学院;}
-                if (OrganizationEnum.金融学院.ToString() == str)
-                { org = OrganizationEnum.金融学院; }
+            if (OrganizationEnum.中国语言文学学院.ToString() == str)
+            { org = OrganizationEnum.中国语言文学学院; }
+            if (OrganizationEnum.SEA团队.ToString() == str)
+            { org = OrganizationEnum.SEA团队; }
+            if (OrganizationEnum.TestOnly.ToString() == str)
+            { org = OrganizationEnum.TestOnly; }
+            if (OrganizationEnum.保险学院.ToString() == str)
+            { org = OrganizationEnum.保险学院; }
+            if (OrganizationEnum.信息学院.ToString() == str)
+            { org = OrganizationEnum.信息学院; }
+            if (OrganizationEnum.公共管理学院.ToString() == str)
+            { org = OrganizationEnum.公共管理学院; }
+            if (OrganizationEnum.国际商学院.ToString() == str)
+            { org = OrganizationEnum.国际商学院; }
+            if (OrganizationEnum.国际经济贸易学院.ToString() == str)
+            { org = OrganizationEnum.国际经济贸易学院; }
+            if (OrganizationEnum.校志愿服务中心.ToString() == str)
+            { org = OrganizationEnum.校志愿服务中心; }
+            if (OrganizationEnum.法学院.ToString() == str)
+            { org = OrganizationEnum.法学院; }
+            if (OrganizationEnum.统计学院.ToString() == str)
+            { org = OrganizationEnum.统计学院; }
+            if (OrganizationEnum.金融学院.ToString() == str)
+            { org = OrganizationEnum.金融学院; }
             return org;
-         }
-        
+        }
+
 
         public async Task<IdentityResult> CreateUserAsync(AppUser user, string password, AppRoleEnum roleEnum, OrganizationEnum orgEnum)
         {
@@ -276,7 +276,7 @@ namespace VolunteerDatabase.Helper
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
         public IdentityResult ApproveRegisterRequest(List<AppUser> users)
         {
-            if(users == null)
+            if (users == null)
             {
                 return IdentityResult.Error("生成的用户列表为空,请查询后重试!");
             }
@@ -301,13 +301,13 @@ namespace VolunteerDatabase.Helper
 
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public IdentityResult RejectRegisterRequest(AppUser user,string note = "无")
+        public IdentityResult RejectRegisterRequest(AppUser user, string note = "无")
         {
-            if(user == null)
+            if (user == null)
             {
                 return IdentityResult.Error("待拒绝的用户为空,用户实体非法,请查询后重试!");
             }
-            if(user.Id == 0)
+            if (user.Id == 0)
             {
                 return IdentityResult.Error("用户实体非法,请查询后重试!");
             }
@@ -320,10 +320,10 @@ namespace VolunteerDatabase.Helper
                 }
                 approvalrecord.IsApproved = false;
                 approvalrecord.ExpireTime = DateTime.Now.AddDays(3);//最近的审批记录
-                approvalrecord.Note = "拒绝学号为["+approvalrecord.User.StudentNum.ToString()+"]用户名为["+approvalrecord.User.AccountName+"]的账号注册请求.";
+                approvalrecord.Note = "拒绝学号为[" + approvalrecord.User.StudentNum.ToString() + "]用户名为[" + approvalrecord.User.AccountName + "]的账号注册请求.";
                 database.ApprovalRecords.Add(approvalrecord);
                 approvalrecord.User = null;
-                if(database.Entry(user).State == System.Data.Entity.EntityState.Detached)
+                if (database.Entry(user).State == System.Data.Entity.EntityState.Detached)
                 {
                     database.Users.Attach(user);
                 }
@@ -342,7 +342,7 @@ namespace VolunteerDatabase.Helper
         public ApprovalRecord GetApprovalRecordByRequestedUser(AppUser user)
         {
             var result = database.ApprovalRecords.SingleOrDefault(r => r.User.Id == user.Id);
-            if(result == null)
+            if (result == null)
             {
                 return null;
             }
@@ -350,7 +350,7 @@ namespace VolunteerDatabase.Helper
             {
                 return result;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 throw;
             }
@@ -368,7 +368,7 @@ namespace VolunteerDatabase.Helper
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
         public List<AppUser> GetUnderlingsList(AppUser superior)
         {
-            if(superior==null)
+            if (superior == null)
             {
                 return null;
             }
@@ -376,7 +376,7 @@ namespace VolunteerDatabase.Helper
             {
                 return superior.Underlings;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 throw;
             }

@@ -32,6 +32,7 @@ namespace Desktop.Pages
         private void sendClaimsEventHandler(AppUserIdentityClaims claims)
         {
             this.Claims = claims;
+#warning "把这些MessageBox.Show()改成友好的窗口或者Tips"
             MessageBox.Show("用户信息模块收到令牌.");
         }
 

@@ -18,6 +18,8 @@ namespace VolunteerDatabase.Entity
 
         public virtual List<AppUser> Members { get; set; }
 
+        public virtual List<Project> Projects { get; set; }
+
         public virtual List<BlackListRecord> BlackListRecords { get; set; }
     }
 
