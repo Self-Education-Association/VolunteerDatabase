@@ -17,7 +17,8 @@ namespace Desktop
     {
         public App()
         {
-            var database = DatabaseContext.GetInstanceAsync();
+            var database = DatabaseContext.GetInstance();
+            database.Users.ToList();
         }
     }
 }
