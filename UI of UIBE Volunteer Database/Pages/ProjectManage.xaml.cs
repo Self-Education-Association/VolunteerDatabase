@@ -24,6 +24,7 @@ namespace Desktop.Pages
     public partial class ProjectManage : UserControl
     {
         IdentityPage identitypage = IdentityPage.GetInstance();
+        List<Project> allprojectlist;
         ProjectProgressHelper helper;
         private AppUserIdentityClaims Claims { get; set; }
         public ProjectManage()
@@ -32,11 +33,50 @@ namespace Desktop.Pages
             Claims = identitypage.Claims;
             helper = ProjectProgressHelper.GetInstance();
             // Login.GetClaims(sendClaimsEventHandler);
-            project_list.ItemsSource = testCreateProjectList();
-
+            allprojectlist = testCreateProjectList();
+            ShowList(StatusSwitch.SelectedIndex);
+            //最后通过绑定后台资源实现列表内容更新
             //project_list.ItemsSource = helper.FindAuthorizedProjectsByUser(Claims.User);
         }
 
+        private void ShowList(int status)
+        {
+            List<Project> list = new List<Project>();
+            switch (status)
+            {
+                case 0:
+                    {
+                        list = allprojectlist;
+                    }
+                    break;
+                case 1:
+                    foreach (Project project in allprojectlist)
+                    {
+                        if (project.Condition == ProjectCondition.Ongoing)
+                            list.Add(project);
+                    }
+                    break;
+                case 2:
+                    foreach (Project project in allprojectlist)
+                    {
+                        if (project.Condition == ProjectCondition.Finished)
+                            list.Add(project);
+                    }
+                    break;
+                default:
+                    break;
+            }
+            project_list.ItemsSource = list;
+        }
+
+
+        private void StatusSwitch_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(project_list != null)
+            ShowList(StatusSwitch.SelectedIndex);
+        }
+
+        #region 测试方法
         private List<Project> testCreateProjectList()
         {
             //ProjectManageHelper helper1 = ProjectManageHelper.GetInstance();

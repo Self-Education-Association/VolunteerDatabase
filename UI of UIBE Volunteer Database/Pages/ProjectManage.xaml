@@ -10,11 +10,12 @@
         <ScrollViewer>
             <Canvas MinWidth="200">
                 <TextBlock Name="Status" Text="项目状态" Style="{StaticResource Heading2}" />
-                <ComboBox x:Name="StatusSwitch"  Width="100" Height="20" HorizontalAlignment="Left" FontSize="12" Canvas.Top="27" SelectedIndex="0" >
-                    <ComboBoxItem Content="全部"></ComboBoxItem>
-                    <ComboBoxItem Content="进行中"></ComboBoxItem>
-                    <ComboBoxItem Content="已完成"></ComboBoxItem>
-                </ComboBox>
+                <ComboBox x:Name="StatusSwitch"  Width="100" Height="20" HorizontalAlignment="Left" FontSize="12" Canvas.Top="27" SelectedIndex="0" SelectionChanged="StatusSwitch_SelectionChanged" >
+                        <ComboBoxItem Content="全部"></ComboBoxItem>
+                        <ComboBoxItem Content="进行中"></ComboBoxItem>
+                        <ComboBoxItem Content="已完成"></ComboBoxItem>
+                    </ComboBox>
+                <!--<Button x:Name="WhiteDivide"/>-->
                 <DataGrid x:Name="project_list" AutoGenerateColumns="False" Width="auto" Height="auto"
                                   ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Visible" Canvas.Top="55" IsReadOnly="True">
                     <!--<DataGrid.RowStyle>

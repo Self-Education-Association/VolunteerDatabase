@@ -9,12 +9,11 @@
     <Grid Style="{StaticResource ContentRoot}">
         <ScrollViewer>
             <StackPanel MinWidth="200">
-                <TextBlock Text="User Approval" Style="{StaticResource Heading2}" />
+                <TextBlock Text="用户审批" Style="{StaticResource Heading2}" />
 
                 <TextBox x:Name="search_volunteer" Width="80" Height="25" HorizontalAlignment="Right"/>
                 <mui:ModernButton x:Name="search_btn" Content="查找" Width="63" Height="29" HorizontalAlignment="Right" Click="ModernButton_Click"/>
-                <DataGrid>
-                    <DataGrid AutoGenerateColumns="False"/>
+                <DataGrid x:Name="approval_list" AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTemplateColumn>
                             <DataGridTemplateColumn.CellTemplate>
@@ -23,24 +22,24 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTextColumn Header="用户名"/>
-                        <DataGridTextColumn Header="学号"/>
-                        <DataGridTextColumn Header="申请日期"/>
-                        <DataGridTextColumn Header="所属组织"/>
+                        <DataGridTextColumn Header="用户名" Binding="{Binding AccountName}" Width="100"/>
+                        <DataGridTextColumn Header="学号" Binding="{Binding StudentNum}" Width="100"/>
+                        <DataGridTextColumn Header="姓名" Binding="{Binding Name}" Width="100"/>
+                        <DataGridTextColumn Header="所属组织" Binding="{Binding Organization.Name}"/>
                         <DataGridTemplateColumn>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <mui:ModernButton Content="通过"/>
+                                    <mui:ModernButton Name="Approve" Content="通过" Click="Approve_Click"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTemplateColumn>
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <mui:ModernButton Content="拒绝"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>    
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <mui:ModernButton Content="拒绝"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>
