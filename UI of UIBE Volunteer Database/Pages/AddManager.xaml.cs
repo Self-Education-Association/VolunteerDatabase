@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using VolunteerDatabase.Entity;
 
 namespace Desktop.Pages
 {
@@ -19,8 +20,10 @@ namespace Desktop.Pages
     /// </summary>
     public partial class AddManager : Window
     {
-        public AddManager()
+        Project sourceproject;
+        public AddManager(Project project)
         {
+            sourceproject = project;
             InitializeComponent();
         }
     }

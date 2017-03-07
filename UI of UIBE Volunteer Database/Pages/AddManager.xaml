@@ -19,6 +19,7 @@
                 </DataGridTemplateColumn>
                 <DataGridTextColumn Header="姓名"/>
                 <DataGridTextColumn Header="学号"/>
+                
             </DataGrid.Columns>
         </DataGrid>
     </StackPanel>
