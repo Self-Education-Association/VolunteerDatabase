@@ -4,11 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Desktop.Pages"
+        xmlns:mui="http://firstfloorsoftware.com/ModernUI"
         mc:Ignorable="d"
         Title="AddManager" Height="300" Width="300">
     <StackPanel>
-        <Button Content="添加" Width="60" Height="25" HorizontalAlignment="Left"/>
-        <DataGrid>
+        <Button Name="addButton"  Content="添加" Width="60" Height="25" HorizontalAlignment="Left" Click="addButton_Click" />
+        <DataGrid x:Name="availableUsers">
             <DataGrid.Columns>
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
@@ -17,6 +18,8 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+                <DataGridCheckBoxColumn>
+                </DataGridCheckBoxColumn>
                 <DataGridTextColumn Header="姓名"/>
                 <DataGridTextColumn Header="学号"/>
                 

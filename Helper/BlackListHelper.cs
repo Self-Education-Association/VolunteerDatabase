@@ -152,7 +152,7 @@ namespace VolunteerDatabase.Helper
         {
             if (start > end)
             {
-                return null;
+                return new List<BlackListRecord>();
             }
             var result = database.BlackListRecords.Where(b => b.AddTime < end && b.AddTime > start).ToList();
             return result;
@@ -167,7 +167,7 @@ namespace VolunteerDatabase.Helper
         {
             if (start > end)
             {
-                return null;
+                return new List<BlackListRecord>();
             }
             var result = database.BlackListRecords.Where(b =>( b.EndTime <= end && b.EndTime >= start)).ToList();
             return result;
@@ -218,7 +218,7 @@ namespace VolunteerDatabase.Helper
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
         //[AppAuthorize(AppRoleEnum.OrgnizationMember)]//必须被授权为该项目管理员 => 拿到机构管理员的令牌
-        public BlackListResult AddBlackListRecord(Volunteer volunteer, AppUser adder, DateTime endtime, Organization orgnization = null, Project project = null, BlackListRecordStatus status = BlackListRecordStatus.Enabled)
+        public BlackListResult AddBlackListRecord(string Detail, Volunteer volunteer, AppUser adder, DateTime endtime, Organization orgnization = null, Project project = null, BlackListRecordStatus status = BlackListRecordStatus.Enabled)
         {
             if (endtime < System.DateTime.Now)
             {
@@ -226,6 +226,7 @@ namespace VolunteerDatabase.Helper
             }
             BlackListRecord result = new BlackListRecord
             {
+                Detail = Detail,
                 Volunteer = volunteer,
                 Adder = adder,
                 Status = status,
@@ -245,7 +246,7 @@ namespace VolunteerDatabase.Helper
         }
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public BlackListResult EditBlackListRecord(Guid uid, DateTime endtime, BlackListRecordStatus status)
+        public BlackListResult EditBlackListRecord(string detail, Guid uid, DateTime endtime, BlackListRecordStatus status)
         {
             var record = database.BlackListRecords.SingleOrDefault(b => b.UID == uid);
             if (uid == null)
@@ -258,6 +259,7 @@ namespace VolunteerDatabase.Helper
             }
             try
             {
+                record.Detail = detail;
                 record.EndTime = endtime;
                 record.Status = status;
                 Save();

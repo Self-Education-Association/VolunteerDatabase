@@ -22,6 +22,7 @@ namespace Desktop.Pages
     public partial class ProjectCreate : UserControl
     {
         private IdentityPage basepage = IdentityPage.GetInstance();
+
         private ProjectManageHelper helper;
         private AppUserIdentityClaims Claims { get; set; }
         public ProjectCreate()

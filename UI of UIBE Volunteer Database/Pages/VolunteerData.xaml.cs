@@ -79,5 +79,10 @@ namespace Desktop.Pages
 #warning "把这些MessageBox.Show()改成友好的窗口或者Tips"
             MessageBox.Show("志愿者库模块收到令牌.");
         }
+
+        private void searchbyid_btn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
