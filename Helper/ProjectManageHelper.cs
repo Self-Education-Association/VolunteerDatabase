@@ -87,14 +87,14 @@ namespace VolunteerDatabase.Helper
                 Project.Time = Time;
                 Project.CreatTime = DateTime.Now;
                 Project.Maximum = Maximum;
-                Project.Managers = null;
+                Project.Managers = new List<AppUser>();
                 Project.Place = Place;
                 Project.Name = Name;
                 Project.Details = Detail;
                 Project.Condition = ProjectCondition.Ongoing;
                 Project.ScoreCondition = ProjectScoreCondition.UnScored;
                 Project.Creater = org;
-                Project.Volunteers = null;
+                Project.Volunteers = new List<Volunteer>();
                 database.Projects.Add(Project);
                 Save();
                 result = ProgressResult.Success();
@@ -126,7 +126,7 @@ namespace VolunteerDatabase.Helper
         public ProgressResult ProjectDelete(Project Pro)
         {
             ProgressResult result;
-            if(!database.Projects.Contains(Pro)||Pro.Condition==ProjectCondition.Finished)//可以用contains?
+            if(database.Projects.Where(p => p.Id == Pro.Id).Count()==0||Pro.Condition==ProjectCondition.Finished)//可以用contains?
             {
                 ProgressResult.Error("删除失败，项目不存在或已经结项");
             }
