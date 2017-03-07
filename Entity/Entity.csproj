@@ -72,9 +72,9 @@
     <Compile Include="Migrations\201703071405249_AddProjectsToOrganization.Designer.cs">
       <DependentUpon>201703071405249_AddProjectsToOrganization.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201703071545266_test1.cs" />
-    <Compile Include="Migrations\201703071545266_test1.Designer.cs">
-      <DependentUpon>201703071545266_test1.cs</DependentUpon>
+    <Compile Include="Migrations\201703071610597_AddDelete.cs" />
+    <Compile Include="Migrations\201703071610597_AddDelete.Designer.cs">
+      <DependentUpon>201703071610597_AddDelete.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Organization.cs" />
@@ -102,8 +102,8 @@
     <EmbeddedResource Include="Migrations\201703071405249_AddProjectsToOrganization.resx">
       <DependentUpon>201703071405249_AddProjectsToOrganization.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703071545266_test1.resx">
-      <DependentUpon>201703071545266_test1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201703071610597_AddDelete.resx">
+      <DependentUpon>201703071610597_AddDelete.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
