@@ -25,15 +25,18 @@ namespace Desktop.Pages
     {
         IdentityPage identitypage = IdentityPage.GetInstance();
         List<Project> allprojectlist;
-        ProjectProgressHelper helper;
+        ProjectManageHelper managehelper;
+        ProjectProgressHelper progresshelper;
         private AppUserIdentityClaims Claims { get; set; }
         public ProjectManage()
         {
             InitializeComponent();
             Claims = identitypage.Claims;
-            helper = ProjectProgressHelper.GetInstance();
+            managehelper = ProjectManageHelper.GetInstance();
+            progresshelper = ProjectProgressHelper.GetInstance();
             // Login.GetClaims(sendClaimsEventHandler);
-            allprojectlist = testCreateProjectList();
+            allprojectlist = managehelper.ShowProjectList(Claims.User.Organization,true);
+            allprojectlist.AddRange(managehelper.ShowProjectList(Claims.User.Organization, false));
             ShowList(StatusSwitch.SelectedIndex);
             //最后通过绑定后台资源实现列表内容更新
             //project_list.ItemsSource = helper.FindAuthorizedProjectsByUser(Claims.User);
@@ -72,6 +75,11 @@ namespace Desktop.Pages
 
         private void StatusSwitch_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if(managehelper !=null && progresshelper != null)
+            {
+                allprojectlist = managehelper.ShowProjectList(Claims.User.Organization, true);
+                allprojectlist.AddRange(managehelper.ShowProjectList(Claims.User.Organization, false));
+            }
             if (project_list != null)
                 ShowList(StatusSwitch.SelectedIndex);
         }
@@ -159,7 +167,7 @@ namespace Desktop.Pages
         private void ModernButton_Click(object sender, RoutedEventArgs e)
         {
             List<Project> Pros = new List<Project>();
-            Pros.Add(helper.FindProjectByProjectId(int.Parse(search_project.Text)));
+            Pros.Add(progresshelper.FindProjectByProjectId(int.Parse(search_project.Text)));
             allprojectlist = Pros;
         }
 

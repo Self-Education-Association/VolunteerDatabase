@@ -49,6 +49,21 @@ namespace Desktop.Pages
 
         private void Approve_Click(object sender, RoutedEventArgs e)
         {
+            Button senderButton = sender as Button;
+            IdentityResult result;
+            AppUser user;
+            if (senderButton.DataContext is AppUser)
+            {
+                user = (AppUser)senderButton.DataContext;
+                result = helper.ApproveRegisterRequest(user);
+                MessageBox.Show("通过用户审批成功!");
+            }
+            else
+            {
+                result = IdentityResult.Error("待审批的用户为空.");
+                MessageBox.Show("错误:待审批的用户为空.");
+            }
+
         }
     }
 }

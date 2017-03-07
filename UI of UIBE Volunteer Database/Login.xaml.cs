@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using VolunteerDatabase.Helper;
 using FirstFloor.ModernUI.Windows.Controls;
 using Desktop.Pages;
+using VolunteerDatabase.Interface;
 
 namespace Desktop
 {
@@ -57,7 +58,7 @@ namespace Desktop
                 else
                 {
                     var claims = await ih.CreateClaimsAsync(userid.Text, password.Password.ToString());//输入合法性验证
-                    if (claims.IsAuthenticated)
+                    if (claims.IsAuthenticated && claims.User.Status == AppUserStatus.Enabled)
                     {
 #warning "把这些MessageBox.Show()改成友好的窗口或者Tips"
                         MessageBox.Show("登陆成功！");
@@ -66,10 +67,14 @@ namespace Desktop
                         Close();
 
                     }
+                    else if(claims.User.Status == AppUserStatus.NotApproved)
+                    {
+                        MessageBox.Show("已发送用户注册审批请求,请等待机构管理员审批.");
+                    }
                     else
                     {
 #warning "把这些MessageBox.Show()改成友好的窗口或者Tips"
-                        MessageBox.Show("登录失败，请检查用户名和密码！");
+                        MessageBox.Show("登录失败，用户名或密码出错，或未通过管理员审批！");
                     }
                 }
             }

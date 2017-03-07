@@ -58,13 +58,13 @@ namespace Desktop
                         Mobile = telephonenumber.Text,
                         Email = emailadress.Text,
                         Room = dormitaryadress.Text,
-                        Status = AppUserStatus.Enabled
+                        Status = AppUserStatus.NotApproved
                     };
-                    IdentityResult result = ih.CreateUser(au, passWord, AppRoleEnum.OrgnizationAdministrator, org);
+                    IdentityResult result = ih.CreateUser(au, passWord, AppRoleEnum.OrgnizationMember, org);
                     if (result.Succeeded == true)
                     {
 #warning "把这些MessageBox.Show()改成友好的窗口或者Tips"
-                        MessageBox.Show("注册成功！");
+                        MessageBox.Show("注册成功!已发送注册审批请求,请等待管理员审批.");
                         this.Close();
                     }
                     else
