@@ -152,7 +152,7 @@ namespace VolunteerDatabase.Helper
         {
             if (start > end)
             {
-                return null;
+                return new List<BlackListRecord>();
             }
             var result = database.BlackListRecords.Where(b => b.AddTime < end && b.AddTime > start).ToList();
             return result;
@@ -167,7 +167,7 @@ namespace VolunteerDatabase.Helper
         {
             if (start > end)
             {
-                return null;
+                return new List<BlackListRecord>();
             }
             var result = database.BlackListRecords.Where(b =>( b.EndTime <= end && b.EndTime >= start)).ToList();
             return result;
