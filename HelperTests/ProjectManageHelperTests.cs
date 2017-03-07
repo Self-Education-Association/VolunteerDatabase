@@ -402,7 +402,6 @@ namespace VolunteerDatabase.Helper.Tests
             {
                 database.BlackListRecords.Remove(item);
             }
-            //var orgInDb = database.Organizations.SingleOrDefault(o => o.Name == org.Name);
             database.Projects.Remove(pro);
             Save();
         }
