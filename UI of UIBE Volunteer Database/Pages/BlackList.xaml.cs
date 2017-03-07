@@ -10,20 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
-using VolunteerDatabase.Entity;
 
 namespace Desktop.Pages
 {
     /// <summary>
-    /// AddManager.xaml 的交互逻辑
+    /// Interaction logic for BlackList.xaml
     /// </summary>
-    public partial class AddManager : Window
+    public partial class BlackList : Window
     {
-        Project sourceproject;
-        public AddManager(Project project)
+        public BlackList()
         {
-            sourceproject = project;
             InitializeComponent();
         }
     }

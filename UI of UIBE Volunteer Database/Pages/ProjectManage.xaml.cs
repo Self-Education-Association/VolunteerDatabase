@@ -72,10 +72,11 @@ namespace Desktop.Pages
 
         private void StatusSwitch_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(project_list != null)
-            ShowList(StatusSwitch.SelectedIndex);
+            if (project_list != null)
+                ShowList(StatusSwitch.SelectedIndex);
         }
-        
+
+
         private List<Project> testCreateProjectList()
         {
             //ProjectManageHelper helper1 = ProjectManageHelper.GetInstance();
@@ -150,12 +151,5 @@ namespace Desktop.Pages
             var AddManager = new AddManager();
             AddManager.Show();
         }
-
-        private void AddVolunteer_btn_Click(object sender, RoutedEventArgs e)
-        {
-            var AddVolunteer = new AddVolunteer();
-            AddVolunteer.Show();
-        }
     }
 }
-#endregion
