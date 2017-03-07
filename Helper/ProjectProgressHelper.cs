@@ -55,16 +55,16 @@ namespace VolunteerDatabase.Helper
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
         public List<Project> FindAuthorizedProjectsByUser(AppUser user)
         {
-            List<Project> projectlist = database.Projects.Where(p => p.Managers.Count() > 0).ToList();
-            List<Project> authorizedprojectlist = new List<Project>();
+            var projectlist = database.Projects.Where(p => p.Managers.Count() > 0).ToList();
+            List<Project> authorizedproject = new List<Project>();
             foreach (Project item in projectlist)
             {
-                if (item.Managers.Contains(user))
-                {
-                    authorizedprojectlist.Add(item);
-                }
+                if (item.Managers.Contains(user)&&item.Condition==ProjectCondition.Ongoing)
+                    authorizedproject.Add(item);
             }
-            return authorizedprojectlist;
+          //  var Project = database.Projects.Where(t => t.Managers);
+           // var Projects = Project.Where(o => o.Condition == ProjectCondition.Ongoing).ToList();
+            return authorizedproject;
         }
 
         [AppAuthorize(AppRoleEnum.Administrator)]
@@ -111,11 +111,11 @@ namespace VolunteerDatabase.Helper
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
         public List<Volunteer> FindSortedVolunteersByProject(Project project)
         {
-            var volunteer = from o in database.Volunteers
-                            where o.Project.Contains(project)
-                            select o;
+            //var volunteer = from o in database.Volunteers
+            //                where o.Project.Contains(project)
+            //                select o;
             List<Volunteer> Volunteers = new List<Volunteer>();
-            foreach (var item in volunteer)
+            foreach (var item in project.Volunteers)
             {
                 Volunteers.Add(item);
             }
@@ -124,22 +124,22 @@ namespace VolunteerDatabase.Helper
         }
 
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public ProgressResult SingleVolunteerInputById(int num, Project Pro)
+        public ProgressResult SingleVolunteerInputById(int num, Project pro)
         {
             ProgressResult result;
             var Volunteer = database.Volunteers.SingleOrDefault(r => r.StudentNum == num);
+            pro = database.Projects.Single(p => p.Id == pro.Id);
             if (Volunteer == null)
             {
                 return ProgressResult.Error("志愿者不存在于数据库中");
             }
-            int volunteerscount = Pro.Volunteers.Count;
-            if(Pro.Maximum <= volunteerscount)
+            if (pro.Maximum <= pro.Volunteers.Count)
             {
                 return ProgressResult.Error("已达项目人数上限，添加失败");
             }
             lock (database)
             {
-                var Project = Pro;
+                var Project = pro;
                 Project.Volunteers.Add(Volunteer);
                 Save();
             }
@@ -169,10 +169,23 @@ namespace VolunteerDatabase.Helper
         public ProgressResult Scoring4ForVolunteers(Project Pro)
         {
             ProgressResult result;
-            var Volunteers = database.Volunteers.Where(o => o.Project.Contains(Pro));     //找不到怎么办？异常处理？？还是返回空？
+            Pro = database.Projects.SingleOrDefault(p => p.Id == Pro.Id);
+            if ( Pro == null)
+            {
+                return ProgressResult.Error("数据库中不存在该项目！");
+            }
+            var Volunteers = database.Volunteers.Where(o => o.Project.Count() > 0).ToList();
+            List<Volunteer> selectedvolunteers = new List<Volunteer>();
+            foreach(var item in Volunteers)
+            {
+                if( item.Project.Contains(Pro))
+                {
+                    selectedvolunteers.Add(item);
+                }
+            }
             lock (database)
             {
-                foreach (var item in Volunteers)
+                foreach (var item in selectedvolunteers)
                 {
                     item.Score += 4;
                 }

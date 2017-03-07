@@ -11,7 +11,7 @@ namespace VolunteerDatabase.Helper
 {
     public class ProjectManageHelper
     {
-        Database database;
+        Database database = DatabaseContext.GetInstance();
         private static ProjectManageHelper helper;
         private static readonly object helperlocker = new object();
         public static ProjectManageHelper GetInstance()
@@ -55,6 +55,7 @@ namespace VolunteerDatabase.Helper
 
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
+        //      public List<AppUser> FindManagerListByStudentNum(params string[] StuNums)  //将原本是string类型的参数改为 int
         public List<AppUser> FindManagerListByStudentNum(params int[] StuNums)
         {
             List<AppUser> Managers = new List<AppUser>();
@@ -78,7 +79,7 @@ namespace VolunteerDatabase.Helper
             ProgressResult result;
             if (Time == null)
             {
-                ProgressResult.Error("新项目"+Name+"时间不合法，请重新输入");
+                return ProgressResult.Error("新项目"+Name+"时间不合法，请重新输入");
             }
             lock (database)
             {
@@ -86,14 +87,14 @@ namespace VolunteerDatabase.Helper
                 Project.Time = Time;
                 Project.CreatTime = DateTime.Now;
                 Project.Maximum = Maximum;
-                Project.Managers = null;
+                Project.Managers = new List<AppUser>();
                 Project.Place = Place;
                 Project.Name = Name;
                 Project.Details = Detail;
                 Project.Condition = ProjectCondition.Ongoing;
                 Project.ScoreCondition = ProjectScoreCondition.UnScored;
                 Project.Creater = org;
-                Project.Volunteers = null;
+                Project.Volunteers = new List<Volunteer>();
                 database.Projects.Add(Project);
                 Save();
                 result = ProgressResult.Success();
@@ -118,43 +119,14 @@ namespace VolunteerDatabase.Helper
             Save();
             result = ProgressResult.Success();
             return result;
-        }//修改Project信息
-
-        [AppAuthorize(AppRoleEnum.Administrator)]
-        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public ProgressResult AddManager(AppUser Manager, Project Pro)
-        {
-            if(Pro==null||Pro.Condition==ProjectCondition.Finished)
-            {
-                return ProgressResult.Error("修改项目时失败!项目不存在或已结项.");
-            }
-            if(Manager == null||Manager.Status!=AppUserStatus.Enabled)
-            {
-                return ProgressResult.Error("待加入的用户身份非法.");
-            }
-
-            Pro.Managers.Add(Manager);
-            Save();
-            return ProgressResult.Success();
         }
 
-        [AppAuthorize(AppRoleEnum.Administrator)]
-        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public List<ProgressResult> AddManager(List<AppUser> managers,Project project)
-        {
-            List<ProgressResult> resultlist = new List<ProgressResult>();
-            foreach (AppUser manager in managers)
-            {
-                resultlist.Add(AddManager(manager, project));
-            }
-            return resultlist;
-        }
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
         public ProgressResult ProjectDelete(Project Pro)
         {
             ProgressResult result;
-            if(database.Projects.Where( p => p.Id == Pro.Id).Count() == 0 ||Pro.Condition==ProjectCondition.Finished)//可以用contains?
+            if(database.Projects.Where(p => p.Id == Pro.Id).Count()==0||Pro.Condition==ProjectCondition.Finished)//可以用contains?
             {
                 ProgressResult.Error("删除失败，项目不存在或已经结项");
             }

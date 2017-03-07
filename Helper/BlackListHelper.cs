@@ -169,7 +169,7 @@ namespace VolunteerDatabase.Helper
             {
                 return null;
             }
-            var result = database.BlackListRecords.Where(b => b.EndTime < end && b.EndTime > start).ToList();
+            var result = database.BlackListRecords.Where(b =>( b.EndTime <= end && b.EndTime >= start)).ToList();
             return result;
         }
 
@@ -181,17 +181,12 @@ namespace VolunteerDatabase.Helper
             {
                 return BlackListResult.Error(BlackListResult.AddBlackListRecordErrorEnum.NullRecord);
             }
-            // var tempbrec = database.BlackListRecords.Where(b =>  b.Project.Id == brec.Project.Id).ToList();
-
             IEnumerable<BlackListRecord> tempbrec = null;
             if (brec.Project != null)
             {
-                tempbrec = database.BlackListRecords.Where(b => b.Project.Id == brec.Project.Id);
-            }
-
+                tempbrec = database.BlackListRecords.Where(b => b.Project.Id == brec.Project.Id).ToList();
             // if (database.BlackListRecords.Where(b=>b.Project==brec.Project).Count()!=0)
-            if (tempbrec != null)
-            //matk!!!! 空的记录判断为非空/！
+            if ( tempbrec.Count() != 0)
             {
                 foreach (var eptempbrec in tempbrec)
                 {
@@ -201,6 +196,7 @@ namespace VolunteerDatabase.Helper
                     }
                 }
                 //  return BlackListResult.Error(BlackListResult.AddBlackListRecordErrorEnum.ExistingRecord);
+            }
             }
             if (brec.EndTime < System.DateTime.Now)
             {
