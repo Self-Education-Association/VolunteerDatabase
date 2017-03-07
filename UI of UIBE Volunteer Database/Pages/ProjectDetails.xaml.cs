@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using FirstFloor.ModernUI.Windows;
 
 namespace Desktop.Pages
 {
@@ -19,11 +20,24 @@ namespace Desktop.Pages
     /// </summary>
     public partial class AddManager : Window
     {
-        Project sourceproject;
-        public AddManager(Project project)
+        public AddManager()
         {
-            sourceproject = project;
             InitializeComponent();
+        }
+
+        private void piliang_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void endproject_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void yijianpingfen_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

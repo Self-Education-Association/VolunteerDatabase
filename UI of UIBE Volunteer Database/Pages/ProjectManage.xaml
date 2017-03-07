@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:mui="http://firstfloorsoftware.com/ModernUI"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="900">
+             d:DesignHeight="300" d:DesignWidth="600">
     <Grid Style="{StaticResource ContentRoot}">
         <ScrollViewer>
             <Canvas MinWidth="200">
@@ -17,7 +17,7 @@
                     </ComboBox>
                 <!--<Button x:Name="WhiteDivide"/>-->
                 <DataGrid x:Name="project_list" AutoGenerateColumns="False" Width="auto" Height="auto"
-                                  ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Visible" Canvas.Top="55" IsReadOnly="True">
+                                  ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Canvas.Top="55" IsReadOnly="True">
                     <!--<DataGrid.RowStyle>
                         <Style TargetType="DataGridRow">
                             <Setter Property="Background" Value="LightBlue" />
@@ -40,14 +40,13 @@
                         <DataGridTextColumn Header="项目名称" Binding="{Binding Name}"/>
                         <DataGridTextColumn Header="项目地点" Binding="{Binding Place}"/>
                         <DataGridTextColumn Header="项目编号" Binding="{Binding Id}"/>
-                        <DataGridTextColumn Header="最大人数" Binding="{Binding Maximum}"/>
+                        <!--<DataGridTextColumn Header="最大人数" Binding="{Binding Maximum}"/>-->
                         <DataGridTextColumn Header="开始时间" Binding="{Binding Time}"/>
                         <DataGridTextColumn Header="创建时间" Binding="{Binding CreateTime}"/>
-                        <DataGridTextColumn Header="项目详情" Binding="{Binding Details}"/>
-                        <DataGridTemplateColumn Header="添加管理者">
+                        <DataGridTemplateColumn>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <ComboBox x:Name="managerSwitch"/>
+                                    <Button Click="Button_Click" x:Name="详情"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
