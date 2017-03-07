@@ -243,6 +243,7 @@ namespace VolunteerDatabase.Helper
                     volunteer.Score -= crecord.Score;
                     volunteer.Score += score;
                     crecord.Score = score;
+                    Save();
                     return ProgressResult.Success();
                 }
                 catch(Exception)
