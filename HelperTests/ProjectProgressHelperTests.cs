@@ -309,7 +309,7 @@ namespace VolunteerDatabase.Helper.Tests
             }
 
             // 删除数据库的有关数据[org pro vol]
-            /*DeleteVolunteer(v1);
+            DeleteVolunteer(v1);
             DeleteVolunteer(v2);
             if (volunteerhelper.FindVolunteer(studentnum1) != null && volunteerhelper.FindVolunteer(studentnum2) != null)
             {
@@ -331,7 +331,7 @@ namespace VolunteerDatabase.Helper.Tests
                 {
                     DeleteOrgnization(item);
                 }
-            }*/
+            }
 
             //修改删除方法，删除方法中无法完全清空别处引用
         }
@@ -411,13 +411,13 @@ namespace VolunteerDatabase.Helper.Tests
             }
 
             // 删除数据库的有关数据[org pro vol]
-            /*    volunteerhelper.DeleteVolunteer(studentnum1);
+               volunteerhelper.DeleteVolunteer(studentnum1);
                 volunteerhelper.DeleteVolunteer(studentnum2);
                 if (volunteerhelper.FindVolunteer(studentnum1) != null && volunteerhelper .FindVolunteer(studentnum2) != null)
                 {
                     Assert.Fail("删除志愿者失败！");
                 }
-                var deletepro = database.Projects.Where(p => p.Name == name);
+                var deletepro = database.Projects.Where(p => p.Name ==pro.Name);
                 if (deletepro != null)
                 {
                     foreach (var item in deletepro)
@@ -433,7 +433,7 @@ namespace VolunteerDatabase.Helper.Tests
                     {
                         DeleteOrgnization(item);
                     }
-                }*/
+                }
 
             //修改删除方法，删除方法中无法完全清空别处引用
         }
@@ -498,13 +498,13 @@ namespace VolunteerDatabase.Helper.Tests
             }
 
             // 删除数据库的有关数据[org pro vol]
-            /* volunteerhelper.DeleteVolunteer(studentnum1);
-             volunteerhelper.DeleteVolunteer(studentnum2);
-             if (volunteerhelper.FindVolunteer(studentnum1) != null && volunteerhelper.FindVolunteer(studentnum2) != null)
+             volunteerhelper.DeleteVolunteer(v1.StudentNum);
+             volunteerhelper.DeleteVolunteer(v2.StudentNum);
+             if (volunteerhelper.FindVolunteer(v1.StudentNum) != null && volunteerhelper.FindVolunteer(studentnum2) != null)
              {
                  Assert.Fail("删除志愿者失败！");
              }
-             var deletepro = database.Projects.Where(p => p.Name == name);
+             var deletepro = database.Projects.Where(p => p.Name == pro.Name);
              if (deletepro != null)
              {
                  foreach (var item in deletepro)
@@ -520,7 +520,7 @@ namespace VolunteerDatabase.Helper.Tests
                  {
                      DeleteOrgnization(item);
                  }
-             }*/
+             }
 
             //修改删除方法，删除方法中无法完全清空别处引用
         }
@@ -590,13 +590,13 @@ namespace VolunteerDatabase.Helper.Tests
             }
 
             // 删除数据库的有关数据[org pro vol]
-            /*  DeleteVolunteer(v1);
+              DeleteVolunteer(v1);
               DeleteVolunteer(v2);
               if (volunteerhelper.FindVolunteer(studentnum1) != null && volunteerhelper.FindVolunteer(studentnum2) != null)
               {
                   Assert.Fail("删除志愿者失败！");
               }
-              var deletepro = database.Projects.Where(p => p.Name == name);
+              var deletepro = database.Projects.Where(p => p.Name == pro.Name);
               if (deletepro != null)
               {
                   foreach (var item in deletepro)
@@ -612,7 +612,7 @@ namespace VolunteerDatabase.Helper.Tests
                   {
                       DeleteOrgnization(item);
                   }
-              }*/
+              }
 
             //修改删除方法，删除方法中无法完全清空别处引用
 
@@ -654,12 +654,7 @@ namespace VolunteerDatabase.Helper.Tests
             }
 
             // 删除数据库的有关数据[vol]
-            /*   DeleteVolunteer(v);
-               if (volunteerhelper.FindVolunteer(studentnum) != null)
-               {
-                   Assert.Fail("删除志愿者失败！");
-               }*/
-
+              DeleteVolunteer(v);
             //修改删除方法，删除方法中无法完全清空别处引用
         }
 
@@ -721,7 +716,7 @@ namespace VolunteerDatabase.Helper.Tests
             }
 
             // 删除数据库的有关数据[org pro vol]
-            /* var deletepro = database.Projects.Where(p => p.Name == name);
+            var deletepro = database.Projects.Where(p => p.Name == name);
              if (deletepro != null)
              {
                  foreach (var item in deletepro)
@@ -737,7 +732,7 @@ namespace VolunteerDatabase.Helper.Tests
                  {
                      DeleteOrgnization(item);
                  }
-             }*/
+             }
 
             //修改删除方法，删除方法中无法完全清空别处引用
 
