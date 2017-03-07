@@ -80,11 +80,28 @@ namespace Desktop.Pages
 
 
             };
-            
+
+            Project p2 = new Project
+            {
+                Id = 998,
+                CreatTime = DateTime.MinValue,
+                Name = "A Finished Project",
+                Condition = ProjectCondition.Finished,
+                Creater = Claims.User.Organization,
+                Time = DateTime.MinValue,
+                Details = "A Test Project.",
+                Maximum = 70,
+                Place = "UIBE",
+                Volunteers = list,
+                Managers = new List<AppUser>()
+
+
+            };
             p.Managers.Add(Claims.User);
 
             List<Project> projects = new List<Project>();
             projects.Add(p);
+            projects.Add(p2);
             return projects;
         }
 
