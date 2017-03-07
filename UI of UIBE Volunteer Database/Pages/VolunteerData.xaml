@@ -11,7 +11,7 @@
             <StackPanel MinWidth="200">
                 <TextBlock Text="Volunteer Data" Style="{StaticResource Heading2}" />
                 <CheckBox Content="黑名单" Width="60" Height="25" HorizontalAlignment="Left"/>
-                <DataGrid>
+                <DataGrid IsReadOnly="True">
                     <DataGrid AutoGenerateColumns="False"></DataGrid>
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="姓名"/>
@@ -21,13 +21,7 @@
                         <DataGridTextColumn Header="邮箱"/>
                         <DataGridTextColumn Header="学院"/>
                         <DataGridTextColumn Header="黑名单记录"/>
-                        <DataGridTemplateColumn Header="评分">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBox/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="评分"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>
