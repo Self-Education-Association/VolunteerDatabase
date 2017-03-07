@@ -117,7 +117,7 @@ namespace VolunteerDatabase.Entity.Migrations
                         CreatTime = c.DateTime(),
                         Condition = c.Int(nullable: false),
                         ScoreCondition = c.Int(nullable: false),
-                        Organization_Id = c.Int(),
+                        Organization_Id = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Organizations", t => t.Organization_Id)
@@ -152,6 +152,7 @@ namespace VolunteerDatabase.Entity.Migrations
                         Email = c.String(),
                         Room = c.String(),
                         Class = c.String(),
+                        Skill = c.String(),
                         Score = c.Int(nullable: false),
                         ProjectCount = c.Int(nullable: false),
                     })
@@ -225,6 +226,7 @@ namespace VolunteerDatabase.Entity.Migrations
         {
             DropForeignKey("dbo.ApprovalRecords", "User_Id", "dbo.AppUsers");
             DropForeignKey("dbo.ApprovalRecords", "Organization_Id", "dbo.Organizations");
+            DropForeignKey("dbo.Projects", "Organization_Id", "dbo.Organizations");
             DropForeignKey("dbo.BlackListRecords", "Organization_Id", "dbo.Organizations");
             DropForeignKey("dbo.BlackListRecords", "Project_Id", "dbo.Projects");
             DropForeignKey("dbo.BlackListRecords", "Adder_Id", "dbo.AppUsers");
@@ -243,7 +245,6 @@ namespace VolunteerDatabase.Entity.Migrations
             DropForeignKey("dbo.CreditRecords", "Participant_UID", "dbo.Volunteers");
             DropForeignKey("dbo.BlackListRecords", "Volunteer_UID", "dbo.Volunteers");
             DropForeignKey("dbo.CreditRecords", "Organization_Id", "dbo.Organizations");
-            DropForeignKey("dbo.Projects", "Organization_Id", "dbo.Organizations");
             DropForeignKey("dbo.LogRecords", "TargetAppUser_Id", "dbo.AppUsers");
             DropForeignKey("dbo.LogRecords", "Adder_Id", "dbo.AppUsers");
             DropIndex("dbo.AppUserAppUsers", new[] { "AppUser_Id1" });
