@@ -96,7 +96,7 @@ namespace VolunteerDatabase.Helper.Tests
             {
                 Name = proname,
                 Place = "testplace",
-                Creater = org
+                Organization = org
             };
             projectmanagerhelper.CreatNewProject(org, System.DateTime.Now, pro.Name, pro.Place, "", 70);
             pro = database.Projects.Single(p => p.Name == pro.Name);
@@ -214,7 +214,7 @@ namespace VolunteerDatabase.Helper.Tests
             {
                 Name = proname,
                 Place = "testplace",
-                Creater = org
+                Organization = org
             };
             projectmanagerhelper.CreatNewProject(org, System.DateTime.Now, pro1.Name, pro1.Place, "", 20);
             pro1 = database.Projects.Single(b => b.Name == pro1.Name);
@@ -238,7 +238,7 @@ namespace VolunteerDatabase.Helper.Tests
             {
                 Name = proname2,
                 Place = "testplace",
-                Creater = org
+                Organization = org
             };
             projectmanagerhelper.CreatNewProject(org, System.DateTime.Now, pro2.Name, pro2.Place, "", 20);
             pro2 = database.Projects.Single(b => b.Name == pro2.Name);
@@ -367,7 +367,7 @@ namespace VolunteerDatabase.Helper.Tests
             {
                 Name = proname,
                 Place = "testplace",
-                Creater = org
+                Organization = org
             };
             projectmanagerhelper.CreatNewProject(org, System.DateTime.Now, pro.Name, pro.Place, "", 20);
             //创建blacklistrecord
@@ -452,7 +452,7 @@ namespace VolunteerDatabase.Helper.Tests
             {
                 Name = proname,
                 Place = "testplace",
-                Creater = org
+                Organization = org
             };
             projectmanagerhelper.CreatNewProject(org, System.DateTime.Now, pro.Name, pro.Place, "", 20);
             BlackListRecord blacklistrecord = new BlackListRecord
@@ -499,7 +499,7 @@ namespace VolunteerDatabase.Helper.Tests
             {
                 database.Users.Remove(item);
             }
-            var projectList = database.Projects.Where(p => p.Creater.Id == org.Id).ToList();
+            var projectList = database.Projects.Where(p => p.Organization.Id == org.Id).ToList();
             foreach (var item in projectList)
             {
                 database.Projects.Remove(item);

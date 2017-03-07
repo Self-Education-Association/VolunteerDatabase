@@ -75,8 +75,7 @@ namespace Desktop.Pages
             if(project_list != null)
             ShowList(StatusSwitch.SelectedIndex);
         }
-
-        #region 测试方法
+        
         private List<Project> testCreateProjectList()
         {
             //ProjectManageHelper helper1 = ProjectManageHelper.GetInstance();

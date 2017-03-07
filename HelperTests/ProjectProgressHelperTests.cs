@@ -52,6 +52,7 @@ namespace VolunteerDatabase.Helper.Tests
             //创建一个originalmanager
             AppUser originalmanager = CreateUser();
             identityhelper.CreateUser(originalmanager, "zxcvbnm,./", Interface.AppRoleEnum.OrgnizationMember, OrganizationEnum.TestOnly);
+            originalmanager = database.Users.Single(b => b.AccountName == originalmanager.AccountName);
             //创建org
             Organization org = identityhelper.CreateOrFindOrganization(Entity.OrganizationEnum.TestOnly);
             //创建两个项目
@@ -81,28 +82,7 @@ namespace VolunteerDatabase.Helper.Tests
             }
 
             // 删除数据库的有关数据[org pro manager]
-            var deleteorg = database.Organizations.Where(o => o.Id == org.Id).ToList();
-            if (deleteorg != null)
-            {
-                foreach (var item in deleteorg)
-                {
-                    DeleteOrgnization(item);
-                }
-            }
-            var deletepro = database.Projects.Where(p => p.Place.ToString() == "uibe");
-            if (deletepro != null)
-            {
-                foreach (var item in deletepro)
-                {
-                    database.Projects.Remove(item);
-                }
-                database.SaveChanges();
-            }
-            var deletemanager = database.Users.Single(m => m.AccountName == originalmanager.AccountName);
-
-                database.Users.Remove(deletemanager);
-                database.SaveChanges();
-            
+            DeleteOrgnization(org);
 
         } //Helper 45行
 
@@ -140,23 +120,7 @@ namespace VolunteerDatabase.Helper.Tests
             }
 
             // 删除数据库的有关数据[pro org]
-             var deleteorg = database.Organizations.Where(o => o.Id == org.Id).ToList();
-             if (deleteorg != null)
-             {
-                 foreach (var item in deleteorg)
-                 {
-                     DeleteOrgnization(item);
-                 }
-             }
-             var deletepro = database.Projects.Where(p => p.Name == name);
-             if (deletepro != null)
-             {
-                 foreach (var item in deletepro)
-                 {
-                     database.Projects.Remove(item);
-                 }
-                 database.SaveChanges();
-             }
+            DeleteOrgnization(org);
 
             //修改删除方法，删除方法中无法完全清空别处引用
         }
@@ -305,29 +269,9 @@ namespace VolunteerDatabase.Helper.Tests
             }
 
             // 删除数据库的有关数据[org pro vol]
-            DeleteVolunteer(v1);
-            DeleteVolunteer(v2);
-            if (volunteerhelper.FindVolunteer(studentnum1) != null && volunteerhelper.FindVolunteer(studentnum2) != null)
-            {
-                Assert.Fail("删除志愿者失败！");
-            }
-            var deletepro = database.Projects.Where(p => p.Name == name);
-            if (deletepro != null)
-            {
-                foreach (var item in deletepro)
-                {
-                    database.Projects.Remove(item);
-                    database.SaveChanges();
-                }
-            }
-            var deleteorg = database.Organizations.Where(o => o.OrganizationEnum == org.OrganizationEnum).ToList();
-            if (deleteorg != null)
-            {
-                foreach (var item in deleteorg)
-                {
-                    DeleteOrgnization(item);
-                }
-            }
+            volunteerhelper.DeleteVolunteer(v1.StudentNum);
+            volunteerhelper.DeleteVolunteer(v2.StudentNum);
+            DeleteOrgnization(org);
         }
 
 
@@ -407,27 +351,7 @@ namespace VolunteerDatabase.Helper.Tests
             // 删除数据库的有关数据[org pro vol]
                volunteerhelper.DeleteVolunteer(studentnum1);
                 volunteerhelper.DeleteVolunteer(studentnum2);
-                if (volunteerhelper.FindVolunteer(studentnum1) != null && volunteerhelper .FindVolunteer(studentnum2) != null)
-                {
-                    Assert.Fail("删除志愿者失败！");
-                }
-                var deletepro = database.Projects.Where(p => p.Name ==pro.Name);
-                if (deletepro != null)
-                {
-                    foreach (var item in deletepro)
-                    {
-                        database.Projects.Remove(item);
-                        database.SaveChanges();
-                    }
-                }
-                var deleteorg = database.Organizations.Where(o => o.OrganizationEnum == org.OrganizationEnum).ToList();
-                if (deleteorg != null)
-                {
-                    foreach (var item in deleteorg)
-                    {
-                        DeleteOrgnization(item);
-                    }
-                }
+            DeleteOrgnization(org);
         }
 
         [TestMethod()]
@@ -492,27 +416,7 @@ namespace VolunteerDatabase.Helper.Tests
             // 删除数据库的有关数据[org pro vol]
              volunteerhelper.DeleteVolunteer(v1.StudentNum);
              volunteerhelper.DeleteVolunteer(v2.StudentNum);
-             if (volunteerhelper.FindVolunteer(v1.StudentNum) != null && volunteerhelper.FindVolunteer(studentnum2) != null)
-             {
-                 Assert.Fail("删除志愿者失败！");
-             }
-             var deletepro = database.Projects.Where(p => p.Name == pro.Name);
-             if (deletepro != null)
-             {
-                 foreach (var item in deletepro)
-                 {
-                     database.Projects.Remove(item);
-                     database.SaveChanges();
-                 }
-             }
-             var deleteorg = database.Organizations.Where(o => o.OrganizationEnum == org.OrganizationEnum).ToList();
-             if (deleteorg != null)
-             {
-                 foreach (var item in deleteorg)
-                 {
-                     DeleteOrgnization(item);
-                 }
-             }
+            DeleteOrgnization(org);
 
             //修改删除方法，删除方法中无法完全清空别处引用
         }
@@ -580,29 +484,9 @@ namespace VolunteerDatabase.Helper.Tests
             }
 
             // 删除数据库的有关数据[org pro vol]
-              DeleteVolunteer(v1);
-              DeleteVolunteer(v2);
-              if (volunteerhelper.FindVolunteer(studentnum1) != null && volunteerhelper.FindVolunteer(studentnum2) != null)
-              {
-                  Assert.Fail("删除志愿者失败！");
-              }
-              var deletepro = database.Projects.Where(p => p.Name == pro.Name);
-              if (deletepro != null)
-              {
-                  foreach (var item in deletepro)
-                  {
-                      database.Projects.Remove(item);
-                      database.SaveChanges();
-                  }
-              }
-              var deleteorg = database.Organizations.Where(o => o.OrganizationEnum == org.OrganizationEnum).ToList();
-              if (deleteorg != null)
-              {
-                  foreach (var item in deleteorg)
-                  {
-                      DeleteOrgnization(item);
-                  }
-              }
+            volunteerhelper.DeleteVolunteer(v1.StudentNum);
+            volunteerhelper.DeleteVolunteer(v2.StudentNum);
+            DeleteOrgnization(org);
         }
 
         [TestMethod()]
@@ -641,7 +525,7 @@ namespace VolunteerDatabase.Helper.Tests
             }
 
             // 删除数据库的有关数据[vol]
-              DeleteVolunteer(v);
+            volunteerhelper.DeleteVolunteer(v.StudentNum);
         }
 
         [TestMethod()]
@@ -702,23 +586,8 @@ namespace VolunteerDatabase.Helper.Tests
             }
 
             // 删除数据库的有关数据[org pro vol]
-            var deletepro = database.Projects.Where(p => p.Name == name);
-             if (deletepro != null)
-             {
-                 foreach (var item in deletepro)
-                 {
-                     database.Projects.Remove(item);
-                     database.SaveChanges();
-                 }
-             }
-             var deleteorg = database.Organizations.Where(o => o.OrganizationEnum == org.OrganizationEnum).ToList();
-             if (deleteorg != null)
-             {
-                 foreach (var item in deleteorg)
-                 {
-                     DeleteOrgnization(item);
-                 }
-             }
+            DeleteOrgnization(org);
+            volunteerhelper.DeleteVolunteer(v.StudentNum);
         }
 
 
@@ -728,29 +597,6 @@ namespace VolunteerDatabase.Helper.Tests
             //Assert.Fail();
         }
 
-
-        public void DeleteOrgnization(Organization org)
-        {
-
-            var list = database.Users.Where(u => u.Organization.Id == org.Id).ToList();
-            foreach (var item in list)
-            {
-                database.Users.Remove(item);
-            }
-            var projectList = database.Projects.Where(p => p.Organization.Id == org.Id).ToList();
-            foreach (var item in projectList)
-            {
-                database.Projects.Remove(item);
-            }
-            var blacklist = database.BlackListRecords.Where(u => u.Organization.Id == org.Id).ToList();
-            foreach (var item in blacklist)
-            {
-                database.BlackListRecords.Remove(item);
-            }
-            //var orgInDb = database.Organizations.SingleOrDefault(o => o.Name == org.Name);
-            database.Organizations.Remove(org);
-            Save();
-        }
 
         private Volunteer CreateVolunteer()
         {
@@ -802,15 +648,37 @@ namespace VolunteerDatabase.Helper.Tests
             return project;
 
         }
-        public void DeleteVolunteer(Volunteer vol)
+        public void DeleteOrgnization(Organization org)
         {
-            lock (database)
+
+            var list = database.Users.Where(u => u.Organization.Id == org.Id).ToList();
+            foreach (var item in list)
             {
-                vol.BlackListRecords.Clear();
-                vol.Project.Clear();
-                vol.TargetedBy.Clear();
-                database.Volunteers.Remove(vol);
-                Save();
+                database.Users.Remove(item);
+            }
+            var projectList = database.Projects.Where(p => p.Organization.Id == org.Id).ToList();
+            foreach (var item in projectList)
+            {
+                database.Projects.Remove(item);
+            }
+            var blacklist = database.BlackListRecords.Where(u => u.Organization.Id == org.Id).ToList();
+            foreach (var item in blacklist)
+            {
+                database.BlackListRecords.Remove(item);
+            }
+            //var orgInDb = database.Organizations.SingleOrDefault(o => o.Name == org.Name);
+            database.Organizations.Remove(org);
+            Save();
+        }
+
+        [TestCleanup()]
+        public void DeleteClaimsUsers()
+        {
+            var dbUser = database.Users.SingleOrDefault(u => u.AccountName == "BlackListRecordHelper");
+            if (dbUser != null)
+            {
+                database.Users.Remove(dbUser);
+                database.SaveChanges();
             }
         }
 
