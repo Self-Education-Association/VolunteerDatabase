@@ -142,14 +142,15 @@ namespace VolunteerDatabase.Helper.Tests
                 }
                 database.SaveChanges();
             }
+
             var deleteorg = database.Organizations.Where(o => o.Id == org.Id).ToList();
             if (deleteorg != null)
             {
                 foreach (var item in deleteorg)
                 {
-                    database.Organizations.Remove(item);
+                    DeleteOrgnization(item);
                 }
-                database.SaveChanges();
+                    database.SaveChanges();
             }
             
 
@@ -204,7 +205,7 @@ namespace VolunteerDatabase.Helper.Tests
             
            // 测试ProjectMessageInput
 
-            if ( result.Succeeded )
+            if ( ! result.Succeeded )
             {
                 Assert.Fail("ProjectMessageInput结果返回失败！");
             }
@@ -237,14 +238,14 @@ namespace VolunteerDatabase.Helper.Tests
                 {
                     database.Users.Remove(item);
                 }
-                database.SaveChanges();
+                Save();
             }
             var deleteorg = database.Organizations.Where(o => o.Id == org.Id).ToList();
             if (deleteorg != null)
             {
                 foreach (var item in deleteorg)
                 {
-                    database.Organizations.Remove(item);
+                    DeleteOrgnization(item);
                 }
           //      database.SaveChanges();
             }
@@ -255,7 +256,7 @@ namespace VolunteerDatabase.Helper.Tests
                 {
                     database.Projects.Remove(item);
                 }
-                database.SaveChanges();
+                Save();
             }
             
         }
@@ -303,14 +304,14 @@ namespace VolunteerDatabase.Helper.Tests
             }
             
            // 删除数据库中添加的数据[org]
-            var deleteorg = database.Organizations.Where(o => o.Id == org.Id).ToList();
-            if (deleteorg != null)
-            {
-                foreach (var item in deleteorg)
-                {
-                    DeleteOrgnization(item);
-                }
-            }
+            //var deleteorg = database.Organizations.Where(o => o.Id == org.Id).ToList();
+            //if (deleteorg != null)
+            //{
+            //    foreach (var item in deleteorg)
+            //    {
+            //        DeleteOrgnization(item);
+            //    }
+            //}
             
         }
 
@@ -381,28 +382,28 @@ namespace VolunteerDatabase.Helper.Tests
             database.Projects.Remove(pro);
             Save();
         }
-        public void DeleteOrgnization(Organization org)
-        {
+          public void DeleteOrgnization(Organization org)
+           {
 
             var list = database.Users.Where(u => u.Organization.Id == org.Id).ToList();
             foreach (var item in list)
             {
-                item.Organization = null;
+                database.Users.Remove(item);
             }
             var projectList = database.Projects.Where(p => p.Creater.Id == org.Id).ToList();
-            foreach (var item in projectList)
-            {
-                item.Creater = null;
-            }
-            var blacklist = database.BlackListRecords.Where(u => u.Organization.Id == org.Id).ToList();
-            foreach (var item in blacklist)
-            {
-                item.Organization = null;
-            }
-            //var orgInDb = database.Organizations.SingleOrDefault(o => o.Name == org.Name);
-            database.Organizations.Remove(org);
-            Save();
-        }
+               foreach (var item in projectList)
+               {
+                   item.Creater = null;
+               }
+               var blacklist = database.BlackListRecords.Where(u => u.Organization.Id == org.Id).ToList();
+               foreach (var item in blacklist)
+               {
+                   item.Organization = null;
+               }
+               //var orgInDb = database.Organizations.SingleOrDefault(o => o.Name == org.Name);
+               database.Organizations.Remove(org);
+               Save();
+           } 
         private void Save()
         {
             bool flag = false;
