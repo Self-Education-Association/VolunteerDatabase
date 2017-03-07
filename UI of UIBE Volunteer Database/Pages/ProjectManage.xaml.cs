@@ -75,8 +75,7 @@ namespace Desktop.Pages
             if(project_list != null)
             ShowList(StatusSwitch.SelectedIndex);
         }
-
-       
+        
         private List<Project> testCreateProjectList()
         {
             //ProjectManageHelper helper1 = ProjectManageHelper.GetInstance();
@@ -145,17 +144,10 @@ namespace Desktop.Pages
             projects.Add(p2);
             return projects;
         }
-        #endregion
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Button senderButton = sender as Button;
-            if(senderButton.DataContext is Project)
-            {
-                Project project = (Project)senderButton.DataContext;
-            }
-
-            var AddManager = new AddManager(Project);
+            var AddManager = new AddManager();
             AddManager.Show();
         }
     }
