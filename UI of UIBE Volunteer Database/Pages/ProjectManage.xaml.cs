@@ -106,10 +106,10 @@ namespace Desktop.Pages
             return projects;
         }
 
-
-
-
-
-
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var AddManager = new AddManager();
+            AddManager.Show();
+        }
     }
 }
