@@ -1,18 +1,28 @@
-﻿<UserControl x:Class="WpfApplication1.Pages.VolunteerData"
+﻿<UserControl x:Class="Desktop.Pages.VolunteerData"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:mui="http://firstfloorsoftware.com/ModernUI"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="600">
     <Grid Style="{StaticResource ContentRoot}">
         <ScrollViewer>
             <StackPanel MinWidth="200">
                 <TextBlock Text="Volunteer Data" Style="{StaticResource Heading2}" />
                 <CheckBox Content="黑名单" Width="60" Height="25" HorizontalAlignment="Left"/>
                 <DataGrid>
-                    <DataGrid AutoGenerateColumns="True"></DataGrid>
+                    <DataGrid AutoGenerateColumns="False"></DataGrid>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="姓名"/>
+                        <DataGridTextColumn Header="学号"/>
+                        <DataGridTextColumn Header="电话"/>
+                        <DataGridTextColumn Header="宿舍"/>
+                        <DataGridTextColumn Header="邮箱"/>
+                        <DataGridTextColumn Header="学院"/>
+                        <DataGridTextColumn Header="黑名单记录"/>
+                        <DataGridTextColumn Header="评分"/>
+                    </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>
         </ScrollViewer>

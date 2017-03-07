@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VolunteerDatabase.Helper;
 
 namespace Desktop.Pages
 {
@@ -20,9 +21,33 @@ namespace Desktop.Pages
     /// </summary>
     public partial class MainTab : UserControl
     {
+        private AppUserIdentityClaims claims;
+
         public MainTab()
+            :this(null)
         {
             InitializeComponent();
+        }
+
+        public MainTab(AppUserIdentityClaims claims)
+        {
+            if (claims == null)
+            {
+                Login.GetClaims(sendClaimsEventHandler);
+                IsEnabled = false;
+            }
+            else
+            {
+                this.claims = claims;
+            }
+        }
+
+        public void sendClaimsEventHandler(AppUserIdentityClaims claims)
+        {
+            IsEnabled = true;
+            this.claims = claims;
+            IdentityPage identitypage = IdentityPage.GetInstance(claims);
+            MessageBox.Show("收到令牌啦！");
         }
     }
 }

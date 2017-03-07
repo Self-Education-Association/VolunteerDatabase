@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="WpfApplication1.Pages.UserInfo"
+﻿<UserControl x:Class="Desktop.Pages.UserInfo"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -28,7 +28,7 @@
                 <PasswordBox x:Name="Password" Height="25" Width="100" HorizontalAlignment="Left" Margin="0,0,0,5"/>
                 <PasswordBox x:Name="PasswordChange" Height="25" Width="100" HorizontalAlignment="Left" Margin="0,0,0,5"/>
                 <PasswordBox x:Name="PasswordChangeConfirm" Height="25" Width="100" HorizontalAlignment="Left" Margin="0,0,0,5" />
-                <Button Content="修改" x:Name="ChangePassword_btn" Height="25" Width="60" HorizontalAlignment="Left" Margin="0,0,0,5"/>
+                <Button Content="修改" x:Name="ChangePassword_btn" Height="25" Width="60" HorizontalAlignment="Left" Margin="0,0,0,5" Click="ChangePassword_btn_Click"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>

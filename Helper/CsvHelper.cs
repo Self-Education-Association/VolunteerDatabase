@@ -67,14 +67,15 @@ namespace VolunteerDatabase.Helper
                         if (str == null)
                             break;
 
-                        string[] eachLine = new string[6];
+                        string[] eachLine = new string[7];
                         eachLine = str.Split(',');
                         int StudentNum = int.Parse(eachLine[0]);
                         string Name = eachLine[1];
                         string Mobile = eachLine[2];
                         string Email = eachLine[3];
                         string Room = eachLine[4];
-                        string Class = eachLine[5];            
+                        string Class = eachLine[5];
+                        string Skill = eachLine[6];        
                 
                         Volunteer v = new Volunteer();
                         v.StudentNum = StudentNum;
@@ -84,6 +85,7 @@ namespace VolunteerDatabase.Helper
                         v.Class = Class;
                         v.Email = Email;
                         v.Room = Room;
+                        v.Skill = Skill;
                         v.BlackListRecords = null;
                         v.Project.Add(Pro);
                         Temp.Add(v);

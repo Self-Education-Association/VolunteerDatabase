@@ -62,8 +62,12 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="BlackListHelperTests.cs" />
+    <Compile Include="ProjectManageHelperTests.cs" />
     <Compile Include="ProjectProgressHelperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UILogicTests.cs" />
+    <Compile Include="VolunteerHelperTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entity\Entity.csproj">

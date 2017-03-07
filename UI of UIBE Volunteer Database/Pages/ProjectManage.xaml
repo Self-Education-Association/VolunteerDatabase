@@ -8,16 +8,16 @@
              d:DesignHeight="300" d:DesignWidth="600">
     <Grid Style="{StaticResource ContentRoot}">
         <ScrollViewer>
-            <StackPanel MinWidth="200">
+            <Canvas MinWidth="200">
                 <TextBlock Name="Status" Text="项目状态" Style="{StaticResource Heading2}" />
-                <ComboBox Width="100" Height="20" HorizontalAlignment="Left" FontSize="12">
+                <ComboBox x:Name="StatusSwitch"  Width="100" Height="20" HorizontalAlignment="Left" FontSize="12" Canvas.Top="27">
                         <ComboBoxItem Content="进行中"></ComboBoxItem>
                         <ComboBoxItem Content="已完成"></ComboBoxItem>
                     </ComboBox>
-                <Button x:Name="test111"/>
-                <DataGrid x:Name="ProjectList" AutoGenerateColumns="True" Width="auto" Height="auto"
-                                  ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
-                    <DataGrid.RowStyle>
+                <!--<Button x:Name="WhiteDivide"/>-->
+                <DataGrid x:Name="project_list" AutoGenerateColumns="False" Width="auto" Height="auto"
+                                  ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Canvas.Top="55" IsReadOnly="True">
+                    <!--<DataGrid.RowStyle>
                         <Style TargetType="DataGridRow">
                             <Setter Property="Background" Value="LightBlue" />
                             <Style.Triggers>
@@ -27,18 +27,34 @@
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
-                    </DataGrid.RowStyle>
+                    </DataGrid.RowStyle>-->
                     <DataGrid.Columns>
-                        <DataGridTemplateColumn Width="50">
+                        <DataGridTemplateColumn Width="30">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <CheckBox/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="项目名称" Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="项目地点" Binding="{Binding Place}"/>
+                        <DataGridTextColumn Header="项目编号" Binding="{Binding Id}"/>
+                        <DataGridTextColumn Header="最大人数" Binding="{Binding Maximum}"/>
+                        <DataGridTextColumn Header="开始时间" Binding="{Binding Time}"/>
+                        <DataGridTextColumn Header="创建时间" Binding="{Binding CreateTime}"/>
+                        <DataGridTextColumn Header="项目详情" Binding="{Binding Details}"/>
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <mui:ModernButton Content="添加管理者"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
-            </StackPanel>
+                <mui:ModernButton Content="查找" Width="60" Height="25" Canvas.Left="498" Canvas.Top="27"/>
+                <TextBox x:Name="search_project" Width="90" Height="25" Canvas.Left="403" Canvas.Top="27"/>
+            </Canvas>
         </ScrollViewer>
     </Grid>
 </UserControl>

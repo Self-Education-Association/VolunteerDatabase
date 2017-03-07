@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VolunteerDatabase.Helper;
 
 namespace Desktop.Pages
 {
@@ -20,8 +21,12 @@ namespace Desktop.Pages
     /// </summary>
     public partial class SettingsPage : UserControl
     {
+        IdentityPage identitypage = IdentityPage.GetInstance();
+        AppUserIdentityClaims Claims { get; set; }
+        
         public SettingsPage()
         {
+            Claims = identitypage.Claims;
             InitializeComponent();
         }
     }
