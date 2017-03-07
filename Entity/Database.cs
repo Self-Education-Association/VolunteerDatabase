@@ -35,7 +35,7 @@
             modelBuilder.Entity<LogRecord>().HasOptional(l => l.TargetVolunteer).WithMany(t => t.TargetedBy);
 
             modelBuilder.Entity<Organization>().HasMany(o => o.BlackListRecords).WithRequired(o => o.Organization);
-            modelBuilder.Entity<Organization>().HasMany(o => o.Projects).WithRequired(p => p.Creater).WillCascadeOnDelete(false);
+            modelBuilder.Entity<Organization>().HasMany(o => o.Projects).WithRequired(p => p.Organization).WillCascadeOnDelete(false);
 
             modelBuilder.Entity<BlackListRecord>().HasKey(b => b.UID).Property(v => v.UID).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             //modelBuilder.Entity<BlackListRecord>().HasRequired(b => b.Organization).WithMany(o => o.BlackListRecords);//这里为何不能WillCascedeOnDelete

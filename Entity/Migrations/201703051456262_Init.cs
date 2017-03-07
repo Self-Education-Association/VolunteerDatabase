@@ -117,11 +117,11 @@ namespace VolunteerDatabase.Entity.Migrations
                         CreatTime = c.DateTime(),
                         Condition = c.Int(nullable: false),
                         ScoreCondition = c.Int(nullable: false),
-                        Creater_Id = c.Int(),
+                        Organization_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Organizations", t => t.Creater_Id)
-                .Index(t => t.Creater_Id);
+                .ForeignKey("dbo.Organizations", t => t.Organization_Id)
+                .Index(t => t.Organization_Id);
             
             CreateTable(
                 "dbo.CreditRecords",
@@ -243,7 +243,7 @@ namespace VolunteerDatabase.Entity.Migrations
             DropForeignKey("dbo.CreditRecords", "Participant_UID", "dbo.Volunteers");
             DropForeignKey("dbo.BlackListRecords", "Volunteer_UID", "dbo.Volunteers");
             DropForeignKey("dbo.CreditRecords", "Organization_Id", "dbo.Organizations");
-            DropForeignKey("dbo.Projects", "Creater_Id", "dbo.Organizations");
+            DropForeignKey("dbo.Projects", "Organization_Id", "dbo.Organizations");
             DropForeignKey("dbo.LogRecords", "TargetAppUser_Id", "dbo.AppUsers");
             DropForeignKey("dbo.LogRecords", "Adder_Id", "dbo.AppUsers");
             DropIndex("dbo.AppUserAppUsers", new[] { "AppUser_Id1" });
@@ -257,7 +257,7 @@ namespace VolunteerDatabase.Entity.Migrations
             DropIndex("dbo.CreditRecords", new[] { "Project_Id" });
             DropIndex("dbo.CreditRecords", new[] { "Participant_UID" });
             DropIndex("dbo.CreditRecords", new[] { "Organization_Id" });
-            DropIndex("dbo.Projects", new[] { "Creater_Id" });
+            DropIndex("dbo.Projects", new[] { "Organization_Id" });
             DropIndex("dbo.LogRecords", new[] { "TargetVolunteer_UID" });
             DropIndex("dbo.LogRecords", new[] { "TargetProject_Id" });
             DropIndex("dbo.LogRecords", new[] { "TargetAppUser_Id" });

@@ -7,16 +7,16 @@ namespace VolunteerDatabase.Entity.Migrations
     {
         public override void Up()
         {
-            DropIndex("dbo.Projects", new[] { "Creater_Id" });
-            AlterColumn("dbo.Projects", "Creater_Id", c => c.Int(nullable: false));
-            CreateIndex("dbo.Projects", "Creater_Id");
+            DropIndex("dbo.Projects", new[] { "Organization_Id" });
+            AlterColumn("dbo.Projects", "Organization_Id", c => c.Int(nullable: false));
+            CreateIndex("dbo.Projects", "Organization_Id");
         }
         
         public override void Down()
         {
-            DropIndex("dbo.Projects", new[] { "Creater_Id" });
-            AlterColumn("dbo.Projects", "Creater_Id", c => c.Int());
-            CreateIndex("dbo.Projects", "Creater_Id");
+            DropIndex("dbo.Projects", new[] { "Organization_Id" });
+            AlterColumn("dbo.Projects", "Organization_Id", c => c.Int());
+            CreateIndex("dbo.Projects", "Organization_Id");
         }
     }
 }
