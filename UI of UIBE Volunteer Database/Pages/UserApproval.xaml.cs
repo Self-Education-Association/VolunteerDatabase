@@ -35,7 +35,6 @@ namespace Desktop.Pages
             List<AppUser> approvallist = helper.ShowNotApprovedMembers(Claims.User.Organization);
             //approval_list.Items.Clear();
             approval_list.ItemsSource = approvallist;
-            //ConfirmApproval dialog = new ConfirmApproval();
         }
 
         private void search_volunteer_TextChanged(object sender, TextChangedEventArgs e)
@@ -50,7 +49,6 @@ namespace Desktop.Pages
 
         private void Approve_Click(object sender, RoutedEventArgs e)
         {
-            //ConfirmApproval dialog = new ConfirmApproval();
         }
     }
 }

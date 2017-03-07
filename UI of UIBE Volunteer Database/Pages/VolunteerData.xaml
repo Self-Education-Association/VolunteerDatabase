@@ -9,25 +9,29 @@
     <Grid Style="{StaticResource ContentRoot}">
         <ScrollViewer>
             <StackPanel MinWidth="200">
+                <!--<TextBox x:Name="search_volunteer" Width="80" Height="25" HorizontalAlignment="Right"/>-->
+                <!--<mui:ModernButton x:Name="search_btn" Content="查找" Width="63" Height="29" HorizontalAlignment="Right" Click="ModernButton_Click"/>-->
                 <TextBlock Text="Volunteer Data" Style="{StaticResource Heading2}" />
-                <CheckBox Content="黑名单" Width="60" Height="25" HorizontalAlignment="Left"/>
-                <DataGrid>
+                <TextBox x:Name="studentnum" Width="80" Height="20" HorizontalAlignment="Left" />
+                <mui:ModernButton x:Name="searchbyid_btn" Content="点我按学号查找志愿者信息" Click="searchbyid_btn_Click"/>
+                <DataGrid IsReadOnly="True">
                     <DataGrid AutoGenerateColumns="False"></DataGrid>
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="姓名"/>
-                        <DataGridTextColumn Header="学号"/>
                         <DataGridTextColumn Header="电话"/>
                         <DataGridTextColumn Header="宿舍"/>
                         <DataGridTextColumn Header="邮箱"/>
                         <DataGridTextColumn Header="学院"/>
-                        <DataGridTextColumn Header="黑名单记录"/>
-                        <DataGridTemplateColumn Header="评分">
+                        <DataGridTextColumn Header="评分"/>
+                        <DataGridTextColumn Header="黑名单"/>
+                        <DataGridTemplateColumn>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBox/>
+                                    <mui:ModernButton x:Name="BlacklistDetails_btn" Content="黑名单详情"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
+                        
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>

@@ -76,7 +76,7 @@ namespace VolunteerDatabase.Helper.Tests
             Guid temp = Guid.NewGuid();
             string appusername = temp.ToString();
             Random rnd = new Random();
-            int usertempnum = rnd.Next(000,999);
+            int usertempnum = rnd.Next(000, 999);
             int usernum = usertempnum;
             AppUser adder = new AppUser()
             {
@@ -104,21 +104,21 @@ namespace VolunteerDatabase.Helper.Tests
             BlackListRecord testaddrecord1 = new BlackListRecord
             {
                 //Id = 1234567890,
-                Volunteer = database.Volunteers.Single(b => b.StudentNum == v1.StudentNum ),
-                Adder = database.Users.Single(b => b.StudentNum == adder.StudentNum ),
+                Volunteer = database.Volunteers.Single(b => b.StudentNum == v1.StudentNum),
+                Adder = database.Users.Single(b => b.StudentNum == adder.StudentNum),
                 Status = BlackListRecordStatus.Enabled,
                 Organization = org,
-                EndTime = new DateTime(2090,2 ,11),
+                EndTime = new DateTime(2090, 2, 11),
                 AddTime = System.DateTime.Now,
                 Project = database.Projects.Single(b => b.Name == pro.Name)
             };
             BlackListResult result = helper.AddBlackListRecord(testaddrecord1);
-               if ( !result.Succeeded )
-               {
+            if (!result.Succeeded)
+            {
                 Assert.Fail("返回错误结果！请检查后重试");
-               }
+            }
             var actual = helper.FindBlackList(v1);
-            if ( actual == null )
+            if (actual == null)
             {
                 Assert.Fail("记录添加失败！数据库无此记录！");
             }
@@ -145,7 +145,7 @@ namespace VolunteerDatabase.Helper.Tests
             // 测试WrongTime
             BlackListRecord testaddrecord4 = new BlackListRecord
             {
-                EndTime = new DateTime(2017,2,1),
+                EndTime = new DateTime(2017, 2, 1),
                 AddTime = System.DateTime.Now
             };
             var wrongtimeresult = helper.AddBlackListRecord(testaddrecord4);
@@ -222,13 +222,13 @@ namespace VolunteerDatabase.Helper.Tests
             BlackListRecord blacklistrecord = new BlackListRecord
             {
                 // Id = 1234567890,
-                Volunteer = database.Volunteers.Single(b => b.StudentNum == v1.StudentNum ),
-                Adder = database.Users.Single(b => b.StudentNum == adder1.StudentNum ),
+                Volunteer = database.Volunteers.Single(b => b.StudentNum == v1.StudentNum),
+                Adder = database.Users.Single(b => b.StudentNum == adder1.StudentNum),
                 Status = BlackListRecordStatus.Enabled,
                 Organization = org,
-                EndTime = new DateTime(2090,2,11),
-           AddTime = System.DateTime.Now,
-                Project = database.Projects.Single(b => b.Name == pro1.Name )
+                EndTime = new DateTime(2090, 2, 11),
+                AddTime = System.DateTime.Now,
+                Project = database.Projects.Single(b => b.Name == pro1.Name)
             };
             helper.AddBlackListRecord(blacklistrecord);
             //创建项目pro2
@@ -250,25 +250,25 @@ namespace VolunteerDatabase.Helper.Tests
                 Adder = database.Users.Single(b => b.StudentNum == adder1.StudentNum),
                 Status = BlackListRecordStatus.Enabled,
                 Organization = org,
-                EndTime = new DateTime(2050,11,13),
-            AddTime = System.DateTime.Now,
+                EndTime = new DateTime(2050, 11, 13),
+                AddTime = System.DateTime.Now,
                 Project = database.Projects.Single(b => b.Name == pro2.Name)
             };
             helper.AddBlackListRecord(blacklistrecord2);
             // 测试FindBlackListByVolunteer
             var findbyvolunteer = helper.FindBlackList(v1);
-            if ( findbyvolunteer == null )
+            if (findbyvolunteer == null)
             {
                 Assert.Fail("找不到记录！");
             }
-            else if ( findbyvolunteer.Count() != 2)
+            else if (findbyvolunteer.Count() != 2)
             {
                 Assert.Fail("测试方法findbyvolunteer失败！");
             }
 
             //测试FindBlackListByOrg
             var findbyorg = helper.FindBlackList(org);
-            if( findbyorg == null )
+            if (findbyorg == null)
             {
                 Assert.Fail("找不到记录！");
             }
@@ -280,7 +280,7 @@ namespace VolunteerDatabase.Helper.Tests
             //测试FindBlackListByPro
             var findbypro1 = helper.FindBlackList(pro1);
             var findbypro2 = helper.FindBlackList(pro2);
-            if ( findbypro1.Count != 1 && findbypro2.Count !=1)
+            if (findbypro1.Count != 1 && findbypro2.Count != 1)
             {
                 Assert.Fail("测试方法FindBlackListByPro失败！返回值与预期值不符！");
             }
@@ -302,18 +302,18 @@ namespace VolunteerDatabase.Helper.Tests
             {
                 Assert.Fail("找不到记录！");
             }
-            else if (findbyaddtime.Count() < 1 )
+            else if (findbyaddtime.Count() < 1)
             {
                 Assert.Fail("测试方法findbyaddtime失败！");
             }
 
             //测试FindBlackListByEndTime
             var findbyendtime = helper.FindBlackListByEndTime(blacklistrecord.AddTime, blacklistrecord.EndTime);
-            if ( findbyendtime == null )
+            if (findbyendtime == null)
             {
                 Assert.Fail("找不到记录！");
             }
-            else if ( findbyendtime.Count() < 2 )
+            else if (findbyendtime.Count() < 2)
             {
                 Assert.Fail("测试方法findbyendtime失败");
             }
@@ -321,7 +321,7 @@ namespace VolunteerDatabase.Helper.Tests
             //清空数据库
             DeleteOrgnization(org); // 清空org 同时清空了blacklistrecord和org下的project，users
             volunteerhelper.DeleteVolunteer(v1.StudentNum);
-            
+
         }
 
         [TestMethod()]
@@ -393,15 +393,15 @@ namespace VolunteerDatabase.Helper.Tests
             //    Assert.Fail("返回结果异常！");
             //}
             //测试EditRecord
-            BlackListResult result = helper.EditBlackListRecord(blacklist.UID, tempendtime , BlackListRecordStatus.Enabled);
+            BlackListResult result = helper.EditBlackListRecord(blacklist.UID, tempendtime, BlackListRecordStatus.Enabled);
             blacklist = helper.FindBlackList(v).First();
             var actual = helper.FindBlackListByEndTime(blacklist.AddTime, tempendtime);
             var actualendtime = actual.First();
-          if ( !result.Succeeded )
+            if (!result.Succeeded)
             {
                 Assert.Fail("结果返回异常！");
             }
-          else if ( actualendtime.EndTime != tempendtime  )
+            else if (actualendtime.EndTime != tempendtime)
             {
                 Assert.Fail("edit方法失败！");
             }
@@ -470,18 +470,18 @@ namespace VolunteerDatabase.Helper.Tests
             var tempblacklist = helper.FindBlackList(adder);
             var blacklist = tempblacklist.First();
             adder = database.Users.Single(u => u.AccountName == adder.AccountName);
-            if ( helper.FindBlackList(adder) == null )
+            if (helper.FindBlackList(adder) == null)
             {
                 Assert.Fail("记录添加失败！");
             }
             // 测试delete方法
             var result = helper.DeleteBlackListRecord(blacklist.UID);
-            if ( !result.Succeeded )
+            if (!result.Succeeded)
             {
                 Assert.Fail("返回结果异常！");
             }
             var actual = helper.FindBlackList(adder);
-            if ( actual.Count != 0 )
+            if (actual.Count != 0)
             {
                 Assert.Fail("方法测试失败！");
             }
@@ -519,7 +519,7 @@ namespace VolunteerDatabase.Helper.Tests
         {
             var dbUser = database.Users.SingleOrDefault(u => u.AccountName == "BlackListRecordHelper");
             if (dbUser != null)
-            { 
+            {
                 database.Users.Remove(dbUser);
                 database.SaveChanges();
             }
@@ -556,15 +556,15 @@ namespace VolunteerDatabase.Helper.Tests
                 return true;
             if ((a == null && b != null) || (a != null && b == null))
                 return false;
-            else if (a.Adder== b.Adder && a.AddTime == b.AddTime&&a.EndTime==b.AddTime&&a.Volunteer==b.Volunteer&&a.Project==b.Project&&a.Organization==b.Organization&&a.Status==b.Status)
+            else if (a.Adder == b.Adder && a.AddTime == b.AddTime && a.EndTime == b.AddTime && a.Volunteer == b.Volunteer && a.Project == b.Project && a.Organization == b.Organization && a.Status == b.Status)
             {
-  
-                    return true;
-            
+
+                return true;
+
             }
             else
                 return false;
         }
     }
-    }
+}
 

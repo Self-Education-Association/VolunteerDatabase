@@ -41,20 +41,20 @@ namespace Desktop.Pages
 
         }
 
-        //private void ShowUserMessage()
-        //{
-        //    string[] orgstring = Claims.User.Organization.OrganizationEnum.ToString().Split('.');
-        //    string orgdetail = orgstring.Last();
-        //    string[] rolestring = Claims.Roles.ToString().Split('.');
-        //    string roledetail = rolestring.Last();
-        //    account_name.Text = Claims.User.AccountName;
-        //    org.Text = orgdetail;
-        //    tel.Text = Claims.User.Mobile;
-        //    roles.Text = roledetail;
-        //    userid.Text = Claims.User.StudentNum.ToString();
-        //    email.Text = Claims.User.Email;
-        //    dormitary.Text = Claims.User.Room;
-        //}
+        private void ShowUserMessage()
+        {
+            string[] orgstring = Claims.User.Organization.OrganizationEnum.ToString().Split('.');
+            string orgdetail = orgstring.Last();
+            string[] rolestring = Claims.Roles.ToString().Split('.');
+            string roledetail = rolestring.Last();
+            account_name.Text = Claims.User.AccountName;
+            org.Text = orgdetail;
+            tel.Text = Claims.User.Mobile;
+            roles.Text = roledetail;
+            userid.Text = Claims.User.StudentNum.ToString();
+            email.Text = Claims.User.Email;
+            dormitary.Text = Claims.User.Room;
+        }
 
     }
 

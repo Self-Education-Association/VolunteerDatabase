@@ -72,11 +72,11 @@ namespace Desktop.Pages
 
         private void StatusSwitch_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(project_list != null)
-            ShowList(StatusSwitch.SelectedIndex);
+            if (project_list != null)
+                ShowList(StatusSwitch.SelectedIndex);
         }
 
-       
+
         private List<Project> testCreateProjectList()
         {
             //ProjectManageHelper helper1 = ProjectManageHelper.GetInstance();
@@ -145,10 +145,17 @@ namespace Desktop.Pages
             projects.Add(p2);
             return projects;
         }
+        #endregion
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var AddManager = new AddManager();
+            Button senderButton = sender as Button;
+            if(senderButton.DataContext is Project)
+            {
+                Project project = (Project)senderButton.DataContext;
+            }
+
+            var AddManager = new AddManager(Project);
             AddManager.Show();
         }
     }

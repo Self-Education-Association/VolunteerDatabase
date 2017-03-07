@@ -15,14 +15,12 @@ using System.Windows.Shapes;
 namespace Desktop.Pages
 {
     /// <summary>
-    /// AddManager.xaml 的交互逻辑
+    /// AddVolunteer.xaml 的交互逻辑
     /// </summary>
-    public partial class AddManager : Window
+    public partial class AddVolunteer : Window
     {
-        Project sourceproject;
-        public AddManager(Project project)
+        public AddVolunteer()
         {
-            sourceproject = project;
             InitializeComponent();
         }
     }

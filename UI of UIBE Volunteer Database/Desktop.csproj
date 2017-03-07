@@ -71,8 +71,14 @@
     <Compile Include="MainWindow1.xaml.cs">
       <DependentUpon>MainWindow1.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\AddManager.xaml.cs">
-      <DependentUpon>AddManager.xaml</DependentUpon>
+    <Compile Include="Pages\ProjectDetails.xaml.cs">
+      <DependentUpon>ProjectDetails.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AddVolunteer.xaml.cs">
+      <DependentUpon>AddVolunteer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\BlackList.xaml.cs">
+      <DependentUpon>BlackList.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\IdentityPage.cs" />
     <Compile Include="Login.xaml.cs">
@@ -117,7 +123,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\AddManager.xaml">
+    <Page Include="Pages\ProjectDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AddVolunteer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\BlackList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
