@@ -132,6 +132,21 @@ namespace VolunteerDatabase.Helper.Tests
             var org = database.Organizations.SingleOrDefault(o => o.OrganizationEnum == OrganizationEnum.TestOnly);
             if (org != null)
             {
+                var projects = database.Projects.Where(p => p.Creater.Id == org.Id).ToList();
+                foreach (var p in projects)
+                {
+                    database.Projects.Remove(p);
+                }
+                var users = database.Users.Where(u => u.Organization.Id == org.Id).ToList();
+                foreach (var u in users)
+                {
+                    database.Users.Remove(u);
+                }
+                var blacklists = database.BlackListRecords.Where(b => b.Organization.Id == org.Id).ToList();
+                foreach (var b in blacklists)
+                {
+                    database.BlackListRecords.Remove(b);
+                }
                 database.Organizations.Remove(org);
                 database.SaveChanges();
             }

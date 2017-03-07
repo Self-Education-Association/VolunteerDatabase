@@ -133,14 +133,15 @@ namespace VolunteerDatabase.Helper
             {
                 return ProgressResult.Error("志愿者不存在于数据库中");
             }
-            if (pro.Maximum <= pro.Volunteers.Count)
+            if (pro.Maximum <= pro.Volunteers?.Count)
             {
                 return ProgressResult.Error("已达项目人数上限，添加失败");
             }
             lock (database)
             {
-                var Project = pro;
-                Project.Volunteers.Add(Volunteer);
+                if (pro.Volunteers == null)
+                    pro.Volunteers = new List<Volunteer>();
+                pro.Volunteers.Add(Volunteer);
                 Save();
             }
             result = ProgressResult.Success();
