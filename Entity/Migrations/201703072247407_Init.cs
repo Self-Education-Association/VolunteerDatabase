@@ -42,6 +42,7 @@ namespace VolunteerDatabase.Entity.Migrations
                         UID = c.Guid(nullable: false, identity: true),
                         AddTime = c.DateTime(nullable: false),
                         EndTime = c.DateTime(nullable: false),
+                        Detail = c.String(),
                         Status = c.Int(nullable: false),
                         Volunteer_UID = c.Guid(nullable: false),
                         Adder_Id = c.Int(nullable: false),
