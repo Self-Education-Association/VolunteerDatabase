@@ -130,9 +130,9 @@ item.StudentNum,vol.Name,item.Name,vol.Mobile,item.Mobile,vol.Email,item.Email,v
         }
 
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
-        public void determChanges(int[]UsingNewInformation)
+        public void determChanges(params int[] StuNums)
         {
-            foreach (var item in UsingNewInformation)
+            foreach (var item in StuNums)
             {
                 var nv = ChangedVols.SingleOrDefault(o => o.StudentNum == item);
                 if (nv != null)
