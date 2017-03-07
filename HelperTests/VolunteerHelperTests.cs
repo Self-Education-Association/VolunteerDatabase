@@ -28,17 +28,17 @@ namespace VolunteerDatabase.Helper.Tests
                 AccountName = userName,
                 Name = "James",
                 Mobile = "1888888888",
-                Email="123@ab.com"
+                Email = "123@ab.com"
             };
             string password = "VolunteerHelperPassword";
             var dbUser = database.Users.SingleOrDefault(u => u.AccountName == userName);
-            if(dbUser!=null)
+            if (dbUser != null)
             {
-//等一下注释掉这一句
+                //等一下注释掉这一句
                 database.Users.Remove(dbUser);
                 database.SaveChanges();
             }
-            IdentityResult result = ihelper.CreateUser(user, password, AppRoleEnum.OrgnizationMember,OrganizationEnum.SEA团队);
+            IdentityResult result = ihelper.CreateUser(user, password, AppRoleEnum.OrgnizationMember, OrganizationEnum.SEA团队);
             testclaims = ihelper.CreateClaims(userName, password, userName);
             helper = VolunteerHelper.GetInstance(testclaims);
         }
@@ -47,7 +47,7 @@ namespace VolunteerDatabase.Helper.Tests
         public void Clear()
         {
             var list = database.Volunteers.Where(o => o.StudentNum != 0).ToList();
-            foreach(Volunteer item in list)
+            foreach (Volunteer item in list)
             {
                 helper.DeleteVolunteer(item);
             }
@@ -90,7 +90,7 @@ namespace VolunteerDatabase.Helper.Tests
 
             #region 插入第一个volunteer对象
             int stunum = 888;
-            if (database.Volunteers.Where(o => o.StudentNum == stunum).ToList().Count()>0)
+            if (database.Volunteers.Where(o => o.StudentNum == stunum).ToList().Count() > 0)
             {
                 var existedvolunteer = FindVolunteerByStuNum(stunum);
                 helper.DeleteVolunteer(existedvolunteer);
@@ -117,7 +117,7 @@ namespace VolunteerDatabase.Helper.Tests
             int tempnum = 999;
             string tempname = "TestVolunteer2";
             result = helper.AddVolunteer(tempnum, tempname);
-            if (VolunteerResult.AreSame(result, VolunteerResult.Error(VolunteerResult.AddVolunteerErrorEnum.SameIdVolunteerExisted,tempnum)))
+            if (VolunteerResult.AreSame(result, VolunteerResult.Error(VolunteerResult.AddVolunteerErrorEnum.SameIdVolunteerExisted, tempnum)))
             {
                 var existedvolunteer = FindVolunteerByStuNum(tempnum);
                 helper.DeleteVolunteer(existedvolunteer);
@@ -147,9 +147,9 @@ namespace VolunteerDatabase.Helper.Tests
             #region 插入重复对象
 
             result = helper.AddVolunteer(v.StudentNum, "shadowman");
-            if (!VolunteerResult.AreSame(VolunteerResult.Error(VolunteerResult.AddVolunteerErrorEnum.SameIdVolunteerExisted,v.StudentNum), result))
+            if (!VolunteerResult.AreSame(VolunteerResult.Error(VolunteerResult.AddVolunteerErrorEnum.SameIdVolunteerExisted, v.StudentNum), result))
                 Assert.Fail("插入的学号为0的对象未能正确处理.");
-                
+
             #endregion
         }
 
@@ -213,7 +213,7 @@ namespace VolunteerDatabase.Helper.Tests
                 Class = "TestClass",
                 Email = "test@test.com",
                 Room = "testroom",
-                Mobile="18888888888"
+                Mobile = "18888888888"
             };
             helper.AddVolunteer(v);
             #endregion
@@ -226,7 +226,7 @@ namespace VolunteerDatabase.Helper.Tests
             bool flag = false;
             foreach (Volunteer o in result2)
             {
-                if(Volunteer.AreSame(o,v))
+                if (Volunteer.AreSame(o, v))
                 {
                     flag = true;
                     break;
@@ -293,5 +293,33 @@ namespace VolunteerDatabase.Helper.Tests
             #endregion
         }
 
+        [TestMethod()]
+        public void SearchVolunteerTest()
+        {
+            helper.DeleteVolunteer(0901);
+            Volunteer v = new Volunteer
+            {
+                StudentNum = 0901,
+                Name = "EditTestName",
+                Class = "TestClass",
+                Email = "test@test.com",
+                Room = "testroom"
+            };
+            helper.AddVolunteer(v);
+            v=new Volunteer
+            {
+                StudentNum = 0902,
+                Name = "EditTestName",
+                Class = "TestClass",
+                Email = "test@test.com",
+                Room = "stroom"
+            };
+            helper.AddVolunteer(v);
+
+            var r1 = helper.SearchVolunteer("te",VolunteerHelper.SearchVolunteerPosition.Email);
+            var r2 = helper.SearchVolunteer("te", VolunteerHelper.SearchVolunteerPosition.Name | VolunteerHelper.SearchVolunteerPosition.Room);
+
+            helper.DeleteVolunteer(0901);
+        }
     }
 }

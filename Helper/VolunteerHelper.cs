@@ -81,7 +81,7 @@ namespace VolunteerDatabase.Helper
         [AppAuthorize(AppRoleEnum.TestOnly)]
         public Volunteer FindVolunteer(int num)
         {
-            var result = database.Volunteers.SingleOrDefault( v => v.StudentNum == num);
+            var result = database.Volunteers.SingleOrDefault(v => v.StudentNum == num);
             return result;
         }
 
@@ -99,7 +99,7 @@ namespace VolunteerDatabase.Helper
         [AppAuthorize(AppRoleEnum.Administrator)]
         public VolunteerResult AddVolunteer(Volunteer v)
         {
-            if(v==null)
+            if (v == null)
                 return VolunteerResult.Error(VolunteerResult.AddVolunteerErrorEnum.NullVolunteerObject);
             if (v.StudentNum == 0)
                 return VolunteerResult.Error(VolunteerResult.AddVolunteerErrorEnum.EmptyId);
@@ -122,9 +122,9 @@ namespace VolunteerDatabase.Helper
         }
 
         [AppAuthorize(AppRoleEnum.Administrator)]
-        public VolunteerResult AddVolunteer(int num,string name=DEFAULTSTRING,string c=DEFAULTSTRING,string mobile=DEFAULTSTRING,string room=DEFAULTSTRING,string email=DEFAULTSTRING)
+        public VolunteerResult AddVolunteer(int num, string name = DEFAULTSTRING, string c = DEFAULTSTRING, string mobile = DEFAULTSTRING, string room = DEFAULTSTRING, string email = DEFAULTSTRING)
         {
-            if(num==0)
+            if (num == 0)
                 return VolunteerResult.Error(VolunteerResult.EditVolunteerErrorEnum.EmptyId);
             var v = new Volunteer
             {
@@ -139,12 +139,12 @@ namespace VolunteerDatabase.Helper
         }
         //编辑志愿者
         [AppAuthorize(AppRoleEnum.Administrator)]
-        public VolunteerResult EditVolunteer(Volunteer a,Volunteer b)
+        public VolunteerResult EditVolunteer(Volunteer a, Volunteer b)
         {
             if (a == null || a.StudentNum == 0)
                 return VolunteerResult.Error(VolunteerResult.EditVolunteerErrorEnum.NonExistingVolunteer);
             var v = database.Volunteers.SingleOrDefault(o => o.StudentNum == a.StudentNum);
-            v.StudentNum=b.StudentNum;
+            v.StudentNum = b.StudentNum;
             v.Name = b.Name;
             v.Class = b.Class;
             v.Mobile = b.Mobile;
@@ -155,7 +155,7 @@ namespace VolunteerDatabase.Helper
             Volunteer target = v;
             Volunteer edited = v;
             //Volunteer edited = FindVolunteer(b.StudentNum);
-            if(edited.Mobile!=target.Mobile||edited.Email!=target.Email||edited.Room!=target.Room)//日志字符串改成“修改联系方式”，现在联系方式：手机 电子邮件 寝室
+            if (edited.Mobile != target.Mobile || edited.Email != target.Email || edited.Room != target.Room)//日志字符串改成“修改联系方式”，现在联系方式：手机 电子邮件 寝室
             {
                 bool logresult = VolunteerOperationSucceeded(string.Format("修改原学号:{0},姓名:{1}的志愿者基本信息.现学号:{2},姓名:{3}", target.StudentNum, target.Name, edited.StudentNum, edited.Name), target, LogType.EditContact, true);
             }
@@ -167,19 +167,19 @@ namespace VolunteerDatabase.Helper
         }
 
         [AppAuthorize(AppRoleEnum.Administrator)]
-        public VolunteerResult EditVolunteer(Volunteer a, int num, string name = DEFAULTSTRING,string c= DEFAULTSTRING, string mobile = DEFAULTSTRING, string room = DEFAULTSTRING, string email = DEFAULTSTRING)
+        public VolunteerResult EditVolunteer(Volunteer a, int num, string name = DEFAULTSTRING, string c = DEFAULTSTRING, string mobile = DEFAULTSTRING, string room = DEFAULTSTRING, string email = DEFAULTSTRING)
         {
             if (num == 0)
                 return VolunteerResult.Error(VolunteerResult.EditVolunteerErrorEnum.EmptyId);
             var v = database.Volunteers.SingleOrDefault(o => o.StudentNum == a.StudentNum);
-            if(v!=null)
+            if (v != null)
             {
                 v.StudentNum = num;
                 v.Name = (name == DEFAULTSTRING) ? v.Name : name;
                 v.Class = (c == DEFAULTSTRING) ? v.Class : c;
                 v.Mobile = (mobile == DEFAULTSTRING) ? v.Mobile : mobile;
                 v.Room = (room == DEFAULTSTRING) ? v.Room : room;
-                v.Email = (email == DEFAULTSTRING )? v.Email : email;
+                v.Email = (email == DEFAULTSTRING) ? v.Email : email;
                 Save();
                 Volunteer target = a;
                 Volunteer edited = FindVolunteer(num);
@@ -216,7 +216,7 @@ namespace VolunteerDatabase.Helper
                 //Save();//等待被注释
                 database.Volunteers.Remove(volunteer);
                 Save();
-                bool logresult = VolunteerOperationSucceeded(string.Format("删除学号:{0},姓名:{1}的志愿者条目.", deletedVolunteerStuNum,deletedVolunteerName),null,LogType.DeleteVolunteer);
+                bool logresult = VolunteerOperationSucceeded(string.Format("删除学号:{0},姓名:{1}的志愿者条目.", deletedVolunteerStuNum, deletedVolunteerName), null, LogType.DeleteVolunteer);
                 return VolunteerResult.Success();
             }
             else
@@ -243,6 +243,72 @@ namespace VolunteerDatabase.Helper
             {
                 return VolunteerResult.Error(VolunteerResult.DeleteVolunteerErrorEnum.NonExistingVolunteer);
             }*/
+        }
+
+        [Flags]
+        public enum SearchVolunteerPosition
+        {
+            StudentNumber = 1,
+            Mobile = 2,
+            Name = 4,
+            Email = 8,
+            Room = 16,
+            Class = 32
+        }
+
+        public List<Volunteer> SearchVolunteer(string condition, SearchVolunteerPosition flags =
+            SearchVolunteerPosition.StudentNumber |
+            SearchVolunteerPosition.Mobile |
+            SearchVolunteerPosition.Name |
+            SearchVolunteerPosition.Email |
+            SearchVolunteerPosition.Room |
+            SearchVolunteerPosition.Class)
+        {
+            var result = new List<Volunteer>();
+            var vb = database.Volunteers;
+            if (flags.HasFlag(SearchVolunteerPosition.StudentNumber))
+            {
+                mergeVolunteers(vb.Where(v => v.StudentNum.ToString().Contains(condition)).ToList(), result);
+            }
+            if (flags.HasFlag(SearchVolunteerPosition.Mobile))
+            {
+                mergeVolunteers(vb.Where(v => v.Mobile.Contains(condition)).ToList(), result);
+            }
+            if (flags.HasFlag(SearchVolunteerPosition.Name))
+            {
+                mergeVolunteers(vb.Where(v => v.Name.Contains(condition)).ToList(), result);
+            }
+            if (flags.HasFlag(SearchVolunteerPosition.Email))
+            {
+                mergeVolunteers(vb.Where(v => v.Email.Contains(condition)).ToList(), result);
+            }
+            if (flags.HasFlag(SearchVolunteerPosition.Room))
+            {
+                mergeVolunteers(vb.Where(v => v.Room.Contains(condition)).ToList(), result);
+            }
+            if (flags.HasFlag(SearchVolunteerPosition.Class))
+            {
+                mergeVolunteers(vb.Where(v => v.Class.Contains(condition)).ToList(), result);
+            }
+
+            return result;
+        }
+
+        private bool mergeVolunteers(List<Volunteer> source, List<Volunteer> target)
+        {
+            try
+            {
+                foreach (var v in source)
+                {
+                    if (!target.Contains(v))
+                        target.Add(v);
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         #region Save

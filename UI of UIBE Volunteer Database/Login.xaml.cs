@@ -23,7 +23,8 @@ namespace Desktop
     /// </summary>
     public partial class Login : Window
     {
-        private static AppUserIdentityClaims claims;
+        private static AppUserIdentityClaims claimsStored;
+
         public Login()
         {
             InitializeComponent();
@@ -43,9 +44,9 @@ namespace Desktop
             }
             else
             { 
-                if (claims != null && claims.IsAuthenticated == true)
+                if (claimsStored != null && claimsStored.IsAuthenticated == true)
                 {
-                    SendClaimsEvent(claims);
+                    SendClaimsEvent(claimsStored);
                     return;
                 }
                 IdentityHelper ih = IdentityHelper.GetInstance();
@@ -59,6 +60,7 @@ namespace Desktop
                     if (claims.IsAuthenticated)
                     {
                         MessageBox.Show("登陆成功！");
+                        claimsStored = claims;
                         SendClaimsEvent(claims);
                         Close();
 
@@ -74,9 +76,9 @@ namespace Desktop
 
         public static void GetClaims(SendClaimsDelegate sendClaims)
         {
-            if (claims?.IsAuthenticated == true)
+            if (claimsStored?.IsAuthenticated == true)
             {
-                SendClaimsEvent(claims);
+                SendClaimsEvent(claimsStored);
                 return;
             }
 

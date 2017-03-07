@@ -15,9 +15,9 @@
                         <ComboBoxItem Content="已完成"></ComboBoxItem>
                     </ComboBox>
                 <!--<Button x:Name="WhiteDivide"/>-->
-                <DataGrid x:Name="project_list" AutoGenerateColumns="True" Width="568" Height="201"
-                                  ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Canvas.Top="55">
-                    <DataGrid.RowStyle>
+                <DataGrid x:Name="project_list" AutoGenerateColumns="False" Width="auto" Height="auto"
+                                  ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Canvas.Top="55" IsReadOnly="True">
+                    <!--<DataGrid.RowStyle>
                         <Style TargetType="DataGridRow">
                             <Setter Property="Background" Value="LightBlue" />
                             <Style.Triggers>
@@ -27,12 +27,26 @@
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
-                    </DataGrid.RowStyle>
+                    </DataGrid.RowStyle>-->
                     <DataGrid.Columns>
-                        <DataGridTemplateColumn Width="50">
+                        <DataGridTemplateColumn Width="30">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <CheckBox/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="项目名称" Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="项目地点" Binding="{Binding Place}"/>
+                        <DataGridTextColumn Header="项目编号" Binding="{Binding Id}"/>
+                        <DataGridTextColumn Header="最大人数" Binding="{Binding Maximum}"/>
+                        <DataGridTextColumn Header="开始时间" Binding="{Binding Time}"/>
+                        <DataGridTextColumn Header="创建时间" Binding="{Binding CreateTime}"/>
+                        <DataGridTextColumn Header="项目详情" Binding="{Binding Details}"/>
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <mui:ModernButton Content="添加管理者"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
