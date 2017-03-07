@@ -73,6 +73,7 @@ namespace VolunteerDatabase.Helper.Tests
             {
                 database.Organizations.Remove(item);
             }
+            database.SaveChanges();
         }           
 
         [TestMethod()]
@@ -334,6 +335,7 @@ namespace VolunteerDatabase.Helper.Tests
                     DeleteOrgnization(item);
                 }
             }
+            database.SaveChanges();
 
         }
 
