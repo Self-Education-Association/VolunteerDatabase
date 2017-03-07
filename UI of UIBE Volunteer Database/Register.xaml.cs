@@ -57,9 +57,10 @@ namespace Desktop
                         Name = wholename.Text,
                         Mobile = telephonenumber.Text,
                         Email = emailadress.Text,
-                        Room = dormitaryadress.Text
+                        Room = dormitaryadress.Text,
+                        Status = AppUserStatus.NotApproved
                     };
-                    IdentityResult result = ih.CreateUser(au, passWord, AppRoleEnum.Administrator, org);
+                    IdentityResult result = ih.CreateUser(au, passWord, AppRoleEnum.OrgnizationMember, org);
                     if (result.Succeeded == true)
                     {
 #warning "把这些MessageBox.Show()改成友好的窗口或者Tips"
