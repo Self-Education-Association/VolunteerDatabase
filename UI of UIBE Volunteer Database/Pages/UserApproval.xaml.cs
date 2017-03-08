@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using VolunteerDatabase.Helper;
 using VolunteerDatabase.Entity;
+using VolunteerDatabase.Interface;
 
 namespace Desktop.Pages
 {
@@ -34,6 +35,10 @@ namespace Desktop.Pages
         {
             InitializeComponent();
             Claims = identitypage.Claims;
+            if(Claims.IsInRole(AppRoleEnum.Administrator))
+            {
+                addorganization_btn.Visibility = Visibility.Visible;
+            }
             approvallist = helper.ShowNotApprovedMembers(Claims.User.Organization);
             //approval_list.Items.Clear();
             approval_list.ItemsSource = approvallist;
@@ -99,7 +104,7 @@ namespace Desktop.Pages
 
         private void addorganization_btn_Click(object sender, RoutedEventArgs e)
         {
-            var Register = new Register();
+            var Register = new Register(Claims);
             Register.ShowDialog();
         }
     }

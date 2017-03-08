@@ -23,8 +23,16 @@ namespace Desktop
     /// </summary>
     public partial class Register : Window
     {
-        public Register()
+        private IdentityHelper identityhelper;
+
+        private bool isAdministrator = false;
+        public Register(AppUserIdentityClaims claims = null)
         {
+            identityhelper = IdentityHelper.GetInstance();
+            if (claims != null && claims.IsInRole(AppRoleEnum.Administrator))
+            {
+                isAdministrator = true;
+            }
             InitializeComponent();
         }
 
@@ -50,6 +58,13 @@ namespace Desktop
 #warning "把这些MessageBox.Show()改成友好的窗口或者Tips"
                         MessageBox.Show("学号输入非法,仅能输入数字.");
                     }
+                    AppUserStatus status = AppUserStatus.NotApproved;
+                    AppRoleEnum role = AppRoleEnum.OrgnizationMember;
+                    if(isAdministrator)
+                    {
+                        status = AppUserStatus.Enabled;
+                        role = AppRoleEnum.OrgnizationAdministrator;
+                    }
                     AppUser au = new AppUser()
                     {
                         StudentNum = int.Parse(studentid.Text),
@@ -58,13 +73,20 @@ namespace Desktop
                         Mobile = telephonenumber.Text,
                         Email = emailadress.Text,
                         Room = dormitaryadress.Text,
-                        Status = AppUserStatus.NotApproved
+                        Status = status
                     };
-                    IdentityResult result = ih.CreateUser(au, passWord, AppRoleEnum.OrgnizationMember, org);
+                    IdentityResult result = ih.CreateUser(au, passWord,  role, org);
                     if (result.Succeeded == true)
                     {
 #warning "把这些MessageBox.Show()改成友好的窗口或者Tips"
-                        MessageBox.Show("注册成功!已发送注册审批请求,请等待管理员审批.");
+                        if(isAdministrator)
+                        {
+                            MessageBox.Show("注册机构账号成功!账号所属机构:["+comboBox.Text+"],机构账号用户名:["+accountname.Text+"],密码:["+passWord+"],请牢记账号密码!");
+                        }
+                        else
+                        {
+                            MessageBox.Show("注册成功!已发送注册审批请求,请等待管理员审批.");
+                        }
                         this.Close();
                     }
                     else
