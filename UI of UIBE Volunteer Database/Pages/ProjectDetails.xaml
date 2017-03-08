@@ -56,13 +56,7 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Width="">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button x:Name="shoushiqingkuang_btn"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
+                        
                         <DataGridTemplateColumn Header="服务态度">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -70,13 +64,7 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Width="">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button x:Name="fuwutaidu_btn"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
+                        
                         <DataGridTemplateColumn Header="通信情况">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -84,13 +72,15 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
+                        
                         <DataGridTemplateColumn Width="">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBox x:Name="tongxinqingkuang_btn"/>
+                                    <Button Content="评分" x:Name="rate_btn" Click="rate_btn_Click"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
+
                         <DataGridTextColumn Header="黑名单"/>
                         <DataGridTemplateColumn>
                             <DataGridTemplateColumn.CellTemplate>
