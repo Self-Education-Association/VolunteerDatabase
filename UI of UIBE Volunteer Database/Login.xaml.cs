@@ -83,7 +83,7 @@ namespace Desktop
                         Close();
 
                     }
-                    else if (claims.User.Status == AppUserStatus.NotApproved)
+                    else if (claims.User != null&&claims.User.Status == AppUserStatus.NotApproved)
                     {
                         MessageBox.Show("已发送用户注册审批请求,请等待机构管理员审批.");
                     }
