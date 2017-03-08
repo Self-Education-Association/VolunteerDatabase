@@ -26,12 +26,12 @@
                 <Label Content="项目状态" HorizontalAlignment="Left" Height="20" Width="50"/>
                 <TextBlock x:Name="project_status"/>
                 <Label Content="项目负责人" HorizontalAlignment="Left" Height="20" Width="60"/>
-                <DataGrid>
+                <DataGrid x:Name="project_manager_list" AutoGenerateColumns="False">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="姓名"/>
-                        <DataGridTextColumn Header="学号"/>
-                        <DataGridTextColumn Header="联系方式"/>
-                        <DataGridTextColumn Header="宿舍"/>
+                        <DataGridTextColumn Header="姓名" Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="学号" Binding="{Binding StudentNum}"/>
+                        <DataGridTextColumn Header="联系方式" Binding="{Binding Mobile}"/>
+                        <DataGridTextColumn Header="宿舍" Binding="{Binding Room}"/>
                         <DataGridTemplateColumn Header="删除">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -42,13 +42,15 @@
                     </DataGrid.Columns>
                 </DataGrid>
                 <Label Content="志愿者" HorizontalAlignment="Left" Height="20" Width="60"/>
-                <DataGrid>
+                <DataGrid x:Name="volunteer_list">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="姓名"/>
-                        <DataGridTextColumn Header="学号"/>
-                        <DataGridTextColumn Header="联系方式"/>
-                        <DataGridTextColumn Header="综合评分"/>
+                        <DataGridTextColumn Header="姓名" Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="学号" Binding="{Binding StudentNum}"/>
+                        <DataGridTextColumn Header="联系方式" Binding="{Binding Mobile}"/>
+                        <DataGridTextColumn Header="技能" Binding="{Binding Skill}"/>
+                        <DataGridTextColumn Header="综合评分" Binding="{Binding AvgScore}"/>
                         <DataGridTemplateColumn Header="守时情况">
+                            <!--meixieluoji-->
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBox x:Name="shoushiqingkuang"/>

@@ -27,7 +27,7 @@
                         <DataGridTemplateColumn>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <mui:ModernButton x:Name="BlacklistDetails_btn" Content="黑名单详情"/>
+                                    <mui:ModernButton x:Name="BlacklistDetails_btn" Content="黑名单详情" Click="BlacklistDetails_btn_Click"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
