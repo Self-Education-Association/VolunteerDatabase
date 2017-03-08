@@ -111,6 +111,15 @@ namespace VolunteerDatabase.Helper.Tests
             //Assert.AreEqual(v, actual);
             if (!VolunteerResult.AreSame(result, VolunteerResult.Success()))
                 Assert.Fail("插入第一个volunteer对象失败");
+            #region 插入重复对象
+
+            result = helper.AddVolunteer(v.StudentNum, "shadowman");
+            if (!VolunteerResult.AreSame(VolunteerResult.Error(VolunteerResult.AddVolunteerErrorEnum.SameIdVolunteerExisted, v.StudentNum), result))
+            {
+                Assert.Fail("插入重复的对象未能正确处理.");
+            }
+
+            #endregion
             database.Volunteers.Remove(actual);//Remove
             #endregion
 
@@ -146,13 +155,7 @@ namespace VolunteerDatabase.Helper.Tests
                 Assert.Fail("插入的学号为0的对象未能正确处理.");
             #endregion
 
-            #region 插入重复对象
-
-            result = helper.AddVolunteer(v.StudentNum, "shadowman");
-            if (!VolunteerResult.AreSame(VolunteerResult.Error(VolunteerResult.AddVolunteerErrorEnum.SameIdVolunteerExisted, v.StudentNum), result))
-                Assert.Fail("插入的学号为0的对象未能正确处理.");
-
-            #endregion
+           
         }
 
         [TestMethod()]

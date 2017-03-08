@@ -110,7 +110,7 @@ namespace VolunteerDatabase.Helper.Tests
                 Organization = org,
                 EndTime = new DateTime(2090, 2, 11),
                 AddTime = System.DateTime.Now,
-                Project = database.Projects.FirstOrDefault(b => b.Name == pro.Name)
+                Project = database.Projects.Single(b => b.Name == pro.Name)
             };
             BlackListResult result = helper.AddBlackListRecord(testaddrecord1);
             if (!result.Succeeded)
@@ -393,7 +393,7 @@ namespace VolunteerDatabase.Helper.Tests
             //    Assert.Fail("返回结果异常！");
             //}
             //测试EditRecord
-            BlackListResult result = helper.EditBlackListRecord("没啥理由", blacklist.UID, tempendtime, BlackListRecordStatus.Enabled);
+            BlackListResult result = helper.EditBlackListRecord("",blacklist.UID, tempendtime,BlackListRecordStatus.Enabled);
             blacklist = helper.FindBlackList(v).First();
             var actual = helper.FindBlackListByEndTime(blacklist.AddTime, tempendtime);
             var actualendtime = actual.First();
@@ -523,6 +523,8 @@ namespace VolunteerDatabase.Helper.Tests
                 database.Users.Remove(dbUser);
                 database.SaveChanges();
             }
+            Organization org = identityhelper.CreateOrFindOrganization(OrganizationEnum.SEA团队);
+            DeleteOrgnization(org);
         }
 
         private void Save()

@@ -51,6 +51,12 @@ namespace VolunteerDatabase.Helper.Tests
         {
             //创建一个originalmanager
             AppUser originalmanager = CreateUser();
+            AppUser actualmanager = database.Users.SingleOrDefault(b => b.StudentNum == originalmanager.StudentNum);
+            if (actualmanager != null)
+            {
+                database.Users.Remove(actualmanager);
+                Save();
+            }
             identityhelper.CreateUser(originalmanager, "zxcvbnm,./", Interface.AppRoleEnum.OrgnizationMember, OrganizationEnum.TestOnly);
             originalmanager = database.Users.Single(b => b.AccountName == originalmanager.AccountName);
             //创建org
@@ -349,8 +355,8 @@ namespace VolunteerDatabase.Helper.Tests
             }
 
             // 删除数据库的有关数据[org pro vol]
-               volunteerhelper.DeleteVolunteer(studentnum1);
-                volunteerhelper.DeleteVolunteer(studentnum2);
+            volunteerhelper.DeleteVolunteer(studentnum1);
+            volunteerhelper.DeleteVolunteer(studentnum2);
             DeleteOrgnization(org);
         }
 
@@ -414,8 +420,8 @@ namespace VolunteerDatabase.Helper.Tests
             }
 
             // 删除数据库的有关数据[org pro vol]
-             volunteerhelper.DeleteVolunteer(v1.StudentNum);
-             volunteerhelper.DeleteVolunteer(v2.StudentNum);
+            volunteerhelper.DeleteVolunteer(v1.StudentNum);
+            volunteerhelper.DeleteVolunteer(v2.StudentNum);
             DeleteOrgnization(org);
 
             //修改删除方法，删除方法中无法完全清空别处引用
@@ -429,7 +435,7 @@ namespace VolunteerDatabase.Helper.Tests
 
             // 创建一个project
             Guid uid = Guid.NewGuid();
-            string name = "CreatVolunteerTest" + uid.ToString();
+            string name = "ScoringDefaultForVolunteers" + uid.ToString();
             Project pro = new Project
             {
                 Name = name,
@@ -453,10 +459,11 @@ namespace VolunteerDatabase.Helper.Tests
             Volunteer v1 = new Volunteer
             {
                 StudentNum = studentnum1,
-                Name = "FindVolunteerById",
+                Name = "ScoringDefaultForVolunteer",
                 Class = "testclass",
                 Room = "testroom",
-                Mobile = "18888888888"
+                Mobile = "18888888888",
+                Score = 0
             };
             volunteerhelper.AddVolunteer(v1);
             Random random2 = new Random();
@@ -464,16 +471,19 @@ namespace VolunteerDatabase.Helper.Tests
             Volunteer v2 = new Volunteer
             {
                 StudentNum = studentnum2,
-                Name = "FindVolunteerById",
+                Name = "ScoringDefaultForVolunteer",
                 Class = "testclass",
                 Room = "testroom",
-                Mobile = "18888888888"
+                Mobile = "18888888888",
+                Score = 0
             };
             volunteerhelper.AddVolunteer(v2);
             pro = database.Projects.SingleOrDefault(b => b.Name == pro.Name);
             helper.SingleVolunteerInputById(v1.StudentNum, pro);
-            helper.SingleVolunteerInputById(v2.StudentNum, pro); 
-            ProgressResult result = helper.ScoringDefaultForVolunteers(pro,4);
+            helper.SingleVolunteerInputById(v2.StudentNum, pro);
+            ProgressResult result = helper.ScoringDefaultForVolunteers(pro, 4);
+            v1 = database.Volunteers.Single(b => b.StudentNum == v1.StudentNum);
+            v2 = database.Volunteers.Single(b => b.StudentNum == v2.StudentNum);
             if (!result.Succeeded && pro.ScoreCondition == Interface.ProjectScoreCondition.Scored)
             {
                 Assert.Fail("结果返回异常！");
@@ -594,9 +604,136 @@ namespace VolunteerDatabase.Helper.Tests
         [TestMethod()]
         public void EditScoreTest()
         {
-            //Assert.Fail();
+            // 创建org
+            Organization org = identityhelper.CreateOrFindOrganization(Entity.OrganizationEnum.TestOnly);
+
+            // 创建一个project
+            Guid uid = Guid.NewGuid();
+            string name = "FinishProjectTest" + uid.ToString();
+            Project pro = new Project
+            {
+                Name = name,
+                Place = "uibe",
+                Maximum = 1,
+                Details = "nothing",
+                Time = DateTime.Now,
+                Organization = org,
+                //    ScoreCondition = Interface.ProjectScoreCondition.UnScored
+            };
+            projectmanagehelper.CreatNewProject(org, DateTime.Now, name, "uibe", "nothing", 1); //unsocred 条件 突然变成scored
+            var addresult = database.Projects.Where(b => b.Name == name).Count();
+            if (addresult == 0)
+            {
+                Assert.Fail("添加记录失败！");
+            }
+            pro = database.Projects.Single(p => p.Name == pro.Name);
+            //向项目添加志愿者
+            // 创建一个志愿者
+            Random random = new Random();
+            int studentnum = random.Next(000, 999);
+            Volunteer v = new Volunteer
+            {
+                StudentNum = studentnum,
+                Name = "FindVolunteerById",
+                Class = "testclass",
+                Room = "testroom",
+                Mobile = "18888888888"
+            };
+            volunteerhelper.AddVolunteer(v);
+            v = database.Volunteers.SingleOrDefault(b => b.StudentNum == v.StudentNum);
+            helper.SingleVolunteerInputById(v.StudentNum, pro);
+            ProgressResult tempresult = helper.EditScore(v, pro, 2);
+            if (tempresult.Succeeded)
+            {
+                Assert.Fail("不存在对应的征信记录failed.");
+            }
+            CreditRecord record = new CreditRecord
+            {
+                Participant = v,
+                Project = pro,
+                Organization = org,
+                Score = 0
+            };
+            database.CreditRecords.Add(record);
+            Save();
+            record = database.CreditRecords.Single(c => c.Organization.Id == org.Id);
+            tempresult = helper.EditScore(v, pro, 2);
+            if (!tempresult.Succeeded)
+            {
+                Assert.Fail("Result is beyond expections!");
+            }
+            //删除数据库
+            database.CreditRecords.Remove(record);
+            DeleteOrgnization(org);
+            volunteerhelper.DeleteVolunteer(v);
+            Save();
         }
 
+        [TestMethod()]
+        public void DeleteCreditRecordTest()
+        {
+            // 创建org
+            Organization org = identityhelper.CreateOrFindOrganization(Entity.OrganizationEnum.TestOnly);
+
+            // 创建一个project
+            Guid uid = Guid.NewGuid();
+            string name = "FinishProjectTest" + uid.ToString();
+            Project pro = new Project
+            {
+                Name = name,
+                Place = "uibe",
+                Maximum = 1,
+                Details = "nothing",
+                Time = DateTime.Now,
+                Organization = org,
+                //    ScoreCondition = Interface.ProjectScoreCondition.UnScored
+            };
+            projectmanagehelper.CreatNewProject(org, DateTime.Now, name, "uibe", "nothing", 1); //unsocred 条件 突然变成scored
+            var addresult = database.Projects.Where(b => b.Name == name).Count();
+            if (addresult == 0)
+            {
+                Assert.Fail("添加记录失败！");
+            }
+            pro = database.Projects.Single(p => p.Name == pro.Name);
+            //向项目添加志愿者
+            // 创建一个志愿者
+            Random random = new Random();
+            int studentnum = random.Next(000, 999);
+            Volunteer v = new Volunteer
+            {
+                StudentNum = studentnum,
+                Name = "FindVolunteerById",
+                Class = "testclass",
+                Room = "testroom",
+                Mobile = "18888888888"
+            };
+            volunteerhelper.AddVolunteer(v);
+            v = database.Volunteers.SingleOrDefault(b => b.StudentNum == v.StudentNum);
+            helper.SingleVolunteerInputById(v.StudentNum, pro);
+            CreditRecord record = new CreditRecord
+            {
+                Participant = v,
+                Project = pro,
+                Organization = org,
+                Score = 0
+            };
+            database.CreditRecords.Add(record);
+            Save();
+            record = database.CreditRecords.Single(c => c.Organization.Id == org.Id);
+           ProgressResult result = helper.DeleteCreditRecord(record);
+            if ( !result.Succeeded )
+            {
+                Assert.Fail();
+            }
+            if (database.CreditRecords.SingleOrDefault(c => c.Organization.Id == org.Id) != null)
+            {
+                Assert.Fail();
+            }
+            //删除数据库
+            DeleteOrgnization(org);
+            volunteerhelper.DeleteVolunteer(v);
+            Save();
+        }
 
         private Volunteer CreateVolunteer()
         {
@@ -652,14 +789,22 @@ namespace VolunteerDatabase.Helper.Tests
         {
 
             var list = database.Users.Where(u => u.Organization.Id == org.Id).ToList();
-            foreach (var item in list)
+            if (list != null)
             {
-                database.Users.Remove(item);
+                foreach (var item in list)
+                {
+                    database.Users.Remove(item);
+
+                }
+
             }
             var projectList = database.Projects.Where(p => p.Organization.Id == org.Id).ToList();
-            foreach (var item in projectList)
+            if (projectList != null)
             {
-                database.Projects.Remove(item);
+                foreach (var item in projectList)
+                {
+                    database.Projects.Remove(item);
+                }
             }
             var blacklist = database.BlackListRecords.Where(u => u.Organization.Id == org.Id).ToList();
             foreach (var item in blacklist)
@@ -710,6 +855,6 @@ namespace VolunteerDatabase.Helper.Tests
             } while (flag);
         }
 
-
+ 
     }
 }
