@@ -29,7 +29,6 @@ namespace Desktop.Pages
         {
             Claims = identitypage.Claims;
             InitializeComponent();
-            Volunteerdata.ItemsSource = sourceList;
             //InitialData();
 
 

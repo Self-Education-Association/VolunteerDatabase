@@ -21,8 +21,8 @@ namespace Desktop.Pages
     /// </summary>
     public partial class ProjectCreate : UserControl
     {
+        private bool ischanged=false;
         private IdentityPage basepage = IdentityPage.GetInstance();
-
         private ProjectManageHelper helper;
         private AppUserIdentityClaims Claims { get; set; }
         public ProjectCreate()
@@ -36,7 +36,7 @@ namespace Desktop.Pages
         private void create_project_button_Click(object sender, RoutedEventArgs e)
         {
             TextRange textRange = new TextRange(project_details.Document.ContentStart, project_details.Document.ContentEnd);
-            if (project_name.Text == "" || project_place.Text == ""|| project_place.Text == "" || project_maximum.Text == "" || textRange.Text == "")
+            if (project_name.Text == "" ||!ischanged||project_place.Text == ""|| project_place.Text == "" || project_maximum.Text == "" || textRange.Text == "")
             {
 #warning "把这些MessageBox.Show()改成友好的窗口或者Tips"
                 MessageBox.Show("请完整输入所有项目.");
@@ -60,6 +60,11 @@ namespace Desktop.Pages
                     MessageBox.Show("项目创建失败!错误信息" + string.Join(",", result.Errors));
                 }
             }
+        }
+
+        private void project_time_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ischanged = true;
         }
     }
 }

@@ -52,7 +52,7 @@
                         <DataGridTemplateColumn Header="守时情况">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBox x:Name="shoushiqingkuang"/>
+                                    <TextBox x:Name="shoushiqingkuang" LostFocus="shoushiqingkuang_LostFocus"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -60,27 +60,34 @@
                         <DataGridTemplateColumn Header="服务态度">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBox x:Name="fuwutaidu"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        
-                        <DataGridTemplateColumn Header="通信情况">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBox x:Name="tongxinqingkuang"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        
-                        <DataGridTemplateColumn Width="">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button Content="评分" x:Name="rate_btn" Click="rate_btn_Click"/>
+                                    <TextBox x:Name="fuwutaidu" LostFocus="fuwutaidu_LostFocus"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
+                        <DataGridTemplateColumn Header="通信情况">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox x:Name="tongxinqingkuang" LostFocus="tongxinqingkuang_LostFocus"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button x:Name="rate_btn_click" Click="rate_btn_Click"></Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Header="黑名单">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock x:Name="blacklistbox"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                         <DataGridTextColumn Header="黑名单"/>
                         <DataGridTemplateColumn>
                             <DataGridTemplateColumn.CellTemplate>
@@ -99,10 +106,10 @@
                     </DataGrid.Columns>
                 </DataGrid>
                 <!--<Label Content="添加管理者" HorizontalAlignment="Left" Height="20" Width="60"/>-->
-                <TextBox x:Name="AddManager" KeyDown="AddManager_KeyDown" MaxLength="9" TextChanged="AddManager_TextChanged" Width="120" HorizontalAlignment="Left"/>
-                <mui:ModernButton x:Name="AddManager_btn" Content="在上方框中输入学号后点我 以添加本项目管理者" HorizontalAlignment="Right" Click="AddManager_btn_Click"/>
-                <TextBox x:Name="AddVolunteer" KeyDown="AddVolunteer_KeyDown" MaxLength="9" Width="120" HorizontalAlignment="Left"/>
-                <mui:ModernButton x:Name="AddVolunteer_btn" Content="在上方框中输入学号后点我 以添加本项目志愿者" HorizontalAlignment="Right" Click="AddVolunteer_btn_Click"/>
+                <TextBox x:Name="AddManager" KeyDown="AddManager_KeyDown" MaxLength="9" TextChanged="AddManager_TextChanged" Width="120" HorizontalAlignment="Right"/>
+                <mui:ModernButton x:Name="AddManager_btn" Content="输入学号添加管理者" HorizontalAlignment="Right" Click="AddManager_btn_Click"/>
+                <TextBox x:Name="AddVolunteer" KeyDown="AddVolunteer_KeyDown" MaxLength="9" Width="120" HorizontalAlignment="Right"/>
+                <mui:ModernButton x:Name="AddVolunteer_btn" Content="输入学号添加志愿者" HorizontalAlignment="Right" Click="AddVolunteer_btn_Click"/>
                 <mui:ModernButton x:Name="piliang" Content="批量添加志愿者" Click="piliang_Click" />
                 <mui:ModernButton x:Name="yijianpingfen" Content="一键评分" Click="yijianpingfen_Click"/>
                 <mui:ModernButton x:Name="endproject" Content="结项" Click="endproject_Click"/>
