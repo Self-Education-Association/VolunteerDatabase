@@ -14,20 +14,26 @@
                 <TextBlock Text="Volunteer Data" Style="{StaticResource Heading2}" />
                 <TextBox x:Name="studentnum" Width="80" Height="20" HorizontalAlignment="Left" />
                 <mui:ModernButton x:Name="searchbyid_btn" Content="点我按学号查找志愿者信息" Click="searchbyid_btn_Click"/>
-                <DataGrid IsReadOnly="True">
+                <DataGrid x:Name="Volunteerdata" IsReadOnly="True">
                     <DataGrid AutoGenerateColumns="False"></DataGrid>
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="姓名"/>
-                        <DataGridTextColumn Header="电话"/>
-                        <DataGridTextColumn Header="宿舍"/>
-                        <DataGridTextColumn Header="邮箱"/>
-                        <DataGridTextColumn Header="学院"/>
-                        <DataGridTextColumn Header="评分"/>
-                        <DataGridTextColumn Header="黑名单"/>
+                        <DataGridTextColumn Header="姓名" Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="电话" Binding="{Binding Mobile}"/>
+                        <DataGridTextColumn Header="宿舍" Binding="{Binding Room}"/>
+                        <DataGridTextColumn Header="邮箱" Binding="{Binding Email}"/>
+                        <!--<DataGridTextColumn Header="学院" Binding="{Binding}"/>-->
+                        <DataGridTextColumn Header="评分" Binding="{Binding AvgScore}"/>
+                        <DataGridTemplateColumn Header="黑名单">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Label x:Name="blacklistmark"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                         <DataGridTemplateColumn>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <mui:ModernButton x:Name="BlacklistDetails_btn" Content="黑名单详情" Click="BlacklistDetails_btn_Click"/>
+                                    <mui:ModernButton x:Name="BlacklistDetails_btn" Click="BlacklistDetails_btn_Click"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>

@@ -31,7 +31,7 @@ namespace Desktop.Pages
             Vol = vol;
             InitializeComponent();
             sourceList = Vol.BlackListRecords;
-        }
-        //未作绑定，待添加
+            Blacklistdata.ItemsSource = sourceList;
+        }      
     }
 }
