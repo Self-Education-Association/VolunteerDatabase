@@ -42,7 +42,7 @@
                     </DataGrid.Columns>
                 </DataGrid>
                 <Label Content="志愿者" HorizontalAlignment="Left" Height="20" Width="60"/>
-                <DataGrid x:Name="volunteer_list">
+                <DataGrid x:Name="volunteer_list" AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="姓名" Binding="{Binding Name}"/>
                         <DataGridTextColumn Header="学号" Binding="{Binding StudentNum}"/>
