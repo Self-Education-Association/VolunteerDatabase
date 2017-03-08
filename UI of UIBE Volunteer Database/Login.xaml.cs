@@ -16,6 +16,7 @@ using VolunteerDatabase.Helper;
 using FirstFloor.ModernUI.Windows.Controls;
 using Desktop.Pages;
 using VolunteerDatabase.Interface;
+using System.ComponentModel;
 
 namespace Desktop
 {
@@ -26,9 +27,24 @@ namespace Desktop
     {
         private static AppUserIdentityClaims claimsStored;
 
-        public Login()
+        private static Login loginWindow = new Login();
+
+        protected Login()
         {
             InitializeComponent();
+        }
+
+        protected static Login GetWindow()
+        {
+            if (loginWindow == null)
+            {
+                lock (loginWindow)
+                {
+                    if (loginWindow == null)
+                        loginWindow = new Login();
+                }
+            }
+            return loginWindow;
         }
 
         private void register_Click(object sender, RoutedEventArgs e)
@@ -39,12 +55,12 @@ namespace Desktop
 
         private async void login_btn_Click(object sender, RoutedEventArgs e)
         {
-            if (userid.Text == "" ||password.Password == "")
+            if (userid.Text == "" || password.Password == "")
             {
                 Tips_block.Visibility = Visibility.Visible;
             }
             else
-            { 
+            {
                 if (claimsStored != null && claimsStored.IsAuthenticated == true)
                 {
                     SendClaimsEvent(claimsStored);
@@ -67,7 +83,7 @@ namespace Desktop
                         Close();
 
                     }
-                    else if(claims.User.Status == AppUserStatus.NotApproved)
+                    else if (claims.User.Status == AppUserStatus.NotApproved)
                     {
                         MessageBox.Show("已发送用户注册审批请求,请等待机构管理员审批.");
                     }
@@ -89,11 +105,17 @@ namespace Desktop
                 return;
             }
 
-
-            Login loginWindow = new Login();
+            Login loginWindow = GetWindow();
             loginWindow.Show();
             SendClaimsEvent += sendClaims;
             return;
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            e.Cancel = true;
+            Hide();
+            base.OnClosing(e);
         }
 
         public delegate void SendClaimsDelegate(AppUserIdentityClaims claims);
