@@ -44,7 +44,7 @@ namespace Desktop.Pages
 
         private void ChangePassword_btn_Click(object sender, RoutedEventArgs e)
         {
-
+            
         }
 
         private void ShowUserMessage()

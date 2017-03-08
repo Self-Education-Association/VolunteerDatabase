@@ -36,14 +36,14 @@ namespace Desktop.Pages
         private void create_project_button_Click(object sender, RoutedEventArgs e)
         {
             TextRange textRange = new TextRange(project_details.Document.ContentStart, project_details.Document.ContentEnd);
-            if (project_name.Text == "" || project_place.Text == "" || project_time.DisplayDate == null || project_time.DisplayDate < DateTime.Now.AddYears(-20) || project_place.Text == "" || project_maximum.Text == "" || textRange.Text == "")
+            if (project_name.Text == "" || project_place.Text == "" || project_time.DisplayDate<=DateTime.Now || project_place.Text == "" || project_maximum.Text == "" || textRange.Text == "")
             {
 #warning "把这些MessageBox.Show()改成友好的窗口或者Tips"
                 MessageBox.Show("请完整输入所有项目.");
             }
+            //此处时间验证仍有问题，待解决！！！
             else
-            {
-                //可以在这里对RichTextBox做美化               
+            {            
                 ProgressResult result = helper.CreatNewProject(Claims.User.Organization, project_time.DisplayDate, project_name.Text, project_place.Text, textRange.Text, int.Parse(project_maximum.Text));
                 if (result.Succeeded)
                 {
@@ -53,7 +53,6 @@ namespace Desktop.Pages
                     project_place.Clear();
                     project_maximum.Clear();
                     project_details.Document.Blocks.Clear();
-
                 }
                 else
                 {
@@ -62,7 +61,5 @@ namespace Desktop.Pages
                 }
             }
         }
-
-        // 
     }
 }
