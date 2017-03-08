@@ -92,5 +92,11 @@ namespace Desktop.Pages
 
 
         }
+
+        private void addorganization_btn_Click(object sender, RoutedEventArgs e)
+        {
+            var Register = new Register();
+            Register.ShowDialog();
+        }
     }
 }
