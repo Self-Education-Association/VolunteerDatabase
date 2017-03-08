@@ -66,6 +66,10 @@ namespace Desktop.Pages
             {
                 var pph = ProjectProgressHelper.GetInstance();
                 var result = pph.FinishProject(Pro);
+                if(!result.Succeeded)
+                {
+                    //此处应提示结项失败
+                }
             }
 
         }
@@ -94,14 +98,36 @@ namespace Desktop.Pages
 
         private void AddManager_btn_Click(object sender, RoutedEventArgs e)
         {
-            var pmh = ProjectManageHelper.GetInstance();
-            var result=pmh.AddManager(int.Parse(AddManager.Text), Pro);
+            if(AddManager.Text=="")
+            {
+
+            }
+            else
+            { 
+                var pmh = ProjectManageHelper.GetInstance();
+                var result = pmh.AddManager(int.Parse(AddManager.Text), Pro);
+                if(!result.Succeeded)
+                {
+                    //此处应提示添加失败
+                }
+            }
         }
 
         private void AddVolunteer_btn_Click(object sender, RoutedEventArgs e)
         {
-            var pph = ProjectProgressHelper.GetInstance();
-            var result = pph.SingleVolunteerInputById(int.Parse(AddVolunteer.Text), Pro);
+            if(AddVolunteer.Text=="")
+            {
+
+            }
+            else
+            {
+                var pph = ProjectProgressHelper.GetInstance();
+                var result = pph.SingleVolunteerInputById(int.Parse(AddVolunteer.Text), Pro);
+                if (!result.Succeeded)
+                {
+                    //此处应提示添加失败
+                }
+            }          
         }
 
         private void AddManager_KeyDown(object sender, KeyEventArgs e)

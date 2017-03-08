@@ -42,7 +42,7 @@
                     </DataGrid.Columns>
                 </DataGrid>
                 <Label Content="志愿者" HorizontalAlignment="Left" Height="20" Width="60"/>
-                <DataGrid x:Name="volunteer_list">
+                <DataGrid x:Name="volunteer_list" AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="姓名" Binding="{Binding Name}"/>
                         <DataGridTextColumn Header="学号" Binding="{Binding StudentNum}"/>
@@ -50,10 +50,16 @@
                         <DataGridTextColumn Header="技能" Binding="{Binding Skill}"/>
                         <DataGridTextColumn Header="综合评分" Binding="{Binding AvgScore}"/>
                         <DataGridTemplateColumn Header="守时情况">
-                            <!--meixieluoji-->
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBox x:Name="shoushiqingkuang"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button x:Name="shoushiqingkuang_btn"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -64,10 +70,24 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button x:Name="fuwutaidu_btn"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                         <DataGridTemplateColumn Header="通信情况">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBox x:Name="tongxinqingkuang"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox x:Name="tongxinqingkuang_btn"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
