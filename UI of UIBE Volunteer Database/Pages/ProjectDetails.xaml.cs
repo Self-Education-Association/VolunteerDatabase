@@ -25,6 +25,7 @@ namespace Desktop.Pages
     public partial class ProjectInformation : Window
     {
         private Project Pro;
+        private string s1, s2, s3;
         public ProjectInformation(Project pro)
         {
             InitializeComponent();
@@ -149,6 +150,34 @@ namespace Desktop.Pages
         private void AddManager_TextChanged(object sender, TextChangedEventArgs e)
         {
 
+        }
+
+        private void rate_btn_Click(object sender, RoutedEventArgs e)
+        {
+            Button senderButton = sender as Button;
+            if (senderButton.DataContext is Volunteer)
+            {
+                Volunteer Vol = (Volunteer)senderButton.DataContext;
+            }
+            
+        }
+
+        private void shoushiqingkuang_LostFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox tb = sender as TextBox;
+            s1 = tb.Text;
+        }
+
+        private void fuwutaidu_LostFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox tb2 = sender as TextBox;
+            s2 = tb2.Text;
+        }
+
+        private void tongxinqingkuang_LostFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox tb3 = sender as TextBox;
+            s3 = tb3.Text;
         }
     }
 }
