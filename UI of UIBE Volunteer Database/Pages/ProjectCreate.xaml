@@ -15,7 +15,7 @@
                 <TextBlock Text="项目地点" Width="60" Height="30" FontSize="14" Canvas.Left="10" Canvas.Top="72"/>
                 <TextBox x:Name="project_place" Width="114" Height="25" FontSize="14" Canvas.Left="75" Canvas.Top="72"/>
                 <TextBlock Text="项目时间" Width="60" Height="30" FontSize="14" Canvas.Left="299" Canvas.Top="37"/>
-                <DatePicker x:Name="project_time" Width="118" Height="25" FontSize="14" Canvas.Left="364" Canvas.Top="37"/>
+                <DatePicker x:Name="project_time" Width="118" Height="25" FontSize="14" Canvas.Left="364" Canvas.Top="37" SelectedDateChanged="project_time_SelectedDateChanged"/>
                 <TextBlock Text="最大人数" Width="60" Height="30" FontSize="14" Canvas.Left="299" Canvas.Top="72"/>
                 <TextBox x:Name="project_maximum" Width="118" Height="25" FontSize="14" Canvas.Left="364" Canvas.Top="72"/>
                 <TextBlock Text="项目详情" Width="60" Height="30" FontSize="14" Canvas.Left="10" Canvas.Top="128"/>
