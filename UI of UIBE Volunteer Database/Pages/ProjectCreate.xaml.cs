@@ -44,7 +44,7 @@ namespace Desktop.Pages
             else
             {
                 //可以在这里对RichTextBox做美化               
-                ProgressResult result = helper.CreatNewProject(Claims.Holder.Organization, project_time.DisplayDate, project_name.Text, project_place.Text, textRange.Text, int.Parse(project_maximum.Text));
+                ProgressResult result = helper.CreatNewProject(Claims.User.Organization, project_time.DisplayDate, project_name.Text, project_place.Text, textRange.Text, int.Parse(project_maximum.Text));
                 if (result.Succeeded)
                 {
 #warning "把这些MessageBox.Show()改成友好的窗口或者Tips"
