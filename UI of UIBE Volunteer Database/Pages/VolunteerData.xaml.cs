@@ -22,14 +22,14 @@ namespace Desktop.Pages
     /// </summary>
     public partial class VolunteerData : UserControl
     {
-        private List<Volunteer> sourceList;
+        private List<Volunteer> sourceList=new List<Volunteer>();
         private IdentityPage identitypage = IdentityPage.GetInstance();
         private AppUserIdentityClaims Claims { get; set; }
         public VolunteerData()
         {
             Claims = identitypage.Claims;
             InitializeComponent();
-
+            Volunteerdata.ItemsSource = sourceList;
             //InitialData();
 
 
@@ -90,6 +90,7 @@ namespace Desktop.Pages
             }
             else
             {
+                
                 var vh = VolunteerHelper.GetInstance();
                 sourceList.Add(vh.FindVolunteer(int.Parse(studentnum.Text)));
             }

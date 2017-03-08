@@ -41,7 +41,7 @@ namespace Desktop.Pages
         }
         private void ProInfoShow()
         {
-            org.Text = Pro.Organization.ToString();
+            org.Text = Pro.Organization.Name;
             project_name.Text = Pro.Name;
             project_id.Text = Pro.Id.ToString();
             project_place.Text = Pro.Place;
