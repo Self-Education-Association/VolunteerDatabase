@@ -150,5 +150,10 @@ namespace Desktop.Pages
         {
 
         }
+
+        private void rate_btn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
