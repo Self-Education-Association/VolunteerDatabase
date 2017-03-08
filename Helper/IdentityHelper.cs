@@ -270,9 +270,9 @@ namespace VolunteerDatabase.Helper
                 Save();
                 return IdentityResult.Success();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                return IdentityResult.Error("出现错误,错误信息:" + e.Message);
             }
         }
 
@@ -301,9 +301,9 @@ namespace VolunteerDatabase.Helper
                 Save();
                 return IdentityResult.Success();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                return IdentityResult.Error("出现错误,错误信息:" + e.Message);
             }
         }
 
@@ -321,7 +321,7 @@ namespace VolunteerDatabase.Helper
             }
             try
             {
-                var approvalrecord = database.ApprovalRecords.SingleOrDefault(r => r.User.Id == user.Id);
+                /*var approvalrecord = database.ApprovalRecords.SingleOrDefault(r => r.User.Id == user.Id);
                 if (approvalrecord == null)
                 {
                     return IdentityResult.Error("没有找到对应用户的审批记录!");
@@ -330,7 +330,7 @@ namespace VolunteerDatabase.Helper
                 approvalrecord.ExpireTime = DateTime.Now.AddDays(3);//最近的审批记录
                 approvalrecord.Note = "拒绝学号为[" + approvalrecord.User.StudentNum.ToString() + "]用户名为[" + approvalrecord.User.AccountName + "]的账号注册请求.";
                 database.ApprovalRecords.Add(approvalrecord);
-                approvalrecord.User = null;
+                approvalrecord.User = null;*/
                 if (database.Entry(user).State == System.Data.Entity.EntityState.Detached)
                 {
                     database.Users.Attach(user);
@@ -339,9 +339,9 @@ namespace VolunteerDatabase.Helper
                 Save();
                 return IdentityResult.Success();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                return IdentityResult.Error("出现错误,错误信息:" + e.Message);
             }
         }
 

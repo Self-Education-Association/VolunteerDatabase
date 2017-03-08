@@ -79,7 +79,7 @@ namespace Desktop.Pages
         private void deleteproject_btn_Click(object sender, RoutedEventArgs e)
         {
             var pmh = ProjectManageHelper.GetInstance();
-            MessageBoxResult result=MessageBox.Show("真的要删除么？？？", "删除提醒", MessageBoxButton.YesNo, MessageBoxImage.Information);
+            MessageBoxResult result=MessageBox.Show("确定要删除该项目?", "删除提醒", MessageBoxButton.YesNo, MessageBoxImage.Information);
             switch(result)
             {
                 case MessageBoxResult.Yes:

@@ -88,14 +88,14 @@ namespace VolunteerDatabase.Helper
                 Project.Time = Time;
                 Project.CreatTime = DateTime.Now;
                 Project.Maximum = Maximum;
-                Project.Managers = null;
+                Project.Managers = new List<AppUser>();
                 Project.Place = Place;
                 Project.Name = Name;
                 Project.Details = Detail;
                 Project.Condition = ProjectCondition.Ongoing;
                 Project.ScoreCondition = ProjectScoreCondition.UnScored;
                 Project.Organization = org;
-                Project.Volunteers = null;
+                Project.Volunteers = new List<Volunteer>();
                 database.Projects.Add(Project);
                 Save();
                 result = ProgressResult.Success();

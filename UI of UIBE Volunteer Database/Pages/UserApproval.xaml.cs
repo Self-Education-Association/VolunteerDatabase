@@ -49,10 +49,12 @@ namespace Desktop.Pages
                 user = (AppUser)senderButton.DataContext;
 
                 result = helper.ApproveRegisterRequest(user);
-                if (result == IdentityResult.Success())
+                if (result.AreSameWith(IdentityResult.Success()))
                 {
                     MessageBox.Show("通过用户审批成功!");
                     approvallist.Remove(user);
+                    approval_list.ItemsSource = null;
+                    approval_list.ItemsSource = approvallist;
                 }
 
                 else
@@ -76,10 +78,12 @@ namespace Desktop.Pages
             {
                 user = (AppUser)senderButton.DataContext;
                 result = helper.RejectRegisterRequest(user);
-                if (result == IdentityResult.Success())
+                if (result.AreSameWith(IdentityResult.Success()))
                 {
                     MessageBox.Show("拒绝用户审批成功!");
                     approvallist.Remove(user);
+                    approval_list.ItemsSource = null;
+                    approval_list.ItemsSource = approvallist;
                 }
                 else
                     MessageBox.Show(string.Join(",", result.Errors));
