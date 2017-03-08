@@ -166,10 +166,18 @@ namespace Desktop.Pages
         }
         private void ModernButton_Click(object sender, RoutedEventArgs e)
         {
-            List<Project> Pros = new List<Project>();
-            Pros.Add(progresshelper.FindProjectByProjectId(int.Parse(search_project.Text)));
-            allprojectlist = Pros;
+            if(search_project.Text=="")
+            {
+
+            }
+            else
+            {
+                List<Project> Pros = new List<Project>();
+                Pros.Add(progresshelper.FindProjectByProjectId(int.Parse(search_project.Text)));
+                allprojectlist = Pros;
+            }
         }
+            
 
     }
 }
