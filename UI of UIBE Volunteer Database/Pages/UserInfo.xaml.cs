@@ -22,13 +22,18 @@ namespace Desktop.Pages
     /// </summary>
     public partial class UserInfo : UserControl
     {
-        private IdentityPage identitypage = IdentityPage.GetInstance();
+        private IdentityPage identitypage;
         private AppUserIdentityClaims Claims { get; set; }
         public UserInfo()
         {
-            Claims = identitypage.Claims;
-            InitializeComponent();
-            ShowUserMessage();
+            identitypage = IdentityPage.GetInstance();
+            if (identitypage.Claims != null)
+            {
+                Claims = identitypage.Claims;
+                InitializeComponent();
+                ShowUserMessage();
+            }
+
         }
         private void sendClaimsEventHandler(AppUserIdentityClaims claims)
         {
@@ -39,7 +44,7 @@ namespace Desktop.Pages
 
         private void ChangePassword_btn_Click(object sender, RoutedEventArgs e)
         {
-
+            
         }
 
         private void ShowUserMessage()

@@ -18,7 +18,7 @@ namespace Desktop.Pages
 
         public static IdentityPage GetInstance(AppUserIdentityClaims claims)
         {
-            if(identitypage == null)
+            if(identitypage == null || identitypage.Claims == null)
             {
                 identitypage = new IdentityPage(claims);
             }
@@ -27,7 +27,7 @@ namespace Desktop.Pages
 
         public static IdentityPage GetInstance()
         {
-            if(identitypage == null)
+            if(identitypage == null || identitypage.Claims == null)
             {
                 IdentityError();
             }

@@ -41,6 +41,15 @@ namespace VolunteerDatabase.Helper
             return result;
         }
 
+        public bool AreSameWith(IdentityResult b)
+        {
+            if (this.Succeeded == b.Succeeded && this.Errors == b.Errors)
+            {
+                return true;
+            }
+            return false;
+        }
+
         private IdentityResult() { }
     }
 }

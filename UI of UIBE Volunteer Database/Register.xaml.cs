@@ -58,9 +58,9 @@ namespace Desktop
                         Mobile = telephonenumber.Text,
                         Email = emailadress.Text,
                         Room = dormitaryadress.Text,
-                        Status = AppUserStatus.NotApproved
+                        Status = AppUserStatus.Enabled
                     };
-                    IdentityResult result = ih.CreateUser(au, passWord, AppRoleEnum.OrgnizationMember, org);
+                    IdentityResult result = ih.CreateUser(au, passWord, AppRoleEnum.OrgnizationAdministrator, org);
                     if (result.Succeeded == true)
                     {
 #warning "把这些MessageBox.Show()改成友好的窗口或者Tips"
