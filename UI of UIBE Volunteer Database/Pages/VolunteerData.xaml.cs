@@ -84,5 +84,11 @@ namespace Desktop.Pages
         {
 
         }
+
+        private void BlacklistDetails_btn_Click(object sender, RoutedEventArgs e)
+        {
+            var BlackList = new BlackList();
+            BlackList.Show();
+        }
     }
 }

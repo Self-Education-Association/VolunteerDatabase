@@ -27,13 +27,17 @@ namespace Desktop.Pages
         private Project Pro;
         public ProjectInformation(Project pro)
         {
-            Pro = pro;
             InitializeComponent();
+            Pro = pro;
             if (Pro.ScoreCondition != ProjectScoreCondition.Scored)
             {
                 endproject.IsEnabled = false;
             }
             ProInfoShow();
+            List<AppUser> users=Pro.Managers.ToList();
+            List<Volunteer> vols=Pro.Volunteers.ToList();
+            project_manager_list.ItemsSource = users;
+            volunteer_list.ItemsSource = vols;
         }
         private void ProInfoShow()
         {
