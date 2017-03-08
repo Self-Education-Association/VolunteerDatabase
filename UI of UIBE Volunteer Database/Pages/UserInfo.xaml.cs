@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using VolunteerDatabase.Interface;
 using VolunteerDatabase.Helper;
+using VolunteerDatabase.Entity;
 
 namespace Desktop.Pages
 {
@@ -49,14 +50,19 @@ namespace Desktop.Pages
 
         private void ShowUserMessage()
         {
-            string[] orgstring = Claims.User.Organization.OrganizationEnum.ToString().Split('.');
-            string orgdetail = orgstring.Last();
-            string[] rolestring = Claims.Roles.ToString().Split('.');
-            string roledetail = rolestring.Last();
+            //string[] orgstring = Claims.User.Organization.//OrganizationEnum.ToString().Split('.');
+            //string orgdetail = orgstring.Last();
+            //string[] rolestring = Claims.Roles.ToString().Split('.');
+            //string roledetail = rolestring.Last();
+            string userroles = "";
+            foreach (AppRole role in Claims.User.Roles)
+            {
+                userroles = userroles + role.Name +" ";
+            }
             account_name.Text = Claims.User.AccountName;
-            org.Text = orgdetail;
+            org.Text = Claims.User.Organization.Name;
             tel.Text = Claims.User.Mobile;
-            roles.Text = roledetail;
+            roles.Text = userroles;
             userid.Text = Claims.User.StudentNum.ToString();
             email.Text = Claims.User.Email;
             dormitary.Text = Claims.User.Room;
