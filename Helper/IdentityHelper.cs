@@ -262,6 +262,10 @@ namespace VolunteerDatabase.Helper
             }
             try
             {
+                if (user.Status == AppUserStatus.Enabled)
+                {
+                    return IdentityResult.Error("该用户已通过审批,请勿重复操作.");
+                }
                 user.Status = AppUserStatus.Enabled;
                 Save();
                 return IdentityResult.Success();
@@ -287,6 +291,10 @@ namespace VolunteerDatabase.Helper
                     if (user == null)
                     {
                         return IdentityResult.Error("待审批的某个用户为空,请查询后重试!");
+                    }
+                    if(user.Status == AppUserStatus.Enabled)
+                    {
+                        return IdentityResult.Error("学号为" + user.StudentNum + ",姓名为" + user.Name + "已通过审批,请勿重复操作.");
                     }
                     user.Status = AppUserStatus.Enabled;
                 }

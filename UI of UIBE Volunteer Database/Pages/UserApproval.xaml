@@ -33,7 +33,7 @@
                         <DataGridTemplateColumn>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <mui:ModernButton Content="拒绝"/>
+                                    <mui:ModernButton Name="Reject" Content="拒绝" Click="Reject_Click"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
