@@ -27,24 +27,16 @@ namespace Desktop.Pages
         private IdentityPage identitypage = IdentityPage.GetInstance();
 
         private IdentityHelper helper = IdentityHelper.GetInstance();
+
+        List<AppUser> approvallist;
         private AppUserIdentityClaims Claims { get; set; }
         public UserApproval()
         {
             InitializeComponent();
             Claims = identitypage.Claims;
-            List<AppUser> approvallist = helper.ShowNotApprovedMembers(Claims.User.Organization);
+            approvallist = helper.ShowNotApprovedMembers(Claims.User.Organization);
             //approval_list.Items.Clear();
             approval_list.ItemsSource = approvallist;
-        }
-
-        private void search_volunteer_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void ModernButton_Click(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void Approve_Click(object sender, RoutedEventArgs e)
@@ -55,14 +47,49 @@ namespace Desktop.Pages
             if (senderButton.DataContext is AppUser)
             {
                 user = (AppUser)senderButton.DataContext;
+
                 result = helper.ApproveRegisterRequest(user);
-                MessageBox.Show("通过用户审批成功!");
+                if (result == IdentityResult.Success())
+                {
+                    MessageBox.Show("通过用户审批成功!");
+                    approvallist.Remove(user);
+                }
+
+                else
+                    MessageBox.Show(string.Join(",", result.Errors));
             }
             else
             {
-                result = IdentityResult.Error("待审批的用户为空.");
-                MessageBox.Show("错误:待审批的用户为空.");
+                result = IdentityResult.Error("待审批的用户不存在.");
+                MessageBox.Show("错误:待审批的用户不存在.");
             }
+            
+
+        }
+
+        private void Reject_Click(object sender, RoutedEventArgs e)
+        {
+            Button senderButton = sender as Button;
+            IdentityResult result;
+            AppUser user;
+            if (senderButton.DataContext is AppUser)
+            {
+                user = (AppUser)senderButton.DataContext;
+                result = helper.RejectRegisterRequest(user);
+                if (result == IdentityResult.Success())
+                {
+                    MessageBox.Show("拒绝用户审批成功!");
+                    approvallist.Remove(user);
+                }
+                else
+                    MessageBox.Show(string.Join(",", result.Errors));
+            }
+            else
+            {
+                result = IdentityResult.Error("待审批的用户不存在.");
+                MessageBox.Show("错误:待审批的用户不存在.");
+            }
+
 
         }
     }
