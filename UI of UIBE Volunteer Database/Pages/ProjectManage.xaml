@@ -42,7 +42,7 @@
                         <DataGridTextColumn Header="项目编号" Binding="{Binding Id}"/>
                         <!--<DataGridTextColumn Header="最大人数" Binding="{Binding Maximum}"/>-->
                         <DataGridTextColumn Header="开始时间" Binding="{Binding Time}"/>
-                        <DataGridTextColumn Header="创建时间" Binding="{Binding CreateTime}"/>
+                        <DataGridTextColumn Header="创建时间" Binding="{Binding CreatTime}"/>
                         <DataGridTemplateColumn Header="项目详情">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
