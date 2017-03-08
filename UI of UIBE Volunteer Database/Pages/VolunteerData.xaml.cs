@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using VolunteerDatabase.Helper;
+using VolunteerDatabase.Entity;
 
 namespace Desktop.Pages
 {
@@ -21,6 +22,7 @@ namespace Desktop.Pages
     /// </summary>
     public partial class VolunteerData : UserControl
     {
+        private List<Volunteer> sourceList;
         private IdentityPage identitypage = IdentityPage.GetInstance();
         private AppUserIdentityClaims Claims { get; set; }
         public VolunteerData()
@@ -82,13 +84,26 @@ namespace Desktop.Pages
 
         private void searchbyid_btn_Click(object sender, RoutedEventArgs e)
         {
+            if(studentnum==null)
+            {
 
+            }
+            else
+            {
+                var vh = VolunteerHelper.GetInstance();
+                sourceList.Add(vh.FindVolunteer(int.Parse(studentnum.Text)));
+            }
         }
 
         private void BlacklistDetails_btn_Click(object sender, RoutedEventArgs e)
         {
-            var BlackList = new BlackList();
-            BlackList.Show();
+            Button senderButton = sender as Button;
+            if (senderButton.DataContext is Volunteer)
+            {
+               Volunteer vol = (Volunteer)senderButton.DataContext;
+                var Blacklist = new BlackList(vol);
+                Blacklist.Show();
+            }
         }
     }
 }
