@@ -43,10 +43,10 @@
                         <!--<DataGridTextColumn Header="最大人数" Binding="{Binding Maximum}"/>-->
                         <DataGridTextColumn Header="开始时间" Binding="{Binding Time}"/>
                         <DataGridTextColumn Header="创建时间" Binding="{Binding CreateTime}"/>
-                        <DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="项目详情">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Click="Button_Click" x:Name="详情"/>
+                                    <mui:ModernButton Click="Button_Click" x:Name="详情"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
