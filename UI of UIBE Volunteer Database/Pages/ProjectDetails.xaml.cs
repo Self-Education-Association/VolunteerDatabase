@@ -71,6 +71,7 @@ namespace Desktop.Pages
             {
                 AddManager_btn.IsEnabled = false;
                 deleteproject_btn.IsEnabled = false;
+                project_manager_list.IsEnabled = false;
             }
             if (Claims.Roles.Count() == 1 && Claims.IsInRole(AppRoleEnum.OrgnizationAdministrator))
             {
@@ -79,7 +80,7 @@ namespace Desktop.Pages
                 piliang.IsEnabled = false;
                 AddVolunteer_btn.IsEnabled = false;
             }
-            //此处权限控制不完善，无法操作DataGrid中两个删除按钮的IsEnabled属性，删除事件也还没有建立，存在传值问题    
+            //此处删除事件没有建立
         }
         private void ProInfoShow()
         {
