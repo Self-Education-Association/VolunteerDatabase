@@ -36,6 +36,7 @@ namespace Desktop.Pages
             }
 
         }
+        //当未登陆就点击用户信息时应不光弹出非法身份，应当再次弹出登陆窗口
         private void sendClaimsEventHandler(AppUserIdentityClaims claims)
         {
             this.Claims = claims;

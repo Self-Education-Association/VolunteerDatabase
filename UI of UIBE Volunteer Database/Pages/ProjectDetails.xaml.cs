@@ -25,11 +25,30 @@ namespace Desktop.Pages
     public partial class ProjectInformation : Window
     {
         private Project Pro;
-        private string s1, s2, s3;
-        public ProjectInformation(Project pro)
+        private AppUserIdentityClaims Claims;
+        public ProjectInformation(AppUserIdentityClaims Claim, Project pro)
         {
-            InitializeComponent();
-            Pro = pro;
+            if (Claim == null)
+            {
+                Login.GetClaims(sendClaimsEventHandler);
+                IsEnabled = false;
+            }
+            else
+            {
+                this.Claims = Claim;
+                Pro = pro;
+            }
+        }
+        public void sendClaimsEventHandler(AppUserIdentityClaims claim)
+        {
+            IsEnabled = true;
+            this.Claims = claim;
+            IdentityPage identitypage = IdentityPage.GetInstance(claim);
+        }
+
+        public ProjectInformation(Project pro) :this(null,pro)
+        {
+            InitializeComponent();        
             if (Pro.ScoreCondition != ProjectScoreCondition.Scored)
             {
                 endproject.IsEnabled = false;
@@ -39,6 +58,28 @@ namespace Desktop.Pages
             List<Volunteer> vols=Pro.Volunteers.ToList();
             project_manager_list.ItemsSource = users;
             volunteer_list.ItemsSource = vols;
+            if (Claims.Roles.Count() == 0)
+            {
+                AddManager_btn.IsEnabled = false;
+                deleteproject_btn.IsEnabled = false;
+                endproject.IsEnabled = false;
+                yijianpingfen.IsEnabled = false;
+                piliang.IsEnabled = false;
+                AddVolunteer_btn.IsEnabled = false;
+            }
+            if (Claims.Roles.Count() == 1&&Claims.IsInRole(AppRoleEnum.OrgnizationMember))
+            {
+                AddManager_btn.IsEnabled = false;
+                deleteproject_btn.IsEnabled = false;
+            }
+            if (Claims.Roles.Count() == 1 && Claims.IsInRole(AppRoleEnum.OrgnizationAdministrator))
+            {
+                endproject.IsEnabled = false;
+                yijianpingfen.IsEnabled = false;
+                piliang.IsEnabled = false;
+                AddVolunteer_btn.IsEnabled = false;
+            }
+            //此处权限控制不完善，无法操作DataGrid中两个删除按钮的IsEnabled属性，删除事件也还没有建立，存在传值问题    
         }
         private void ProInfoShow()
         {
@@ -59,6 +100,14 @@ namespace Desktop.Pages
             {
                 var ch = CsvHelper.GetInstance();
                 ch.MassiveVolunteersInput(op, Pro);
+                if(ch.informingMessage.Count()!=0&&ch.informingMessage.Count()!=1)
+                {
+                    //此处应提示informingMessage,即有改动的信息，然后传多个学号，调用ch中方法确定新信息
+                }
+                else
+                {
+                    //提示导入失败
+                }
             }
         }
 
@@ -110,6 +159,7 @@ namespace Desktop.Pages
                 if(!result.Succeeded)
                 {
                     //此处应提示添加失败
+                    AddManager.Clear();
                 }
             }
         }
@@ -127,6 +177,7 @@ namespace Desktop.Pages
                 if (!result.Succeeded)
                 {
                     //此处应提示添加失败
+                    AddVolunteer.Clear();
                 }
             }          
         }
@@ -151,7 +202,7 @@ namespace Desktop.Pages
         {
 
         }
-
+        //这个方法没什么用吧？不知道为什么会出现在这里
         private void rate_btn_Click(object sender, RoutedEventArgs e)
         {
             Button senderButton = sender as Button;
@@ -159,25 +210,22 @@ namespace Desktop.Pages
             {
                 Volunteer Vol = (Volunteer)senderButton.DataContext;
             }
-            
+            //此处传值问题未解决，如何导出三个分数框中的值并且和对应行vol进行匹配？
         }
 
         private void shoushiqingkuang_LostFocus(object sender, RoutedEventArgs e)
         {
             TextBox tb = sender as TextBox;
-            s1 = tb.Text;
         }
 
         private void fuwutaidu_LostFocus(object sender, RoutedEventArgs e)
         {
             TextBox tb2 = sender as TextBox;
-            s2 = tb2.Text;
         }
 
         private void tongxinqingkuang_LostFocus(object sender, RoutedEventArgs e)
         {
             TextBox tb3 = sender as TextBox;
-            s3 = tb3.Text;
         }
     }
 }
