@@ -34,12 +34,12 @@ namespace Desktop.Pages
             Claims = identitypage.Claims;
             managehelper = ProjectManageHelper.GetInstance();
             progresshelper = ProjectProgressHelper.GetInstance();
-            // Login.GetClaims(sendClaimsEventHandler);
             allprojectlist = managehelper.ShowProjectList(Claims.User.Organization,true);
             allprojectlist.AddRange(managehelper.ShowProjectList(Claims.User.Organization, false));
             ShowList(StatusSwitch.SelectedIndex);
             //最后通过绑定后台资源实现列表内容更新
             //project_list.ItemsSource = helper.FindAuthorizedProjectsByUser(Claims.User);
+            //此处逻辑未完成，仅为OrgMember时应该禁用选择项目状态按钮；此外应该配置切换到该页面的刷新
         }
 
         private void ShowList(int status)
@@ -160,7 +160,7 @@ namespace Desktop.Pages
             if(senderButton.DataContext is Project)
             {
                 Project project = (Project)senderButton.DataContext;
-                var ProjectInformation = new ProjectInformation(project);
+                var ProjectInformation = new ProjectInformation(this.Claims,project);
                 ProjectInformation.Show();
             }          
         }
@@ -174,10 +174,8 @@ namespace Desktop.Pages
             {
                 List<Project> Pros = new List<Project>();
                 Pros.Add(progresshelper.FindProjectByProjectId(int.Parse(search_project.Text)));
-                allprojectlist = Pros;
+                project_list.ItemsSource = Pros;
             }
         }
-            
-
     }
 }

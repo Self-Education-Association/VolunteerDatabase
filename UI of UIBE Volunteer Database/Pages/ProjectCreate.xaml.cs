@@ -41,7 +41,6 @@ namespace Desktop.Pages
 #warning "把这些MessageBox.Show()改成友好的窗口或者Tips"
                 MessageBox.Show("请完整输入所有项目.");
             }
-            //此处时间验证仍有问题，待解决！！！
             else
             {            
                 ProgressResult result = helper.CreatNewProject(Claims.User.Organization, project_time.DisplayDate, project_name.Text, project_place.Text, textRange.Text, int.Parse(project_maximum.Text));
