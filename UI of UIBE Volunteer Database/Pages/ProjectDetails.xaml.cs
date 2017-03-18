@@ -26,6 +26,13 @@ namespace Desktop.Pages
     {
         private Project Pro;
         private AppUserIdentityClaims Claims;
+        public void sendClaimsEventHandler(AppUserIdentityClaims claim)
+        {
+            IsEnabled = true;
+            this.Claims = claim;
+            IdentityPage identitypage = IdentityPage.GetInstance(claim);
+        }
+
         public ProjectInformation(AppUserIdentityClaims Claim, Project pro)
         {
             if (Claim == null)
@@ -38,26 +45,20 @@ namespace Desktop.Pages
                 this.Claims = Claim;
                 Pro = pro;
             }
-        }
-        public void sendClaimsEventHandler(AppUserIdentityClaims claim)
-        {
-            IsEnabled = true;
-            this.Claims = claim;
-            IdentityPage identitypage = IdentityPage.GetInstance(claim);
-        }
-
-        public ProjectInformation(Project pro) :this(null,pro)
-        {
-            InitializeComponent();        
-            if (Pro.ScoreCondition != ProjectScoreCondition.Scored)
-            {
-                endproject.IsEnabled = false;
-            }
+            InitializeComponent();
+            Auth();        
             ProInfoShow();
             List<AppUser> users=Pro.Managers.ToList();
             List<Volunteer> vols=Pro.Volunteers.ToList();
             project_manager_list.ItemsSource = users;
             volunteer_list.ItemsSource = vols;
+        }
+        private void Auth()
+        {
+            if (Pro.ScoreCondition != ProjectScoreCondition.Scored)
+            {
+                endproject.IsEnabled = false;
+            }
             if (Claims.Roles.Count() == 0)
             {
                 AddManager_btn.IsEnabled = false;
@@ -67,7 +68,7 @@ namespace Desktop.Pages
                 piliang.IsEnabled = false;
                 AddVolunteer_btn.IsEnabled = false;
             }
-            if (Claims.Roles.Count() == 1&&Claims.IsInRole(AppRoleEnum.OrgnizationMember))
+            if (Claims.Roles.Count() == 1 && Claims.IsInRole(AppRoleEnum.OrgnizationMember))
             {
                 AddManager_btn.IsEnabled = false;
                 deleteproject_btn.IsEnabled = false;
@@ -80,17 +81,20 @@ namespace Desktop.Pages
                 piliang.IsEnabled = false;
                 AddVolunteer_btn.IsEnabled = false;
             }
-            //此处删除事件没有建立
         }
+
         private void ProInfoShow()
         {
-            org.Text = Pro.Organization.Name;
-            project_name.Text = Pro.Name;
-            project_id.Text = Pro.Id.ToString();
-            project_place.Text = Pro.Place;
-            project_status.Text = Pro.Condition.ToString();
-            project_time.Text = Pro.Time.ToString();
-            project_accomodation.Text = Pro.Volunteers.Count() + "/" + Pro.Maximum.ToString();
+            if (Pro != null)
+            {
+                org.Text = Pro.Organization.Name;
+                project_name.Text = Pro.Name;
+                project_id.Text = Pro.Id.ToString();
+                project_place.Text = Pro.Place;
+                project_status.Text = Pro.Condition.ToString();
+                project_time.Text = Pro.Time.ToString();
+                project_accomodation.Text = Pro.Volunteers.Count() + "/" + Pro.Maximum.ToString();
+            }         
         }
 
         private void piliang_Click(object sender, RoutedEventArgs e)
@@ -103,11 +107,11 @@ namespace Desktop.Pages
                 ch.MassiveVolunteersInput(op, Pro);
                 if(ch.informingMessage.Count()!=0&&ch.informingMessage.Count()!=1)
                 {
-                    //此处应提示informingMessage,即有改动的信息，然后传多个学号，调用ch中方法确定新信息
+                    //此处应建立窗口提示informingMessage,即有改动的信息，然后传多个学号，再调用ch中方法确定新信息
                 }
                 else
                 {
-                    //提示导入失败
+                    MessageBox.Show("导入失败");
                 }
             }
         }
@@ -116,11 +120,14 @@ namespace Desktop.Pages
         {
             {
                 var pph = ProjectProgressHelper.GetInstance();
-                var result = pph.FinishProject(Pro);
-                if(!result.Succeeded)
+                if (Pro != null)
                 {
-                    //此处应提示结项失败
-                }
+                    var result = pph.FinishProject(Pro);
+                    if (!result.Succeeded)
+                    {
+                        MessageBox.Show("结项失败");
+                    }
+                }                        
             }
 
         }
@@ -159,7 +166,7 @@ namespace Desktop.Pages
                 var result = pmh.AddManager(int.Parse(AddManager.Text), Pro);
                 if(!result.Succeeded)
                 {
-                    //此处应提示添加失败
+                    MessageBox.Show("导入失败");
                     AddManager.Clear();
                 }
             }
@@ -177,7 +184,7 @@ namespace Desktop.Pages
                 var result = pph.SingleVolunteerInputById(int.Parse(AddVolunteer.Text), Pro);
                 if (!result.Succeeded)
                 {
-                    //此处应提示添加失败
+                    MessageBox.Show("导入失败");
                     AddVolunteer.Clear();
                 }
             }          
@@ -199,20 +206,16 @@ namespace Desktop.Pages
             }
         }
 
-        private void AddManager_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-        //这个方法没什么用吧？不知道为什么会出现在这里
         private void rate_btn_Click(object sender, RoutedEventArgs e)
         {
             Button senderButton = sender as Button;
             if (senderButton.DataContext is Volunteer)
             {
                 Volunteer Vol = (Volunteer)senderButton.DataContext;
-            }
-            //此处传值问题未解决，如何导出三个分数框中的值并且和对应行vol进行匹配？
+            }          
         }
+        //仍然不能调用datagrid中的按钮！！好气（评分没写）
+        //两个DataGrid中删除事件没建立
 
         private void shoushiqingkuang_LostFocus(object sender, RoutedEventArgs e)
         {

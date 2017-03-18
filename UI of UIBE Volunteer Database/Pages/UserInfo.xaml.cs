@@ -36,7 +36,10 @@ namespace Desktop.Pages
             }
 
         }
-        //当未登陆就点击用户信息时应不光弹出非法身份，应当再次弹出登陆窗口
+        //当未登陆就点击用户信息时应不光弹出非法身份，应当再次弹出登陆窗口,重要！！！！！！！！！！
+
+
+
         private void sendClaimsEventHandler(AppUserIdentityClaims claims)
         {
             this.Claims = claims;
@@ -51,10 +54,6 @@ namespace Desktop.Pages
 
         private void ShowUserMessage()
         {
-            //string[] orgstring = Claims.User.Organization.//OrganizationEnum.ToString().Split('.');
-            //string orgdetail = orgstring.Last();
-            //string[] rolestring = Claims.Roles.ToString().Split('.');
-            //string roledetail = rolestring.Last();
             string userroles = "";
             foreach (AppRole role in Claims.User.Roles)
             {

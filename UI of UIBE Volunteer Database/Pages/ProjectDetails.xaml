@@ -106,7 +106,7 @@
                     </DataGrid.Columns>
                 </DataGrid>
                 <!--<Label Content="添加管理者" HorizontalAlignment="Left" Height="20" Width="60"/>-->
-                <TextBox x:Name="AddManager" KeyDown="AddManager_KeyDown" MaxLength="9" TextChanged="AddManager_TextChanged" Width="120" HorizontalAlignment="Right"/>
+                <TextBox x:Name="AddManager" KeyDown="AddManager_KeyDown" MaxLength="9" Width="120" HorizontalAlignment="Right"/>
                 <mui:ModernButton x:Name="AddManager_btn" Content="输入学号添加管理者" HorizontalAlignment="Right" Click="AddManager_btn_Click"/>
                 <TextBox x:Name="AddVolunteer" KeyDown="AddVolunteer_KeyDown" MaxLength="9" Width="120" HorizontalAlignment="Right"/>
                 <mui:ModernButton x:Name="AddVolunteer_btn" Content="输入学号添加志愿者" HorizontalAlignment="Right" Click="AddVolunteer_btn_Click"/>

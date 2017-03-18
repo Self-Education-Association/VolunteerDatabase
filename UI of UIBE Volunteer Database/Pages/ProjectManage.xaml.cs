@@ -31,15 +31,20 @@ namespace Desktop.Pages
         public ProjectManage()
         {
             InitializeComponent();
-            Claims = identitypage.Claims;
+            if(Claims!=null)
+            {
+                Claims = identitypage.Claims;
+            }
             managehelper = ProjectManageHelper.GetInstance();
             progresshelper = ProjectProgressHelper.GetInstance();
             allprojectlist = managehelper.ShowProjectList(Claims.User.Organization,true);
             allprojectlist.AddRange(managehelper.ShowProjectList(Claims.User.Organization, false));
             ShowList(StatusSwitch.SelectedIndex);
-            //最后通过绑定后台资源实现列表内容更新
-            //project_list.ItemsSource = helper.FindAuthorizedProjectsByUser(Claims.User);
-            //此处逻辑未完成，仅为OrgMember时应该禁用选择项目状态按钮；此外应该配置切换到该页面的刷新
+            if (Claims.Roles.Count() == 1 && Claims.IsInRole(AppRoleEnum.OrgnizationMember))
+            {
+                project_list.ItemsSource = progresshelper.FindAuthorizedProjectsByUser(Claims.User);
+                StatusSwitch.IsEnabled = false;
+            }
         }
 
         private void ShowList(int status)
@@ -82,76 +87,6 @@ namespace Desktop.Pages
             }
             if (project_list != null)
                 ShowList(StatusSwitch.SelectedIndex);
-        }
-
-
-        private List<Project> testCreateProjectList()
-        {
-            //ProjectManageHelper helper1 = ProjectManageHelper.GetInstance();
-            // ProjectProgressHelper helper2 = ProjectProgressHelper.GetInstance();
-
-            Volunteer v1 = new Volunteer
-            {
-                StudentNum = 5551,
-                Mobile = "13812345678",
-                Name = "AddTest",
-                Email = "AddTest@test.com",
-                Class = "AddTestClass",
-                Room = "AddTestRoom"
-            };
-
-            Volunteer v2 = new Volunteer
-            {
-                StudentNum = 5552,
-                Mobile = "13812345671",
-                Name = "AddTest2",
-                Email = "AddTest2@test.com",
-                Class = "AddTestClass2",
-                Room = "AddTestRoom2"
-            };
-            List<Volunteer> list = new List<Volunteer>();
-            list.Add(v1);
-            list.Add(v2);
-
-            Project p = new Project
-            {
-                Id = 999,
-                CreatTime = DateTime.MinValue,
-                Name = "A Project",
-                Condition = ProjectCondition.Ongoing,
-                Organization = Claims.User.Organization,
-                Time = DateTime.MinValue,
-                Details = "A Test Project.",
-                Maximum = 70,
-                Place = "UIBE",
-                Volunteers = list,
-                Managers = new List<AppUser>()
-
-
-            };
-
-            Project p2 = new Project
-            {
-                Id = 998,
-                CreatTime = DateTime.MinValue,
-                Name = "A Finished Project",
-                Condition = ProjectCondition.Finished,
-                Organization = Claims.User.Organization,
-                Time = DateTime.MinValue,
-                Details = "A Test Project.",
-                Maximum = 70,
-                Place = "UIBE",
-                Volunteers = list,
-                Managers = new List<AppUser>()
-
-
-            };
-            p.Managers.Add(Claims.User);
-
-            List<Project> projects = new List<Project>();
-            projects.Add(p);
-            projects.Add(p2);
-            return projects;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
