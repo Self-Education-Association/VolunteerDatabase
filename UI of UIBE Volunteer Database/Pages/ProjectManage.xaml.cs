@@ -27,16 +27,17 @@ namespace Desktop.Pages
         List<Project> allprojectlist;
         ProjectManageHelper managehelper;
         ProjectProgressHelper progresshelper;
-        private AppUserIdentityClaims Claims { get; set; }
+        private AppUserIdentityClaims Claims{ get; set; }
         public ProjectManage()
         {
             InitializeComponent();
-            if(Claims!=null)
+            if (identitypage.Claims != null)
             {
                 Claims = identitypage.Claims;
             }
             managehelper = ProjectManageHelper.GetInstance();
             progresshelper = ProjectProgressHelper.GetInstance();
+            if (managehelper.ShowProjectList(Claims.User.Organization, true) != null)
             allprojectlist = managehelper.ShowProjectList(Claims.User.Organization,true);
             allprojectlist.AddRange(managehelper.ShowProjectList(Claims.User.Organization, false));
             ShowList(StatusSwitch.SelectedIndex);

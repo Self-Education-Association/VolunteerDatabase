@@ -106,7 +106,7 @@ namespace Desktop
 
         private void studentid_KeyDown(object sender, KeyEventArgs e)
         {
-            if (!((e.Key >= Key.D0 && e.Key <= Key.D9) || (e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9)))
+            if (!((e.Key >= Key.D0 && e.Key <= Key.D9) || (e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9)||e.Key==Key.Enter||e.Key==Key.Tab))
             {
                 e.Handled = true;
             }
@@ -114,12 +114,17 @@ namespace Desktop
 
         private void telephonenumber_KeyDown(object sender, KeyEventArgs e)
         {
-            if (!((e.Key >= Key.D0 && e.Key <= Key.D9) || (e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9)))
+            if (!((e.Key >= Key.D0 && e.Key <= Key.D9) || (e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9 || e.Key == Key.Enter || e.Key == Key.Tab)))
             {
                 e.Handled = true;
             }
 
-        }       
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
+        }
         //此处限制了键盘输入必须为数字，但是无法检查输入法的中文输入，待解决
         //动态展现：用户名已经被占用
     }

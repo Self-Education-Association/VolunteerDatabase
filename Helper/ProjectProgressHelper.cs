@@ -185,6 +185,11 @@ namespace VolunteerDatabase.Helper
                 foreach (var item in selectedvolunteers)
                 {
                     item.Score += Score;
+                    CreditRecord cr = new CreditRecord();
+                    cr.Participant = item;
+                    cr.Project = Pro;
+                    cr.Score = Score;
+                    item.CreditRecords.Add(cr);
                 }
                 Pro.ScoreCondition = ProjectScoreCondition.Scored;
                 Save();

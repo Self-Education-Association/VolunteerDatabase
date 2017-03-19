@@ -121,5 +121,11 @@ namespace Desktop
         public delegate void SendClaimsDelegate(AppUserIdentityClaims claims);
 
         public static event SendClaimsDelegate SendClaimsEvent;
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            if (claimsStored == null)
+                Environment.Exit(0);
+        }
     }
 }
