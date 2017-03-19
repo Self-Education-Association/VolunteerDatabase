@@ -231,5 +231,15 @@ namespace Desktop.Pages
         {
             TextBox tb3 = sender as TextBox;
         }
+
+        private void deleteprojectmanager_btn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void deletevolunteer_btn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
