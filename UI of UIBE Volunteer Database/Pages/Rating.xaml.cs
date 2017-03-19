@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using VolunteerDatabase.Helper;
 using VolunteerDatabase.Entity;
 using VolunteerDatabase.Interface;
+using FirstFloor.ModernUI.Windows.Controls;
 
 namespace Desktop.Pages
 {
@@ -49,7 +50,7 @@ namespace Desktop.Pages
                 }
                 else
                 {
-                    MessageBox.Show("评分失败，请检查分数输入是否合法");
+                    ModernDialog.ShowMessage("请检查分数输入是否合法","评分失败",MessageBoxButton.OK);
                 }
             }
             else
@@ -58,7 +59,7 @@ namespace Desktop.Pages
                 var result=pph.EditScore(vol,pro,temp);
                 if(result.Succeeded)
                 {
-                    MessageBox.Show("分数已经更改");
+                    ModernDialog.ShowMessage("分数已经更改","评分成功",MessageBoxButton.OK);
                     this.Close();
                 }
             }          

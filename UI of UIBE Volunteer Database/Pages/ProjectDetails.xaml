@@ -80,11 +80,11 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTextColumn Header="黑名单"/>
+                        <DataGridTextColumn Header="黑名单" Binding="{Binding BlaclistCondition}"/>
                         <DataGridTemplateColumn>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <mui:ModernButton x:Name="BlacklistDetails_btn"/>
+                                    <Button x:Name="BlacklistDetails_btn" Content="黑名单详情"></Button>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
