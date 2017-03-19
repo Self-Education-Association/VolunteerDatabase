@@ -11,6 +11,7 @@ namespace VolunteerDatabase.Helper
     public class ProjectProgressHelper
     {
         private static ProjectProgressHelper helper;
+        private VolunteerHelper vhelper;
         private static readonly object helperlocker = new object();
         Database database = DatabaseContext.GetInstance();
 
@@ -50,6 +51,7 @@ namespace VolunteerDatabase.Helper
         public ProjectProgressHelper()
         {
             database = DatabaseContext.GetInstance();
+            vhelper = VolunteerHelper.GetInstance();
         }
 
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]

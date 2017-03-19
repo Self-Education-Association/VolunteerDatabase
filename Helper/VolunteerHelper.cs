@@ -113,6 +113,13 @@ namespace VolunteerDatabase.Helper
                 v.Name = v.Name == DEFAULTSTRING ? DEFAULTSTRING : v.Name;
                 v.Class = v.Class == DEFAULTSTRING ? DEFAULTSTRING : v.Class;
                 v.Email = v.Email == DEFAULTSTRING ? DEFAULTSTRING : v.Email; //加入几个列表的初始化.
+                v.BlackListRecords = new List<BlackListRecord>();
+                v.CreditRecords = new List<CreditRecord>();
+                v.ProjectCount = 0;
+                v.Project = new List<Project>();
+                v.Skill = v.Skill;
+                v.Score = 0;
+                v.TargetedBy = new List<LogRecord>();
                 database.Volunteers.Add(v);
                 Save();
                 Volunteer target = FindVolunteer(stunum);
