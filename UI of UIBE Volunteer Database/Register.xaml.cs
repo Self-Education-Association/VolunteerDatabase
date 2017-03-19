@@ -55,8 +55,7 @@ namespace Desktop
                     }
                     catch(Exception)
                     {
-#warning "把这些MessageBox.Show()改成友好的窗口或者Tips"
-                        MessageBox.Show("学号输入非法,仅能输入数字.");
+                        ModernDialog.ShowMessage("学号输入非法,仅能输入数字.", "警告", MessageBoxButton.OK);
                     }
                     AppUserStatus status = AppUserStatus.NotApproved;
                     AppRoleEnum role = AppRoleEnum.OrgnizationMember;
@@ -78,28 +77,24 @@ namespace Desktop
                     IdentityResult result = ih.CreateUser(au, passWord,  role, org);
                     if (result.Succeeded == true)
                     {
-#warning "把这些MessageBox.Show()改成友好的窗口或者Tips"
                         if(isAdministrator)
                         {
-                            MessageBox.Show("注册机构账号成功!账号所属机构:["+comboBox.Text+"],机构账号用户名:["+accountname.Text+"],密码:["+passWord+"],请牢记账号密码!");
+                            ModernDialog.ShowMessage("注册机构账号成功!账号所属机构:[" + comboBox.Text + "],机构账号用户名:[" + accountname.Text + "],密码:[" + passWord + "],请牢记账号密码!", "", MessageBoxButton.OK);
                         }
                         else
                         {
-                            MessageBox.Show("注册成功!已发送注册审批请求,请等待管理员审批.");
+                            ModernDialog.ShowMessage("注册成功!已发送注册审批请求,请等待管理员审批.","",MessageBoxButton.OK);
                         }
                         this.Close();
                     }
                     else
                     {
-#warning "把这些MessageBox.Show()改成友好的窗口或者Tips"
-                        MessageBox.Show("注册失败，错误信息：" + string.Join(",", result.Errors));
+                        ModernDialog.ShowMessage("注册失败，错误信息：" + string.Join(",", result.Errors),"",MessageBoxButton.OK);
                     }
                 }
                 else
                 {
-#warning "把这些MessageBox.Show()改成友好的窗口或者Tips"
-                    MessageBox.Show("两次密码输入不一致，请核对");
-                    //用MessageBox太丑了，待改
+                    ModernDialog.ShowMessage("两次密码输入不一致，请核对","",MessageBoxButton.OK);
                 }
             }
         }

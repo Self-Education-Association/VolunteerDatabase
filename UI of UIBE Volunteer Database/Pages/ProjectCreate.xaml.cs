@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using VolunteerDatabase.Helper;
+using FirstFloor.ModernUI.Windows.Controls;
 
 namespace Desktop.Pages
 {
@@ -38,16 +39,14 @@ namespace Desktop.Pages
             TextRange textRange = new TextRange(project_details.Document.ContentStart, project_details.Document.ContentEnd);
             if (project_name.Text == "" ||!ischanged||project_place.Text == ""|| project_place.Text == "" || project_maximum.Text == "" || textRange.Text == "")
             {
-#warning "把这些MessageBox.Show()改成友好的窗口或者Tips"
-                MessageBox.Show("请完整输入所有项目.");
+                ModernDialog.ShowMessage("请完整输入所有项目", "提示", MessageBoxButton.OK);
             }
             else
             {            
                 ProgressResult result = helper.CreatNewProject(Claims.User.Organization, project_time.DisplayDate, project_name.Text, project_place.Text, textRange.Text, int.Parse(project_maximum.Text));
                 if (result.Succeeded)
                 {
-#warning "把这些MessageBox.Show()改成友好的窗口或者Tips"
-                    MessageBox.Show("项目创建成功!");
+                    ModernDialog.ShowMessage("项目创建成功!", "", MessageBoxButton.OK);
                     project_name.Clear();
                     project_place.Clear();
                     project_maximum.Clear();
@@ -55,8 +54,7 @@ namespace Desktop.Pages
                 }
                 else
                 {
-#warning "把这些MessageBox.Show()改成友好的窗口或者Tips"
-                    MessageBox.Show("项目创建失败!错误信息" + string.Join(",", result.Errors));
+                    ModernDialog.ShowMessage("项目创建失败!错误信息" + string.Join(",", result.Errors), "", MessageBoxButton.OK);
                 }
             }
         }
