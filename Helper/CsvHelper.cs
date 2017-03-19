@@ -45,9 +45,9 @@ namespace VolunteerDatabase.Helper
             return await helper;
         }
 
-        public List<string> errorList;
-        public List<string> informingMessage;
-        public static List<Volunteer> ChangedVols;
+        public List<string> errorList=new List<string>();
+        public List<string> informingMessage=new List<string>();
+        public static List<Volunteer> ChangedVols=new List<Volunteer>();
 
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
         public void MassiveVolunteersInput(OpenFileDialog op,Project Pro)
