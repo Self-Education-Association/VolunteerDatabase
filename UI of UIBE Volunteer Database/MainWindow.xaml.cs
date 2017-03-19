@@ -31,7 +31,7 @@ namespace Desktop
             bool? result = new CertificateInstaller().InstallCertificate();
             if (result == true)
             {
-                MessageBox.Show("证书安装成功");
+                ModernDialog.ShowMessage("证书安装成功","提示信息",MessageBoxButton.OK);
             }
 #endif
             InitializeComponent();
