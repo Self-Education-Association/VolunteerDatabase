@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Desktop"
         xmlns:mui="http://firstfloorsoftware.com/ModernUI"
         mc:Ignorable="d"
-        Height="400" Width="300" d:DesignWidth="400" d:DesignHeight="300">
+        Height="400" Width="300" d:DesignWidth="400" d:DesignHeight="300" Closing="Window_Closing">
     <Grid Style="{StaticResource ContentRoot}">
         <ScrollViewer>
             <Canvas>
