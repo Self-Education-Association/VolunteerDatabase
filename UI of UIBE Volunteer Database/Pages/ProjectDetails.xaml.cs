@@ -73,6 +73,8 @@ namespace Desktop.Pages
                 AddManager_btn.IsEnabled = false;
                 deleteproject_btn.IsEnabled = false;
                 project_manager_list.IsEnabled = false;
+                AddManager.IsEnabled = false;
+                AddManager_btn.IsEnabled = false;
             }
             if (Claims.Roles.Count() == 1 && Claims.IsInRole(AppRoleEnum.OrgnizationAdministrator))
             {
@@ -211,11 +213,10 @@ namespace Desktop.Pages
             Button senderButton = sender as Button;
             if (senderButton.DataContext is Volunteer)
             {
-                Volunteer Vol = (Volunteer)senderButton.DataContext;
+                Volunteer Vol = (Volunteer)senderButton.DataContext;               
             }          
         }
         //仍然不能调用datagrid中的按钮！！好气（评分没写）
-        //两个DataGrid中删除事件没建立
 
         private void shoushiqingkuang_LostFocus(object sender, RoutedEventArgs e)
         {
@@ -230,6 +231,34 @@ namespace Desktop.Pages
         private void tongxinqingkuang_LostFocus(object sender, RoutedEventArgs e)
         {
             TextBox tb3 = sender as TextBox;
+        }
+
+        private void deleteprojectmanager_btn_Click(object sender, RoutedEventArgs e)
+        {
+            Button senderButton = sender as Button;
+            if (senderButton.DataContext is AppUser)
+            {
+                AppUser Man = (AppUser)senderButton.DataContext;
+                if(Man!=null)
+                {
+                    var pmh = ProjectManageHelper.GetInstance();
+                    pmh.DeletManager(Man.StudentNum, Pro);
+                }
+            }
+        }
+
+        private void deletevolunteer_btn_Click(object sender, RoutedEventArgs e)
+        {
+            Button senderButton = sender as Button;
+            if (senderButton.DataContext is Volunteer)
+            {
+                Volunteer Vol = (Volunteer)senderButton.DataContext;
+                if (Vol != null)
+                {
+                    var pph = ProjectProgressHelper.GetInstance();
+                    pph.DeleteVolunteerFromProject(Vol, Pro);
+                }
+            }
         }
     }
 }

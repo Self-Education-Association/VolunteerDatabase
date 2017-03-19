@@ -143,6 +143,24 @@ namespace VolunteerDatabase.Helper
             Save();
             return ProgressResult.Success();
         }
+        [AppAuthorize(AppRoleEnum.Administrator)]
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
+        public ProgressResult DeletManager(int StuNum, Project Pro)
+        {
+            var Manager = database.Users.SingleOrDefault(o => o.StudentNum == StuNum);
+            if (Pro == null || Pro.Condition == ProjectCondition.Finished)
+            {
+                return ProgressResult.Error("修改项目时失败!项目不存在或已结项.");
+            }
+            if (Manager == null || Manager.Status != AppUserStatus.Enabled)
+            {
+                return ProgressResult.Error("待删除的用户身份非法.");
+            }
+
+            Pro.Managers.Remove(Manager);
+            Save();
+            return ProgressResult.Success();
+        }
 
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
