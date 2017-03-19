@@ -51,6 +51,7 @@ namespace Desktop.Pages
                 if(studentnum.Text!="")
                 {
                     sourceList.Add(vh.FindVolunteer(int.Parse(studentnum.Text)));
+                    App.DoEvents();
                 }
             }              
         }

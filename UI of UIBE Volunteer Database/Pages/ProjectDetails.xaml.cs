@@ -128,6 +128,7 @@ namespace Desktop.Pages
                     {
                         MessageBox.Show("评分失败");
                     }
+                    App.DoEvents();
                 }          
                 if (Pro != null)
                 {
@@ -150,6 +151,7 @@ namespace Desktop.Pages
                 case MessageBoxResult.Yes:
                     pmh.ProjectDelete(Pro);
                     this.Close();
+                    App.DoEvents();
                     break;
                 case MessageBoxResult.No:
                     break;
@@ -172,6 +174,9 @@ namespace Desktop.Pages
                     if(result.Succeeded)
                     {
                         MessageBox.Show("学号为[" + AddManager.Text + "]的用户已经被添加为项目["+Pro.Name+"]的项目管理者.");
+                        project_manager_list.ItemsSource = null;
+                        project_manager_list.ItemsSource = Pro.Managers.ToList();
+                        App.DoEvents();
                     }
                     if (!result.Succeeded)
                     {
@@ -199,6 +204,9 @@ namespace Desktop.Pages
                 if (result.Succeeded)
                 {
                     MessageBox.Show("学号为[" + AddVolunteer.Text + "]的志愿者已经被添加入项目[" + Pro.Name + "]的志愿者列表.");
+                    volunteer_list.ItemsSource = null;
+                    volunteer_list.ItemsSource = Pro.Volunteers.ToList();
+                    App.DoEvents();
                 }
                 if (!result.Succeeded)
                 {
@@ -247,6 +255,9 @@ namespace Desktop.Pages
                 {
                     var pmh = ProjectManageHelper.GetInstance();
                     pmh.DeletManager(Man.StudentNum, Pro);
+                    project_manager_list.ItemsSource = null;
+                    project_manager_list.ItemsSource = Pro.Managers.ToList();
+                    App.DoEvents();
                 }
             }
         }
@@ -261,6 +272,9 @@ namespace Desktop.Pages
                 {
                     var pph = ProjectProgressHelper.GetInstance();
                     pph.DeleteVolunteerFromProject(Vol, Pro);
+                    volunteer_list.ItemsSource = null;
+                    volunteer_list.ItemsSource = Pro.Volunteers.ToList();
+                    App.DoEvents();
                 }
             }
         }
