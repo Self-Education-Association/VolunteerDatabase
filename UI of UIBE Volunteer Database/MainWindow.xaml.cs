@@ -1,9 +1,11 @@
 ﻿using FirstFloor.ModernUI.Windows.Controls;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -30,13 +32,12 @@ namespace Desktop
             bool? result = new CertificateInstaller().InstallCertificate();
             if (result == true)
             {
-                ModernDialog.ShowMessage("证书安装成功","提示信息",MessageBoxButton.OK);
+                MessageBox.Show("证书安装成功！");
             }
 #endif
             InitializeComponent();
         }
         private AppUserIdentityClaims Claims { get; set; }
-
     }
 
 }
