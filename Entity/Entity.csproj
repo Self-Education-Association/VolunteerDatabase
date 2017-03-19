@@ -60,13 +60,9 @@
     <Compile Include="Database.cs" />
     <Compile Include="DatabaseContext.cs" />
     <Compile Include="LogRecord.cs" />
-    <Compile Include="Migrations\201703071658057_Init.cs" />
-    <Compile Include="Migrations\201703071658057_Init.Designer.cs">
-      <DependentUpon>201703071658057_Init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703071737530_LJWforTest.cs" />
-    <Compile Include="Migrations\201703071737530_LJWforTest.Designer.cs">
-      <DependentUpon>201703071737530_LJWforTest.cs</DependentUpon>
+    <Compile Include="Migrations\201703072247407_Init.cs" />
+    <Compile Include="Migrations\201703072247407_Init.Designer.cs">
+      <DependentUpon>201703072247407_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Organization.cs" />
@@ -85,11 +81,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201703071658057_Init.resx">
-      <DependentUpon>201703071658057_Init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703071737530_LJWforTest.resx">
-      <DependentUpon>201703071737530_LJWforTest.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201703072247407_Init.resx">
+      <DependentUpon>201703072247407_Init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

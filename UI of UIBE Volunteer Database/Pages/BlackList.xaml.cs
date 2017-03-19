@@ -12,6 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VolunteerDatabase.Helper;
+using VolunteerDatabase.Entity;
+using VolunteerDatabase.Interface;
+
 
 namespace Desktop.Pages
 {
@@ -20,9 +24,14 @@ namespace Desktop.Pages
     /// </summary>
     public partial class BlackList : Window
     {
-        public BlackList()
+        private Volunteer Vol;
+        List<BlackListRecord> sourceList;
+        public BlackList(Volunteer vol)
         {
+            Vol = vol;
             InitializeComponent();
-        }
+            sourceList = Vol.BlackListRecords;
+            Blacklistdata.ItemsSource = sourceList;
+        }      
     }
 }

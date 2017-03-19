@@ -42,17 +42,17 @@
                         <DataGridTextColumn Header="项目编号" Binding="{Binding Id}"/>
                         <!--<DataGridTextColumn Header="最大人数" Binding="{Binding Maximum}"/>-->
                         <DataGridTextColumn Header="开始时间" Binding="{Binding Time}"/>
-                        <DataGridTextColumn Header="创建时间" Binding="{Binding CreateTime}"/>
-                        <DataGridTemplateColumn>
+                        <DataGridTextColumn Header="创建时间" Binding="{Binding CreatTime}"/>
+                        <DataGridTemplateColumn Header="项目详情">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Click="Button_Click" x:Name="详情"/>
+                                    <mui:ModernButton Click="Button_Click" x:Name="详情"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
-                <mui:ModernButton Content="查找" Width="60" Height="25" Canvas.Left="498" Canvas.Top="27"/>
+                <mui:ModernButton Content="查找" Width="60" Height="25" Canvas.Left="498" Canvas.Top="27" Click="ModernButton_Click"/>
                 <TextBox x:Name="search_project" Width="90" Height="25" Canvas.Left="403" Canvas.Top="27"/>
             </Canvas>
         </ScrollViewer>

@@ -53,6 +53,7 @@ namespace VolunteerDatabase.Helper
             return Projects;
         }
 
+
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
         //      public List<AppUser> FindManagerListByStudentNum(params string[] StuNums)  //将原本是string类型的参数改为 int
@@ -87,14 +88,14 @@ namespace VolunteerDatabase.Helper
                 Project.Time = Time;
                 Project.CreatTime = DateTime.Now;
                 Project.Maximum = Maximum;
-                Project.Managers = null;
+                Project.Managers = new List<AppUser>();
                 Project.Place = Place;
                 Project.Name = Name;
                 Project.Details = Detail;
                 Project.Condition = ProjectCondition.Ongoing;
                 Project.ScoreCondition = ProjectScoreCondition.UnScored;
                 Project.Organization = org;
-                Project.Volunteers = null;
+                Project.Volunteers = new List<Volunteer>();
                 database.Projects.Add(Project);
                 Save();
                 result = ProgressResult.Success();
@@ -126,8 +127,9 @@ namespace VolunteerDatabase.Helper
 
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public ProgressResult AddManager(AppUser Manager, Project Pro)
+        public ProgressResult AddManager(int StuNum, Project Pro)
         {
+            var Manager = database.Users.SingleOrDefault(o => o.StudentNum == StuNum);       
             if(Pro==null||Pro.Condition==ProjectCondition.Finished)
             {
                 return ProgressResult.Error("修改项目时失败!项目不存在或已结项.");
@@ -141,6 +143,24 @@ namespace VolunteerDatabase.Helper
             Save();
             return ProgressResult.Success();
         }
+        [AppAuthorize(AppRoleEnum.Administrator)]
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
+        public ProgressResult DeletManager(int StuNum, Project Pro)
+        {
+            var Manager = database.Users.SingleOrDefault(o => o.StudentNum == StuNum);
+            if (Pro == null || Pro.Condition == ProjectCondition.Finished)
+            {
+                return ProgressResult.Error("修改项目时失败!项目不存在或已结项.");
+            }
+            if (Manager == null || Manager.Status != AppUserStatus.Enabled)
+            {
+                return ProgressResult.Error("待删除的用户身份非法.");
+            }
+
+            Pro.Managers.Remove(Manager);
+            Save();
+            return ProgressResult.Success();
+        }
 
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
@@ -149,7 +169,7 @@ namespace VolunteerDatabase.Helper
             List<ProgressResult> resultlist = new List<ProgressResult>();
             foreach (AppUser manager in managers)
             {
-                resultlist.Add(AddManager(manager, project));
+                resultlist.Add(AddManager(manager.StudentNum, project));
             }
             return resultlist;
         }

@@ -13,7 +13,7 @@ namespace VolunteerDatabase.Entity.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201703071658057_Init"; }
+            get { return "201703072247407_Init"; }
         }
         
         string IMigrationMetadata.Source

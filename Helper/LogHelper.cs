@@ -10,11 +10,11 @@ using VolunteerDatabase.Interface;
 
 namespace VolunteerDatabase.Helper
 {
-/// <summary>
-///     管理对于日志的撰写
-///     请使用GetInstance方法获取单例工厂类
-///     实例化前请先对Claims
-/// </summary>
+    /// <summary>
+    ///     管理对于日志的撰写
+    ///     请使用GetInstance方法获取单例工厂类
+    ///     实例化前请先对Claims
+    /// </summary>
     public class LogHelper
     {
 
@@ -81,7 +81,7 @@ namespace VolunteerDatabase.Helper
                 var result = database.LogRecords.Where(r => r.Adder.Id == user.Id).ToList();
                 return result;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return null;
             }
@@ -138,11 +138,11 @@ namespace VolunteerDatabase.Helper
         /// <param name="start"></param>
         /// <param name="end"></param>
         /// <returns></returns>
-        public List<LogRecord> FindPublicLogRecord(DateTime start,DateTime end)
+        public List<LogRecord> FindPublicLogRecord(DateTime start, DateTime end)
         {
             try
             {
-                var result = database.LogRecords.Where(r => r.AddTime>start && r.AddTime<end && r.IsPulblic == true).ToList();
+                var result = database.LogRecords.Where(r => r.AddTime > start && r.AddTime < end && r.IsPulblic == true).ToList();
                 return result;
             }
             catch (Exception)
@@ -209,7 +209,7 @@ namespace VolunteerDatabase.Helper
         {
             try
             {
-                var result = database.LogRecords.Where(r => r.Operation==operation && r.IsPulblic == true).ToList();
+                var result = database.LogRecords.Where(r => r.Operation == operation && r.IsPulblic == true).ToList();
                 return result;
             }
             catch (Exception)
@@ -227,11 +227,11 @@ namespace VolunteerDatabase.Helper
         {
             try
             {
-                if(target == null)
+                if (target == null)
                 {
                     return null;
                 }
-                var result = database.LogRecords.Where(r => r.TargetAppUser.AreSameWith(target) && r.IsPulblic ==true).ToList();
+                var result = database.LogRecords.Where(r => r.TargetAppUser.AreSameWith(target) && r.IsPulblic == true).ToList();
                 return result;
             }
             catch (Exception)
@@ -253,7 +253,7 @@ namespace VolunteerDatabase.Helper
                 {
                     return new List<LogRecord>();
                 }
-                var result = database.LogRecords.Where(r => r.TargetVolunteer.UID==target.UID && r.IsPulblic == true).ToList();
+                var result = database.LogRecords.Where(r => r.TargetVolunteer.UID == target.UID && r.IsPulblic == true).ToList();
                 return result;
             }
             catch (Exception)
@@ -294,16 +294,16 @@ namespace VolunteerDatabase.Helper
             try
             {
                 var list = database.LogRecords.Where(r => r.Type == LogType.LastContactEdit && r.TargetVolunteer.AreSameWith(v) && r.IsPulblic == true).ToList();
-                if(list.Count()==0)
+                if (list.Count() == 0)
                 {
                     return null;
                 }
                 LogRecord result = list.First();
-                if (list.Count>1)
+                if (list.Count > 1)
                 {
-                    foreach(LogRecord item in list)
+                    foreach (LogRecord item in list)
                     {
-                        if(result.AddTime<item.AddTime)
+                        if (result.AddTime < item.AddTime)
                         {
                             result = item;
                         }
@@ -311,7 +311,7 @@ namespace VolunteerDatabase.Helper
                 }
                 return result;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return null;
             }
@@ -331,7 +331,7 @@ namespace VolunteerDatabase.Helper
             foreach (AppUser underling in underlings)
             {
                 List<LogRecord> log = FindPrivateLogRecord(underling);
-                if(log == null)
+                if (log == null)
                 {
                     continue;
                 }
@@ -348,26 +348,12 @@ namespace VolunteerDatabase.Helper
         [AppAuthorize(AppRoleEnum.LogViewer)]
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
         [AppAuthorize(AppRoleEnum.TestOnly)]
-        public bool Succeeded(string content, bool ispublic,LogType type = LogType.Default, AppUser targetuser = null, Volunteer targetvolunteer = null, Project targetproject = null, [CallerMemberName] string caller = "")
+        public bool Succeeded(string content, bool ispublic, LogType type = LogType.Default, AppUser targetuser = null, Volunteer targetvolunteer = null, Project targetproject = null, [CallerMemberName] string caller = "")
         {
             AppUser adder = database.Users.SingleOrDefault(u => u.AccountName == Claims.User.AccountName);
             if (caller == "")
                 return false;
-            string str = string.Format("操作:[{0}]成功.操作者:{1} " + content, caller,adder.Name);
-            return AddLogRecord(adder:adder, content:content, ispublic:ispublic,type:type, targetuser:targetuser, targetvolunteer:targetvolunteer, targetproject:targetproject, caller:caller);
-        }
-
-        [AppAuthorize(AppRoleEnum.Administrator)]
-        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        [AppAuthorize(AppRoleEnum.LogViewer)]
-        [AppAuthorize(AppRoleEnum.OrgnizationMember)]
-        [AppAuthorize(AppRoleEnum.TestOnly)]
-        public bool Failed(string content, bool ispublic,LogType type, AppUser targetuser = null, Volunteer targetvolunteer = null, Project targetproject = null, [CallerMemberName] string caller = "")
-        {
-            AppUser adder = database.Users.SingleOrDefault(u => u.AccountName == Claims.User.AccountName);
-            if (caller == "")
-                return false;
-            string str = string.Format("操作：[{0}]失败.操作者:{1} " + content, caller,adder.Name);
+            string str = string.Format("操作:[{0}]成功.操作者:{1} " + content, caller, adder?.Name);
             return AddLogRecord(adder: adder, content: content, ispublic: ispublic, type: type, targetuser: targetuser, targetvolunteer: targetvolunteer, targetproject: targetproject, caller: caller);
         }
 
@@ -376,7 +362,21 @@ namespace VolunteerDatabase.Helper
         [AppAuthorize(AppRoleEnum.LogViewer)]
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
         [AppAuthorize(AppRoleEnum.TestOnly)]
-        public bool AddLogRecord(AppUser adder, string content, bool ispublic,LogType type = LogType.Default, AppUser targetuser = null, Volunteer targetvolunteer = null, Project targetproject = null, [CallerMemberName] string caller = "")
+        public bool Failed(string content, bool ispublic, LogType type, AppUser targetuser = null, Volunteer targetvolunteer = null, Project targetproject = null, [CallerMemberName] string caller = "")
+        {
+            AppUser adder = database.Users.SingleOrDefault(u => u.AccountName == Claims.User.AccountName);
+            if (caller == "")
+                return false;
+            string str = string.Format("操作：[{0}]失败.操作者:{1} " + content, caller, adder.Name);
+            return AddLogRecord(adder: adder, content: content, ispublic: ispublic, type: type, targetuser: targetuser, targetvolunteer: targetvolunteer, targetproject: targetproject, caller: caller);
+        }
+
+        [AppAuthorize(AppRoleEnum.Administrator)]
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
+        [AppAuthorize(AppRoleEnum.LogViewer)]
+        [AppAuthorize(AppRoleEnum.OrgnizationMember)]
+        [AppAuthorize(AppRoleEnum.TestOnly)]
+        public bool AddLogRecord(AppUser adder, string content, bool ispublic, LogType type = LogType.Default, AppUser targetuser = null, Volunteer targetvolunteer = null, Project targetproject = null, [CallerMemberName] string caller = "")
         {
             if (caller == "")
                 return false;
@@ -406,12 +406,12 @@ namespace VolunteerDatabase.Helper
                     AddLogRecord(record);
                 }
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return false;
             }
             return true;
-            
+
         }
 
         [AppAuthorize(AppRoleEnum.Administrator)]
@@ -444,7 +444,7 @@ namespace VolunteerDatabase.Helper
                 database.LogRecords.Remove(record);
                 Save();
             }
-            catch(Exception)
+            catch (Exception)
             {
                 throw;
             }

@@ -25,18 +25,27 @@ namespace Desktop.Pages
     {
         IdentityPage identitypage = IdentityPage.GetInstance();
         List<Project> allprojectlist;
-        ProjectProgressHelper helper;
-        private AppUserIdentityClaims Claims { get; set; }
+        ProjectManageHelper managehelper;
+        ProjectProgressHelper progresshelper;
+        private AppUserIdentityClaims Claims{ get; set; }
         public ProjectManage()
         {
             InitializeComponent();
-            Claims = identitypage.Claims;
-            helper = ProjectProgressHelper.GetInstance();
-            // Login.GetClaims(sendClaimsEventHandler);
-            allprojectlist = testCreateProjectList();
+            if (identitypage.Claims != null)
+            {
+                Claims = identitypage.Claims;
+            }
+            managehelper = ProjectManageHelper.GetInstance();
+            progresshelper = ProjectProgressHelper.GetInstance();
+            if (managehelper.ShowProjectList(Claims.User.Organization, true) != null)
+            allprojectlist = managehelper.ShowProjectList(Claims.User.Organization,true);
+            allprojectlist.AddRange(managehelper.ShowProjectList(Claims.User.Organization, false));
             ShowList(StatusSwitch.SelectedIndex);
-            //最后通过绑定后台资源实现列表内容更新
-            //project_list.ItemsSource = helper.FindAuthorizedProjectsByUser(Claims.User);
+            if (Claims.Roles.Count() == 1 && Claims.IsInRole(AppRoleEnum.OrgnizationMember))
+            {
+                project_list.ItemsSource = progresshelper.FindAuthorizedProjectsByUser(Claims.User);
+                StatusSwitch.IsEnabled = false;
+            }
         }
 
         private void ShowList(int status)
@@ -72,80 +81,14 @@ namespace Desktop.Pages
 
         private void StatusSwitch_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if(managehelper !=null && progresshelper != null)
+            {
+                allprojectlist = managehelper.ShowProjectList(Claims.User.Organization, true);
+                allprojectlist.AddRange(managehelper.ShowProjectList(Claims.User.Organization, false));
+            }
             if (project_list != null)
                 ShowList(StatusSwitch.SelectedIndex);
         }
-
-
-        private List<Project> testCreateProjectList()
-        {
-            //ProjectManageHelper helper1 = ProjectManageHelper.GetInstance();
-            // ProjectProgressHelper helper2 = ProjectProgressHelper.GetInstance();
-
-            Volunteer v1 = new Volunteer
-            {
-                StudentNum = 5551,
-                Mobile = "13812345678",
-                Name = "AddTest",
-                Email = "AddTest@test.com",
-                Class = "AddTestClass",
-                Room = "AddTestRoom"
-            };
-
-            Volunteer v2 = new Volunteer
-            {
-                StudentNum = 5552,
-                Mobile = "13812345671",
-                Name = "AddTest2",
-                Email = "AddTest2@test.com",
-                Class = "AddTestClass2",
-                Room = "AddTestRoom2"
-            };
-            List<Volunteer> list = new List<Volunteer>();
-            list.Add(v1);
-            list.Add(v2);
-
-            Project p = new Project
-            {
-                Id = 999,
-                CreatTime = DateTime.MinValue,
-                Name = "A Project",
-                Condition = ProjectCondition.Ongoing,
-                Organization = Claims.User.Organization,
-                Time = DateTime.MinValue,
-                Details = "A Test Project.",
-                Maximum = 70,
-                Place = "UIBE",
-                Volunteers = list,
-                Managers = new List<AppUser>()
-
-
-            };
-
-            Project p2 = new Project
-            {
-                Id = 998,
-                CreatTime = DateTime.MinValue,
-                Name = "A Finished Project",
-                Condition = ProjectCondition.Finished,
-                Organization = Claims.User.Organization,
-                Time = DateTime.MinValue,
-                Details = "A Test Project.",
-                Maximum = 70,
-                Place = "UIBE",
-                Volunteers = list,
-                Managers = new List<AppUser>()
-
-
-            };
-            p.Managers.Add(Claims.User);
-
-            List<Project> projects = new List<Project>();
-            projects.Add(p);
-            projects.Add(p2);
-            return projects;
-        }
-        #endregion
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -153,10 +96,22 @@ namespace Desktop.Pages
             if(senderButton.DataContext is Project)
             {
                 Project project = (Project)senderButton.DataContext;
-            }
+                var ProjectInformation = new ProjectInformation(this.Claims,project);
+                ProjectInformation.Show();
+            }          
+        }
+        private void ModernButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(search_project.Text=="")
+            {
 
-            var AddManager = new AddManager(Project);
-            AddManager.Show();
+            }
+            else
+            {
+                List<Project> Pros = new List<Project>();
+                Pros.Add(progresshelper.FindProjectByProjectId(int.Parse(search_project.Text)));
+                project_list.ItemsSource = Pros;
+            }
         }
     }
 }

@@ -45,9 +45,9 @@ namespace VolunteerDatabase.Helper
             return await helper;
         }
 
-        public List<string> errorList;
-        public List<string> informingMessage;
-        public static List<Volunteer> ChangedVols;
+        public List<string> errorList=new List<string>();
+        public List<string> informingMessage=new List<string>();
+        public static List<Volunteer> ChangedVols=new List<Volunteer>();
 
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
         public void MassiveVolunteersInput(OpenFileDialog op,Project Pro)
@@ -90,49 +90,57 @@ namespace VolunteerDatabase.Helper
                         v.Project.Add(Pro);
                         Temp.Add(v);
                     }
-            foreach (var item in Temp)
+            if(Temp.Count()>Pro.Maximum||Temp.Count()==0)
             {
-                var vol = database.Volunteers.SingleOrDefault(o => o.StudentNum == item.StudentNum);
-                if (vol.Name==item.Name&&vol.Class==item.Class&&vol.Email==item.Email&&vol.Mobile==item.Mobile)
+                informingMessage.Add("该次导入的人数不合法");
+            }
+            else
+            {
+                foreach (var item in Temp)
                 {
-                    vol.Project.Add(Pro);
-                    continue;
-                }
-                else
-                if (vol == null)
-                {
-                    if (item.StudentNum > 20500000 || item.StudentNum < 20110000)
+                    var vol = database.Volunteers.SingleOrDefault(o => o.StudentNum == item.StudentNum);
+                    if (vol.Name == item.Name && vol.Class == item.Class && vol.Email == item.Email && vol.Mobile == item.Mobile)
                     {
-                        errorList.Add("不合法的学号:"+ item.StudentNum);
+                        vol.Project.Add(Pro);
+                        continue;
+                    }
+                    else
+                    if (vol == null)
+                    {
+                        if (item.StudentNum > 20500000 || item.StudentNum < 20110000)
+                        {
+                            errorList.Add("不合法的学号:" + item.StudentNum);
+                        }
+                        else
+                        {
+                            lock (database)
+                            {
+                                database.Volunteers.Add(item);
+                                Save();
+                            }
+                        }
                     }
                     else
                     {
-                        lock (database)
-                        {
-                            database.Volunteers.Add(item);
-                            Save();
-                        }
-                    }
-                }
-                else
-                {
-                    string inform = String.Format(@"个人信息更改的志愿者 - 学号：{0}        
+                        string inform = String.Format(@"个人信息更改的志愿者 - 学号：{0}        
                                                     原姓名：{1}                            现姓名{2}
                                                     原电话：{3}                            现电话{4}
                                                     原邮箱：{5}                            现邮箱{6}
                                                     原宿舍：{7}                            现宿舍{8}
                                                     原班级：{9}                            现班级{10}",
-item.StudentNum,vol.Name,item.Name,vol.Mobile,item.Mobile,vol.Email,item.Email,vol.Room,item.Room,vol.Class,item.Class);
-                    informingMessage.Add(inform);
-                    ChangedVols.Add(item);
-                }               
+    item.StudentNum, vol.Name, item.Name, vol.Mobile, item.Mobile, vol.Email, item.Email, vol.Room, item.Room, vol.Class, item.Class);
+                        informingMessage.Add(inform);
+                        ChangedVols.Add(item);
+                    }
+                }
+                informingMessage.Add("导入成功");
             }
         }
 
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
-        public void determChanges(int[]UsingNewInformation)
+        public void determChanges(params int[] StuNums)
         {
-            foreach (var item in UsingNewInformation)
+            foreach (var item in StuNums)
             {
                 var nv = ChangedVols.SingleOrDefault(o => o.StudentNum == item);
                 if (nv != null)

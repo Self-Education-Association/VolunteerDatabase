@@ -262,6 +262,7 @@ namespace VolunteerDatabase.Helper
                 try
                 {
                     database.CreditRecords.Remove(crecord);//多对多的中间表，应该可以直接删除.
+                    Save();
                     return ProgressResult.Success();
                 }
                 catch(Exception)

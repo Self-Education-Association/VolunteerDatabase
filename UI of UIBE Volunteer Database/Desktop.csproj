@@ -102,9 +102,6 @@
     <Compile Include="Pages\ProjectDetails.xaml.cs">
       <DependentUpon>ProjectDetails.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\AddVolunteer.xaml.cs">
-      <DependentUpon>AddVolunteer.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\BlackList.xaml.cs">
       <DependentUpon>BlackList.xaml</DependentUpon>
     </Compile>
@@ -143,6 +140,9 @@
     <Compile Include="Pages\MainTab.xaml.cs">
       <DependentUpon>MainTab.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TipsPages\LoginDialog1.xaml.cs">
+      <DependentUpon>LoginDialog1.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow1.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -152,10 +152,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\ProjectDetails.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\AddVolunteer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -232,6 +228,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\MainTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TipsPages\LoginDialog1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
