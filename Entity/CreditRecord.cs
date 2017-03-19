@@ -15,6 +15,6 @@ namespace VolunteerDatabase.Entity
         public Volunteer Participant { get; set; }
         public Project Project { get; set; }
         public Organization Organization { get; set; }
-        public int Score { get; set; }
+        public double Score { get; set; }
     }
 }

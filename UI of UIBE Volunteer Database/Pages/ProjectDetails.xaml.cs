@@ -59,12 +59,11 @@ namespace Desktop.Pages
             {
                 endproject.IsEnabled = false;
             }
-            if (Claims.Roles.Count() == 0)
+            if (Claims.Roles.Count() == 0||Pro.Condition==ProjectCondition.Finished)
             {
                 AddManager_btn.IsEnabled = false;
                 deleteproject_btn.IsEnabled = false;
                 endproject.IsEnabled = false;
-                yijianpingfen.IsEnabled = false;
                 piliang.IsEnabled = false;
                 AddVolunteer_btn.IsEnabled = false;
             }
@@ -79,7 +78,6 @@ namespace Desktop.Pages
             if (Claims.Roles.Count() == 1 && Claims.IsInRole(AppRoleEnum.OrgnizationAdministrator))
             {
                 endproject.IsEnabled = false;
-                yijianpingfen.IsEnabled = false;
                 piliang.IsEnabled = false;
                 AddVolunteer_btn.IsEnabled = false;
             }
@@ -122,6 +120,15 @@ namespace Desktop.Pages
         {
             {
                 var pph = ProjectProgressHelper.GetInstance();
+                MessageBox.Show("未单独评分的志愿者将默认全部评分为：4");
+                if(Pro!=null&&Pro.Condition==ProjectCondition.Ongoing)
+                {
+                    var result=pph.ScoringDefaultForVolunteers(Pro, 4);
+                    if(!result.Succeeded)
+                    {
+                        MessageBox.Show("评分失败");
+                    }
+                }          
                 if (Pro != null)
                 {
                     var result = pph.FinishProject(Pro);
@@ -132,12 +139,6 @@ namespace Desktop.Pages
                 }                        
             }
 
-        }
-
-        private void yijianpingfen_Click(object sender, RoutedEventArgs e)
-        {
-            var pph = ProjectProgressHelper.GetInstance();
-            var result = pph.ScoringDefaultForVolunteers(Pro, 4);
         }
 
         private void deleteproject_btn_Click(object sender, RoutedEventArgs e)
@@ -216,7 +217,7 @@ namespace Desktop.Pages
                 Volunteer Vol = (Volunteer)senderButton.DataContext;
                 if(Vol!=null&&Pro.ScoreCondition!=ProjectScoreCondition.UnScored)
                 {
-
+                    var rp = new Rating(Vol,Pro);
                 }
             }          
         }

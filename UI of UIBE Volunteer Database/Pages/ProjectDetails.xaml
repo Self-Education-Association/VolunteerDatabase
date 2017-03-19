@@ -103,10 +103,8 @@
                 <TextBox x:Name="AddVolunteer" KeyDown="AddVolunteer_KeyDown" MaxLength="9" Width="120" HorizontalAlignment="Right"/>
                 <mui:ModernButton x:Name="AddVolunteer_btn" Content="输入学号添加志愿者" HorizontalAlignment="Right" Click="AddVolunteer_btn_Click"/>
                 <mui:ModernButton x:Name="piliang" Content="批量添加志愿者" Click="piliang_Click" />
-                <mui:ModernButton x:Name="yijianpingfen" Content="一键评分" Click="yijianpingfen_Click"/>
                 <mui:ModernButton x:Name="endproject" Content="结项" Click="endproject_Click"/>
                 <mui:ModernButton x:Name="deleteproject_btn" Content="删除项目" Click="deleteproject_btn_Click"/>
-
             </StackPanel>
         </ScrollViewer>
     </Grid>
