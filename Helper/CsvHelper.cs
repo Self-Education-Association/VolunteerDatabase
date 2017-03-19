@@ -108,7 +108,7 @@ namespace VolunteerDatabase.Helper
                     {
                         if (item.StudentNum > 20500000 || item.StudentNum < 20110000)
                         {
-                            errorList.Add("不合法的学号:" + item.StudentNum);
+                            errorList.Add("下面这些学号是不合法的,确认没有输错吗:" + item.StudentNum);
                         }
                         else
                         {
@@ -129,7 +129,7 @@ namespace VolunteerDatabase.Helper
                                                     原班级：{9}                            现班级{10}",
     item.StudentNum, vol.Name, item.Name, vol.Mobile, item.Mobile, vol.Email, item.Email, vol.Room, item.Room, vol.Class, item.Class);
                         informingMessage.Add(inform);
-                        ChangedVols.Add(item);
+                        ChangedVols.Add(item);//冲突的话 只是给一个提示
                     }
                 }
                 informingMessage.Add("导入成功");
@@ -144,16 +144,18 @@ namespace VolunteerDatabase.Helper
                 var nv = ChangedVols.SingleOrDefault(o => o.StudentNum == item);
                 if (nv != null)
                 {
-                    var ov = database.Volunteers.SingleOrDefault(i => i.StudentNum == item);
-                    database.Volunteers.Remove(ov);
-                    database.Volunteers.Add(nv);
+                    Volunteer ov = vhelper.FindVolunteer(item);
+                    VolunteerResult result = vhelper.EditVolunteer(ov, nv);
+                    if(result.Succeeded==false)
+                    {
+                        errorList.Add("出现错误,错误信息:["+result.ErrorString + "] 错误相关志愿者学号:[" + result.ErrorVolunteerNum + "]");
+                    }
                 }
                else
                 {                   
                     errorList.Add("学号:"+item+"的志愿者不存在于信息变动的志愿者列表中");
                 }
             }
-            Save();
             ChangedVols.Clear();
         }
       
