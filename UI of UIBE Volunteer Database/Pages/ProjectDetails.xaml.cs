@@ -263,15 +263,5 @@ namespace Desktop.Pages
                 }
             }
         }
-
-        private void deleteprojectmanager_btn_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void deletevolunteer_btn_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }
