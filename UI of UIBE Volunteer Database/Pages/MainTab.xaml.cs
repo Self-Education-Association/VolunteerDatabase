@@ -33,7 +33,7 @@ namespace Desktop.Pages
         {
             if (claims == null)
             {
-                Login.GetClaims(sendClaimsEventHandler);
+                Login.GetClaims(sendClaimsEventHandler, logOutEventHandler);
                 IsEnabled = false;
             }
             else
@@ -48,6 +48,11 @@ namespace Desktop.Pages
             this.claims = claims;
             IdentityPage identitypage = IdentityPage.GetInstance(claims);
             //MessageBox.Show("收到令牌啦！");
+        }
+
+        public void logOutEventHandler()
+        {
+            claims = null;
         }
     }
 }

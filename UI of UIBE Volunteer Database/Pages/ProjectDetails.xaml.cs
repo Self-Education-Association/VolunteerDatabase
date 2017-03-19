@@ -33,11 +33,17 @@ namespace Desktop.Pages
             IdentityPage identitypage = IdentityPage.GetInstance(claim);
         }
 
+        public void logOutEventHandler()
+        {
+            Claims = null;
+            Close();
+        }
+
         public ProjectInformation(AppUserIdentityClaims Claim, Project pro)
         {
             if (Claim == null)
             {
-                Login.GetClaims(sendClaimsEventHandler);
+                Login.GetClaims(sendClaimsEventHandler, logOutEventHandler);
                 IsEnabled = false;
             }
             else
