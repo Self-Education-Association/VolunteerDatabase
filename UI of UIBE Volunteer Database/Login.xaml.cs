@@ -85,12 +85,11 @@ namespace Desktop
                     }
                     else if (claims.User != null&&claims.User.Status == AppUserStatus.NotApproved)
                     {
-                        MessageBox.Show("已发送用户注册审批请求,请等待机构管理员审批.");
+                        ModernDialog.ShowMessage("已发送用户注册审批请求,请等待机构管理员审批", "注册成功", MessageBoxButton.OK);
                     }
                     else
                     {
-#warning "把这些MessageBox.Show()改成友好的窗口或者Tips"
-                        MessageBox.Show("登录失败，用户名或密码出错，或未通过管理员审批！");
+                        ModernDialog.ShowMessage("用户名或密码出错，或未通过管理员审批！", "登录失败", MessageBoxButton.OK);
                     }
                 }
             }
