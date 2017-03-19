@@ -111,6 +111,7 @@ namespace Desktop.Pages
                 List<Project> Pros = new List<Project>();
                 Pros.Add(progresshelper.FindProjectByProjectId(int.Parse(search_project.Text)));
                 project_list.ItemsSource = Pros;
+                App.DoEvents();
             }
         }
     }
