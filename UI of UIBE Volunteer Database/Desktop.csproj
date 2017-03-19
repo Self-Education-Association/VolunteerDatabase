@@ -116,9 +116,6 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\csvviewer.xaml.cs">
-      <DependentUpon>csvviewer.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\ProjectDetails.xaml.cs">
       <DependentUpon>ProjectDetails.xaml</DependentUpon>
     </Compile>
@@ -173,10 +170,6 @@
     <Page Include="Login.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\csvviewer.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\ProjectDetails.xaml">
       <SubType>Designer</SubType>
