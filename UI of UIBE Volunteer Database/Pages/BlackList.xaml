@@ -9,7 +9,7 @@
     <Grid Style="{StaticResource ContentRoot}">
         <ScrollViewer>
             <StackPanel MinWidth="200">
-                <TextBlock Text="Black List" Style="{StaticResource Heading2}" />
+                <TextBlock Text="Black List Details" Style="{StaticResource Heading2}" />
                 <DataGrid x:Name="Blacklistdata" AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="添加时间" Binding="{Binding AddTime}" IsReadOnly="True"/>

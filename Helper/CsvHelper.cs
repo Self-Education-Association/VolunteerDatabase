@@ -16,9 +16,11 @@ namespace VolunteerDatabase.Helper
     public class CsvHelper
     {
         Database database;
+        VolunteerHelper vhelper;
         private CsvHelper()
         {
             database = DatabaseContext.GetInstance();
+            vhelper = VolunteerHelper.GetInstance();
         }
         private static CsvHelper helper;
         private static readonly object helperlocker = new object();
@@ -55,7 +57,8 @@ namespace VolunteerDatabase.Helper
             op.Filter="csv文件|*.csv";
             errorList.Clear();
             informingMessage.Clear();
-            List<Volunteer> Temp = new List<Volunteer>();          
+            List<Volunteer> Temp = new List<Volunteer>();
+//文件读写异常处理
             FileStream fs = new FileStream(op.FileName, FileMode.Open, FileAccess.Read, FileShare.None);
             StreamReader sr = new StreamReader(fs, Encoding.GetEncoding(936));
 
@@ -75,24 +78,20 @@ namespace VolunteerDatabase.Helper
                         string Email = eachLine[3];
                         string Room = eachLine[4];
                         string Class = eachLine[5];
-                        string Skill = eachLine[6];        
-                
-                        Volunteer v = new Volunteer();
-                        v.StudentNum = StudentNum;
-                        v.Name = Name;
-                        v.Score = 0;
-                        v.Mobile = Mobile;
-                        v.Class = Class;
-                        v.Email = Email;
-                        v.Room = Room;
-                        v.Skill = Skill;
-                        v.BlackListRecords = null;
-                        v.Project.Add(Pro);
+                        string Skill = eachLine[6];
+                //
+                        Volunteer v = vhelper.CreateTempVolunteer(StudentNum, Name, Class, Mobile, Room, Email, Skill);
+          
+                        //v.Project.Add(Pro);
                         Temp.Add(v);
                     }
-            if(Temp.Count()>Pro.Maximum||Temp.Count()==0)
+            if (Temp.Count() == 0)
             {
-                informingMessage.Add("该次导入的人数不合法");
+                informingMessage.Add("导入的表中没有找到志愿者信息,请检查输入格式!");
+            }
+            if (Temp.Count()>Pro.Maximum)
+            {
+                informingMessage.Add("该次导入的人数超过上限!");
             }
             else
             {
@@ -109,14 +108,14 @@ namespace VolunteerDatabase.Helper
                     {
                         if (item.StudentNum > 20500000 || item.StudentNum < 20110000)
                         {
-                            errorList.Add("不合法的学号:" + item.StudentNum);
+                            errorList.Add("下面这些学号是不合法的,确认没有输错吗:" + item.StudentNum);
                         }
                         else
                         {
-                            lock (database)
+                            VolunteerResult result = vhelper.AddVolunteer(item);
+                            if(result.Succeeded==false)
                             {
-                                database.Volunteers.Add(item);
-                                Save();
+                                informingMessage.Add("出现错误,错误信息[:" + result.ErrorString + "] 错误相关志愿者学号:[" + result.ErrorVolunteerNum + "]");
                             }
                         }
                     }
@@ -130,7 +129,7 @@ namespace VolunteerDatabase.Helper
                                                     原班级：{9}                            现班级{10}",
     item.StudentNum, vol.Name, item.Name, vol.Mobile, item.Mobile, vol.Email, item.Email, vol.Room, item.Room, vol.Class, item.Class);
                         informingMessage.Add(inform);
-                        ChangedVols.Add(item);
+                        ChangedVols.Add(item);//冲突的话 只是给一个提示
                     }
                 }
                 informingMessage.Add("导入成功");
@@ -145,16 +144,18 @@ namespace VolunteerDatabase.Helper
                 var nv = ChangedVols.SingleOrDefault(o => o.StudentNum == item);
                 if (nv != null)
                 {
-                    var ov = database.Volunteers.SingleOrDefault(i => i.StudentNum == item);
-                    database.Volunteers.Remove(ov);
-                    database.Volunteers.Add(nv);
+                    Volunteer ov = vhelper.FindVolunteer(item);
+                    VolunteerResult result = vhelper.EditVolunteer(ov, nv);
+                    if(result.Succeeded==false)
+                    {
+                        errorList.Add("出现错误,错误信息:["+result.ErrorString + "] 错误相关志愿者学号:[" + result.ErrorVolunteerNum + "]");
+                    }
                 }
                else
                 {                   
                     errorList.Add("学号:"+item+"的志愿者不存在于信息变动的志愿者列表中");
                 }
             }
-            Save();
             ChangedVols.Clear();
         }
       

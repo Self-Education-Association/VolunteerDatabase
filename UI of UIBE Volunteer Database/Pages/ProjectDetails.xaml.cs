@@ -160,16 +160,27 @@ namespace Desktop.Pages
         {
             if(AddManager.Text=="")
             {
-
+                MessageBox.Show("请输入管理者学号!");
             }
             else
             { 
                 var pmh = ProjectManageHelper.GetInstance();
-                var result = pmh.AddManager(int.Parse(AddManager.Text), Pro);
-                if(!result.Succeeded)
+                try
                 {
-                    MessageBox.Show("导入失败");
-                    AddManager.Clear();
+                    var result = pmh.AddManager(int.Parse(AddManager.Text), Pro);
+                    if(result.Succeeded)
+                    {
+                        MessageBox.Show("学号为[" + AddManager.Text + "]的用户已经被添加为项目["+Pro.Name+"]的项目管理者.");
+                    }
+                    if (!result.Succeeded)
+                    {
+                        MessageBox.Show("导入失败,错误信息:"+string.Join(",",result.Errors));
+                        AddManager.Clear();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
                 }
             }
         }
@@ -178,12 +189,16 @@ namespace Desktop.Pages
         {
             if(AddVolunteer.Text=="")
             {
-
+                MessageBox.Show("请输入管理者学号!");
             }
             else
             {
                 var pph = ProjectProgressHelper.GetInstance();
                 var result = pph.SingleVolunteerInputById(int.Parse(AddVolunteer.Text), Pro);
+                if (result.Succeeded)
+                {
+                    MessageBox.Show("学号为[" + AddVolunteer.Text + "]的志愿者已经被添加入项目[" + Pro.Name + "]的志愿者列表.");
+                }
                 if (!result.Succeeded)
                 {
                     MessageBox.Show("导入失败");
@@ -213,24 +228,12 @@ namespace Desktop.Pages
             Button senderButton = sender as Button;
             if (senderButton.DataContext is Volunteer)
             {
-                Volunteer Vol = (Volunteer)senderButton.DataContext;               
+                Volunteer Vol = (Volunteer)senderButton.DataContext;
+                if(Vol!=null&&Pro.ScoreCondition!=ProjectScoreCondition.UnScored)
+                {
+
+                }
             }          
-        }
-        //仍然不能调用datagrid中的按钮！！好气（评分没写）
-
-        private void shoushiqingkuang_LostFocus(object sender, RoutedEventArgs e)
-        {
-            TextBox tb = sender as TextBox;
-        }
-
-        private void fuwutaidu_LostFocus(object sender, RoutedEventArgs e)
-        {
-            TextBox tb2 = sender as TextBox;
-        }
-
-        private void tongxinqingkuang_LostFocus(object sender, RoutedEventArgs e)
-        {
-            TextBox tb3 = sender as TextBox;
         }
 
         private void deleteprojectmanager_btn_Click(object sender, RoutedEventArgs e)
@@ -259,6 +262,16 @@ namespace Desktop.Pages
                     pph.DeleteVolunteerFromProject(Vol, Pro);
                 }
             }
+        }
+
+        private void deleteprojectmanager_btn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void deletevolunteer_btn_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
