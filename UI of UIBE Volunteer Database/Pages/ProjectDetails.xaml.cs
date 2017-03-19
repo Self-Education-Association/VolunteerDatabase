@@ -213,24 +213,12 @@ namespace Desktop.Pages
             Button senderButton = sender as Button;
             if (senderButton.DataContext is Volunteer)
             {
-                Volunteer Vol = (Volunteer)senderButton.DataContext;               
+                Volunteer Vol = (Volunteer)senderButton.DataContext;
+                if(Vol!=null&&Pro.ScoreCondition!=ProjectScoreCondition.UnScored)
+                {
+
+                }
             }          
-        }
-        //仍然不能调用datagrid中的按钮！！好气（评分没写）
-
-        private void shoushiqingkuang_LostFocus(object sender, RoutedEventArgs e)
-        {
-            TextBox tb = sender as TextBox;
-        }
-
-        private void fuwutaidu_LostFocus(object sender, RoutedEventArgs e)
-        {
-            TextBox tb2 = sender as TextBox;
-        }
-
-        private void tongxinqingkuang_LostFocus(object sender, RoutedEventArgs e)
-        {
-            TextBox tb3 = sender as TextBox;
         }
 
         private void deleteprojectmanager_btn_Click(object sender, RoutedEventArgs e)

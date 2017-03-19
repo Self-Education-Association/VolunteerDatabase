@@ -49,7 +49,7 @@
                         <DataGridTextColumn Header="联系方式" Binding="{Binding Mobile}"/>
                         <DataGridTextColumn Header="技能" Binding="{Binding Skill}"/>
                         <DataGridTextColumn Header="综合评分" Binding="{Binding AvgScore}"/>
-                        <DataGridTemplateColumn Header="守时情况">
+                        <!--<DataGridTemplateColumn Header="守时情况">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBox x:Name="shoushiqingkuang" LostFocus="shoushiqingkuang_LostFocus"/>
@@ -71,20 +71,12 @@
                                     <TextBox x:Name="tongxinqingkuang" LostFocus="tongxinqingkuang_LostFocus"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
+                        </DataGridTemplateColumn>-->
 
                         <DataGridTemplateColumn>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button x:Name="rate_btn_click" Click="rate_btn_Click"></Button>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-
-                        <DataGridTemplateColumn Header="黑名单">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock x:Name="blacklistbox"/>
+                                    <Button x:Name="rate_btn_click" Click="rate_btn_Click" Content="点击评分"></Button>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
