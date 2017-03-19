@@ -103,19 +103,40 @@ namespace Desktop.Pages
         {
             OpenFileDialog op = new OpenFileDialog();
             op.Filter = "Csv文件|*.csv";
+            List<Volunteer> list = new List<Volunteer>();
             if (op.ShowDialog() == true)
             {
                 var ch = CsvHelper.GetInstance();
-                ch.MassiveVolunteersInput(op, Pro);
-                if(ch.informingMessage.Count()!=0&&ch.informingMessage.Count()!=1)
+                list = ch.PrepareAddInBatch(op, Pro);
+                if (ch.informingMessage.Count() != 0)
                 {
-                    //此处应建立窗口提示informingMessage,即有改动的信息，然后传多个学号，再调用ch中方法确定新信息
+                    foreach (string item in ch.informingMessage)
+                    {
+                        //if(item)
+                        MessageBox.Show(item);
+                    }//此处应建立窗口提示informingMessage,即有改动的信息，然后传多个学号，再调用ch中方法确定新信息
                 }
-                else
+                if(ch.errorList.Count()!=0)
                 {
-                    MessageBox.Show("导入失败");
+                    foreach (string item in ch.errorList)
+                    {
+                        MessageBox.Show(item);
+                    }
                 }
+                
+                //MessageBox.Show("导入的信息与志愿者库中不一致的条目已被红色高亮标记,请确认保留项目.");
             }
+
+            else
+            {
+                MessageBox.Show("导入失败");
+            }
+            Window window = new Window();
+            window.Height = 650;
+            window.Width = 470;
+            DealWithConflict dealer = new DealWithConflict(Pro,list,window);
+            window.Content = dealer;
+            window.Show();
         }
 
         private void endproject_Click(object sender, RoutedEventArgs e)
