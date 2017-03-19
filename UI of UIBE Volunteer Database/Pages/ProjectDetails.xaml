@@ -35,7 +35,7 @@
                         <DataGridTemplateColumn Header="删除">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <mui:ModernButton x:Name="deleteprojectmanager_btn"/>
+                                    <mui:ModernButton x:Name="deleteprojectmanager_btn" Click="deleteprojectmanager_btn_Click"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -99,7 +99,7 @@
                         <DataGridTemplateColumn Header="删除">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <mui:ModernButton x:Name="deletevolunteer_btn"/>
+                                    <mui:ModernButton x:Name="deletevolunteer_btn" Click="deletevolunteer_btn_Click"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
