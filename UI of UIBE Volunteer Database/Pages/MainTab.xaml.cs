@@ -47,7 +47,7 @@ namespace Desktop.Pages
             IsEnabled = true;
             this.claims = claims;
             IdentityPage identitypage = IdentityPage.GetInstance(claims);
-            MessageBox.Show("收到令牌啦！");
+            //MessageBox.Show("收到令牌啦！");
         }
     }
 }
