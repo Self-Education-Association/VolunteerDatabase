@@ -112,7 +112,7 @@ namespace VolunteerDatabase.Helper
                 v.Room = v.Room == DEFAULTSTRING ? DEFAULTSTRING : v.Room;
                 v.Name = v.Name == DEFAULTSTRING ? DEFAULTSTRING : v.Name;
                 v.Class = v.Class == DEFAULTSTRING ? DEFAULTSTRING : v.Class;
-                v.Email = v.Email == DEFAULTSTRING ? DEFAULTSTRING : v.Email;
+                v.Email = v.Email == DEFAULTSTRING ? DEFAULTSTRING : v.Email; //加入几个列表的初始化.
                 database.Volunteers.Add(v);
                 Save();
                 Volunteer target = FindVolunteer(stunum);
@@ -122,7 +122,7 @@ namespace VolunteerDatabase.Helper
         }
 
         [AppAuthorize(AppRoleEnum.Administrator)]
-        public VolunteerResult AddVolunteer(int num, string name = DEFAULTSTRING, string c = DEFAULTSTRING, string mobile = DEFAULTSTRING, string room = DEFAULTSTRING, string email = DEFAULTSTRING)
+        public VolunteerResult AddVolunteer(int num, string name = DEFAULTSTRING, string c = DEFAULTSTRING, string mobile = DEFAULTSTRING, string room = DEFAULTSTRING, string email = DEFAULTSTRING,string skill=DEFAULTSTRING)
         {
             if (num == 0)
                 return VolunteerResult.Error(VolunteerResult.EditVolunteerErrorEnum.EmptyId);
@@ -133,9 +133,38 @@ namespace VolunteerDatabase.Helper
                 Class = c,
                 Mobile = mobile,
                 Room = room,
-                Email = email
+                Email = email,
+                BlackListRecords = new List<BlackListRecord>(),
+                CreditRecords = new List<CreditRecord>(),
+                ProjectCount = 0,
+                Project = new List<Project>(),
+                Skill = skill,
+                Score = 0,
+                TargetedBy = new List<LogRecord>()
             };
             return AddVolunteer(v);
+        }
+
+        [AppAuthorize(AppRoleEnum.Administrator)]
+        public Volunteer CreateTempVolunteer(int num, string name = DEFAULTSTRING, string c = DEFAULTSTRING, string mobile = DEFAULTSTRING, string room = DEFAULTSTRING, string email = DEFAULTSTRING,string skill = DEFAULTSTRING)
+        {
+            var v = new Volunteer
+            {
+                StudentNum = num,
+                Name = name,
+                Class = c,
+                Mobile = mobile,
+                Room = room,
+                Email = email,
+                BlackListRecords = new List<BlackListRecord>(),
+                CreditRecords = new List<CreditRecord>(),
+                ProjectCount = 0,
+                Project = new List<Project>(),
+                Skill = skill,
+                Score = 0,
+                TargetedBy = new List<LogRecord>()
+            };
+            return v;
         }
         //编辑志愿者
         [AppAuthorize(AppRoleEnum.Administrator)]
