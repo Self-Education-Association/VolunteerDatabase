@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using VolunteerDatabase.Helper;
 using FirstFloor.ModernUI.Windows.Controls;
 using Desktop.Pages;
+using Desktop.TipsPages;
 using VolunteerDatabase.Interface;
 using System.ComponentModel;
 
@@ -76,8 +77,7 @@ namespace Desktop
                     var claims = await ih.CreateClaimsAsync(userid.Text, password.Password.ToString());//输入合法性验证
                     if (claims.IsAuthenticated && claims.User.Status == AppUserStatus.Enabled)
                     {
-#warning "把这些MessageBox.Show()改成友好的窗口或者Tips"
-                        MessageBox.Show("登陆成功！");
+                        LoginDialog1.ShowMessage("登陆成功"," ",MessageBoxButton.OK);
                         claimsStored = claims;
                         SendClaimsEvent(claims);
                         Close();

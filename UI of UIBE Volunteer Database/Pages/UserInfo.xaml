@@ -25,9 +25,11 @@
                 <Label Content="身份" HorizontalAlignment="Left" Height="20" Width="40"/>
                 <TextBlock x:Name="roles"/>
                 <TextBlock Text="修改密码" HorizontalAlignment="Left" Height="20" Width="60"/>
-                <PasswordBox x:Name="Password" Height="25" Width="100" HorizontalAlignment="Left" Margin="0,0,0,5"/>
-                <PasswordBox x:Name="PasswordChange" Height="25" Width="100" HorizontalAlignment="Left" Margin="0,0,0,5"/>
-                <PasswordBox x:Name="PasswordChangeConfirm" Height="25" Width="100" HorizontalAlignment="Left" Margin="0,0,0,5" />
+                <WrapPanel>
+                    <PasswordBox x:Name="Password" Height="25" Width="100" HorizontalAlignment="Left" Margin="0,0,0,5"/>
+                    <PasswordBox x:Name="PasswordChange" Height="25" Width="100" HorizontalAlignment="Left" Margin="0,0,0,5"/>
+                    <PasswordBox x:Name="PasswordChangeConfirm" Height="25" Width="100" HorizontalAlignment="Left" Margin="0,0,0,5" />
+                </WrapPanel>
                 <Button Content="修改" x:Name="ChangePassword_btn" Height="25" Width="60" HorizontalAlignment="Left" Margin="0,0,0,5" Click="ChangePassword_btn_Click"/>
             </StackPanel>
         </ScrollViewer>
