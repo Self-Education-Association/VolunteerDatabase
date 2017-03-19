@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using VolunteerDatabase.Helper;
 using VolunteerDatabase.Entity;
+using System.Security.Principal;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Desktop
 {
