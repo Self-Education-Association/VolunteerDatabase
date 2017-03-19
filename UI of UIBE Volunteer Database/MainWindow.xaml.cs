@@ -24,7 +24,6 @@ namespace Desktop
     /// </summary>
     public partial class MainWindow : ModernWindow
     {
-        string certificateStored = "SelfEducationAssociation.cer";
         public MainWindow()
         {
 #if !DEBUG
