@@ -1,12 +1,21 @@
-﻿<UserControl x:Class="WpfApplication1.Pages.Rating"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:WpfApplication1.Pages"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+﻿<Window x:Class="Desktop.Pages.Rating"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Desktop.Pages"
+        mc:Ignorable="d"
+        Title="单独评分" Height="300" Width="300">
     <Grid>
-            
+        <TextBox x:Name="Time" MaxLength="1" KeyDown="Time_KeyDown" HorizontalAlignment="Left" Height="23" Margin="57,89,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="Attitude" MaxLength="1" KeyDown="Attitude_KeyDown" HorizontalAlignment="Left" Height="23" Margin="57,134,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="Connection" MaxLength="1" KeyDown="Connection_KeyDown" HorizontalAlignment="Left" Height="23" Margin="57,177,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBlock x:Name="ProName" HorizontalAlignment="Left" Margin="21,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock x:Name="VolName" HorizontalAlignment="Left" Margin="21,49,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
+        <Button x:Name="Confirm" Content="确认" Click="Confirm_Click" HorizontalAlignment="Left" Margin="164,224,0,0" VerticalAlignment="Top" Width="75"/>
+        <TextBlock x:Name="textBlock"  HorizontalAlignment="Left" Margin="190,91,0,0" TextWrapping="Wrap" Text="守时情况评分" VerticalAlignment="Top"/>
+        <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="190,136,0,0" TextWrapping="Wrap" Text="服务态度评分" VerticalAlignment="Top"/>
+        <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="190,179,0,0" TextWrapping="Wrap" Text="通信情况评分" VerticalAlignment="Top"/>
+
     </Grid>
-</UserControl>
+</Window>

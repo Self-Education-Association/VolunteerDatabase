@@ -22,6 +22,7 @@
                         <DataGridTextColumn Header="宿舍" Binding="{Binding Room}"/>
                         <DataGridTextColumn Header="邮箱" Binding="{Binding Email}"/>
                         <!--<DataGridTextColumn Header="学院" Binding="{Binding}"/>-->
+                        <DataGridTextColumn Header="技能" Binding="{Binding Skills}"/>
                         <DataGridTextColumn Header="评分" Binding="{Binding AvgScore}"/>
                         <DataGridTemplateColumn Header="黑名单">
                             <DataGridTemplateColumn.CellTemplate>
@@ -30,7 +31,7 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="黑名单详情">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <mui:ModernButton x:Name="BlacklistDetails_btn" Click="BlacklistDetails_btn_Click"/>

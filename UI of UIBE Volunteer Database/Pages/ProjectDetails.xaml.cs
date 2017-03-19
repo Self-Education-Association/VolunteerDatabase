@@ -33,11 +33,17 @@ namespace Desktop.Pages
             IdentityPage identitypage = IdentityPage.GetInstance(claim);
         }
 
+        public void logOutEventHandler()
+        {
+            Claims = null;
+            Close();
+        }
+
         public ProjectInformation(AppUserIdentityClaims Claim, Project pro)
         {
             if (Claim == null)
             {
-                Login.GetClaims(sendClaimsEventHandler);
+                Login.GetClaims(sendClaimsEventHandler, logOutEventHandler);
                 IsEnabled = false;
             }
             else
@@ -59,12 +65,11 @@ namespace Desktop.Pages
             {
                 endproject.IsEnabled = false;
             }
-            if (Claims.Roles.Count() == 0)
+            if (Claims.Roles.Count() == 0||Pro.Condition==ProjectCondition.Finished)
             {
                 AddManager_btn.IsEnabled = false;
                 deleteproject_btn.IsEnabled = false;
                 endproject.IsEnabled = false;
-                yijianpingfen.IsEnabled = false;
                 piliang.IsEnabled = false;
                 AddVolunteer_btn.IsEnabled = false;
             }
@@ -79,7 +84,6 @@ namespace Desktop.Pages
             if (Claims.Roles.Count() == 1 && Claims.IsInRole(AppRoleEnum.OrgnizationAdministrator))
             {
                 endproject.IsEnabled = false;
-                yijianpingfen.IsEnabled = false;
                 piliang.IsEnabled = false;
                 AddVolunteer_btn.IsEnabled = false;
             }
@@ -143,6 +147,16 @@ namespace Desktop.Pages
         {
             {
                 var pph = ProjectProgressHelper.GetInstance();
+                MessageBox.Show("未单独评分的志愿者将默认全部评分为：4");
+                if(Pro!=null&&Pro.Condition==ProjectCondition.Ongoing)
+                {
+                    var result=pph.ScoringDefaultForVolunteers(Pro, 4);
+                    if(!result.Succeeded)
+                    {
+                        MessageBox.Show("评分失败");
+                    }
+                    App.DoEvents();
+                }          
                 if (Pro != null)
                 {
                     var result = pph.FinishProject(Pro);
@@ -155,12 +169,6 @@ namespace Desktop.Pages
 
         }
 
-        private void yijianpingfen_Click(object sender, RoutedEventArgs e)
-        {
-            var pph = ProjectProgressHelper.GetInstance();
-            var result = pph.ScoringDefaultForVolunteers(Pro, 4);
-        }
-
         private void deleteproject_btn_Click(object sender, RoutedEventArgs e)
         {
             var pmh = ProjectManageHelper.GetInstance();
@@ -170,6 +178,7 @@ namespace Desktop.Pages
                 case MessageBoxResult.Yes:
                     pmh.ProjectDelete(Pro);
                     this.Close();
+                    App.DoEvents();
                     break;
                 case MessageBoxResult.No:
                     break;
@@ -192,6 +201,9 @@ namespace Desktop.Pages
                     if(result.Succeeded)
                     {
                         MessageBox.Show("学号为[" + AddManager.Text + "]的用户已经被添加为项目["+Pro.Name+"]的项目管理者.");
+                        project_manager_list.ItemsSource = null;
+                        project_manager_list.ItemsSource = Pro.Managers.ToList();
+                        App.DoEvents();
                     }
                     if (!result.Succeeded)
                     {
@@ -219,6 +231,9 @@ namespace Desktop.Pages
                 if (result.Succeeded)
                 {
                     MessageBox.Show("学号为[" + AddVolunteer.Text + "]的志愿者已经被添加入项目[" + Pro.Name + "]的志愿者列表.");
+                    volunteer_list.ItemsSource = null;
+                    volunteer_list.ItemsSource = Pro.Volunteers.ToList();
+                    App.DoEvents();
                 }
                 if (!result.Succeeded)
                 {
@@ -252,7 +267,7 @@ namespace Desktop.Pages
                 Volunteer Vol = (Volunteer)senderButton.DataContext;
                 if(Vol!=null&&Pro.ScoreCondition!=ProjectScoreCondition.UnScored)
                 {
-
+                    var rp = new Rating(Vol,Pro);
                 }
             }          
         }
@@ -267,6 +282,9 @@ namespace Desktop.Pages
                 {
                     var pmh = ProjectManageHelper.GetInstance();
                     pmh.DeletManager(Man.StudentNum, Pro);
+                    project_manager_list.ItemsSource = null;
+                    project_manager_list.ItemsSource = Pro.Managers.ToList();
+                    App.DoEvents();
                 }
             }
         }
@@ -281,6 +299,9 @@ namespace Desktop.Pages
                 {
                     var pph = ProjectProgressHelper.GetInstance();
                     pph.DeleteVolunteerFromProject(Vol, Pro);
+                    volunteer_list.ItemsSource = null;
+                    volunteer_list.ItemsSource = Pro.Volunteers.ToList();
+                    App.DoEvents();
                 }
             }
         }

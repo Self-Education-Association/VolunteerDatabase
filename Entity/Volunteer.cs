@@ -29,11 +29,18 @@ namespace VolunteerDatabase.Entity
 
         public string Skill { get; set; }
 
+        public string BlaclistCondition {
+                            get {
+                            if (BlackListRecords.Exists(o => o.Status == BlackListRecordStatus.Enabled))
+                                            return "正在黑名单中";
+                                            else return "当前无黑名单"; }
+                                }
+
         public virtual List<Project> Project{ get; set; }
         public virtual List<BlackListRecord> BlackListRecords { get; set; }
         public virtual List<CreditRecord> CreditRecords { get; set; }
         public virtual List<LogRecord> TargetedBy { get; set; }
-        public int Score { get; set; }//以后改成double
+        public double Score { get; set; }
         public int ProjectCount { get; set; }
         public double AvgScore { get { return (double)Score / (ProjectCount==0?1:ProjectCount); } }
         public bool AreSameWith(Volunteer b)

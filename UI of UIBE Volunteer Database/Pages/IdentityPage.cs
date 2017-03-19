@@ -7,6 +7,7 @@ using VolunteerDatabase.Entity;
 using VolunteerDatabase.Helper;
 using System.Windows;
 using System.Windows.Controls;
+using FirstFloor.ModernUI.Windows.Controls;
 
 namespace Desktop.Pages
 {
@@ -36,8 +37,8 @@ namespace Desktop.Pages
 
         public static void IdentityError()
         {
-#warning "把这些MessageBox.Show()改成友好的窗口或者Tips"
-            MessageBox.Show("用户非法，请重新登录");
+
+            ModernDialog.ShowMessage("用户非法，请重新登录","",MessageBoxButton.OK);
         }
 
         public IdentityPage(AppUserIdentityClaims claims)

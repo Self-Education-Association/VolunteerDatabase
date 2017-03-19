@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using VolunteerDatabase.Helper;
 using VolunteerDatabase.Entity;
+using System.Security.Principal;
+using System.Security.Cryptography.X509Certificates;
+using System.Windows.Threading;
 
 namespace Desktop
 {
@@ -19,6 +22,24 @@ namespace Desktop
         {
             var database = DatabaseContext.GetInstance();
             database.Users.ToList();
+        }
+        private static DispatcherOperationCallback exitFrameCallback = new DispatcherOperationCallback(ExitFrame);
+        public static void DoEvents()
+        {
+            DispatcherFrame nestedFrame =new DispatcherFrame();
+            DispatcherOperation exitOperation = Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Background,exitFrameCallback, nestedFrame);
+            Dispatcher.PushFrame(nestedFrame);
+            if (exitOperation.Status != DispatcherOperationStatus.Completed)
+            {
+                exitOperation.Abort();
+            }
+        }
+        private static Object ExitFrame (Object state)
+        {
+            DispatcherFrame frame = state as
+            DispatcherFrame;
+            frame.Continue = false;
+            return null;
         }
     }
 }

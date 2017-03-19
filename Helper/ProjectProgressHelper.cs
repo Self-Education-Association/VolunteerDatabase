@@ -165,7 +165,7 @@ namespace VolunteerDatabase.Helper
         }
 
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public ProgressResult ScoringDefaultForVolunteers(Project Pro,int Score)
+        public ProgressResult ScoringDefaultForVolunteers(Project Pro,double Score)
         {
             ProgressResult result;
             Pro = database.Projects.SingleOrDefault(p => p.Id == Pro.Id);
@@ -186,12 +186,15 @@ namespace VolunteerDatabase.Helper
             {
                 foreach (var item in selectedvolunteers)
                 {
-                    item.Score += Score;
-                    CreditRecord cr = new CreditRecord();
-                    cr.Participant = item;
-                    cr.Project = Pro;
-                    cr.Score = Score;
-                    item.CreditRecords.Add(cr);
+                    if (!item.CreditRecords.Exists(o=>o.Project.Id==Pro.Id))
+                    {
+                        item.Score += Score;
+                        CreditRecord cr = new CreditRecord();
+                        cr.Participant = item;
+                        cr.Project = Pro;
+                        cr.Score = Score;
+                        item.CreditRecords.Add(cr);
+                    }                 
                 }
                 Pro.ScoreCondition = ProjectScoreCondition.Scored;
                 Save();
@@ -199,16 +202,33 @@ namespace VolunteerDatabase.Helper
             result = ProgressResult.Success();
             return result;
         }
+        public ProgressResult AddScore(Volunteer vol, Project pro,double score)
+        {
+            if(vol!=null&&pro!=null&&score<=5.0)
+            {
+                CreditRecord cr = new CreditRecord();
+                cr.Organization = pro.Organization;
+                cr.Participant = vol;
+                cr.Score = score;
+                vol.CreditRecords.Add(cr);
+                vol.Score += score;
+                return  ProgressResult.Success();
+            }
+            else
+            {
+                return ProgressResult.Error("评分失败");
+            }
+        }
 
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public ProgressResult ScoreSingleVolunteer(int Score, Volunteer Vol)
+        public ProgressResult ScoreSingleVolunteer(double Score, Volunteer Vol)
         {
             ProgressResult result;
             if (Score < 1 || Score > 5)
             {
               return  ProgressResult.Error("分数超出合法范围");
             }
-            Vol.Score = Vol.Score + Score - 4;
+            Vol.Score +=Score;
             Save();
             result = ProgressResult.Success();
             return result;
@@ -233,7 +253,7 @@ namespace VolunteerDatabase.Helper
         }
 
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public ProgressResult EditScore(Volunteer volunteer,Project project,int score)
+        public ProgressResult EditScore(Volunteer volunteer,Project project,double score)
         {
             CreditRecord crecord = database.CreditRecords.SingleOrDefault(r => r.Participant.UID == volunteer.UID && r.Project.Id == project.Id);
             if(crecord == null)

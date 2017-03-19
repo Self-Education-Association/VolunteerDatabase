@@ -19,7 +19,7 @@
                 <TextBlock Text="最大人数" Width="60" Height="30" FontSize="14" Canvas.Left="299" Canvas.Top="72"/>
                 <TextBox x:Name="project_maximum" Width="118" Height="25" FontSize="14" Canvas.Left="364" Canvas.Top="72"/>
                 <TextBlock Text="项目详情" Width="60" Height="30" FontSize="14" Canvas.Left="10" Canvas.Top="128"/>
-                <RichTextBox x:Name="project_details" Width="488" Height="83" FontSize="20" Canvas.Left="70" Canvas.Top="128"/>
+                <RichTextBox x:Name="project_details" Width="407" Height="83" FontSize="20" Canvas.Left="75" Canvas.Top="128"/>
                 <mui:ModernButton x:Name="create_project_button" Content="创建项目" Width="89" Height="30" FontSize="14" Canvas.Top="216" Canvas.Left="469" Click="create_project_button_Click"/>
                 <!--Click="create_project_button_Click"-->
             </Canvas>
