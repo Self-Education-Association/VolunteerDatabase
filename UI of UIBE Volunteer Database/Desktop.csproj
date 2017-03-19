@@ -29,10 +29,10 @@
     <ProductName>Volunteer Database Manager</ProductName>
     <PublisherName>Self Education Association</PublisherName>
     <SuiteName>Volunteer Database Project</SuiteName>
-    <MinimumRequiredVersion>1.0.0.5</MinimumRequiredVersion>
+    <MinimumRequiredVersion>1.0.0.6</MinimumRequiredVersion>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>6</ApplicationRevision>
+    <ApplicationRevision>7</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
