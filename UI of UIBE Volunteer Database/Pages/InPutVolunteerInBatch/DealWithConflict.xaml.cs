@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using VolunteerDatabase.Entity;
 using VolunteerDatabase.Helper;
+using FirstFloor.ModernUI.Windows.Controls;
 
 namespace Desktop.Pages
 {
@@ -54,7 +55,7 @@ namespace Desktop.Pages
             }
             if (conflictList.Count() == 0)
             {
-                MessageBox.Show("导入信息成功!");
+                ModernDialog.ShowMessage("导入信息成功!","",MessageBoxButton.OK);
                 Csvviewer viewer = new Csvviewer(project,fullList,fatherWindow);
                 fatherWindow.Content = viewer;
                 //this.Visibility=Visibility.Collapsed;
@@ -146,13 +147,13 @@ namespace Desktop.Pages
                 }
                 if(position%2 == 0 && flag == true && cbox.IsChecked==true)
                 {
-                    MessageBox.Show("每一个志愿者只能保存一条记录,请检查选择是否有错.");
+                    ModernDialog.ShowMessage("每一个志愿者只能保存一条记录,请检查选择是否有错.","错误提示",MessageBoxButton.OK);
                     isValid = false;
                     break;
                 }
                 if(position%2==0 && flag == false && cbox.IsChecked ==false)
                 {
-                    MessageBox.Show("每一个志愿者必须选择至少一条记录,请检查是否有遗漏.");
+                    ModernDialog.ShowMessage("每一个志愿者必须选择至少一条记录,请检查是否有遗漏.","错误提示",MessageBoxButton.OK);
                     isValid = false;
                     break;
                 }
@@ -167,7 +168,7 @@ namespace Desktop.Pages
             }
             else
             {
-                MessageBox.Show("处理信息冲突完成!");
+                ModernDialog.ShowMessage("处理信息冲突完成!","操作成功",MessageBoxButton.OK);
                 normalList.AddRange(CheckedList);
                 Csvviewer viewer = new Csvviewer(project,normalList,fatherWindow);
                 fatherWindow.Content = viewer;
