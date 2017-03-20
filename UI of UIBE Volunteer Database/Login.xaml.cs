@@ -95,11 +95,10 @@ namespace Desktop
                     var claims = await ih.CreateClaimsAsync(userid.Text, password.Password.ToString());//输入合法性验证
                     if (claims.IsAuthenticated && claims.User.Status == AppUserStatus.Enabled)
                     {
-                        LoginDialog1.ShowMessage("登陆成功", " ", MessageBoxButton.OK);
                         claimsStored = claims;
                         SendClaimsEvent(claims);
                         Close();
-
+                        LoginDialog1.ShowMessage("登陆成功", " ", MessageBoxButton.OK);                                   
                     }
                     else if (claims.User != null && claims.User.Status == AppUserStatus.NotApproved)
                     {
@@ -154,7 +153,12 @@ namespace Desktop
 
         private void OnLostFocus(object sender, RoutedEventArgs e)
         {
-            Focus();
+            Keyboard.Focus(this);
+        }
+
+        private void LostKeyFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            Keyboard.Focus(this);
         }
     }
 }

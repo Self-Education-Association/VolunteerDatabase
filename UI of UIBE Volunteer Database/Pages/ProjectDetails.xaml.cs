@@ -88,13 +88,12 @@ namespace Desktop.Pages
                 AddVolunteer_btn.IsEnabled = false;
             }
         }
-
         private void ProInfoShow()
         {
             if (Pro != null)
             {
-                org.Text = Pro.Organization.Name;
-                project_name.Text = Pro.Name;
+                //org.Text = Pro.Organization.Name;
+                Title = Pro.Name;
                 project_id.Text = Pro.Id.ToString();
                 project_place.Text = Pro.Place;
                 project_status.Text = Pro.Condition.ToString();
@@ -156,6 +155,7 @@ namespace Desktop.Pages
                         MessageBox.Show("评分失败");
                     }
                     App.DoEvents();
+                    
                 }          
                 if (Pro != null)
                 {
@@ -168,7 +168,6 @@ namespace Desktop.Pages
             }
 
         }
-
         private void deleteproject_btn_Click(object sender, RoutedEventArgs e)
         {
             var pmh = ProjectManageHelper.GetInstance();

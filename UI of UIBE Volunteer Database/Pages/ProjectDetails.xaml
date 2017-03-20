@@ -10,22 +10,19 @@
     <Grid Style="{StaticResource ContentRoot}">
         <ScrollViewer>
             <StackPanel MinWidth="200">
-                <TextBlock Text="项目信息 Project Information" Style="{StaticResource Heading2}" />
-                <Label x:Name="label" Content="项目名" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="40"/>
-                <TextBlock x:Name="project_name"/>
-                <Label x:Name="label1" Content="组织" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="40"/>
-                <TextBlock x:Name="org"/>
-                <Label Content="项目地点" HorizontalAlignment="Left" Height="20" Width="50"/>
+                <!--<Label x:Name="label1" Content="组织" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="40"/>
+                <TextBlock x:Name="org"/>-->
+                <Label Content="地点" HorizontalAlignment="Left" Height="20" Width="50"/>
                 <TextBlock x:Name="project_place"/>
-                <Label Content="项目编号" HorizontalAlignment="Left" Height="20" Width="50"></Label>
+                <Label Content="编号" HorizontalAlignment="Left" Height="20" Width="50"></Label>
                 <TextBlock x:Name="project_id"/>
                 <Label Content="项目人数/最大人数" HorizontalAlignment="Left" Height="20" Width="100"/>
                 <TextBlock x:Name="project_accomodation"/>
-                <Label Content="项目时间" HorizontalAlignment="Left" Height="20" Width="50"/>
+                <Label Content="开始时间" HorizontalAlignment="Left" Height="20" Width="50"/>
                 <TextBlock x:Name="project_time"/>
-                <Label Content="项目状态" HorizontalAlignment="Left" Height="20" Width="50"/>
+                <Label Content="状态" HorizontalAlignment="Left" Height="20" Width="50"/>
                 <TextBlock x:Name="project_status"/>
-                <Label Content="项目负责人" HorizontalAlignment="Left" Height="20" Width="60"/>
+                <Label Content="负责人" HorizontalAlignment="Left" Height="20" Width="60"/>
                 <DataGrid x:Name="project_manager_list" AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="姓名" Binding="{Binding Name}"/>
