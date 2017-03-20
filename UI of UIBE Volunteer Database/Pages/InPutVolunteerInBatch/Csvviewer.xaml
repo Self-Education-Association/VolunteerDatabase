@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="Desktop.Pages.Csvviewer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Desktop.Pages"
+             mc:Ignorable="d" 
+             d:DesignHeight="650" d:DesignWidth="470">
+
+    <Grid Style="{StaticResource ContentRoot}">
+        <Canvas MinWidth="250">
+            <TextBlock Text="成功读取的志愿者列表" Canvas.Left="10" Style="{StaticResource Heading2}"/>
+            <ScrollViewer Canvas.Top="20">
+                <DataGrid x:Name="csvGrid" Canvas.Top="30" Canvas.Left="35" LoadingRow="csvGrid_LoadingRow" AutoGenerateColumns="False" IsReadOnly="True" >
+                    <DataGrid.Columns>
+                        <DataGridCheckBoxColumn IsReadOnly="False"/>
+                        <DataGridTextColumn Header="学号" Width="90" Binding="{Binding StudentNum}"/>
+                        <DataGridTextColumn Header="姓名" Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="班级" Binding="{Binding Class}"/>
+                        <DataGridTextColumn Header="电话" Width="100" Binding="{Binding Mobile}"/>
+                        <DataGridTextColumn Header="综合评分" Binding="{Binding AvgScore}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </ScrollViewer>
+            <Button Name="SelectAll" Content="全选/全不选" Canvas.Bottom="20" Canvas.Left="30" Click="SelectAll_Click" />
+            <Button Name="SelectNotSelected" Content="反选" Canvas.Bottom="20" Canvas.Left="140" Click="SelectNotSelected_Click" />
+            <Button x:Name="Confirm" Content="确认名单" Canvas.Bottom="20" Canvas.Right="20" Click="Confirm_Click" />
+            <TextBlock x:Name="limit" Text="{Binding Counts}"/>
+        </Canvas>
+        
+    </Grid>
+</UserControl>

@@ -29,10 +29,10 @@
     <ProductName>Volunteer Database Manager</ProductName>
     <PublisherName>Self Education Association</PublisherName>
     <SuiteName>Volunteer Database Project</SuiteName>
-    <MinimumRequiredVersion>1.0.0.5</MinimumRequiredVersion>
+    <MinimumRequiredVersion>1.0.0.6</MinimumRequiredVersion>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>6</ApplicationRevision>
+    <ApplicationRevision>7</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -116,6 +116,12 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\InPutVolunteerInBatch\Csvviewer.xaml.cs">
+      <DependentUpon>Csvviewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\InPutVolunteerInBatch\DealWithConflict.xaml.cs">
+      <DependentUpon>DealWithConflict.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\ProjectDetails.xaml.cs">
       <DependentUpon>ProjectDetails.xaml</DependentUpon>
     </Compile>
@@ -170,6 +176,14 @@
     <Page Include="Login.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\InPutVolunteerInBatch\Csvviewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\InPutVolunteerInBatch\DealWithConflict.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\ProjectDetails.xaml">
       <SubType>Designer</SubType>
@@ -327,6 +341,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

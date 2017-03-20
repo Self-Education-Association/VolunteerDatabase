@@ -6,7 +6,7 @@
              xmlns:mui="http://firstfloorsoftware.com/ModernUI"
              mc:Ignorable="d"
              Width="300" Height="400"
-             d:DesignHeight="300" d:DesignWidth="400" Closing="Window_Closing" ResizeMode="NoResize" >
+             d:DesignHeight="300" d:DesignWidth="400" ResizeMode="NoResize" >
     <Grid Style="{StaticResource ContentRoot}">
         <ScrollViewer> 
             <Canvas MinWidth="200" LostFocus="OnLostFocus">

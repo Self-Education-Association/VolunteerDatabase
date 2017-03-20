@@ -38,6 +38,12 @@ namespace Desktop
             InitializeComponent();
         }
         private AppUserIdentityClaims Claims { get; set; }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+            Application.Current.Shutdown();
+        }
     }
 
 }

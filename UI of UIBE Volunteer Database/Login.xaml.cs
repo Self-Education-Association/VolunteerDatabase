@@ -30,6 +30,14 @@ namespace Desktop
 
         private static Login loginWindow = new Login();
 
+        public static bool IsLogin
+        {
+            get
+            {
+                return claimsStored?.IsAuthenticated == true;
+            }
+        }
+
         protected Login()
         {
             InitializeComponent();
@@ -47,6 +55,15 @@ namespace Desktop
                 }
             }
             return loginWindow;
+        }
+
+        public static bool LogOut()
+        {
+            claimsStored = null;
+            SendClaimsEvent = null;
+            LogOutEvent?.Invoke();
+            LogOutEvent = null;
+            return true;
         }
 
         private void register_Click(object sender, RoutedEventArgs e)
@@ -94,14 +111,13 @@ namespace Desktop
                     }
                 }
             }
-
         }
 
-        public static void GetClaims(SendClaimsDelegate sendClaims)
+        public static void GetClaims(SendClaimsDelegate sendClaims, LogOutDelegate logout)
         {
             if (claimsStored?.IsAuthenticated == true)
             {
-                SendClaimsEvent(claimsStored);
+                sendClaims(claimsStored);
                 return;
             }
 
@@ -113,19 +129,27 @@ namespace Desktop
 
         protected override void OnClosing(CancelEventArgs e)
         {
+            if (claimsStored == null)
+                Application.Current.Shutdown();
             e.Cancel = true;
             Hide();
-            base.OnClosing(e);
         }
 
         public delegate void SendClaimsDelegate(AppUserIdentityClaims claims);
 
+        public delegate void LogOutDelegate();
+
         public static event SendClaimsDelegate SendClaimsEvent;
 
-        private void Window_Closing(object sender, CancelEventArgs e)
+        public static event LogOutDelegate LogOutEvent;
+
+        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (claimsStored == null)
-                Environment.Exit(0);
+            try
+            {
+                DragMove();
+            }
+            catch { }
         }
 
         private void OnLostFocus(object sender, RoutedEventArgs e)
