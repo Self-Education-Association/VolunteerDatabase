@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using VolunteerDatabase.Entity;
 using VolunteerDatabase.Helper;
+using FirstFloor.ModernUI.Windows.Controls;
 
 namespace Desktop.Pages
 {
@@ -105,11 +106,11 @@ namespace Desktop.Pages
             }
             foreach (string error in errors)
             {
-                MessageBox.Show("学号为:["+error+"]的志愿者添加失败!");
+                ModernDialog.ShowMessage("学号为:["+error+"]的志愿者添加失败!","错误信息",MessageBoxButton.OK);
             }
             if(errors.Count()==0)
             {
-                MessageBox.Show("添加成功!共添加:"+ csvGrid.SelectedItems.Count+"位志愿者.");
+                ModernDialog.ShowMessage("共添加:"+ csvGrid.SelectedItems.Count+"位志愿者.","添加成功",MessageBoxButton.OK);
                 fatherWindow.Close();
             }
         }
