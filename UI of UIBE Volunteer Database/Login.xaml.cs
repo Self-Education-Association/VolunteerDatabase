@@ -33,6 +33,7 @@ namespace Desktop
         protected Login()
         {
             InitializeComponent();
+            this.Topmost = true;
         }
 
         protected static Login GetWindow()
@@ -77,13 +78,13 @@ namespace Desktop
                     var claims = await ih.CreateClaimsAsync(userid.Text, password.Password.ToString());//输入合法性验证
                     if (claims.IsAuthenticated && claims.User.Status == AppUserStatus.Enabled)
                     {
-                        LoginDialog1.ShowMessage("登陆成功"," ",MessageBoxButton.OK);
+                        LoginDialog1.ShowMessage("登陆成功", " ", MessageBoxButton.OK);
                         claimsStored = claims;
                         SendClaimsEvent(claims);
                         Close();
 
                     }
-                    else if (claims.User != null&&claims.User.Status == AppUserStatus.NotApproved)
+                    else if (claims.User != null && claims.User.Status == AppUserStatus.NotApproved)
                     {
                         ModernDialog.ShowMessage("已发送用户注册审批请求,请等待机构管理员审批", "注册成功", MessageBoxButton.OK);
                     }
@@ -125,6 +126,11 @@ namespace Desktop
         {
             if (claimsStored == null)
                 Environment.Exit(0);
+        }
+
+        private void OnLostFocus(object sender, RoutedEventArgs e)
+        {
+            Focus();
         }
     }
 }
