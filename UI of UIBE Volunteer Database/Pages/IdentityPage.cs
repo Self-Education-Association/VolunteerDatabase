@@ -14,6 +14,7 @@ namespace Desktop.Pages
     public class IdentityPage
     {
         private static IdentityPage identitypage;
+        public bool flag = true;
         
         public AppUserIdentityClaims Claims { get; private set; }
 
@@ -37,7 +38,7 @@ namespace Desktop.Pages
 
         public static void IdentityError()
         {
-
+            identitypage.flag = false;
             ModernDialog.ShowMessage("用户非法，请重新登录","",MessageBoxButton.OK);
         }
 

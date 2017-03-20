@@ -28,13 +28,21 @@ namespace Desktop.Pages
         public UserInfo()
         {
             identitypage = IdentityPage.GetInstance();
-            if (identitypage?.Claims != null)
+            if (identitypage!=null&&identitypage?.Claims != null)
             {
                 Claims = identitypage.Claims;
-                InitializeComponent();
-                ShowUserMessage();
+                if(identitypage.flag)
+                {
+                    InitializeComponent();
+                    ShowUserMessage();
+                }
+                else
+                {
+                    IsEnabled = false;
+                }
             }
         }
+            
 
         private void sendClaimsEventHandler(AppUserIdentityClaims claims)
         {

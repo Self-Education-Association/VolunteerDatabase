@@ -47,7 +47,6 @@ namespace Desktop.Pages
                 StatusSwitch.IsEnabled = false;
             }
         }
-
         private void ShowList(int status)
         {
             List<Project> list = new List<Project>();
