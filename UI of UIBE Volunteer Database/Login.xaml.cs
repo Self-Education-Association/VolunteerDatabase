@@ -41,6 +41,7 @@ namespace Desktop
         protected Login()
         {
             InitializeComponent();
+            this.Topmost = true;
         }
 
         protected static Login GetWindow()
@@ -149,6 +150,11 @@ namespace Desktop
                 DragMove();
             }
             catch { }
+        }
+
+        private void OnLostFocus(object sender, RoutedEventArgs e)
+        {
+            Focus();
         }
     }
 }

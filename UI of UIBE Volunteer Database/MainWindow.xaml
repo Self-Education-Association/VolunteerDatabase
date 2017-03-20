@@ -21,7 +21,7 @@
     </mui:ModernWindow.MenuLinkGroups>
     
     <mui:ModernWindow.TitleLinks>
-        <mui:Link DisplayName="设置 settings" Source="/Pages/SettingsPage.xaml" />
+        <mui:Link DisplayName="设置 settings" Source="/Pages/SettingsPage.xaml"/>
         <!--<mui:Link DisplayName="help" Source="https://github.com/firstfloorsoftware/mui" />-->
         <mui:Link DisplayName="用户信息 user info" Source="/Pages/UserInfo.xaml"/>
     </mui:ModernWindow.TitleLinks>

@@ -133,7 +133,7 @@
     <Compile Include="Pages\Settings\Appearance.xaml.cs">
       <DependentUpon>Appearance.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Settings\AppearanceViewModel.cs" />
+    <Compile Include="Pages\AppearanceViewModel.cs" />
     <Compile Include="Pages\UserApproval.xaml.cs">
       <DependentUpon>UserApproval.xaml</DependentUpon>
     </Compile>
