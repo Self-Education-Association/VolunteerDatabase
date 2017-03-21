@@ -1,42 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using VolunteerDatabase.Helper;
 using FirstFloor.ModernUI.Windows.Controls;
-using Desktop.Pages;
-using Desktop.TipsPages;
+using VolunteerDatabase.Helper;
 using VolunteerDatabase.Interface;
-using System.ComponentModel;
 
-namespace Desktop
+namespace VolunteerDatabase.Desktop
 {
     /// <summary>
     /// Interaction logic for Login.xaml
     /// </summary>
     public partial class Login : Window
     {
-        private static AppUserIdentityClaims claimsStored;
+        private static AppUserIdentityClaims _claimsStored;
 
-        private static Login loginWindow = new Login();
+        private static readonly object LoginWindowLocker = new object();
 
-        public static bool IsLogin
-        {
-            get
-            {
-                return claimsStored?.IsAuthenticated == true;
-            }
-        }
+        private static Login _loginWindow;
+
+        public static bool IsLogin => _claimsStored?.IsAuthenticated == true;
 
         protected Login()
         {
@@ -46,20 +28,20 @@ namespace Desktop
 
         protected static Login GetWindow()
         {
-            if (loginWindow == null)
+            if (_loginWindow == null)
             {
-                lock (loginWindow)
+                lock (LoginWindowLocker)
                 {
-                    if (loginWindow == null)
-                        loginWindow = new Login();
+                    if (_loginWindow == null)
+                        _loginWindow = new Login();
                 }
             }
-            return loginWindow;
+            return _loginWindow;
         }
 
         public static bool LogOut()
         {
-            claimsStored = null;
+            _claimsStored = null;
             SendClaimsEvent = null;
             LogOutEvent?.Invoke();
             LogOutEvent = null;
@@ -68,8 +50,8 @@ namespace Desktop
 
         private void register_Click(object sender, RoutedEventArgs e)
         {
-            var Register = new Register();
-            Register.Show();
+            var register = new Register();
+            register.Show();
         }
 
         private async void login_btn_Click(object sender, RoutedEventArgs e)
@@ -80,9 +62,9 @@ namespace Desktop
             }
             else
             {
-                if (claimsStored != null && claimsStored.IsAuthenticated == true)
+                if (_claimsStored != null && _claimsStored.IsAuthenticated == true)
                 {
-                    SendClaimsEvent(claimsStored);
+                    SendClaimsEvent?.Invoke(_claimsStored);
                     return;
                 }
                 IdentityHelper ih = IdentityHelper.GetInstance();
@@ -95,10 +77,10 @@ namespace Desktop
                     var claims = await ih.CreateClaimsAsync(userid.Text, password.Password.ToString());//输入合法性验证
                     if (claims.IsAuthenticated && claims.User.Status == AppUserStatus.Enabled)
                     {
-                        claimsStored = claims;
-                        SendClaimsEvent(claims);
+                        _claimsStored = claims;
+                        SendClaimsEvent?.Invoke(claims);
                         Close();
-                        LoginDialog1.ShowMessage("登陆成功", " ", MessageBoxButton.OK);                                   
+                        ModernDialog.ShowMessage("登陆成功", " ", MessageBoxButton.OK);                                   
                     }
                     else if (claims.User != null && claims.User.Status == AppUserStatus.NotApproved)
                     {
@@ -114,9 +96,9 @@ namespace Desktop
 
         public static void GetClaims(SendClaimsDelegate sendClaims, LogOutDelegate logout)
         {
-            if (claimsStored?.IsAuthenticated == true)
+            if (_claimsStored?.IsAuthenticated == true)
             {
-                sendClaims(claimsStored);
+                sendClaims(_claimsStored);
                 return;
             }
 
@@ -128,7 +110,7 @@ namespace Desktop
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            if (claimsStored == null)
+            if (_claimsStored == null)
                 Application.Current.Shutdown();
             e.Cancel = true;
             Hide();
@@ -141,15 +123,6 @@ namespace Desktop
         public static event SendClaimsDelegate SendClaimsEvent;
 
         public static event LogOutDelegate LogOutEvent;
-
-        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-                DragMove();
-            }
-            catch { }
-        }
 
         private void OnLostFocus(object sender, RoutedEventArgs e)
         {

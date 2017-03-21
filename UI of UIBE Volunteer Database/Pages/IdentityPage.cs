@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using VolunteerDatabase.Entity;
-using VolunteerDatabase.Helper;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows;
 using FirstFloor.ModernUI.Windows.Controls;
+using VolunteerDatabase.Helper;
 
-namespace Desktop.Pages
+namespace VolunteerDatabase.Desktop.Pages
 {
     public class IdentityPage
     {

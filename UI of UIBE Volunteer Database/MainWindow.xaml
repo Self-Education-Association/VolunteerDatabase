@@ -1,4 +1,4 @@
-﻿<mui:ModernWindow x:Class="Desktop.MainWindow"
+﻿<mui:ModernWindow x:Class="VolunteerDatabase.Desktop.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mui="http://firstfloorsoftware.com/ModernUI"

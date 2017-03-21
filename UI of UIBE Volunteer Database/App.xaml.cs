@@ -1,17 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
-using VolunteerDatabase.Helper;
-using VolunteerDatabase.Entity;
-using System.Security.Principal;
-using System.Security.Cryptography.X509Certificates;
 using System.Windows.Threading;
+using VolunteerDatabase.Entity;
 
-namespace Desktop
+namespace VolunteerDatabase.Desktop
 {
     /// <summary>
     /// App.xaml 的交互逻辑
