@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Security;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
-namespace Desktop
+namespace VolunteerDatabase.Desktop
 {
     public class CertificateInstaller
     {
