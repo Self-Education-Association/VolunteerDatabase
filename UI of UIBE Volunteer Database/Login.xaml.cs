@@ -124,14 +124,5 @@ namespace VolunteerDatabase.Desktop
 
         public static event LogOutDelegate LogOutEvent;
 
-        private void OnLostFocus(object sender, RoutedEventArgs e)
-        {
-            Keyboard.Focus(this);
-        }
-
-        private void LostKeyFocus(object sender, KeyboardFocusChangedEventArgs e)
-        {
-            Keyboard.Focus(this);
-        }
     }
 }
