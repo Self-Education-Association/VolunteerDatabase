@@ -31,6 +31,7 @@ namespace VolunteerDatabase.Desktop.Pages
 
         public static void IdentityError()
         {
+            if(identitypage!=null)
             identitypage.flag = false;
             ModernDialog.ShowMessage("用户非法，请重新登录","",MessageBoxButton.OK);
         }

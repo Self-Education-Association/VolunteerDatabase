@@ -132,6 +132,7 @@ namespace VolunteerDatabase.Desktop.Pages
             window.Width = 470;
             DealWithConflict dealer = new DealWithConflict(Pro,list,window);
             window.Content = dealer;
+            window.Owner = this;
             window.Show();
         }
 
@@ -260,6 +261,7 @@ namespace VolunteerDatabase.Desktop.Pages
                 if(Vol!=null&&Pro.ScoreCondition!=ProjectScoreCondition.UnScored)
                 {
                     var rp = new Rating(Vol,Pro);
+                    rp.Owner = this;
                 }
             }          
         }
