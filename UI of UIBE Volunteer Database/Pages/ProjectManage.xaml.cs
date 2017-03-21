@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using FirstFloor.ModernUI.Windows.Controls;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -98,8 +100,17 @@ namespace VolunteerDatabase.Desktop.Pages
             else
             {
                 List<Project> Pros = new List<Project>();
-                Pros.Add(progresshelper.FindProjectByProjectId(int.Parse(search_project.Text)));
-                project_list.ItemsSource = Pros;
+                try
+                {
+                    int num = int.Parse(search_project.Text);
+                    Pros.Add(progresshelper.FindProjectByProjectId(num));
+                    project_list.ItemsSource = Pros;
+                }
+                catch (Exception)
+                {
+                    ModernDialog.ShowMessage("输入非法,仅能输入数字.", "警告", MessageBoxButton.OK);
+                }
+               
                 App.DoEvents();
             }
         }
