@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using FirstFloor.ModernUI.Windows.Controls;
+using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using VolunteerDatabase.Entity;
@@ -39,7 +41,15 @@ namespace VolunteerDatabase.Desktop.Pages
                 var vh = VolunteerHelper.GetInstance();
                 if(studentnum.Text!="")
                 {
-                    sourceList.Add(vh.FindVolunteer(int.Parse(studentnum.Text)));
+                     try
+                    {
+                        int num = int.Parse(studentnum.Text);
+                        sourceList.Add(vh.FindVolunteer(num));
+                    }
+                    catch(Exception)
+                    {
+                        ModernDialog.ShowMessage("学号输入非法,仅能输入数字.", "警告", MessageBoxButton.OK);
+                    }              
                     App.DoEvents();
                 }
             }              

@@ -8,12 +8,12 @@ namespace VolunteerDatabase.Desktop.Pages
     /// </summary>
     public partial class SettingsPage : UserControl
     {
-        IdentityPage identitypage = IdentityPage.GetInstance();
-        AppUserIdentityClaims Claims { get; set; }
+        //IdentityPage identitypage = IdentityPage.GetInstance();
+       // AppUserIdentityClaims Claims { get; set; }
         
         public SettingsPage()
         {
-            Claims = identitypage.Claims;
+           // Claims = identitypage.Claims;
             InitializeComponent();
         }
     }

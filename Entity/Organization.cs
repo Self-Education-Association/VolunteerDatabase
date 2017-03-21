@@ -37,6 +37,7 @@ namespace VolunteerDatabase.Entity
         金融学院,
         国际商学院,
         公共管理学院,
+        国际关系学院,
         法学院,
         外语学院,
         英语学院,

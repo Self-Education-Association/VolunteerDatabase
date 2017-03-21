@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using FirstFloor.ModernUI.Windows.Controls;
 using VolunteerDatabase.Helper;
+using System;
 
 namespace VolunteerDatabase.Desktop.Pages
 {
@@ -31,20 +32,29 @@ namespace VolunteerDatabase.Desktop.Pages
                 ModernDialog.ShowMessage("请完整输入所有项目", "提示", MessageBoxButton.OK);
             }
             else
-            {            
-                ProgressResult result = helper.CreatNewProject(Claims.User.Organization, project_time.DisplayDate, project_name.Text, project_place.Text, textRange.Text, int.Parse(project_maximum.Text));
-                if (result.Succeeded)
+            {
+                try
                 {
-                    ModernDialog.ShowMessage("项目创建成功!", "", MessageBoxButton.OK);
-                    project_name.Clear();
-                    project_place.Clear();
-                    project_maximum.Clear();
-                    project_details.Document.Blocks.Clear();
+                    int num = int.Parse(project_maximum.Text);
+                    ProgressResult result = helper.CreatNewProject(Claims.User.Organization, project_time.DisplayDate, project_name.Text, project_place.Text, textRange.Text, num);
+                    if (result.Succeeded)
+                    {
+                        ModernDialog.ShowMessage("项目创建成功!", "", MessageBoxButton.OK);
+                        project_name.Clear();
+                        project_place.Clear();
+                        project_maximum.Clear();
+                        project_details.Document.Blocks.Clear();
+                    }
+                    else
+                    {
+                        ModernDialog.ShowMessage("项目创建失败!错误信息" + string.Join(",", result.Errors), "", MessageBoxButton.OK);
+                    }
                 }
-                else
+                catch (Exception)
                 {
-                    ModernDialog.ShowMessage("项目创建失败!错误信息" + string.Join(",", result.Errors), "", MessageBoxButton.OK);
+                    ModernDialog.ShowMessage("学号输入非法,仅能输入数字.", "警告", MessageBoxButton.OK);
                 }
+                
             }
         }
 
