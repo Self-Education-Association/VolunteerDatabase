@@ -52,6 +52,7 @@ namespace VolunteerDatabase.Desktop
         {
             var register = new Register();
             register.Show();
+            Hide();
         }
 
         private async void login_btn_Click(object sender, RoutedEventArgs e)
@@ -88,7 +89,9 @@ namespace VolunteerDatabase.Desktop
                     }
                     else
                     {
+                        Hide();
                         ModernDialog.ShowMessage("用户名或密码出错，或未通过管理员审批！", "登录失败", MessageBoxButton.OK);
+                        Show();
                     }
                 }
             }
