@@ -110,8 +110,6 @@ namespace VolunteerDatabase.Desktop.Pages
                 {
                     ModernDialog.ShowMessage("输入非法,仅能输入数字.", "警告", MessageBoxButton.OK);
                 }
-               
-                App.DoEvents();
             }
         }
     }

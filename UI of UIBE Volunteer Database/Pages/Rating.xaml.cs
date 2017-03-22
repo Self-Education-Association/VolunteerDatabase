@@ -46,7 +46,6 @@ namespace VolunteerDatabase.Desktop.Pages
                 {
                     MessageBox.Show("评分成功");
                     this.Close();
-                    App.DoEvents();
                 }
                 else
                 {
@@ -61,7 +60,6 @@ namespace VolunteerDatabase.Desktop.Pages
                 {
                     ModernDialog.ShowMessage("分数已经更改","评分成功",MessageBoxButton.OK);
                     this.Close();
-                    App.DoEvents();
                 }
             }          
         }
