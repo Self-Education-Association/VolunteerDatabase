@@ -75,6 +75,12 @@ namespace VolunteerDatabase.Helper
             { org = OrganizationEnum.统计学院; }
             if (OrganizationEnum.金融学院.ToString() == str)
             { org = OrganizationEnum.金融学院; }
+            if (OrganizationEnum.国际关系学院.ToString() == str)
+            { org = OrganizationEnum.国际关系学院; }
+            if (OrganizationEnum.英语学院.ToString() == str)
+            { org = OrganizationEnum.英语学院; }
+            if (OrganizationEnum.外语学院.ToString() == str)
+            { org = OrganizationEnum.外语学院; }
             return org;
         }
 
