@@ -1,9 +1,11 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using FirstFloor.ModernUI.Windows.Controls;
 using VolunteerDatabase.Helper;
 
 namespace VolunteerDatabase.Desktop.Pages
 {
+    [Obsolete]
     public class IdentityPage
     {
         private static IdentityPage identitypage;
