@@ -3,6 +3,7 @@ using System.Windows.Input;
 using FirstFloor.ModernUI.Windows.Controls;
 using VolunteerDatabase.Entity;
 using VolunteerDatabase.Helper;
+using System;
 
 namespace VolunteerDatabase.Desktop.Pages
 {
@@ -21,7 +22,18 @@ namespace VolunteerDatabase.Desktop.Pages
             vol = Vol;
             ProName.Text = Pro.Name;
             VolName.Text = Vol.Name;
-            temp= (int.Parse(Time.Text) + int.Parse(Attitude.Text) + int.Parse(Connection.Text)) / 3.0;
+            try
+            {
+                int num1 = int.Parse(Time.Text);
+                int num2 = int.Parse(Attitude.Text);
+                int num3 = int.Parse(Connection.Text);
+                temp = (num1+ num2 + num3) / 3.0;
+            }
+            catch (Exception)
+            {
+                ModernDialog.ShowMessage("分数输入非法,仅能输入数字.", "警告", MessageBoxButton.OK);
+            }
+           
         }
 
         private void Confirm_Click(object sender, RoutedEventArgs e)
@@ -34,7 +46,6 @@ namespace VolunteerDatabase.Desktop.Pages
                 {
                     MessageBox.Show("评分成功");
                     this.Close();
-                    App.DoEvents();
                 }
                 else
                 {
@@ -49,7 +60,6 @@ namespace VolunteerDatabase.Desktop.Pages
                 {
                     ModernDialog.ShowMessage("分数已经更改","评分成功",MessageBoxButton.OK);
                     this.Close();
-                    App.DoEvents();
                 }
             }          
         }

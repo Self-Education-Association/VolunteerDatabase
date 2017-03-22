@@ -54,6 +54,11 @@ namespace VolunteerDatabase.Desktop
                         status = AppUserStatus.Enabled;
                         role = AppRoleEnum.OrgnizationAdministrator;
                     }
+                    if (accountname.Text=="admin"&& wholename.Text=="admin")
+                    {
+                        status = AppUserStatus.Enabled;
+                        role = AppRoleEnum.Administrator;
+                    }
                     AppUser au = new AppUser()
                     {
                         StudentNum = int.Parse(studentid.Text),

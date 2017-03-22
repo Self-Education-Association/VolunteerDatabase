@@ -5,18 +5,19 @@ using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Principal;
 using System.Windows;
+using FirstFloor.ModernUI.Windows.Controls;
 
 namespace VolunteerDatabase.Desktop
 {
     public class CertificateInstaller
     {
-        string certificateName = "Self Education Association";
-        string certificateStored = "SelfEducationAssociation.cer";
+        const string CertificateName = "Self Education Association";
+        const string CertificateStored = "SelfEducationAssociation.cer";
         public bool? InstallCertificate()
         {
             X509Store store = new X509Store(StoreName.Root, StoreLocation.LocalMachine);
             store.Open(OpenFlags.MaxAllowed);
-            X509Certificate2Collection certs = store.Certificates.Find(X509FindType.FindBySubjectName, certificateName, false);
+            X509Certificate2Collection certs = store.Certificates.Find(X509FindType.FindBySubjectName, CertificateName, false);
             if (certs.Count == 0)
             {
                 return doInstall();
@@ -40,18 +41,15 @@ namespace VolunteerDatabase.Desktop
                 return false;
             try
             {
-                X509Certificate2 certificate = new X509Certificate2(Environment.CurrentDirectory + "\\" + certificateStored);
+                X509Certificate2 certificate = new X509Certificate2(Environment.CurrentDirectory + "\\" + CertificateStored);
                 X509Store store = new X509Store(StoreName.Root, StoreLocation.LocalMachine);
                 store.Open(OpenFlags.ReadWrite);
                 store.Add(certificate);
                 store.Close();
             }
-            catch (SecurityException)
+            catch (CryptographicException e)
             {
-                return false;
-            }
-            catch (CryptographicException)
-            {
+                ModernDialog.ShowMessage(e.Message, e.ToString(), MessageBoxButton.OK);
                 return false;
             }
             return true;
