@@ -11,18 +11,18 @@ namespace VolunteerDatabase.Desktop
 {
     public class CertificateInstaller
     {
-        const string CertificateName = "Self Education Association";
-        const string CertificateStored = "SelfEducationAssociation.cer";
-        public bool? InstallCertificate()
+        private const string CertificateName = "Self Education Association";
+        private const string CertificateStored = "SelfEducationAssociation.cer";
+        public static bool? InstallCertificate()
         {
-            X509Store store = new X509Store(StoreName.Root, StoreLocation.LocalMachine);
+            var store = new X509Store(StoreName.Root, StoreLocation.LocalMachine);
             store.Open(OpenFlags.MaxAllowed);
-            X509Certificate2Collection certs = store.Certificates.Find(X509FindType.FindBySubjectName, CertificateName, false);
+            var certs = store.Certificates.Find(X509FindType.FindBySubjectName, CertificateName, false);
             if (certs.Count == 0)
             {
-                return doInstall();
+                return DoInstall();
             }
-            bool flag = false;
+            var flag = false;
             foreach (var c in certs)
             {
                 if (c.NotAfter > DateTime.Now)
@@ -31,18 +31,18 @@ namespace VolunteerDatabase.Desktop
                 }
             }
             if (!flag)
-                return doInstall();
+                return DoInstall();
             return null;
         }
 
-        bool doInstall()
+        private static bool DoInstall()
         {
-            if (!getAdministratorPermission())
+            if (!GetAdministratorPermission())
                 return false;
             try
             {
-                X509Certificate2 certificate = new X509Certificate2(Environment.CurrentDirectory + "\\" + CertificateStored);
-                X509Store store = new X509Store(StoreName.Root, StoreLocation.LocalMachine);
+                var certificate = new X509Certificate2(Environment.CurrentDirectory + "\\" + CertificateStored);
+                var store = new X509Store(StoreName.Root, StoreLocation.LocalMachine);
                 store.Open(OpenFlags.ReadWrite);
                 store.Add(certificate);
                 store.Close();
@@ -55,31 +55,30 @@ namespace VolunteerDatabase.Desktop
             return true;
         }
 
-        bool getAdministratorPermission()
+        private static bool GetAdministratorPermission()
         {
-            WindowsIdentity identity = WindowsIdentity.GetCurrent();
-            WindowsPrincipal principal = new WindowsPrincipal(identity);
+            var identity = WindowsIdentity.GetCurrent();
+            var principal = new WindowsPrincipal(identity);
             if (principal.IsInRole(WindowsBuiltInRole.Administrator))
             {
                 return true;
             }
-            else
+            var startInfo = new ProcessStartInfo
             {
-                ProcessStartInfo startInfo = new ProcessStartInfo();
-                startInfo.UseShellExecute = true;
-                startInfo.WorkingDirectory = Environment.CurrentDirectory;
-                startInfo.FileName = Process.GetCurrentProcess().MainModule.FileName;
-                //设置启动动作,确保以管理员身份运行
-                startInfo.Verb = "runas";
-                try
-                {
-                    Process.Start(startInfo);
-                }
-                catch
-                {
-                    Application.Current.Shutdown();
-                    return false;
-                }
+                UseShellExecute = true,
+                WorkingDirectory = Environment.CurrentDirectory,
+                FileName = Process.GetCurrentProcess().MainModule.FileName,
+                Verb = "runas"
+            };
+            //设置启动动作,确保以管理员身份运行
+            try
+            {
+                Process.Start(startInfo);
+            }
+            catch
+            {
+                Application.Current.Shutdown();
+                return false;
             }
             Application.Current.Shutdown();
             return true;
