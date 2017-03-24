@@ -13,7 +13,7 @@ namespace VolunteerDatabase.Desktop
         public MainWindow()
         {
 #if !DEBUG
-            bool? result = new CertificateInstaller().InstallCertificate();
+            bool? result = CertificateInstaller.InstallCertificate();
             if (result == true)
             {
                 MessageBox.Show("证书安装成功！");

@@ -34,7 +34,7 @@ namespace VolunteerDatabase.Entity
             return database;
         }
 
-        public async static Task<Database> GetInstanceAsync()
+        public static async Task<Database> GetInstanceAsync()
         {
             return await Task.Run(() => GetInstance());
         }
