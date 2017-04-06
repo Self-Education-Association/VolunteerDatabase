@@ -75,23 +75,23 @@ namespace VolunteerDatabase.Helper
 
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public ProgressResult CreatNewProject(Organization org, DateTime Time, string Name = "", string Place = "", string Detail = "", int Maximum = 70)
+        public ProgressResult CreatNewProject(Organization org, DateTime Time, string name = "", string place = "", string detail = "", int maximum = 70)
         {
             ProgressResult result;
             if (Time == null)
             {
-                return ProgressResult.Error("新项目"+Name+"时间不合法，请重新输入");
+                return ProgressResult.Error("新项目"+name+"时间不合法，请重新输入");
             }
             lock (database)
             {
                 var Project = new Project();
                 Project.Time = Time;
                 Project.CreatTime = DateTime.Now;
-                Project.Maximum = Maximum;
+                Project.Maximum = maximum;
                 Project.Managers = new List<AppUser>();
-                Project.Place = Place;
-                Project.Name = Name;
-                Project.Details = Detail;
+                Project.Place = place;
+                Project.Name = name;
+                Project.Details = detail;
                 Project.Condition = ProjectCondition.Ongoing;
                 Project.ScoreCondition = ProjectScoreCondition.UnScored;
                 Project.Organization = org;
@@ -105,18 +105,18 @@ namespace VolunteerDatabase.Helper
 
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public ProgressResult ProjectMessageInput(string Name, string Detail,string Place, int Max,DateTime Time, List<AppUser> Managers,Project Pro)
+        public ProgressResult ProjectMessageInput(string Name, string detail,string place, int max,DateTime time, List<AppUser> managers,Project pro)
         {
             ProgressResult result;
-            if (Name==""|| Detail == "" || Place =="" ||Time== null || Managers == null)
+            if (Name==""|| detail == "" || place =="" ||time== null || managers == null)
             {
                 ProgressResult.Error("信息不完整，无法输入信息");
             }
-            Pro.Place = Place;
-            Pro.Maximum = Max;
-            Pro.Time = Time;
-            Pro.Managers = Managers;
-            Pro.Details = Detail;
+            pro.Place = place;
+            pro.Maximum = max;
+            pro.Time = time;
+            pro.Managers = managers;
+            pro.Details = detail;
             Save();
             result = ProgressResult.Success();
             return result;
@@ -127,10 +127,10 @@ namespace VolunteerDatabase.Helper
 
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public ProgressResult AddManager(int StuNum, Project Pro)
+        public ProgressResult AddManager(int StuNum, Project pro)
         {
             var Manager = database.Users.SingleOrDefault(o => o.StudentNum == StuNum);       
-            if(Pro==null||Pro.Condition==ProjectCondition.Finished)
+            if(pro==null||pro.Condition==ProjectCondition.Finished)
             {
                 return ProgressResult.Error("修改项目时失败!项目不存在或已结项.");
             }
@@ -139,16 +139,16 @@ namespace VolunteerDatabase.Helper
                 return ProgressResult.Error("待加入的用户身份非法.");
             }
 
-            Pro.Managers.Add(Manager);
+            pro.Managers.Add(Manager);
             Save();
             return ProgressResult.Success();
         }
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public ProgressResult DeletManager(int StuNum, Project Pro)
+        public ProgressResult DeletManager(int StuNum, Project pro)
         {
             var Manager = database.Users.SingleOrDefault(o => o.StudentNum == StuNum);
-            if (Pro == null || Pro.Condition == ProjectCondition.Finished)
+            if (pro == null || pro.Condition == ProjectCondition.Finished)
             {
                 return ProgressResult.Error("修改项目时失败!项目不存在或已结项.");
             }
@@ -157,7 +157,7 @@ namespace VolunteerDatabase.Helper
                 return ProgressResult.Error("待删除的用户身份非法.");
             }
 
-            Pro.Managers.Remove(Manager);
+            pro.Managers.Remove(Manager);
             Save();
             return ProgressResult.Success();
         }

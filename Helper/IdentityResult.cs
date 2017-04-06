@@ -13,9 +13,9 @@ namespace VolunteerDatabase.Helper
 
         private bool _succeeded;
 
-        public string[] Errors { get { return _errors; } }
+        public string[] Errors => _errors;
 
-        public bool Succeeded { get { return _succeeded; } }
+        public bool Succeeded => _succeeded;
 
         public static IdentityResult Error(params string[] errors)
         {

@@ -117,6 +117,10 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ManagedControl\ControlManager.cs" />
+    <Compile Include="ManagedControl\IControlManager.cs" />
+    <Compile Include="ManagedControl\IManageableControl.cs" />
+    <Compile Include="ManagedControl\ManageableControl.cs" />
     <Compile Include="Pages\InPutVolunteerInBatch\Csvviewer.xaml.cs">
       <DependentUpon>Csvviewer.xaml</DependentUpon>
     </Compile>

@@ -27,13 +27,7 @@ namespace VolunteerDatabase.Helper
             }
         }
 
-        public AppUser Holder
-        {
-            get
-            {
-                return _holder;
-            }
-        }
+        public AppUser Holder => _holder;
 
         public IEnumerable<AppRoleEnum> Roles
         {
@@ -44,7 +38,7 @@ namespace VolunteerDatabase.Helper
             }
         }
 
-        public bool IsAuthenticated { get { return _isAuthenticated; } }
+        public bool IsAuthenticated => _isAuthenticated;
 
         public bool IsInRole(AppRoleEnum roleEnum)
         {

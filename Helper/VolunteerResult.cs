@@ -13,10 +13,11 @@ namespace VolunteerDatabase.Helper
         private string[] _errors;
         private int _errorvolunteernum;
         private string _errorstring;
-        public bool Succeeded { get { return _succeeded; } }
-        public string[] Errors { get { return _errors; } }
-        public string ErrorString { get { return _errorstring; } }
-        public int ErrorVolunteerNum { get { return _errorvolunteernum; } }
+        public bool Succeeded => _succeeded;
+        public string[] Errors => _errors;
+        public string ErrorString => _errorstring;
+        public int ErrorVolunteerNum => _errorvolunteernum;
+
         /// <summary>
         /// 使用字符串数组作为错误信息的方法
         /// </summary>

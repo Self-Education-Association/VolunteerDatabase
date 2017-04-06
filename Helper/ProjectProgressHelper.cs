@@ -147,17 +147,17 @@ namespace VolunteerDatabase.Helper
         }
 
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public ProgressResult DeleteVolunteerFromProject(Volunteer Vol, Project Pro)
+        public ProgressResult DeleteVolunteerFromProject(Volunteer Vol, Project pro)
         {
             ProgressResult result;
-            if (!Pro.Volunteers.Contains(Vol))
+            if (!pro.Volunteers.Contains(Vol))
             {
                 return ProgressResult.Error("志愿者不在该项目中");
             }
             else
             lock (database)
             {
-                Pro.Volunteers.Remove(Vol);
+                pro.Volunteers.Remove(Vol);
                 Save();
             }
             result = ProgressResult.Success();
@@ -165,7 +165,7 @@ namespace VolunteerDatabase.Helper
         }
 
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public ProgressResult ScoringDefaultForVolunteers(Project Pro,double Score)
+        public ProgressResult ScoringDefaultForVolunteers(Project Pro,double score)
         {
             ProgressResult result;
             Pro = database.Projects.SingleOrDefault(p => p.Id == Pro.Id);
@@ -188,11 +188,11 @@ namespace VolunteerDatabase.Helper
                 {
                     if (!item.CreditRecords.Exists(o=>o.Project.Id==Pro.Id))
                     {
-                        item.Score += Score;
+                        item.Score += score;
                         CreditRecord cr = new CreditRecord();
                         cr.Participant = item;
                         cr.Project = Pro;
-                        cr.Score = Score;
+                        cr.Score = score;
                         item.CreditRecords.Add(cr);
                     }                 
                 }
@@ -221,14 +221,14 @@ namespace VolunteerDatabase.Helper
         }
 
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public ProgressResult ScoreSingleVolunteer(double Score, Volunteer Vol)
+        public ProgressResult ScoreSingleVolunteer(double Score, Volunteer vol)
         {
             ProgressResult result;
             if (Score < 1 || Score > 5)
             {
               return  ProgressResult.Error("分数超出合法范围");
             }
-            Vol.Score +=Score;
+            vol.Score +=Score;
             Save();
             result = ProgressResult.Success();
             return result;

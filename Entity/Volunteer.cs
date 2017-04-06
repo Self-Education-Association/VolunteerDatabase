@@ -9,10 +9,10 @@ using VolunteerDatabase.Interface;
 
 namespace VolunteerDatabase.Entity
 {
-    public class Volunteer:IComparable<Volunteer>, IEqualityComparer<Volunteer>
+    public class Volunteer : IComparable<Volunteer>, IEqualityComparer<Volunteer>
     {
         //[Required]
-        public int StudentNum { get; set;}//学号
+        public int StudentNum { get; set; }//学号
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid UID { get; set; }//唯一标识符：主键
@@ -29,20 +29,24 @@ namespace VolunteerDatabase.Entity
 
         public string Skill { get; set; }
 
-        public string BlaclistCondition {
-                            get {
-                            if (BlackListRecords.Exists(o => o.Status == BlackListRecordStatus.Enabled))
-                                            return "正在黑名单中";
-                                            else return "当前无黑名单"; }
-                                }
+        public string BlaclistCondition
+        {
+            get
+            {
+                if (BlackListRecords.Exists(o => o.Status == BlackListRecordStatus.Enabled))
+                    return "正在黑名单中";
+                else return "当前无黑名单";
+            }
+        }
 
-        public virtual List<Project> Project{ get; set; }
+        public virtual List<Project> Project { get; set; }
         public virtual List<BlackListRecord> BlackListRecords { get; set; }
         public virtual List<CreditRecord> CreditRecords { get; set; }
         public virtual List<LogRecord> TargetedBy { get; set; }
         public double Score { get; set; }
         public int ProjectCount { get; set; }
-        public double AvgScore { get { return (double)Score / (ProjectCount==0?1:ProjectCount); } }
+        public double AvgScore => (double)Score / (ProjectCount == 0 ? 1 : ProjectCount);
+
         public bool AreSameWith(Volunteer b)
         {
             if (b == null)
@@ -54,7 +58,7 @@ namespace VolunteerDatabase.Entity
             else
                 return false;
         }
-        public static bool AreSame(Volunteer a,Volunteer b)
+        public static bool AreSame(Volunteer a, Volunteer b)
         {
             if (a == null && b == null)
             {
@@ -84,12 +88,12 @@ namespace VolunteerDatabase.Entity
         public int CompareTo(Volunteer obj)//Volunteer里存double平均分，加个CreditRecord来存单次的分数
         {
             int result;
-            if(this.AvgScore==obj.AvgScore)
+            if (this.AvgScore == obj.AvgScore)
             {
                 result = 0;
             }
             else
-            if(this.AvgScore>obj.AvgScore)
+            if (this.AvgScore > obj.AvgScore)
             {
                 result = -1;
             }

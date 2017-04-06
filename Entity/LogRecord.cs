@@ -18,7 +18,8 @@ namespace VolunteerDatabase.Entity
         public int Id { get; set; }
 
         public virtual AppUser Adder { get; set; }
-        public Organization AddOrganization { get { return Adder.Organization; } }//不存进数据库 是从Adder里面派生的
+        public Organization AddOrganization //不存进数据库 是从Adder里面派生的
+            => Adder.Organization;
 
         [Required]
         public DateTime AddTime { get; set; }

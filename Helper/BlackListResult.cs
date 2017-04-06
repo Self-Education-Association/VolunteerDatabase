@@ -7,20 +7,21 @@ using VolunteerDatabase.Interface;
 
 namespace VolunteerDatabase.Helper
 {
-    public class BlackListResult:IResult
+    public class BlackListResult : IResult
     {
         private bool _succeed = false;
         private string[] _errors;
         private string _errorstring;
-        public bool Succeeded { get { return _succeed; } }
-        public string[] Errors { get { return _errors; } }
-        public string ErrorString { get { return _errorstring; } }
+        public bool Succeeded => _succeed;
+        public string[] Errors => _errors;
+        public string ErrorString => _errorstring;
+
         public static BlackListResult Success()
         {
             var result = new BlackListResult
             {
                 _succeed = true,
-                _errors = {},
+                _errors = { },
             };
             return result;
         }
@@ -35,11 +36,11 @@ namespace VolunteerDatabase.Helper
             {
                 _succeed = false,
                 _errors = errors,
-                  _errorstring = errors.ToString()
+                _errorstring = errors.ToString()
             };
             return result;
         }
-        public static BlackListResult Error(int id ,params string[] errors)
+        public static BlackListResult Error(int id, params string[] errors)
         {
             if (errors.Count() == 0)
             {
@@ -65,7 +66,7 @@ namespace VolunteerDatabase.Helper
                     result = Error("已存在相同记录，请勿重复添加。");
                     break;
                 case (AddBlackListRecordErrorEnum.WrongTime):
-                    result= Error("填写时间不正确，请检查并稍后重试！");
+                    result = Error("填写时间不正确，请检查并稍后重试！");
                     break;
                 default:
                     result = Error();
@@ -75,7 +76,7 @@ namespace VolunteerDatabase.Helper
         }
         public static BlackListResult Error(EditBlackListRecordErrorEnum err)
         {
-          BlackListResult result;
+            BlackListResult result;
             switch (err)
             {
                 case (EditBlackListRecordErrorEnum.EmptyId):
@@ -104,7 +105,7 @@ namespace VolunteerDatabase.Helper
             }
             return result;
         }
-        public static bool AreSame(BlackListResult a,BlackListResult b)
+        public static bool AreSame(BlackListResult a, BlackListResult b)
         {
             if (a == null && b == null)
                 return true;
@@ -112,7 +113,7 @@ namespace VolunteerDatabase.Helper
                 return false;
             else if (a.ErrorString == b.ErrorString && a.Succeeded == b.Succeeded)
             {
-                    return true;
+                return true;
             }
             else
                 return false;
