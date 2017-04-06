@@ -55,11 +55,8 @@
     <Compile Include="IClaims.cs" />
     <Compile Include="IDatabase.cs" />
     <Compile Include="IDatabaseManager.cs" />
-    <Compile Include="IWindowsManager.cs" />
     <Compile Include="IHelper.cs" />
     <Compile Include="ILog.cs" />
-    <Compile Include="IManageableWindow.cs" />
-    <Compile Include="IManageableWindowFactory.cs" />
     <Compile Include="IResult.cs" />
     <Compile Include="IProject.cs" />
     <Compile Include="IRole.cs" />

@@ -113,8 +113,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AppWindowsManager.cs" />
-    <Compile Include="AppManageableWindowFactory.cs" />
     <Compile Include="CertificateInstaller.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
