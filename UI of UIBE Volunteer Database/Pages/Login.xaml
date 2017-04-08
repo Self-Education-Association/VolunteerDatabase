@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="VolunteerDatabase.Desktop.Pages.Login"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:VolunteerDatabase.Desktop.Pages"
+             xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Canvas>
+            <Label x:Name="label1" Content="账号" HorizontalAlignment="Center" Height="30" Width="38" FontSize="14"
+                       Canvas.Left="24" Canvas.Top="64" ScrollViewer.VerticalScrollBarVisibility="Auto" />
+            <TextBox x:Name="userid" HorizontalAlignment="Center" TextWrapping="Wrap" Height="30" Width="160"
+                         Background="#FFF1ECFF" Canvas.Left="67" Canvas.Top="64" MaxLength="32" />
+            <Label x:Name="label2" Content="密码" HorizontalAlignment="Center" Height="30" Width="38" FontSize="14"
+                       Canvas.Left="24" Canvas.Top="127" />
+            <PasswordBox x:Name="password" HorizontalAlignment="Center" Height="30" Width="160"
+                             Background="#FFF1ECFF" Canvas.Left="67" Canvas.Top="127" AllowDrop="False" />
+            <mui:ModernButton x:Name="login_btn" Content="Log in" HorizontalAlignment="Left" Width="65"
+                                  Canvas.Left="162" Canvas.Top="192" Click="login_btn_Click" />
+            <TextBlock x:Name="Tips_block" Height="25" Width="150" Canvas.Left="67" Canvas.Top="162"
+                           Text="请输入用户名和密码=_=" Visibility="Hidden" />
+        </Canvas>
+
+    </Grid>
+</UserControl>

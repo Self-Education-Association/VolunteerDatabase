@@ -8,32 +8,32 @@ using VolunteerDatabase.Interface;
 namespace VolunteerDatabase.Desktop
 {
     /// <summary>
-    /// Interaction logic for Login.xaml
+    /// Interaction logic for WelcomePage.xaml
     /// </summary>
-    public partial class Login : Window
+    public partial class WelcomePage : Window
     {
         private static AppUserIdentityClaims _claimsStored;
 
         private static readonly object LoginWindowLocker = new object();
 
-        private static Login _loginWindow;
+        private static WelcomePage _loginWindow;
 
         public static bool IsLogin => _claimsStored?.IsAuthenticated == true;
 
-        protected Login()
+        protected WelcomePage()
         {
             InitializeComponent();
             this.Topmost = true;
         }
 
-        protected static Login GetWindow()
+        protected static WelcomePage GetWindow()
         {
             if (_loginWindow == null)
             {
                 lock (LoginWindowLocker)
                 {
                     if (_loginWindow == null)
-                        _loginWindow = new Login();
+                        _loginWindow = new WelcomePage();
                 }
             }
             return _loginWindow;
@@ -46,13 +46,6 @@ namespace VolunteerDatabase.Desktop
             LogOutEvent?.Invoke();
             LogOutEvent = null;
             return true;
-        }
-
-        private void register_Click(object sender, RoutedEventArgs e)
-        {
-            var register = new Register();
-            register.Show();
-            Hide();
         }
 
         private async void login_btn_Click(object sender, RoutedEventArgs e)
@@ -81,7 +74,7 @@ namespace VolunteerDatabase.Desktop
                         _claimsStored = claims;
                         SendClaimsEvent?.Invoke(claims);
                         Close();
-                        ModernDialog.ShowMessage("登陆成功", " ", MessageBoxButton.OK);                                   
+                        ModernDialog.ShowMessage("登陆成功", " ", MessageBoxButton.OK);
                     }
                     else if (claims.User != null && claims.User.Status == AppUserStatus.NotApproved)
                     {
@@ -105,7 +98,7 @@ namespace VolunteerDatabase.Desktop
                 return;
             }
 
-            Login loginWindow = GetWindow();
+            WelcomePage loginWindow = GetWindow();
             loginWindow.Show();
             SendClaimsEvent += sendClaims;
             return;
