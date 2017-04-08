@@ -529,7 +529,7 @@ namespace VolunteerDatabase.Helper.Tests
             {
                 Assert.Fail("添加失败！");
             }
-            if (v.Score != 1)
+            if (v.Score != 5)
             {
                 Assert.Fail("测试ScoreSingleVolunteer失败！");
             }
