@@ -36,7 +36,7 @@ namespace VolunteerDatabase.Desktop.Pages
             InitializeComponent();
         }
 
-        protected static WelcomePage GetWindow()
+        public static WelcomePage GetWindow()
         {
             if (_loginWindow == null)
             {
