@@ -8,9 +8,9 @@
              d:DesignHeight="300" d:DesignWidth="600">
     <Grid Style="{StaticResource ContentRoot}">
         <ScrollViewer>
-            <Canvas MinWidth="200">
+            <Canvas MinWidth="150">
                 <TextBlock Name="Status" Text="项目状态" Style="{StaticResource Heading2}" />
-                <ComboBox x:Name="StatusSwitch"  Width="100" Height="20" HorizontalAlignment="Left" FontSize="12" Canvas.Top="27" SelectedIndex="0" SelectionChanged="StatusSwitch_SelectionChanged" >
+                <ComboBox x:Name="StatusSwitch"  Width="100" Height="20" HorizontalAlignment="Left" FontSize="12" Canvas.Top="25" SelectedIndex="0" SelectionChanged="StatusSwitch_SelectionChanged" >
                     <ComboBoxItem Content="全部"></ComboBoxItem>
                     <ComboBoxItem Content="进行中"></ComboBoxItem>
                     <ComboBoxItem Content="已完成"></ComboBoxItem>
@@ -30,13 +30,13 @@
                         </Style>
                     </DataGrid.RowStyle>-->
                     <DataGrid.Columns>
-                        <DataGridTemplateColumn Width="30">
-                            <!--<DataGridTemplateColumn.CellTemplate>
+                        <!--<DataGridTemplateColumn Width="30">
+                            <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <CheckBox/>
                                 </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>-->
-                        </DataGridTemplateColumn>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>-->
                         <DataGridTextColumn Header="项目编号" Binding="{Binding Id}"/>
                         <DataGridTextColumn Header="名称" Binding="{Binding Name}"/>
                         <DataGridTextColumn Header="地点" Binding="{Binding Place}"/>
@@ -52,8 +52,8 @@
                         </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
-                <mui:ModernButton Content="按编号查找" HorizontalAlignment="Right"  Width="100" Height="25" Canvas.Left="478" Canvas.Top="31" Click="ModernButton_Click"/>
-                <TextBox x:Name="search_project" Width="90" Height="25" Canvas.Left="380" Canvas.Top="31"/>
+                <mui:ModernButton Content="查找" HorizontalAlignment="Right"  Width="100" Height="25" Canvas.Right="50" Canvas.Top="25" Click="ModernButton_Click"/>
+                <TextBox x:Name="search_project" Width="90" Height="20" Canvas.Right="0" Canvas.Top="25"/>
             </Canvas>
         </ScrollViewer>
     </Grid>
