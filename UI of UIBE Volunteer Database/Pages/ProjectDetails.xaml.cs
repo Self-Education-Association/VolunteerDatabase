@@ -15,7 +15,7 @@ namespace VolunteerDatabase.Desktop.Pages
     /// <summary>
     /// AddManager.xaml 的交互逻辑
     /// </summary>
-    public partial class ProjectInformation : Window
+    public partial class ProjectDetails : UserControl
     {
         private Project Pro;
         private AppUserIdentityClaims Claims;
@@ -32,7 +32,7 @@ namespace VolunteerDatabase.Desktop.Pages
             Close();
         }
 
-        public ProjectInformation(AppUserIdentityClaims Claim, Project pro)
+        public ProjectDetails(AppUserIdentityClaims Claim, Project pro)
         {
             if (Claim == null)
             {

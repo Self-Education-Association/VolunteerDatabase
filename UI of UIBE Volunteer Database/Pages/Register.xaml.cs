@@ -112,10 +112,10 @@ namespace VolunteerDatabase.Desktop
 
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
+        //private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        //{
 
-        }
+        //}
         //此处限制了键盘输入必须为数字，但是无法检查输入法的中文输入，待解决
         //动态展现：用户名已经被占用
     }

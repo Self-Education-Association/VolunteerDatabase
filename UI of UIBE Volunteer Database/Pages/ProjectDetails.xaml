@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="VolunteerDatabase.Desktop.Pages.ProjectInformation"
+﻿<UserControl x:Class="VolunteerDatabase.Desktop.Pages.ProjectDetails"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -98,9 +98,12 @@
                 <mui:ModernButton x:Name="AddManager_btn" Content="输入学号添加管理者" HorizontalAlignment="Right" Click="AddManager_btn_Click"/>
                 <TextBox x:Name="AddVolunteer" KeyDown="AddVolunteer_KeyDown" MaxLength="9" Width="120" HorizontalAlignment="Right"/>
                 <mui:ModernButton x:Name="AddVolunteer_btn" Content="输入学号添加志愿者" HorizontalAlignment="Right" Click="AddVolunteer_btn_Click"/>
-                <mui:ModernButton x:Name="piliang" Content="批量添加志愿者" Click="piliang_Click" />
-                <mui:ModernButton x:Name="endproject" Content="结项" Click="endproject_Click"/>
-                <mui:ModernButton x:Name="deleteproject_btn" Content="删除项目" Click="deleteproject_btn_Click"/>
+                <Canvas>
+                    <mui:ModernButton x:Name="piliang" Content="批量添加志愿者" Click="piliang_Click" />
+                    <mui:ModernButton x:Name="endproject" Content="结项" Click="endproject_Click" Canvas.Left="271"/>
+                    <mui:ModernButton x:Name="deleteproject_btn" Content="删除项目" Click="deleteproject_btn_Click" Canvas.Left="483"/>
+                </Canvas>
+                
             </StackPanel>
         </ScrollViewer>
     </Grid>

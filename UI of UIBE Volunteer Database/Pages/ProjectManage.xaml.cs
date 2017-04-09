@@ -87,7 +87,7 @@ namespace VolunteerDatabase.Desktop.Pages
             if(senderButton.DataContext is Project)
             {
                 Project project = (Project)senderButton.DataContext;
-                var ProjectInformation = new ProjectInformation(this.Claims,project);
+                var ProjectInformation = new ProjectDetails(this.Claims,project);
                 ProjectInformation.Show();
             }          
         }
