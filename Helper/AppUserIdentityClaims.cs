@@ -12,33 +12,22 @@ namespace VolunteerDatabase.Helper
     {
         private AppUser _user;
 
-        private AppUser _holder;
-
         private IEnumerable<AppRoleEnum> _roles;
 
-        private bool _isAuthenticated;
+        public AppUser User => !IsAuthenticated ? null : _user;
 
-        public AppUser User
-        {
-            get
-            {
-                if (!_isAuthenticated) return null;
-                return _user;
-            }
-        }
-
-        public AppUser Holder => _holder;
+        public AppUser Holder { get; private set; }
 
         public IEnumerable<AppRoleEnum> Roles
         {
             get
             {
-                if (!_isAuthenticated) return new List<AppRoleEnum>();
+                if (!IsAuthenticated) return new List<AppRoleEnum>();
                 return _roles;
             }
         }
 
-        public bool IsAuthenticated => _isAuthenticated;
+        public bool IsAuthenticated { get; private set; }
 
         public bool IsInRole(AppRoleEnum roleEnum)
         {
@@ -52,8 +41,8 @@ namespace VolunteerDatabase.Helper
             {
                 claims = new AppUserIdentityClaims
                 {
-                    _holder = holder,
-                    _isAuthenticated = false
+                    Holder = holder,
+                    IsAuthenticated = false
                 };
             }
             else
@@ -61,9 +50,9 @@ namespace VolunteerDatabase.Helper
                 claims = new AppUserIdentityClaims
                 {
                     _user = user,
-                    _holder = holder,
+                    Holder = holder,
                     _roles = from r in user.Roles select r.RoleEnum,
-                    _isAuthenticated = true
+                    IsAuthenticated = true
                 };
             }
 
