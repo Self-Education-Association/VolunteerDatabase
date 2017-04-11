@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Controls;
 using FirstFloor.ModernUI.Windows.Controls;
 using VolunteerDatabase.Entity;
 using VolunteerDatabase.Helper;
@@ -11,7 +12,7 @@ namespace VolunteerDatabase.Desktop
     /// <summary>
     /// Register.xaml 的交互逻辑
     /// </summary>
-    public partial class Register : Window
+    public partial class Register : UserControl
     {
         private IdentityHelper identityhelper;
 
@@ -80,7 +81,7 @@ namespace VolunteerDatabase.Desktop
                         {
                             ModernDialog.ShowMessage("注册成功!已发送注册审批请求,请等待管理员审批.","",MessageBoxButton.OK);
                         }
-                        this.Close();
+                        //this.Close();
                     }
                     else
                     {
@@ -111,10 +112,10 @@ namespace VolunteerDatabase.Desktop
 
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
+        //private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        //{
 
-        }
+        //}
         //此处限制了键盘输入必须为数字，但是无法检查输入法的中文输入，待解决
         //动态展现：用户名已经被占用
     }

@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Input;
+using System.Windows.Controls;
 using FirstFloor.ModernUI.Windows.Controls;
 using VolunteerDatabase.Entity;
 using VolunteerDatabase.Helper;
@@ -10,7 +11,7 @@ namespace VolunteerDatabase.Desktop.Pages
     /// <summary>
     /// Rating.xaml 的交互逻辑
     /// </summary>
-    public partial class Rating : Window
+    public partial class Rating : UserControl
     {
         private Project pro;
         private Volunteer vol;
@@ -45,7 +46,7 @@ namespace VolunteerDatabase.Desktop.Pages
                 if (result.Succeeded)
                 {
                     MessageBox.Show("评分成功");
-                    this.Close();
+                    //this.Close();
                 }
                 else
                 {
@@ -59,7 +60,7 @@ namespace VolunteerDatabase.Desktop.Pages
                 if(result.Succeeded)
                 {
                     ModernDialog.ShowMessage("分数已经更改","评分成功",MessageBoxButton.OK);
-                    this.Close();
+                    //this.Close();
                 }
             }          
         }

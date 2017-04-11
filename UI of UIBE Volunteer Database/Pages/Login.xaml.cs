@@ -1,58 +1,52 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
-using FirstFloor.ModernUI.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 using VolunteerDatabase.Helper;
 using VolunteerDatabase.Interface;
+using FirstFloor.ModernUI.Windows.Controls;
 
-namespace VolunteerDatabase.Desktop
+namespace VolunteerDatabase.Desktop.Pages
 {
     /// <summary>
-    /// Interaction logic for Login.xaml
+    /// Login.xaml 的交互逻辑
     /// </summary>
-    public partial class Login : Window
+    public partial class Login : UserControl
     {
         private static AppUserIdentityClaims _claimsStored;
 
         private static readonly object LoginWindowLocker = new object();
 
-        private static Login _loginWindow;
+        private static WelcomePage _loginWindow;
 
         public static bool IsLogin => _claimsStored?.IsAuthenticated == true;
 
         protected Login()
         {
             InitializeComponent();
-            this.Topmost = true;
         }
 
-        protected static Login GetWindow()
+        public static WelcomePage GetWindow()
         {
             if (_loginWindow == null)
             {
                 lock (LoginWindowLocker)
                 {
                     if (_loginWindow == null)
-                        _loginWindow = new Login();
+                        _loginWindow = new WelcomePage();
                 }
             }
             return _loginWindow;
-        }
-
-        public static bool LogOut()
-        {
-            _claimsStored = null;
-            SendClaimsEvent = null;
-            LogOutEvent?.Invoke();
-            LogOutEvent = null;
-            return true;
-        }
-
-        private void register_Click(object sender, RoutedEventArgs e)
-        {
-            var register = new Register();
-            register.Show();
-            Hide();
         }
 
         private async void login_btn_Click(object sender, RoutedEventArgs e)
@@ -81,7 +75,7 @@ namespace VolunteerDatabase.Desktop
                         _claimsStored = claims;
                         SendClaimsEvent?.Invoke(claims);
                         Close();
-                        ModernDialog.ShowMessage("登陆成功", " ", MessageBoxButton.OK);                                   
+                        ModernDialog.ShowMessage("登陆成功", " ", MessageBoxButton.OK);
                     }
                     else if (claims.User != null && claims.User.Status == AppUserStatus.NotApproved)
                     {
@@ -96,36 +90,5 @@ namespace VolunteerDatabase.Desktop
                 }
             }
         }
-
-        public static void GetClaims(SendClaimsDelegate sendClaims, LogOutDelegate logout)
-        {
-            if (_claimsStored?.IsAuthenticated == true)
-            {
-                sendClaims(_claimsStored);
-                return;
-            }
-
-            Login loginWindow = GetWindow();
-            loginWindow.Show();
-            SendClaimsEvent += sendClaims;
-            return;
-        }
-
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            if (_claimsStored == null)
-                Application.Current.Shutdown();
-            e.Cancel = true;
-            Hide();
-        }
-
-        public delegate void SendClaimsDelegate(AppUserIdentityClaims claims);
-
-        public delegate void LogOutDelegate();
-
-        public static event SendClaimsDelegate SendClaimsEvent;
-
-        public static event LogOutDelegate LogOutEvent;
-
     }
 }
