@@ -38,7 +38,26 @@ namespace VolunteerDatabase.Desktop.Pages
 
         private void ChangePassword_btn_Click(object sender, RoutedEventArgs e)
         {
-            
+            string a = Password.Password;
+            string b = PasswordChange.Password;
+            string c = PasswordChangeConfirm.Password;
+            if (b != c)
+            {
+                MessageBox.Show("两次输入密码不一致，请检查");
+            }
+            else
+            {
+                var ih = IdentityHelper.GetInstance();
+                var re = ih.ChangePassword(Claims.User.AccountName, a, b);
+                if (re.Succeeded)
+                {
+                    MessageBox.Show("修改成功");
+                }
+                else
+                {
+                    MessageBox.Show(re.Errors.ToString());
+                }
+            }
         }
 
         private void ShowUserMessage()
