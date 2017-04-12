@@ -12,7 +12,7 @@ namespace VolunteerDatabase.Desktop
     {
         public string Name { get; }
 
-        public string AuthenticationType { get; }
+        public string AuthenticationType { get; }//Default : Normal
 
         public bool IsAuthenticated => string.IsNullOrEmpty(Name);
 

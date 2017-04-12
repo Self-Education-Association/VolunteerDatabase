@@ -10,6 +10,8 @@ namespace VolunteerDatabase.Desktop.Pages
     {
         private AppUserIdentityClaims claims;
 
+        private AuthenticationManager authManager;
+
         public MainTab()
             :this(null)
         {

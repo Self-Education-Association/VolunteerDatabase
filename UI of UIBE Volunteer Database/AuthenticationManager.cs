@@ -60,6 +60,7 @@ namespace VolunteerDatabase.Desktop
                 return;
             }
             SendPrincipalEvent += sendClaims;
+            LogOutEvent += logout;
         }
 
         public delegate void SendPrincipalDelegate(IPrincipal principal);
@@ -79,8 +80,10 @@ namespace VolunteerDatabase.Desktop
 
         public TimeSpan ExpireTimeSpan
         {
-            get => IsPersistent ? TimeSpan.MaxValue : _expireTimeSpan;
-            set => _expireTimeSpan = value;
+            //get => IsPersistent ? TimeSpan.MaxValue : _expireTimeSpan;//2017的语法？
+            //set => _expireTimeSpan = value;
+            get { return IsPersistent ? TimeSpan.MaxValue : _expireTimeSpan; }
+            set { _expireTimeSpan = value; }
         }
 
         public bool IsPersistent;

@@ -29,6 +29,8 @@ namespace VolunteerDatabase.Desktop.Pages
 
         private static WelcomePage _loginWindow;
 
+       
+
         public static bool IsLogin => _claimsStored?.IsAuthenticated == true;
 
         protected Login()
@@ -53,19 +55,19 @@ namespace VolunteerDatabase.Desktop.Pages
         {
             if (userid.Text == "" || password.Password == "")
             {
-                Tips_block.Visibility = Visibility.Visible;
+                Tips_block.Visibility = Visibility.Visible;//没有输入账号密码
             }
             else
             {
                 if (_claimsStored != null && _claimsStored.IsAuthenticated == true)
                 {
-                    SendClaimsEvent?.Invoke(_claimsStored);
+                    SendClaimsEvent?.Invoke(_claimsStored);//传claims
                     return;
                 }
                 IdentityHelper ih = IdentityHelper.GetInstance();
                 if (userid.Text == "" || password.Password.ToString() == "")
                 {
-
+                    ModernDialog.ShowMessage("请正确输入用户名与密码.", "错误", MessageBoxButton.OK);
                 }
                 else
                 {
@@ -79,16 +81,37 @@ namespace VolunteerDatabase.Desktop.Pages
                     }
                     else if (claims.User != null && claims.User.Status == AppUserStatus.NotApproved)
                     {
-                        ModernDialog.ShowMessage("已发送用户注册审批请求,请等待机构管理员审批", "注册成功", MessageBoxButton.OK);
+                        ModernDialog.ShowMessage("已发送用户注册审批请求,请等待机构管理员审批.", "注册成功", MessageBoxButton.OK);
                     }
                     else
                     {
-                        Hide();
+                        Hide();//可以理解成 不让它这个时候操作对登陆界面
                         ModernDialog.ShowMessage("用户名或密码出错，或未通过管理员审批！", "登录失败", MessageBoxButton.OK);
                         Show();
                     }
                 }
             }
+
+            
+        }
+
+        public delegate void SendClaimsDelegate(AppUserIdentityClaims claims);
+
+        public event SendClaimsDelegate SendClaimsEvent;
+
+        private void Hide()
+        {
+            _loginWindow.Hide();
+        }
+
+        private void Show()
+        {
+            _loginWindow.Show();
+        }
+
+        private void Close()
+        {
+            _loginWindow.Close();//close时候应该会销毁整个loginWindow
         }
     }
 }

@@ -14,7 +14,7 @@ namespace VolunteerDatabase.Desktop
     {
         
 
-        protected WelcomePage()
+        public WelcomePage()
         {
             InitializeComponent();
         }
