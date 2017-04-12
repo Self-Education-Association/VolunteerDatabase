@@ -20,7 +20,7 @@ namespace VolunteerDatabase.Desktop
                 if (DateTime.Now > _expireTime)
                 {
                     LogOut();
-                    Login.GetWindow();
+                    LoginControl.GetWindow();
                 }
                 return _principal;
             }

@@ -130,8 +130,8 @@
     <Compile Include="Pages\InPutVolunteerInBatch\DealWithConflict.xaml.cs">
       <DependentUpon>DealWithConflict.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Login.xaml.cs">
-      <DependentUpon>Login.xaml</DependentUpon>
+    <Compile Include="Pages\LoginControl.xaml.cs">
+      <DependentUpon>LoginControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\ProjectDetails.xaml.cs">
       <DependentUpon>ProjectDetails.xaml</DependentUpon>
@@ -181,7 +181,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\Login.xaml">
+    <Page Include="Pages\LoginControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

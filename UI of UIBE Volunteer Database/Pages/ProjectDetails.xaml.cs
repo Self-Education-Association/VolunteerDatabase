@@ -36,7 +36,7 @@ namespace VolunteerDatabase.Desktop.Pages
         {
             if (Claim == null)
             {
-                Login.GetClaims(sendClaimsEventHandler, logOutEventHandler);
+                LoginControl.GetClaims(sendClaimsEventHandler, logOutEventHandler);
                 IsEnabled = false;
             }
             else

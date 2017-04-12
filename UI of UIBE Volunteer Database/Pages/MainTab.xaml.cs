@@ -10,8 +10,6 @@ namespace VolunteerDatabase.Desktop.Pages
     {
         private AppUserIdentityClaims claims;
 
-        private AuthenticationManager authManager;
-
         public MainTab()
             :this(null)
         {
@@ -22,7 +20,7 @@ namespace VolunteerDatabase.Desktop.Pages
         {
             if (claims == null)
             {
-                Login.GetClaims(sendClaimsEventHandler, logOutEventHandler);
+                LoginControl.GetClaims(sendClaimsEventHandler, logOutEventHandler);
                 IsEnabled = false;
             }
             else

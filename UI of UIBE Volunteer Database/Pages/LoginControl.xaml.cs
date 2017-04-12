@@ -21,7 +21,7 @@ namespace VolunteerDatabase.Desktop.Pages
     /// <summary>
     /// Login.xaml 的交互逻辑
     /// </summary>
-    public partial class Login : UserControl
+    public partial class LoginControl : UserControl
     {
         private static AppUserIdentityClaims _claimsStored;
 
@@ -33,7 +33,7 @@ namespace VolunteerDatabase.Desktop.Pages
 
         public static bool IsLogin => _claimsStored?.IsAuthenticated == true;
 
-        protected Login()
+        protected LoginControl()
         {
             InitializeComponent();
         }
@@ -95,9 +95,32 @@ namespace VolunteerDatabase.Desktop.Pages
             
         }
 
+        [Obsolete]
+        public static void GetClaims(SendClaimsDelegate sendClaims, LogOutDelegate logout)
+        {
+            if (_claimsStored?.IsAuthenticated == true)
+            {
+                sendClaims(_claimsStored);
+                return;
+            }
+            SendClaimsEvent += sendClaims;
+            LogOutEvent += logout;
+        }
+
+        [Obsolete]
+        public static void LogOut()
+        {
+            _claimsStored = null;
+            LogOutEvent?.Invoke();
+        }
+
+        public delegate void LogOutDelegate();
+
+        public static event LogOutDelegate LogOutEvent;
+
         public delegate void SendClaimsDelegate(AppUserIdentityClaims claims);
 
-        public event SendClaimsDelegate SendClaimsEvent;
+        public static event SendClaimsDelegate SendClaimsEvent;
 
         private void Hide()
         {
