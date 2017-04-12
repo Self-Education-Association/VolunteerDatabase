@@ -26,35 +26,42 @@ namespace VolunteerDatabase.Desktop.Pages
 
         private void create_project_button_Click(object sender, RoutedEventArgs e)
         {
-            TextRange textRange = new TextRange(project_details.Document.ContentStart, project_details.Document.ContentEnd);
-            if (project_name.Text == "" ||!ischanged||project_place.Text == ""|| project_place.Text == "" || project_maximum.Text == "" || textRange.Text == "")
+            if(Claims!=null&&Claims.IsInRole(Interface.AppRoleEnum.OrgnizationAdministrator))
             {
-                ModernDialog.ShowMessage("请完整输入所有项目", "提示", MessageBoxButton.OK);
+                TextRange textRange = new TextRange(project_details.Document.ContentStart, project_details.Document.ContentEnd);
+                if (project_name.Text == "" || !ischanged || project_place.Text == "" || project_place.Text == "" || project_maximum.Text == "" || textRange.Text == "")
+                {
+                    ModernDialog.ShowMessage("请完整输入所有项目", "提示", MessageBoxButton.OK);
+                }
+                else
+                {
+                    try
+                    {
+                        int num = int.Parse(project_maximum.Text);
+                        ProgressResult result = helper.CreatNewProject(Claims.User.Organization, project_time.DisplayDate, project_name.Text, project_place.Text, textRange.Text, num);
+                        if (result.Succeeded)
+                        {
+                            ModernDialog.ShowMessage("项目创建成功!", "", MessageBoxButton.OK);
+                            project_name.Clear();
+                            project_place.Clear();
+                            project_maximum.Clear();
+                            project_details.Document.Blocks.Clear();
+                        }
+                        else
+                        {
+                            ModernDialog.ShowMessage("项目创建失败!错误信息" + string.Join(",", result.Errors), "", MessageBoxButton.OK);
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        ModernDialog.ShowMessage("学号输入非法,仅能输入数字.", "警告", MessageBoxButton.OK);
+                    }
+
+                }
             }
-            else
+           else
             {
-                try
-                {
-                    int num = int.Parse(project_maximum.Text);
-                    ProgressResult result = helper.CreatNewProject(Claims.User.Organization, project_time.DisplayDate, project_name.Text, project_place.Text, textRange.Text, num);
-                    if (result.Succeeded)
-                    {
-                        ModernDialog.ShowMessage("项目创建成功!", "", MessageBoxButton.OK);
-                        project_name.Clear();
-                        project_place.Clear();
-                        project_maximum.Clear();
-                        project_details.Document.Blocks.Clear();
-                    }
-                    else
-                    {
-                        ModernDialog.ShowMessage("项目创建失败!错误信息" + string.Join(",", result.Errors), "", MessageBoxButton.OK);
-                    }
-                }
-                catch (Exception)
-                {
-                    ModernDialog.ShowMessage("学号输入非法,仅能输入数字.", "警告", MessageBoxButton.OK);
-                }
-                
+                ModernDialog.ShowMessage("非机构管理员账号，无权创建项目，请联系机构管理员.", "警告", MessageBoxButton.OK);
             }
         }
 

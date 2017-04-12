@@ -10,20 +10,22 @@
         <ScrollViewer>
             <StackPanel MinWidth="200">
                 <TextBlock Text="用户信息 User Information" Style="{StaticResource Heading2}" />
-                <Label x:Name="label" Content="用户名" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="40"/>
-                <TextBlock x:Name="account_name"/>
-                <Label x:Name="label1" Content="组织" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="40"/>
-                <TextBlock x:Name="org"/>
-                <Label Content="电话" HorizontalAlignment="Left" Height="20" Width="40"/>
-                <TextBlock x:Name="tel"/>
-                <Label Content="学号" HorizontalAlignment="Left" Height="20" Width="40"></Label>
-                <TextBlock x:Name="userid"/>
-                <Label Content="邮箱" HorizontalAlignment="Left" Height="20" Width="40"/>
-                <TextBlock x:Name="email"/>
-                <Label Content="宿舍" HorizontalAlignment="Left" Height="20" Width="40"/>
-                <TextBlock x:Name="dormitary"/>
-                <Label Content="身份" HorizontalAlignment="Left" Height="20" Width="40"/>
-                <TextBlock x:Name="roles"/>
+                <Canvas MinHeight="200">
+                    <Label x:Name="label" Content="用户名" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="40"/>
+                    <TextBlock x:Name="account_name" Width="auto" Canvas.Right="0"/>
+                    <Label x:Name="label1" Content="组织" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="40" Canvas.Top="30"/>
+                    <TextBlock x:Name="org" Width="auto" Canvas.Top="30" Canvas.Right="0"/>
+                    <Label Content="电话" HorizontalAlignment="Left" Height="20" Width="40" Canvas.Top="60"/>
+                    <TextBlock x:Name="tel" Width="auto" Canvas.Top="60" Canvas.Right="0"/>
+                    <Label Content="学号" HorizontalAlignment="Left" Height="20" Width="40" Canvas.Top="90"/>
+                    <TextBlock x:Name="userid" Width="auto" Canvas.Top="90" Canvas.Right="0"/>
+                    <Label Content="邮箱" HorizontalAlignment="Left" Height="20" Width="40" Canvas.Top="120"/>
+                    <TextBlock x:Name="email" Width="auto" Canvas.Top="120" Canvas.Right="0"/>
+                    <Label Content="宿舍" HorizontalAlignment="Left" Height="20" Width="40" Canvas.Top="150"/>
+                    <TextBlock x:Name="dormitary" Width="auto" Canvas.Top="150" Canvas.Right="0"/>
+                    <Label Content="身份" HorizontalAlignment="Left" Height="20" Width="40" Canvas.Top="180"/>
+                    <TextBlock x:Name="roles" Width="auto" Canvas.Top="180" Canvas.Right="0"/>
+                </Canvas>
                 <TextBlock Text="修改密码" HorizontalAlignment="Left" Height="20" Width="60"/>
                 <WrapPanel>
                     <PasswordBox x:Name="Password" Height="25" Width="100" HorizontalAlignment="Left" Margin="0,0,0,5"/>
