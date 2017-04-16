@@ -38,7 +38,11 @@ namespace VolunteerDatabase.Desktop.Pages
 
         private void ChangePassword_btn_Click(object sender, RoutedEventArgs e)
         {
-            
+            Window window = new Window();
+            window.Width = 300;
+            window.Height = 250;
+            window.Content = new ChangePassWord();
+            window.Show();
         }
 
         private void ShowUserMessage()
