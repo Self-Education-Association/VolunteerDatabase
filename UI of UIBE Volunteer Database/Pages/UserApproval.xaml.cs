@@ -28,6 +28,14 @@ namespace VolunteerDatabase.Desktop.Pages
             {
                 addorganization_btn.Visibility = Visibility.Visible;
             }
+            if(Claims.IsInRole(AppRoleEnum.Administrator)|| Claims.IsInRole(AppRoleEnum.OrgnizationAdministrator))
+            {
+                this.IsEnabled = true;
+            }
+            else
+            {
+                this.IsEnabled = false;
+            }
             approvallist = helper.ShowNotApprovedMembers(Claims.User.Organization);
             //approval_list.Items.Clear();
             approval_list.ItemsSource = approvallist;

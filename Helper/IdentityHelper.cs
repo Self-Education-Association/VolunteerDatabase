@@ -100,6 +100,10 @@ namespace VolunteerDatabase.Helper
                 {
                     return IdentityResult.Error("该用户名已被使用。");
                 }
+                if (database.Users.Where(u => u.StudentNum == user.StudentNum) != null && database.Users.Where(u => u.StudentNum == user.StudentNum).Count() != 0)
+                {
+                    return IdentityResult.Error("该学号已被注册。");
+                }
                 var org = CreateOrFindOrganization(orgEnum);
                 user.Salt = SecurityHelper.GetSalt();
                 user.HashedPassword = SecurityHelper.Hash(password, user.Salt);

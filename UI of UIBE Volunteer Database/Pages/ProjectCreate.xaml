@@ -7,6 +7,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="600">
     <Grid Style="{StaticResource ContentRoot}">
+        <Grid.Resources>
+            <PathGeometry x:Key="Check">M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z</PathGeometry>
+        </Grid.Resources>
         <ScrollViewer>
             <Canvas MinWidth="200">
                 <TextBlock Text="创建项目" Style="{StaticResource Heading2}" />
@@ -20,7 +23,7 @@
                 <TextBox x:Name="project_maximum" Width="118" Height="25" FontSize="14" Canvas.Left="364" Canvas.Top="72"/>
                 <TextBlock Text="项目详情" Width="60" Height="30" FontSize="14" Canvas.Left="10" Canvas.Top="128"/>
                 <RichTextBox x:Name="project_details" Width="407" Height="83" FontSize="20" Canvas.Left="75" Canvas.Top="128"/>
-                <mui:ModernButton x:Name="create_project_button" Content="创建项目" Width="89" Height="30" FontSize="14" Canvas.Top="216" Canvas.Left="469" Click="create_project_button_Click"/>
+                <mui:ModernButton IconData="{StaticResource Check}" x:Name="create_project_button" Content="创建项目" Width="89" Height="30" FontSize="14" Canvas.Top="216" Canvas.Left="469" Click="create_project_button_Click"/>
                 <!--Click="create_project_button_Click"-->
             </Canvas>
         </ScrollViewer>
