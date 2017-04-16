@@ -61,9 +61,9 @@ namespace VolunteerDatabase.Desktop.Pages
             {
                 ModernDialog.ShowMessage("原始密码或新密码不能为空.","提示",MessageBoxButton.OK);
             }
-            if(originPasswordBox.Password!=newPasswordBox.Password)
+            if(SecurityHelper.Hash(password: originPasswordBox.Password, salt: Claims.User.Salt)!=Claims.User.HashedPassword)
             {
-                ModernDialog.ShowMessage("两次输入的密码不一致.", "提示", MessageBoxButton.OK);
+                ModernDialog.ShowMessage("原密码错误.", "提示", MessageBoxButton.OK);
             }
             else
             {
@@ -72,6 +72,7 @@ namespace VolunteerDatabase.Desktop.Pages
                 if (re.Succeeded)
                 {
                     ModernDialog.ShowMessage("修改成功", "成功", MessageBoxButton.OK);
+                    Owner.Close();
                 }
                 else
                 {
