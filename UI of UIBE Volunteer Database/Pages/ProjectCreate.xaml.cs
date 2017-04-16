@@ -4,6 +4,7 @@ using System.Windows.Documents;
 using FirstFloor.ModernUI.Windows.Controls;
 using VolunteerDatabase.Helper;
 using System;
+using VolunteerDatabase.Interface;
 
 namespace VolunteerDatabase.Desktop.Pages
 {
@@ -22,6 +23,14 @@ namespace VolunteerDatabase.Desktop.Pages
             helper = ProjectManageHelper.GetInstance();
             //Login.GetClaims(sendClaimsEventHandler);
             InitializeComponent();
+            if (Claims.IsInRole(AppRoleEnum.Administrator) || Claims.IsInRole(AppRoleEnum.OrgnizationAdministrator))
+            {
+                this.IsEnabled = true;
+            }
+            else
+            {
+                this.IsEnabled = false;
+            }
         }
 
         private void create_project_button_Click(object sender, RoutedEventArgs e)
