@@ -79,6 +79,7 @@ namespace VolunteerDatabase.Desktop
                         else
                         {
                             ModernDialog.ShowMessage("注册成功!已发送注册审批请求,请等待管理员审批.","",MessageBoxButton.OK);
+                            Application.Current.Shutdown();
                         }
                         this.Close();
                     }
