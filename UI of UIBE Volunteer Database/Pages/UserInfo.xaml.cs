@@ -41,7 +41,7 @@ namespace VolunteerDatabase.Desktop.Pages
             Window window = new Window();
             window.Width = 300;
             window.Height = 250;
-            window.Content = new ChangePassWord();
+            window.Content = new ChangePassWord(Claims,window);
             window.Show();
         }
 

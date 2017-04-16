@@ -22,8 +22,34 @@ namespace VolunteerDatabase.Desktop.Pages
     /// </summary>
     public partial class ChangePassWord : UserControl
     {
-        public ChangePassWord()
+        private AppUserIdentityClaims Claims;
+        private Window Owner;
+
+        public void sendClaimsEventHandler(AppUserIdentityClaims claim)
         {
+            IsEnabled = true;
+            this.Claims = claim;
+            IdentityPage identitypage = IdentityPage.GetInstance(claim);
+        }
+
+        public void logOutEventHandler()
+        {
+            Claims = null;
+            Owner.Close();
+        }
+
+        public ChangePassWord(AppUserIdentityClaims Claim,Window owner)
+        {
+            if (Claim == null)
+            {
+                Login.GetClaims(sendClaimsEventHandler, logOutEventHandler);
+                IsEnabled = false;
+            }
+            else
+            {
+                this.Claims = Claim;
+                this.Owner = owner;
+            }
             InitializeComponent();
         }
 
@@ -41,8 +67,22 @@ namespace VolunteerDatabase.Desktop.Pages
             }
             else
             {
-                
+                var ihh = IdentityHelper.GetInstance();
+                var re = ihh.ChangePassword(Claims.User.AccountName, originPasswordBox.Password, newPasswordBox.Password);
+                if (re.Succeeded)
+                {
+                    ModernDialog.ShowMessage("修改成功", "成功", MessageBoxButton.OK);
+                }
+                else
+                {
+                    ModernDialog.ShowMessage(re.Errors.ToString(), "提示", MessageBoxButton.OK);
+                }
             }
+        }
+
+        private void cancelBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Owner.Close();
         }
     }
 }
