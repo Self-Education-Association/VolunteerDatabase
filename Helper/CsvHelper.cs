@@ -15,7 +15,7 @@ namespace VolunteerDatabase.Helper
 {
     public class CsvHelper
     {
-        Database database;
+        private Database database;
         VolunteerHelper vhelper;
         private CsvHelper()
         {
