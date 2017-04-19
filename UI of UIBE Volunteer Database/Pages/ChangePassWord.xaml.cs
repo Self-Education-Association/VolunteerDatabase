@@ -22,8 +22,34 @@ namespace VolunteerDatabase.Desktop.Pages
     /// </summary>
     public partial class ChangePassWord : UserControl
     {
-        public ChangePassWord()
+        private AppUserIdentityClaims Claims;
+        private Window Owner;
+
+        public void sendClaimsEventHandler(AppUserIdentityClaims claim)
         {
+            IsEnabled = true;
+            this.Claims = claim;
+            IdentityPage identitypage = IdentityPage.GetInstance(claim);
+        }
+
+        public void logOutEventHandler()
+        {
+            Claims = null;
+            Owner.Close();
+        }
+
+        public ChangePassWord(AppUserIdentityClaims Claim,Window owner)
+        {
+            if (Claim == null)
+            {
+                Login.GetClaims(sendClaimsEventHandler, logOutEventHandler);
+                IsEnabled = false;
+            }
+            else
+            {
+                this.Claims = Claim;
+                this.Owner = owner;
+            }
             InitializeComponent();
         }
 
@@ -35,14 +61,29 @@ namespace VolunteerDatabase.Desktop.Pages
             {
                 ModernDialog.ShowMessage("原始密码或新密码不能为空.","提示",MessageBoxButton.OK);
             }
-            if(originPasswordBox.Password!=newPasswordBox.Password)
+            if(SecurityHelper.Hash(password: originPasswordBox.Password, salt: Claims.User.Salt)!=Claims.User.HashedPassword)
             {
-                ModernDialog.ShowMessage("两次输入的密码不一致.", "提示", MessageBoxButton.OK);
+                ModernDialog.ShowMessage("原密码错误.", "提示", MessageBoxButton.OK);
             }
             else
             {
-                
+                var ihh = IdentityHelper.GetInstance();
+                var re = ihh.ChangePassword(Claims.User.AccountName, originPasswordBox.Password, newPasswordBox.Password);
+                if (re.Succeeded)
+                {
+                    ModernDialog.ShowMessage("修改成功", "成功", MessageBoxButton.OK);
+                    Owner.Close();
+                }
+                else
+                {
+                    ModernDialog.ShowMessage(re.Errors.ToString(), "提示", MessageBoxButton.OK);
+                }
             }
+        }
+
+        private void cancelBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Owner.Close();
         }
     }
 }
