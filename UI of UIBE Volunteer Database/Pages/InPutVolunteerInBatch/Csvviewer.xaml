@@ -8,7 +8,7 @@
 
     <Grid Style="{StaticResource ContentRoot}">
         <Canvas MinWidth="250">
-            <TextBlock Text="成功读取的志愿者列表" Canvas.Left="10" Style="{StaticResource Heading2}"/>
+            <TextBlock Text="成功读取的志愿者列表" Canvas.Left="12" Style="{StaticResource Heading2}"/>
             <ScrollViewer Canvas.Top="20">
                 <DataGrid x:Name="csvGrid" Canvas.Top="30" Canvas.Left="35" LoadingRow="csvGrid_LoadingRow" AutoGenerateColumns="False" IsReadOnly="True" >
                     <DataGrid.Columns>

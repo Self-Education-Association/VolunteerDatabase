@@ -31,7 +31,7 @@ namespace VolunteerDatabase.Desktop
         {
             if (wholename.Text == "" || studentid.Text == "" || accountname.Text == "" || telephonenumber.Text == "" || emailadress.Text == "" || dormitaryadress.Text == "" || passwordBox.Password == "" || comboBox.Text == "")
             {
-                //MessageBox.Show("信息输入不完整,请检查后重试.");//存在空白，信息不完整
+                ModernDialog.ShowMessage("信息输入不完整,请检查后重试.","警告", MessageBoxButton.OK);
             }
             else
             {
@@ -80,6 +80,7 @@ namespace VolunteerDatabase.Desktop
                         else
                         {
                             ModernDialog.ShowMessage("注册成功!已发送注册审批请求,请等待管理员审批.","",MessageBoxButton.OK);
+                            Application.Current.Shutdown();
                         }
                         //this.Close();
                     }

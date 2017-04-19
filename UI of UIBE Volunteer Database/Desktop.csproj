@@ -15,7 +15,7 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>true</IsWebBootstrapper>
-    <PublishUrl>\\10.1.1.68\website%24\open\volunteer\</PublishUrl>
+    <PublishUrl>\\open.uibesea.org\website%24\volunteer\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -29,10 +29,10 @@
     <ProductName>Volunteer Database Manager</ProductName>
     <PublisherName>Self Education Association</PublisherName>
     <SuiteName>Volunteer Database Project</SuiteName>
-    <MinimumRequiredVersion>1.0.1.1</MinimumRequiredVersion>
+    <MinimumRequiredVersion>1.0.1.3</MinimumRequiredVersion>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationRevision>3</ApplicationRevision>
     <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -58,7 +58,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>false</SignManifests>
+    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>2E560C6A8B39347FCD6F73ACF6132C4884523D85</ManifestCertificateThumbprint>
@@ -120,6 +120,10 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ChangePassWord.xaml.cs">
+      <DependentUpon>ChangePassWord.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\InformAndWarning.cs" />
     <Compile Include="ManagedControl\ControlManager.cs" />
     <Compile Include="ManagedControl\IControlManager.cs" />
     <Compile Include="ManagedControl\IManageableControl.cs" />
@@ -188,6 +192,10 @@
     <Page Include="WelcomePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\ChangePassWord.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\InPutVolunteerInBatch\Csvviewer.xaml">
       <SubType>Designer</SubType>
@@ -261,6 +269,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ResourceDictionary\MainStaticResource.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ResourceDictionary\ShinyBlue.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
