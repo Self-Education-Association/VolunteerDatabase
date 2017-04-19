@@ -59,9 +59,13 @@ namespace VolunteerDatabase.Desktop.Pages
             IdentityHelper ih = IdentityHelper.GetInstance();
             if (originPasswordBox.Password == "" || newPasswordBox.Password=="")
             {
-                ModernDialog.ShowMessage("原始密码或新密码不能为空.","提示",MessageBoxButton.OK);
+                informingMessage.Content="原始密码或新密码不能为空.";
             }
-            if(SecurityHelper.Hash(password: originPasswordBox.Password, salt: Claims.User.Salt)!=Claims.User.HashedPassword)
+            else if (newPasswordBox.Password!=repeatPasswordBox.Password)
+            {
+                informingMessage.Content = "两次输入的新密码不一致.";
+            }
+            else if(SecurityHelper.Hash(password: originPasswordBox.Password, salt: Claims.User.Salt)!=Claims.User.HashedPassword)
             {
                 ModernDialog.ShowMessage("原密码错误.", "提示", MessageBoxButton.OK);
             }
@@ -84,6 +88,21 @@ namespace VolunteerDatabase.Desktop.Pages
         private void cancelBtn_Click(object sender, RoutedEventArgs e)
         {
             Owner.Close();
+        }
+
+        private void originPasswordBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            informingMessage.Content = "";
+        }
+
+        private void newPasswordBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            informingMessage.Content = "";
+        }
+
+        private void repeatPasswordBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            informingMessage.Content = "";
         }
     }
 }
