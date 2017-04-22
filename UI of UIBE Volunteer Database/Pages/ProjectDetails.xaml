@@ -8,8 +8,7 @@
         Height="auto" Width="auto">
     <Grid Style="{StaticResource ContentRoot}">
         <ScrollViewer>
-            <Canvas>
-                <StackPanel MinWidth="200">
+            <StackPanel MinWidth="200">
                     <!--<Label x:Name="label1" Content="组织" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="40"/>
                 <TextBlock x:Name="org"/>-->
                 <Canvas MinHeight="125" MinWidth="200">
