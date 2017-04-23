@@ -43,6 +43,7 @@ namespace VolunteerDatabase.Desktop.Pages
             window.Height = 250;
             window.Content = new ChangePassWord(Claims,window);
             window.Show();
+            window.ResizeMode=System.Windows.ResizeMode.NoResize;
         }
 
         private void ShowUserMessage()
