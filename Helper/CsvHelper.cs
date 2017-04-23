@@ -106,7 +106,7 @@ namespace VolunteerDatabase.Helper
                 else
                 if (vol == null)
                 {
-                    if (item.StudentNum > 20500000 || item.StudentNum < 20110000)
+                    if (item.StudentNum > 205000000 || item.StudentNum < 201100000)
                     {
                         errorList.Add("下面这些学号是不合法的,确认没有输错吗:" + item.StudentNum);
                     }
