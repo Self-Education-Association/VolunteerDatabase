@@ -51,6 +51,21 @@ namespace VolunteerDatabase.Desktop
                     ModernDialog.ShowMessage("密码过短，长度至少为6位", "警告", MessageBoxButton.OK);
                 }
                 else
+                if (telephonenumber.Text.Length != 11)
+                {
+                    ModernDialog.ShowMessage("电话长度应为11位", "警告", MessageBoxButton.OK);
+                }
+                else
+                if (!emailadress.Text.Contains("@"))
+                {
+                    ModernDialog.ShowMessage("非法的邮箱格式，请检查", "警告", MessageBoxButton.OK);
+                }
+                else
+                if (dormitaryadress.Text.Length>10||dormitaryadress.Text.Length < 3)
+                {
+                    ModernDialog.ShowMessage("非法的宿舍格式，请检查", "警告", MessageBoxButton.OK);
+                }
+                else
                 if (passwordBox.Password == passwordBox1.Password)
                 {
                     string passWord = passwordBox.Password;
@@ -89,6 +104,7 @@ namespace VolunteerDatabase.Desktop
                         else
                         {
                             ModernDialog.ShowMessage("注册成功!已发送注册审批请求,请等待管理员审批.","",MessageBoxButton.OK);
+                            System.Windows.Forms.Application.Restart();
                             Application.Current.Shutdown();
                         }
                         this.Close();
