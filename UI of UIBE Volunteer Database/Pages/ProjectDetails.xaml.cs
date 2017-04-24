@@ -121,12 +121,12 @@ namespace VolunteerDatabase.Desktop.Pages
                         MessageBox.Show(item);
                     }
                 }
-                Window window = new Window();
+                InputWindow window = new InputWindow();
 
                 window.Height = 650;
                 window.Width = 470;
                 DealWithConflict dealer = new DealWithConflict(Pro, list, window);
-
+                window.FinishInPutEvent += FinishInPutEventHandler;
                 window.Content = dealer;
                 window.Owner = this;
                 window.Show();
@@ -135,6 +135,12 @@ namespace VolunteerDatabase.Desktop.Pages
 
           
            
+        }
+
+        private void FinishInPutEventHandler()
+        {
+            volunteer_list.ItemsSource = null;
+            volunteer_list.ItemsSource = Pro.Volunteers.ToList();
         }
 
         private void endproject_Click(object sender, RoutedEventArgs e)

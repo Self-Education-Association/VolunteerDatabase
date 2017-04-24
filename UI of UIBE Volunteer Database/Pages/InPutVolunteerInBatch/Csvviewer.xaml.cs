@@ -16,7 +16,7 @@ namespace VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch
     public partial class Csvviewer : UserControl
     {
         private AppUserIdentityClaims Claims { get; set; }
-        private Window fatherWindow;
+        private InputWindow fatherWindow;
         private IdentityPage identitypage = IdentityPage.GetInstance();
         private CsvHelper chelper;
         private VolunteerHelper vhelper;
@@ -26,7 +26,7 @@ namespace VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch
         
         private Project project;
         private bool hasAllSelected = false;
-        public Csvviewer(Project p, List<csvItemViewModel> list,Window window)//csv导入后弹出,加载页面=>datagrid列表显示，若有冲突:"一个以上冲突，请您确认",对应行标红,保留与否：按钮.保留原数据/新数据，下一步:更改的确认,导入成功，detail页面的显示
+        public Csvviewer(Project p, List<csvItemViewModel> list,InputWindow window)//csv导入后弹出,加载页面=>datagrid列表显示，若有冲突:"一个以上冲突，请您确认",对应行标红,保留与否：按钮.保留原数据/新数据，下一步:更改的确认,导入成功，detail页面的显示
         {
             InitializeComponent();
             fatherWindow = window;
@@ -144,6 +144,7 @@ namespace VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch
                 MessageBox.Show("最终，共往项目中添加:" + succeededList.Count + "位志愿者.\n现在显示的是没有选择的志愿者跟添加失败的志愿者.\n若不需要添加，请关闭该窗口.", "添加成功", MessageBoxButton.OK);
                 csvGrid.ItemsSource = null;
                 csvGrid.ItemsSource = csvList;
+                
             }
             else
             {
