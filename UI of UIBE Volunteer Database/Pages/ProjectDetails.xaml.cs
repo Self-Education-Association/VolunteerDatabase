@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -298,6 +299,37 @@ namespace VolunteerDatabase.Desktop.Pages
                     volunteer_list.ItemsSource = null;
                     volunteer_list.ItemsSource = Pro.Volunteers.ToList();
                 }
+            }
+        }
+
+        private void saveFile_Click(object sender, RoutedEventArgs e)
+        {
+            var templateName = "导入模板.csv";
+            var sfd = new SaveFileDialog
+            {
+                Filter = "逗号分隔的列表文件（*.csv）|*.csv",
+                DefaultExt = "csv",
+                FileName = "导入模板",
+                AddExtension = true
+            };
+            if (sfd.ShowDialog() == true)
+            {
+                var pathName = sfd.FileName;
+                var templatePathName = Environment.CurrentDirectory + @"\" + templateName;
+                try
+                {
+                    File.Copy(templatePathName, pathName, true);
+                }
+                catch (IOException exception)
+                {
+                    //TODO: LOG
+                }
+
+                MessageBox.Show("导出模板文件成功。");
+            }
+            else
+            {
+                MessageBox.Show("用户取消操作。");
             }
         }
     }
