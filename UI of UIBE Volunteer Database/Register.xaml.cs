@@ -28,6 +28,17 @@ namespace VolunteerDatabase.Desktop
 
         private void register_button_Click(object sender, RoutedEventArgs e)
         {
+                int studentnum;
+                if(!int.TryParse(studentid.Text,out studentnum))
+            {
+                ModernDialog.ShowMessage("学号输入非法", "警告", MessageBoxButton.OK);
+            }
+                else
+                if(studentnum<201300000||studentnum>205000000)
+            {
+                ModernDialog.ShowMessage("学号大小非法", "警告", MessageBoxButton.OK);
+            }
+            else
             if (wholename.Text == "" || studentid.Text == "" || accountname.Text == "" || telephonenumber.Text == "" || emailadress.Text == "" || dormitaryadress.Text == "" || passwordBox.Password == "" || comboBox.Text == "")
             {
                 ModernDialog.ShowMessage("信息输入不完整,请检查后重试.","警告", MessageBoxButton.OK);
@@ -35,18 +46,32 @@ namespace VolunteerDatabase.Desktop
             else
             {
                 IdentityHelper ih = IdentityHelper.GetInstance();
+                if (passwordBox.Password.Length<=5)
+                {
+                    ModernDialog.ShowMessage("密码过短，长度至少为6位", "警告", MessageBoxButton.OK);
+                }
+                else
+                if (telephonenumber.Text.Length != 11)
+                {
+                    ModernDialog.ShowMessage("电话长度应为11位", "警告", MessageBoxButton.OK);
+                }
+                else
+                if (!emailadress.Text.Contains("@"))
+                {
+                    ModernDialog.ShowMessage("非法的邮箱格式，请检查", "警告", MessageBoxButton.OK);
+                }
+                else
+                if (dormitaryadress.Text.Length>10||dormitaryadress.Text.Length < 3)
+                {
+                    ModernDialog.ShowMessage("非法的宿舍格式，请检查", "警告", MessageBoxButton.OK);
+                }
+                else
                 if (passwordBox.Password == passwordBox1.Password)
                 {
                     string passWord = passwordBox.Password;
                     OrganizationEnum org = ih.Matching(comboBox.Text);
-                    try
-                    {
-                        int studentnum = int.Parse(studentid.Text);
-                    }
-                    catch(Exception)
-                    {
-                        ModernDialog.ShowMessage("学号输入非法,仅能输入数字.", "警告", MessageBoxButton.OK);
-                    }
+                        
+                   
                     AppUserStatus status = AppUserStatus.NotApproved;
                     AppRoleEnum role = AppRoleEnum.OrgnizationMember;
                     if(isAdministrator)
@@ -59,7 +84,7 @@ namespace VolunteerDatabase.Desktop
                         status = AppUserStatus.Enabled;
                         role = AppRoleEnum.Administrator;
                     }
-                    AppUser au = new AppUser()
+                        AppUser au = new AppUser()
                     {
                         StudentNum = int.Parse(studentid.Text),
                         AccountName = accountname.Text,
@@ -79,6 +104,7 @@ namespace VolunteerDatabase.Desktop
                         else
                         {
                             ModernDialog.ShowMessage("注册成功!已发送注册审批请求,请等待管理员审批.","",MessageBoxButton.OK);
+                            System.Windows.Forms.Application.Restart();
                             Application.Current.Shutdown();
                         }
                         this.Close();
@@ -90,7 +116,7 @@ namespace VolunteerDatabase.Desktop
                 }
                 else
                 {
-                    ModernDialog.ShowMessage("两次密码输入不一致，请核对","",MessageBoxButton.OK);
+                    ModernDialog.ShowMessage("两次密码输入不一致","",MessageBoxButton.OK);
                 }
             }
         }

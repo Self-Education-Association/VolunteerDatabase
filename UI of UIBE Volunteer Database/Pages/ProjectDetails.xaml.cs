@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,6 +10,7 @@ using VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch;
 using VolunteerDatabase.Entity;
 using VolunteerDatabase.Helper;
 using VolunteerDatabase.Interface;
+using FirstFloor.ModernUI.Windows.Controls;
 
 namespace VolunteerDatabase.Desktop.Pages
 {
@@ -119,21 +121,20 @@ namespace VolunteerDatabase.Desktop.Pages
                         MessageBox.Show(item);
                     }
                 }
-                
+                Window window = new Window();
+
+                window.Height = 650;
+                window.Width = 470;
+                DealWithConflict dealer = new DealWithConflict(Pro, list, window);
+
+                window.Content = dealer;
+                window.Owner = this;
+                window.Show();
                 //MessageBox.Show("导入的信息与志愿者库中不一致的条目已被红色高亮标记,请确认保留项目.");
             }
 
-            else
-            {
-                MessageBox.Show("导入失败");
-            }
-            Window window = new Window();
-            window.Height = 650;
-            window.Width = 470;
-            DealWithConflict dealer = new DealWithConflict(Pro,list,window);
-            window.Content = dealer;
-            window.Owner = this;
-            window.Show();
+          
+           
         }
 
         private void endproject_Click(object sender, RoutedEventArgs e)
@@ -292,6 +293,37 @@ namespace VolunteerDatabase.Desktop.Pages
                     volunteer_list.ItemsSource = null;
                     volunteer_list.ItemsSource = Pro.Volunteers.ToList();
                 }
+            }
+        }
+
+        private void saveFile_Click(object sender, RoutedEventArgs e)
+        {
+            var templateName = "导入模板.csv";
+            var sfd = new SaveFileDialog
+            {
+                Filter = "逗号分隔的列表文件（*.csv）|*.csv",
+                DefaultExt = "csv",
+                FileName = "导入模板",
+                AddExtension = true
+            };
+            if (sfd.ShowDialog() == true)
+            {
+                var pathName = sfd.FileName;
+                var templatePathName = Environment.CurrentDirectory + @"\" + templateName;
+                try
+                {
+                    File.Copy(templatePathName, pathName, true);
+                }
+                catch (IOException exception)
+                {
+                    //TODO: LOG
+                }
+
+                MessageBox.Show("导出模板文件成功。");
+            }
+            else
+            {
+                MessageBox.Show("用户取消操作。");
             }
         }
     }

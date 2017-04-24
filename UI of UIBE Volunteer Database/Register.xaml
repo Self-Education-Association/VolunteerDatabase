@@ -34,7 +34,7 @@
                     <ComboBoxItem>统计学院</ComboBoxItem>
                     <ComboBoxItem>英语学院</ComboBoxItem>
                     <ComboBoxItem>外语学院</ComboBoxItem>
-                    <ComboBoxItem>国际关系学院学院</ComboBoxItem>
+                    <ComboBoxItem>国际关系学院</ComboBoxItem>
                     <ComboBoxItem>TestOnly</ComboBoxItem>
                 </ComboBox>
                 <TextBlock x:Name="textBlock7" TextWrapping="Wrap" Text="电话" Width="40" Height="25" Canvas.Left="25" Canvas.Top="204"/>

@@ -81,7 +81,7 @@ namespace VolunteerDatabase.Desktop
                         _claimsStored = claims;
                         SendClaimsEvent?.Invoke(claims);
                         Close();
-                        ModernDialog.ShowMessage("登陆成功", " ", MessageBoxButton.OK);                                   
+                        ModernDialog.ShowMessage("登录成功", " ", MessageBoxButton.OK);                                   
                     }
                     else if (claims.User != null && claims.User.Status == AppUserStatus.NotApproved)
                     {

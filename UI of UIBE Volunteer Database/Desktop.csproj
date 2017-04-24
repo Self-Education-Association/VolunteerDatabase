@@ -120,6 +120,7 @@
     <Compile Include="Pages\ChangePassWord.xaml.cs">
       <DependentUpon>ChangePassWord.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\csvItemViewModel.cs" />
     <Compile Include="Pages\InformAndWarning.cs" />
     <Compile Include="Pages\InPutVolunteerInBatch\Csvviewer.xaml.cs">
       <DependentUpon>Csvviewer.xaml</DependentUpon>
@@ -314,6 +315,9 @@
     </None>
     <AppDesigner Include="Properties\" />
     <Content Include="SelfEducationAssociation.cer">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="导入模板.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

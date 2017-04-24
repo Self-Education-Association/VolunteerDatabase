@@ -19,7 +19,7 @@ namespace VolunteerDatabase.Helper
         private static readonly object VolunteerLocker = new object();
         private static readonly object helperlocker = new object();
         private const string DEFAULTSTRING = "未填写";
-        Database database;
+        private Database database;
 
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]

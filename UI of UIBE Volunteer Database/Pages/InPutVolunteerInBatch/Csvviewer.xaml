@@ -10,9 +10,13 @@
         <Canvas MinWidth="250">
             <TextBlock Text="成功读取的志愿者列表" Canvas.Left="12" Style="{StaticResource Heading2}"/>
             <ScrollViewer Canvas.Top="20">
-                <DataGrid x:Name="csvGrid" Canvas.Top="30" Canvas.Left="35" LoadingRow="csvGrid_LoadingRow" AutoGenerateColumns="False" IsReadOnly="True" >
+                <DataGrid x:Name="csvGrid" Canvas.Top="30" Canvas.Left="35" LoadingRow="csvGrid_LoadingRow" AutoGenerateColumns="False" IsReadOnly="True"  MouseLeftButtonUp="csvGrid_MouseLeftButtonUp" >
+                    
                     <DataGrid.Columns>
-                        <DataGridCheckBoxColumn IsReadOnly="False"/>
+
+
+
+                        <DataGridCheckBoxColumn Binding="{Binding Selected }"/>
                         <DataGridTextColumn Header="学号" Width="90" Binding="{Binding StudentNum}"/>
                         <DataGridTextColumn Header="姓名" Binding="{Binding Name}"/>
                         <DataGridTextColumn Header="班级" Binding="{Binding Class}"/>
@@ -24,7 +28,7 @@
             <Button Name="SelectAll" Content="全选/全不选" Canvas.Bottom="20" Canvas.Left="30" Click="SelectAll_Click" />
             <Button Name="SelectNotSelected" Content="反选" Canvas.Bottom="20" Canvas.Left="140" Click="SelectNotSelected_Click" />
             <Button x:Name="Confirm" Content="确认名单" Canvas.Bottom="20" Canvas.Right="20" Click="Confirm_Click" />
-            <TextBlock x:Name="limit" Text="{Binding Counts}"/>
+            <TextBlock x:Name="Limit" Text="{Binding Counts}" Canvas.Left="198" Canvas.Top="10"/>
         </Canvas>
         
     </Grid>

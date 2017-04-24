@@ -131,6 +131,10 @@ namespace VolunteerDatabase.Helper
             {
                 return ProgressResult.Error("志愿者不存在于数据库中");
             }
+            if(IsInProject(pro,Volunteer))
+            {
+                return ProgressResult.Error("学号为[" + Volunteer.StudentNum + "] 姓名为[" + Volunteer.Name + "]的志愿者已经存在于该项目中.");
+            }
             if (pro.Maximum <= pro.Volunteers?.Count)
             {
                 return ProgressResult.Error("已达项目人数上限，添加失败");
@@ -145,6 +149,13 @@ namespace VolunteerDatabase.Helper
             result = ProgressResult.Success();
             return result;
         }
+
+        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
+        public bool IsInProject(Project p,Volunteer v)
+        {
+            return p.Volunteers.Contains(v);
+        }
+        
 
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
         public ProgressResult DeleteVolunteerFromProject(Volunteer Vol, Project Pro)
