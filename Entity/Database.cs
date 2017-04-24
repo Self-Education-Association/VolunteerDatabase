@@ -7,7 +7,7 @@
     public class Database : DbContext
     {
         public Database()
-            : base("name=Database")
+            : base(@"name=Database")
         {
         }
 

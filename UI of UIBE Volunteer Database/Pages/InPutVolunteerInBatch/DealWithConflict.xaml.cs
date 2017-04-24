@@ -15,7 +15,7 @@ namespace VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch
     /// </summary>
     public partial class DealWithConflict : UserControl
     {
-        private Window fatherWindow;
+        private InputWindow fatherWindow;
         private Project project;
         private Database database;
         private List<Volunteer> fullList = new List<Volunteer>();
@@ -23,7 +23,9 @@ namespace VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch
         private List<Volunteer> normalList = new List<Volunteer>();
         private VolunteerHelper vhelper = VolunteerHelper.GetInstance();
         private List<csvItemViewModel> itemList;
-        public DealWithConflict(Project p, List<Volunteer> fulllist,Window window)//list为完整list
+        
+
+        public DealWithConflict(Project p, List<Volunteer> fulllist,InputWindow window)//list为完整list
         {
             InitializeComponent();
             project = p;
