@@ -8,11 +8,12 @@
 
     <Grid Style="{StaticResource ContentRoot}">
         <Canvas MinWidth="250">
-            <TextBlock Text="处理信息冲突" Canvas.Left="10" Style="{StaticResource Heading2}"/>
-            <ScrollViewer Canvas.Top="20">
-                <DataGrid x:Name="csvGrid" Canvas.Top="30" Canvas.Left="35" AutoGenerateColumns="False" IsReadOnly="True" LoadingRow="csvGrid_LoadingRow" >
+            <TextBlock Text="更新志愿者信息" Canvas.Left="10" Style="{StaticResource Heading2}"/>
+            <TextBlock Text="以下褐色背景的条目为志愿者数据库中已经记录的志愿者基本信息，这与您方才导入的部分信息存在差异，请判断并选择要保留的志愿者信息。                       不选默认为保留旧记录。                                                                                 一般而言，如果新的条目中手机号码有变动，请保留该志愿者新的信息。" TextWrapping="Wrap"  Height="66" Width="428" Canvas.Top="26" Canvas.Left="10"/>
+            <ScrollViewer Canvas.Top="92" Canvas.Left="10">
+                <DataGrid x:Name="csvGrid" Canvas.Top="30" Canvas.Left="35" AutoGenerateColumns="False" IsReadOnly="True" LoadingRow="csvGrid_LoadingRow" MouseLeftButtonUp="csvGrid_MouseLeftButtonUp" >
                     <DataGrid.Columns>
-                        <DataGridCheckBoxColumn IsReadOnly="False"/>
+                        <DataGridCheckBoxColumn Binding="{Binding Selected}" IsReadOnly="False"/>
 
 
                         <!--<DataGridTemplateColumn>
@@ -23,13 +24,7 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>-->
                        
-                        <DataGridTemplateColumn>
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock x:Name="OldOrNew" Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type DataGridRow}},Path=Header}"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
+                       
                         <DataGridTextColumn Header="学号" Width="90" Binding="{Binding StudentNum}"/>
                         <DataGridTextColumn Header="姓名" Binding="{Binding Name}"/>
                         <DataGridTextColumn Header="班级" Binding="{Binding Class}"/>
@@ -39,7 +34,7 @@
             </ScrollViewer>
             <Button Name="SelectTheNew" Content="全选新记录" Canvas.Bottom="20" Canvas.Left="30" Click="SelectTheNew_Click"/>
             <Button Name="SelectTheOld" Content="全选旧记录" Canvas.Bottom="20" Canvas.Left="140" Click="SelectTheOld_Click"/>
-            <Button Name="Confirm" Content="确认处理冲突" Canvas.Bottom="20" Canvas.Right="20" Click="Confirm_Click" />
+            <Button Name="Confirm" Content="确认更新信息" Canvas.Bottom="20" Canvas.Right="20" Click="Confirm_Click" />
 
 
         </Canvas>

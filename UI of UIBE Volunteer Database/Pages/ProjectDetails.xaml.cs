@@ -9,6 +9,7 @@ using VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch;
 using VolunteerDatabase.Entity;
 using VolunteerDatabase.Helper;
 using VolunteerDatabase.Interface;
+using FirstFloor.ModernUI.Windows.Controls;
 
 namespace VolunteerDatabase.Desktop.Pages
 {
@@ -128,9 +129,11 @@ namespace VolunteerDatabase.Desktop.Pages
                 MessageBox.Show("导入失败");
             }
             Window window = new Window();
+            
             window.Height = 650;
             window.Width = 470;
             DealWithConflict dealer = new DealWithConflict(Pro,list,window);
+            
             window.Content = dealer;
             window.Owner = this;
             window.Show();

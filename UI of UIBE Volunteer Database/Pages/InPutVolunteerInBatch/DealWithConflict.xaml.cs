@@ -6,6 +6,7 @@ using System.Windows.Media;
 using FirstFloor.ModernUI.Windows.Controls;
 using VolunteerDatabase.Entity;
 using VolunteerDatabase.Helper;
+using System.Windows.Input;
 
 namespace VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch
 {
@@ -21,11 +22,7 @@ namespace VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch
         private List<Volunteer> conflictList = new List<Volunteer>();
         private List<Volunteer> normalList = new List<Volunteer>();
         private VolunteerHelper vhelper = VolunteerHelper.GetInstance();
-        private bool isOld = false;
-        private List<Volunteer> CheckedList = new List<Volunteer>();
-        private List<DataGridRow> theNewRows = new List<DataGridRow>();
-        private List<DataGridRow> theOldRows = new List<DataGridRow>();
-        private List<DataGridRow> theOldAndNewRows = new List<DataGridRow>();
+        private List<csvItemViewModel> itemList;
         public DealWithConflict(Project p, List<Volunteer> fulllist,Window window)//list为完整list
         {
             InitializeComponent();
@@ -33,6 +30,7 @@ namespace VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch
             fatherWindow = window;
             fullList = fulllist;
             database = DatabaseContext.GetInstance();
+            itemList = new List<csvItemViewModel>();
             foreach (Volunteer item in fullList)
             {
                 if(database.Volunteers.Where(v=>v.StudentNum==item.StudentNum).ToList().Count()!=0)
@@ -44,84 +42,153 @@ namespace VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch
                     normalList.Add(item);
                 }
             }
+            
             if (conflictList.Count() == 0)
             {
-                ModernDialog.ShowMessage("导入信息成功!","",MessageBoxButton.OK);
-                Csvviewer viewer = new Csvviewer(project,fullList,fatherWindow);
+                List<csvItemViewModel> finalList = new List<csvItemViewModel>();
+                foreach(Volunteer v in normalList)
+                {
+                    finalList.Add(new csvItemViewModel(v));
+                }
+                MessageBox.Show("导入信息成功!","",MessageBoxButton.OK);
+                Csvviewer viewer = new Csvviewer(project,finalList,fatherWindow);
                 fatherWindow.Content = viewer;
+                
                 //this.Visibility=Visibility.Collapsed;
             }
-            
-            List<Volunteer> theOldAndNew = new List<Volunteer>();
-            Volunteer theOld;
-            foreach (Volunteer theNew in conflictList)
+            else
             {
-                theOldAndNew.Add(theNew);
-                theOld = vhelper.FindVolunteer(theNew.StudentNum);
-                theOldAndNew.Add(theOld);
+                foreach(Volunteer v in conflictList)
+                {
+                    Volunteer old = vhelper.FindVolunteer(v.StudentNum);
+                    csvItemViewModel vmNew = new csvItemViewModel(v);
+                    csvItemViewModel vmOld = new csvItemViewModel(old);
+                    vmOld.IsOld = true;
+                    vmNew.IsOld = false;
+                    vmNew.Pair = vmOld;
+                    vmOld.Pair = vmNew;
+                    itemList.Add(vmNew);
+                    itemList.Add(vmOld);
+                }
+                /* List<Volunteer> theOldAndNew = new List<Volunteer>();
+                 Volunteer theOld;
+                 foreach (Volunteer theNew in conflictList)
+                 {
+                     theOldAndNew.Add(theNew);
+                     theOld = vhelper.FindVolunteer(theNew.StudentNum);
+                     theOldAndNew.Add(theOld);
+                 }
+                 isOld = false;
+                 conflictList = theOldAndNew;
+                 csvGrid.ItemsSource = conflictList;*/
+                csvGrid.ItemsSource = itemList;
             }
-            isOld = false;
-            conflictList = theOldAndNew;
-            csvGrid.ItemsSource = conflictList;
+            
+            
         }
 
         private void csvGrid_LoadingRow(object sender, DataGridRowEventArgs e)//inconfirmed.
         {
-            
-            if(isOld)
+            csvItemViewModel vm = e.Row.Item as csvItemViewModel;
+            if(vm.IsOld)
             {
                 e.Row.Header = "旧";
-                isOld = false;
-                theOldRows.Add(e.Row);
-                theOldAndNewRows.Add(e.Row);
+                e.Row.Background = new SolidColorBrush(Colors.Wheat);
             }
             else
             {
-                e.Row.Background = new SolidColorBrush(Colors.Red);
                 e.Row.Header = "新";
-                isOld = true;
-                theNewRows.Add(e.Row);
-                theOldAndNewRows.Add(e.Row);
+                
             }
+            
             
         }
 
         private void SelectTheNew_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var theNew in theNewRows)
+            foreach(csvItemViewModel item in itemList)
             {
-                //DataGridCheckBoxColumn checkcolumn = csvGrid.Columns[0] as DataGridCheckBoxColumn;
-                CheckBox cbox = csvGrid.Columns[0].GetCellContent(theNew) as CheckBox;
-                cbox.IsChecked = !(cbox.IsChecked);
-            }
-            foreach (var theOld in theOldRows)
-            {
-                CheckBox cbox = csvGrid.Columns[0].GetCellContent(theOld) as CheckBox;
-                cbox.IsChecked = false;
+                if(item.IsOld == false)
+                {
+                    item.Selected = true;
+                }
+                else
+                {
+                    item.Selected = false;
+                }
             }
            
         }
 
         private void SelectTheOld_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var theOld in theOldRows)
+            foreach (csvItemViewModel item in itemList)
             {
-                //DataGridCheckBoxColumn checkcolumn = csvGrid.Columns[0] as DataGridCheckBoxColumn;
-                CheckBox cbox = csvGrid.Columns[0].GetCellContent(theOld) as CheckBox;
-                cbox.IsChecked = true;
-            }
-            foreach (var theNew in theNewRows)
-            {
-                CheckBox cbox = csvGrid.Columns[0].GetCellContent(theNew) as CheckBox;
-                cbox.IsChecked = false;
+                if(item.IsOld == true)
+                {
+                    item.Selected = true;
+                }
+                else
+                {
+                    item.Selected = false;
+                }
             }
         }
 
         private void Confirm_Click(object sender, RoutedEventArgs e)
         {
-            int position = 1;
-            bool isValid = true;
-            bool flag = false;
+            List<csvItemViewModel> finalList = new List<csvItemViewModel>();
+            bool succeeded = true;
+            string error="记录选择有误,请检查选择.";
+            foreach(csvItemViewModel item in itemList)
+            {
+                if(item.Selected)
+                {
+                    if(item.Pair.Selected)
+                    {
+                        succeeded = false;
+                        error = "每一个志愿者只能保存一条记录,请检查选择是否有错.";
+                        break;
+                    }
+                    else
+                    {
+                        if(!finalList.Contains(item))
+                        finalList.Add(item);
+                    }
+                }
+                else
+                {
+                    if(!item.Pair.Selected)
+                    {
+                        finalList.Add(item.IsOld ? item : item.Pair);
+                        if (item.IsOld)
+                        {
+                            item.Selected = true;
+                        }
+                        else
+                        {
+                            item.Pair.Selected = true;
+                        }
+                    }
+                   
+                }
+            }
+            if(!succeeded)
+            {
+                MessageBox.Show(error);
+                succeeded = true;
+            }
+            else
+            {
+                foreach(Volunteer v in normalList)
+                {
+                    finalList.Add(new csvItemViewModel(v));
+                }
+                MessageBox.Show("完成了对志愿者库信息的更新.\n请确认最终要导入的志愿者.");
+                Csvviewer viewer = new Csvviewer(project, finalList, fatherWindow);
+                fatherWindow.Content = viewer;
+            }
+            /*
             for(int i=1;i<=theOldAndNewRows.Count();i++)
             {
                 DataGridRow item = theOldAndNewRows[i - 1];
@@ -159,37 +226,24 @@ namespace VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch
             }
             else
             {
-                ModernDialog.ShowMessage("处理信息冲突完成!","操作成功",MessageBoxButton.OK);
+                MessageBox.Show("处理信息冲突完成!","操作成功",MessageBoxButton.OK);
                 normalList.AddRange(CheckedList);
                 Csvviewer viewer = new Csvviewer(project,normalList,fatherWindow);
                 fatherWindow.Content = viewer;
                 //window.Show();
-            }
+            }*/
         }
 
-        private CheckBox GetCheckBox(DataGridRow row)
+       
+
+        private void csvGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            CheckBox cbox = csvGrid.Columns[0].GetCellContent(row) as CheckBox;
-            return cbox;
+            csvItemViewModel vm = csvGrid.SelectedItem as csvItemViewModel;
+            vm.Selected = !vm.Selected;
         }
 
 
 
-        //private void CheckBox_Checked(object sender, RoutedEventArgs e)
-        //{
-        //    CheckBox box = sender as CheckBox;
-        //    Volunteer v;
-        //    bool? flag = box.IsChecked;
-        //    v = box.DataContext as Volunteer;
-        //    CheckedList.Add(v);
-        //}
-
-        //private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
-        //{
-        //    CheckBox box = sender as CheckBox;
-        //    Volunteer v;
-        //    v = box.DataContext as Volunteer;
-        //    CheckedList.Remove(v);
-        //}
+        
     }
 }

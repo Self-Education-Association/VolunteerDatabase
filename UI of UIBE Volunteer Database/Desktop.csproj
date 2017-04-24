@@ -120,6 +120,7 @@
     <Compile Include="Pages\ChangePassWord.xaml.cs">
       <DependentUpon>ChangePassWord.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\csvItemViewModel.cs" />
     <Compile Include="Pages\InformAndWarning.cs" />
     <Compile Include="Pages\InPutVolunteerInBatch\Csvviewer.xaml.cs">
       <DependentUpon>Csvviewer.xaml</DependentUpon>
