@@ -120,23 +120,20 @@ namespace VolunteerDatabase.Desktop.Pages
                         MessageBox.Show(item);
                     }
                 }
-                
+                Window window = new Window();
+
+                window.Height = 650;
+                window.Width = 470;
+                DealWithConflict dealer = new DealWithConflict(Pro, list, window);
+
+                window.Content = dealer;
+                window.Owner = this;
+                window.Show();
                 //MessageBox.Show("导入的信息与志愿者库中不一致的条目已被红色高亮标记,请确认保留项目.");
             }
 
-            else
-            {
-                MessageBox.Show("导入失败");
-            }
-            Window window = new Window();
-            
-            window.Height = 650;
-            window.Width = 470;
-            DealWithConflict dealer = new DealWithConflict(Pro,list,window);
-            
-            window.Content = dealer;
-            window.Owner = this;
-            window.Show();
+          
+           
         }
 
         private void endproject_Click(object sender, RoutedEventArgs e)
