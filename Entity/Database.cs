@@ -7,16 +7,7 @@
     public class Database : DbContext
     {
         public Database()
-            : base(@"Data Source=10.1.1.68\seasqlserver;
-                    Initial Catalog=VolunteerDatabase;
-                    Integrated Security=False;
-                    User ID=project1612;
-                    Password=!@#project$%^1612;
-                    Connect Timeout=15;
-                    Encrypt=False;
-                    TrustServerCertificate=True;
-                    ApplicationIntent=ReadWrite;
-                    MultiSubnetFailover=False")
+            : base(@"name=Database")
         {
         }
 
