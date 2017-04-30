@@ -44,7 +44,7 @@
                 <TextBlock Text="宿舍" Width="40" Height="25" Canvas.Left="25" Canvas.Top="264"/>
                 <TextBox x:Name="dormitaryadress" Width="100" Height="25" Canvas.Left="100" Canvas.Top="264"/>
                 <CheckBox x:Name="checkBox" Content="我同意使用协议" Canvas.Left="25" Canvas.Top="305"/>
-                <mui:ModernButton x:Name="register_button" Content="注册" Click="register_button_Click" IsEnabled="{Binding ElementName=checkBox,Path=IsChecked}" Canvas.Left="206" Canvas.Top="306"/>
+                <mui:ModernButton x:Name="register_button" IconData="{StaticResource Confirm}" Content="注册" Click="register_button_Click" IsEnabled="{Binding ElementName=checkBox,Path=IsChecked}" Canvas.Left="206" Canvas.Top="306"/>
             </Canvas>
         </ScrollViewer>
     </Grid>

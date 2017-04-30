@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mui="http://firstfloorsoftware.com/ModernUI"     
         mc:Ignorable="d"
         Height="300" Width="300">
     <Grid>
@@ -11,7 +12,7 @@
         <TextBox x:Name="Connection" MaxLength="1" KeyDown="Connection_KeyDown" HorizontalAlignment="Left" Height="23" Margin="57,177,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBlock x:Name="ProName" HorizontalAlignment="Left" Margin="21,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <TextBlock x:Name="VolName" HorizontalAlignment="Left" Margin="21,49,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
-        <Button x:Name="Confirm" Content="确认" Click="Confirm_Click" HorizontalAlignment="Left" Margin="164,224,0,0" VerticalAlignment="Top" Width="75"/>
+        <mui:ModernButton x:Name="Confirm" IconData="{StaticResource Confirm}" Content="确认" Click="Confirm_Click" HorizontalAlignment="Left" Margin="120,232,0,0" VerticalAlignment="Top" Width="75"/>
         <TextBlock x:Name="textBlock"  HorizontalAlignment="Left" Margin="190,91,0,0" TextWrapping="Wrap" Text="守时情况评分" VerticalAlignment="Top"/>
         <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="190,136,0,0" TextWrapping="Wrap" Text="服务态度评分" VerticalAlignment="Top"/>
         <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="190,179,0,0" TextWrapping="Wrap" Text="通信情况评分" VerticalAlignment="Top"/>

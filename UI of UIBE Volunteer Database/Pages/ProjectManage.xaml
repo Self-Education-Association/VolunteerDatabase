@@ -52,8 +52,8 @@
                         </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
-                <mui:ModernButton Content="查找" HorizontalAlignment="Right"  Width="100" Height="25" Canvas.Right="50" Canvas.Top="25" Click="ModernButton_Click"/>
-                <TextBox x:Name="search_project" Width="90" Height="20" Canvas.Right="0" Canvas.Top="25"/>
+                <Button Content="查找" HorizontalAlignment="Right"  Width="60" Height="23" Canvas.Right="0" Canvas.Top="25" Click="ModernButton_Click"/>
+                <TextBox x:Name="search_project" Width="90" Height="23" Canvas.Right="60" Canvas.Top="25"/>
             </Canvas>
         </ScrollViewer>
     </Grid>

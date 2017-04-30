@@ -8,7 +8,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid Style="{StaticResource ContentRoot}">
         <ScrollViewer>
-            <StackPanel MinWidth="200">
+            <StackPanel MinWidth="210">
                 <TextBlock Text="用户信息 User Information" Style="{StaticResource Heading2}" />
                 <Canvas MinHeight="200">
                     <Label x:Name="label" Content="用户名" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="40"/>
@@ -25,9 +25,9 @@
                     <TextBlock x:Name="dormitary" Width="auto" Canvas.Top="150" Canvas.Right="0"/>
                     <Label Content="身份" HorizontalAlignment="Left" Height="20" Width="40" Canvas.Top="180"/>
                     <TextBlock x:Name="roles" Width="auto" Canvas.Top="180" Canvas.Right="0"/>
+                    <TextBlock Text="修改密码" HorizontalAlignment="Left" Height="20" Width="60" Canvas.Top="210"/>
+                    <mui:ModernButton Content="修改" x:Name="ChangePassword_btn" IconData="{StaticResource Confirm}" Height="25" Width="60" HorizontalAlignment="Left" Canvas.Top="210" Canvas.Right="0" Click="ChangePassword_btn_Click"/>
                 </Canvas>
-                <TextBlock Text="修改密码" HorizontalAlignment="Left" Height="20" Width="60"/>
-                <Button Content="修改" x:Name="ChangePassword_btn" Height="25" Width="60" HorizontalAlignment="Left" Margin="0,0,0,5" Click="ChangePassword_btn_Click"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>

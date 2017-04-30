@@ -11,7 +11,7 @@
             <StackPanel MinWidth="200">
                 <Canvas MinHeight="48">
                     <TextBlock Text="Volunteer Data" Style="{StaticResource Heading2}"/>
-                    <TextBox x:Name="studentnum" Width="90" Height="23" HorizontalAlignment="Left" Canvas.Top="22" Canvas.Right="70"/>
+                    <TextBox x:Name="studentnum" Width="90" Height="23" HorizontalAlignment="Left" Canvas.Top="22" Canvas.Right="70" Canvas.Left="418"/>
                     <Button x:Name="searchbyid_btn" Width="60" Height="23" Content="查找" Canvas.Top="22" Canvas.Right="0" Click="searchbyid_btn_Click"/>
                 </Canvas>
                 <DataGrid x:Name="Volunteerdata" IsReadOnly="True" AutoGenerateColumns="False">
