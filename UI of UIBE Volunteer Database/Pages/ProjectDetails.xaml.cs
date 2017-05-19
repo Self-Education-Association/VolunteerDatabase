@@ -21,6 +21,7 @@ namespace VolunteerDatabase.Desktop.Pages
     {
         private Project Pro;
         private AppUserIdentityClaims Claims;
+
         public void sendClaimsEventHandler(AppUserIdentityClaims claim)
         {
             IsEnabled = true;
@@ -47,20 +48,21 @@ namespace VolunteerDatabase.Desktop.Pages
                 Pro = pro;
             }
             InitializeComponent();
-            Auth();        
+            Auth();
             ProInfoShow();
-            List<AppUser> users=Pro.Managers.ToList();
-            List<Volunteer> vols=Pro.Volunteers.ToList();
-            project_manager_list.ItemsSource = users;
+            List<AppUser> users = Pro.Managers;
+            List<Volunteer> vols = Pro.Volunteers;
+            project_manager_list.ItemsSource = users;//可以做个viewmodel
             volunteer_list.ItemsSource = vols;
         }
+
         private void Auth()
         {
             if (Pro.ScoreCondition != ProjectScoreCondition.Scored)
             {
                 endproject.IsEnabled = false;
             }
-            if (Claims.Roles.Count() == 0||Pro.Condition==ProjectCondition.Finished)
+            if (Claims.Roles.Count() == 0 || Pro.Condition == ProjectCondition.Finished)
             {
                 AddManager_btn.IsEnabled = false;
                 deleteproject_btn.IsEnabled = false;
@@ -83,6 +85,7 @@ namespace VolunteerDatabase.Desktop.Pages
                 AddVolunteer_btn.IsEnabled = false;
             }
         }
+
         private void ProInfoShow()
         {
             if (Pro != null)
@@ -94,7 +97,7 @@ namespace VolunteerDatabase.Desktop.Pages
                 project_status.Text = Pro.Condition.ToString();
                 project_time.Text = Pro.Time.ToString();
                 project_accomodation.Text = Pro.Volunteers.Count() + "/" + Pro.Maximum.ToString();
-            }         
+            }
         }
 
         private void piliang_Click(object sender, RoutedEventArgs e)
@@ -114,27 +117,27 @@ namespace VolunteerDatabase.Desktop.Pages
                         MessageBox.Show(item);
                     }//此处应建立窗口提示informingMessage,即有改动的信息，然后传多个学号，再调用ch中方法确定新信息
                 }
-                if(ch.errorList.Count()!=0)
+                if (ch.errorList.Count() != 0)
                 {
                     foreach (string item in ch.errorList)
                     {
                         MessageBox.Show(item);
                     }
                 }
-                InputWindow window = new InputWindow();
+                else
+                {
+                    InputWindow window = new InputWindow();
+                    window.Height = 650;
+                    window.Width = 470;
+                    DealWithConflict dealer = new DealWithConflict(Pro, list, window);
+                    window.FinishInPutEvent += FinishInPutEventHandler;
+                    window.Content = dealer;
+                    window.Owner = this;
+                    window.Show();
+                }
 
-                window.Height = 650;
-                window.Width = 470;
-                DealWithConflict dealer = new DealWithConflict(Pro, list, window);
-                window.FinishInPutEvent += FinishInPutEventHandler;
-                window.Content = dealer;
-                window.Owner = this;
-                window.Show();
                 //MessageBox.Show("导入的信息与志愿者库中不一致的条目已被红色高亮标记,请确认保留项目.");
             }
-
-          
-           
         }
 
         private void FinishInPutEventHandler()
@@ -148,64 +151,75 @@ namespace VolunteerDatabase.Desktop.Pages
             {
                 var pph = ProjectProgressHelper.GetInstance();
                 MessageBox.Show("未单独评分的志愿者将默认全部评分为：4");
-                if(Pro!=null&&Pro.Condition==ProjectCondition.Ongoing)
-                {
-                    var result=pph.ScoringDefaultForVolunteers(Pro, 4);
-                    if(!result.Succeeded)
-                    {
-                        MessageBox.Show("评分失败");
-                    }
-                    
-                }          
-                if (Pro != null)
-                {
-                    var result = pph.FinishProject(Pro);
-                    if (!result.Succeeded)
-                    {
-                        MessageBox.Show("结项失败");
-                    }
-                }                        
-            }
+                if (Pro != null && Pro.Condition == ProjectCondition.Ongoing)
 
+                    try
+                    {
+                        var result1 = pph.ScoringDefaultForVolunteers(Pro, 4);
+                        if (!result1.Succeeded)
+                        {
+                            MessageBox.Show("评分失败,未能结项");
+                            return;
+                        }
+                        if (Pro.ScoreCondition == ProjectScoreCondition.Scored)
+                        {
+                            var result2 = pph.FinishProject(Pro);
+                            if (!result2.Succeeded)
+                            {
+                                MessageBox.Show("结项失败");
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("没有评分,未能结项");
+                            return;
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
+            }
         }
+
         private void deleteproject_btn_Click(object sender, RoutedEventArgs e)
         {
             var pmh = ProjectManageHelper.GetInstance();
-            MessageBoxResult result=MessageBox.Show("确定要删除该项目?", "删除提醒", MessageBoxButton.YesNo, MessageBoxImage.Information);
-            switch(result)
+            MessageBoxResult result = MessageBox.Show("确定要删除该项目?", "删除提醒", MessageBoxButton.YesNo, MessageBoxImage.Information);
+            switch (result)
             {
                 case MessageBoxResult.Yes:
                     pmh.ProjectDelete(Pro);
-         
+
                     this.Close();
                     break;
+
                 case MessageBoxResult.No:
                     break;
             }
-
         }
 
         private void AddManager_btn_Click(object sender, RoutedEventArgs e)
         {
-            if(AddManager.Text=="")
+            if (AddManager.Text == "")
             {
                 MessageBox.Show("请输入管理者学号!");
             }
             else
-            { 
+            {
                 var pmh = ProjectManageHelper.GetInstance();
                 try
                 {
                     var result = pmh.AddManager(int.Parse(AddManager.Text), Pro);
-                    if(result.Succeeded)
+                    if (result.Succeeded)
                     {
-                        MessageBox.Show("学号为[" + AddManager.Text + "]的用户已经被添加为项目["+Pro.Name+"]的项目管理者.");
+                        MessageBox.Show("学号为[" + AddManager.Text + "]的用户已经被添加为项目[" + Pro.Name + "]的项目管理者.");
                         project_manager_list.ItemsSource = null;
                         project_manager_list.ItemsSource = Pro.Managers.ToList();
                     }
                     if (!result.Succeeded)
                     {
-                        MessageBox.Show("导入失败,错误信息:"+string.Join(",",result.Errors));
+                        MessageBox.Show("导入失败,错误信息:" + string.Join(",", result.Errors));
                         AddManager.Clear();
                     }
                 }
@@ -218,7 +232,7 @@ namespace VolunteerDatabase.Desktop.Pages
 
         private void AddVolunteer_btn_Click(object sender, RoutedEventArgs e)
         {
-            if(AddVolunteer.Text=="")
+            if (AddVolunteer.Text == "")
             {
                 MessageBox.Show("请输入管理者学号!");
             }
@@ -237,7 +251,7 @@ namespace VolunteerDatabase.Desktop.Pages
                     MessageBox.Show("导入失败");
                     AddVolunteer.Clear();
                 }
-            }          
+            }
         }
 
         private void AddManager_KeyDown(object sender, KeyEventArgs e)
@@ -262,12 +276,13 @@ namespace VolunteerDatabase.Desktop.Pages
             if (senderButton.DataContext is Volunteer)
             {
                 Volunteer Vol = (Volunteer)senderButton.DataContext;
-                if(Vol!=null&&Pro.ScoreCondition!=ProjectScoreCondition.UnScored)
+                if (Vol != null && Pro.ScoreCondition != ProjectScoreCondition.UnScored)
                 {
-                    var rp = new Rating(Vol,Pro);
+                    var rp = new Rating(Vol, Pro);
                     rp.Owner = this;
+                    rp.Show();
                 }
-            }          
+            }
         }
 
         private void deleteprojectmanager_btn_Click(object sender, RoutedEventArgs e)
@@ -276,7 +291,7 @@ namespace VolunteerDatabase.Desktop.Pages
             if (senderButton.DataContext is AppUser)
             {
                 AppUser Man = (AppUser)senderButton.DataContext;
-                if(Man!=null)
+                if (Man != null)
                 {
                     var pmh = ProjectManageHelper.GetInstance();
                     pmh.DeletManager(Man.StudentNum, Pro);
@@ -332,5 +347,31 @@ namespace VolunteerDatabase.Desktop.Pages
                 MessageBox.Show("用户取消操作。");
             }
         }
+
+        private void BlacklistDetails_btn_Click(object sender, RoutedEventArgs e)
+        {
+            Button senderButton = sender as Button;
+            if (senderButton.DataContext is Volunteer)
+            {
+                Volunteer Vol = (Volunteer)senderButton.DataContext;
+                if (Vol != null)
+                {
+                    var bl = new BlackList(Vol);
+                    bl.Show();
+                    bl.Owner = this;
+                }
+            }
+        }
+
+        //public void Query(int size, int pageIndex)
+        //{
+        //    Result.Total = Student.Students.Count;
+        //    Result.Students = Student.Students.Skip((pageIndex - 1) * size).Take(size).ToList();
+
+        //}
+        //private void dataPager_PageChanged(object sender, Resource.PageChangedEventArgs args)
+        //{
+        //    Query(args.PageSize, args.PageIndex);
+        //}
     }
 }

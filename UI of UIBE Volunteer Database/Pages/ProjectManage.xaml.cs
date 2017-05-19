@@ -15,11 +15,12 @@ namespace VolunteerDatabase.Desktop.Pages
     /// </summary>
     public partial class ProjectManage : UserControl
     {
-        IdentityPage identitypage = IdentityPage.GetInstance();
-        List<Project> allprojectlist;
-        ProjectManageHelper managehelper;
-        ProjectProgressHelper progresshelper;
-        private AppUserIdentityClaims Claims{ get; set; }
+        private IdentityPage identitypage = IdentityPage.GetInstance();
+        private List<Project> allprojectlist;
+        private ProjectManageHelper managehelper;
+        private ProjectProgressHelper progresshelper;
+        private AppUserIdentityClaims Claims { get; set; }
+
         public ProjectManage()
         {
             InitializeComponent();
@@ -30,7 +31,7 @@ namespace VolunteerDatabase.Desktop.Pages
             managehelper = ProjectManageHelper.GetInstance();
             progresshelper = ProjectProgressHelper.GetInstance();
             if (managehelper.ShowProjectList(Claims.User.Organization, true) != null)
-            allprojectlist = managehelper.ShowProjectList(Claims.User.Organization,true);
+                allprojectlist = managehelper.ShowProjectList(Claims.User.Organization, true);
             allprojectlist.AddRange(managehelper.ShowProjectList(Claims.User.Organization, false));
             ShowList(StatusSwitch.SelectedIndex);
             if (Claims.Roles.Count() == 1 && Claims.IsInRole(AppRoleEnum.OrgnizationMember))
@@ -39,6 +40,7 @@ namespace VolunteerDatabase.Desktop.Pages
                 StatusSwitch.IsEnabled = false;
             }
         }
+
         private void ShowList(int status)
         {
             List<Project> list = new List<Project>();
@@ -49,6 +51,7 @@ namespace VolunteerDatabase.Desktop.Pages
                         list = allprojectlist;
                     }
                     break;
+
                 case 1:
                     foreach (Project project in allprojectlist)
                     {
@@ -56,6 +59,7 @@ namespace VolunteerDatabase.Desktop.Pages
                             list.Add(project);
                     }
                     break;
+
                 case 2:
                     foreach (Project project in allprojectlist)
                     {
@@ -63,16 +67,16 @@ namespace VolunteerDatabase.Desktop.Pages
                             list.Add(project);
                     }
                     break;
+
                 default:
                     break;
             }
             project_list.ItemsSource = list;
         }
 
-
         private void StatusSwitch_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(managehelper !=null && progresshelper != null)
+            if (managehelper != null && progresshelper != null)
             {
                 allprojectlist = managehelper.ShowProjectList(Claims.User.Organization, true);
                 allprojectlist.AddRange(managehelper.ShowProjectList(Claims.User.Organization, false));
@@ -84,18 +88,18 @@ namespace VolunteerDatabase.Desktop.Pages
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Button senderButton = sender as Button;
-            if(senderButton.DataContext is Project)
+            if (senderButton.DataContext is Project)
             {
                 Project project = (Project)senderButton.DataContext;
-                var ProjectInformation = new ProjectInformation(this.Claims,project);
+                var ProjectInformation = new ProjectInformation(this.Claims, project);
                 ProjectInformation.Show();
-            }          
+            }
         }
+
         private void ModernButton_Click(object sender, RoutedEventArgs e)
         {
-            if(search_project.Text=="")
+            if (search_project.Text == "")
             {
-
             }
             else
             {

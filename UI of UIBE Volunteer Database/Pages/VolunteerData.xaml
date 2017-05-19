@@ -13,7 +13,7 @@
                 <!--<mui:ModernButton x:Name="search_btn" Content="查找" Width="63" Height="29" HorizontalAlignment="Right" Click="ModernButton_Click"/>-->
                 <TextBlock Text="Volunteer Data" Style="{StaticResource Heading2}" />
                 <TextBox x:Name="studentnum" Width="80" Height="20" HorizontalAlignment="Left" />
-                <mui:ModernButton x:Name="searchbyid_btn" Content="点我按学号查找志愿者信息" Click="searchbyid_btn_Click"/>
+                <mui:ModernButton IconData="{StaticResource Search}" x:Name="searchbyid_btn" Content="点我按学号查找志愿者信息" Click="searchbyid_btn_Click"/>
                 <DataGrid x:Name="Volunteerdata" IsReadOnly="True">
                     <DataGrid AutoGenerateColumns="False"></DataGrid>
                     <DataGrid.Columns>
@@ -34,7 +34,7 @@
                         <DataGridTemplateColumn Header="黑名单详情">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <mui:ModernButton x:Name="BlacklistDetails_btn" Click="BlacklistDetails_btn_Click"/>
+                                    <mui:ModernButton IconData="{StaticResource Detail}" x:Name="BlacklistDetails_btn" Click="BlacklistDetails_btn_Click"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>

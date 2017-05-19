@@ -29,11 +29,11 @@
     <ProductName>Volunteer Database Manager</ProductName>
     <PublisherName>Self Education Association</PublisherName>
     <SuiteName>Volunteer Database Project</SuiteName>
-    <MinimumRequiredVersion>1.3.0.0</MinimumRequiredVersion>
+    <MinimumRequiredVersion>1.4.0.0</MinimumRequiredVersion>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
     <ApplicationRevision>1</ApplicationRevision>
-    <ApplicationVersion>1.3.0.%2a</ApplicationVersion>
+    <ApplicationVersion>1.4.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -121,6 +121,7 @@
       <DependentUpon>ChangePassWord.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\csvItemViewModel.cs" />
+    <Compile Include="ResourceDictionary\DataPager.xaml.cs" />
     <Compile Include="Pages\InformAndWarning.cs" />
     <Compile Include="Pages\InPutVolunteerInBatch\Csvviewer.xaml.cs">
       <DependentUpon>Csvviewer.xaml</DependentUpon>
@@ -178,6 +179,9 @@
     <Compile Include="TipsPages\LoginDialog.xaml.cs">
       <DependentUpon>LoginDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WelcomePage.xaml.cs">
+      <DependentUpon>WelcomePage.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -189,6 +193,10 @@
     <Page Include="Pages\ChangePassWord.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResourceDictionary\DataPager.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\InPutVolunteerInBatch\Csvviewer.xaml">
       <SubType>Designer</SubType>
@@ -291,6 +299,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TipsPages\LoginDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WelcomePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

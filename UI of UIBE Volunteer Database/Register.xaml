@@ -5,22 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mui="http://firstfloorsoftware.com/ModernUI"
         mc:Ignorable="d"
-        Height="400" Width="300" d:DesignWidth="400" d:DesignHeight="300" Closing="Window_Closing" ResizeMode="NoResize">
+        Height="439.378" Width="305.699" ResizeMode="NoResize" Title="注册">
     <Grid Style="{StaticResource ContentRoot}">
         <ScrollViewer>
             <Canvas>
                 <TextBlock x:Name="textBlock1" TextWrapping="Wrap" Text="姓名" Width="40" Height="25" Canvas.Left="25" Canvas.Top="24"/>
-                <TextBox x:Name="wholename" TextWrapping="Wrap" Width="100" Height="25" Canvas.Left="100" Canvas.Top="24"/>
+                <TextBox x:Name="wholename" TextWrapping="Wrap" Width="127" Height="25" Canvas.Left="100" Canvas.Top="24"/>
                 <TextBlock x:Name="textBlock2" TextWrapping="Wrap" Text="学号" Width="40" Height="25" Canvas.Left="25" Canvas.Top="54"/>
-                <TextBox x:Name="studentid" TextWrapping="Wrap" Width="100" Height="25" KeyDown="studentid_KeyDown" Canvas.Left="100" Canvas.Top="54"/>
+                <TextBox x:Name="studentid" TextWrapping="Wrap" Width="127" Height="25" KeyDown="studentid_KeyDown" Canvas.Left="100" Canvas.Top="54"/>
                 <TextBlock x:Name="textBlock3" TextWrapping="Wrap" Text="账号" Width="40" Height="25" Canvas.Left="25" Canvas.Top="84"/>
-                <TextBox x:Name="accountname" TextWrapping="Wrap" Width="100" Height="25" MaxLength="16" ToolTip="请输入16位以内英文或数字" Canvas.Left="100" Canvas.Top="84"/>
+                <TextBox x:Name="accountname" TextWrapping="Wrap" Width="127" Height="25" MaxLength="16" ToolTip="请输入16位以内英文或数字" Canvas.Left="100" Canvas.Top="84"/>
                 <TextBlock x:Name="textBlock4" TextWrapping="Wrap" Text="密码" Width="40" Height="25" Canvas.Left="25" Canvas.Top="114"/>
-                <PasswordBox x:Name="passwordBox" Width="100" Height="25" Canvas.Left="100" Canvas.Top="114"/>
+                <PasswordBox x:Name="passwordBox" Width="127" Height="25" Canvas.Left="100" Canvas.Top="114"/>
                 <TextBlock x:Name="textBlock5" TextWrapping="Wrap" Text="确认密码" Width="60" Height="25" Canvas.Left="25" Canvas.Top="144"/>
-                <PasswordBox x:Name="passwordBox1" Width="100" Height="25" Canvas.Left="100" Canvas.Top="144"/>
+                <PasswordBox x:Name="passwordBox1" Width="127" Height="25" Canvas.Left="100" Canvas.Top="144"/>
                 <TextBlock x:Name="textBlock6" TextWrapping="Wrap" Text="所属机构" Width="60" Height="25" Canvas.Left="25" Canvas.Top="174"/>
-                <ComboBox x:Name="comboBox" Width="100" Height="25" Canvas.Left="100" Canvas.Top="174">
+                <ComboBox x:Name="comboBox" Width="127" Height="25" Canvas.Left="100" Canvas.Top="174">
                     <ComboBoxItem>SEA团队</ComboBoxItem>
                     <ComboBoxItem>校志愿服务中心</ComboBoxItem>
                     <ComboBoxItem>国际经济贸易学院</ComboBoxItem>
@@ -38,13 +38,13 @@
                     <ComboBoxItem>TestOnly</ComboBoxItem>
                 </ComboBox>
                 <TextBlock x:Name="textBlock7" TextWrapping="Wrap" Text="电话" Width="40" Height="25" Canvas.Left="25" Canvas.Top="204"/>
-                <TextBox x:Name="telephonenumber" TextWrapping="Wrap" Width="100" Height="25" ToolTip="请输入有效的电话号码" MaxLength="13" KeyDown="telephonenumber_KeyDown" Canvas.Left="100" Canvas.Top="204"/>
+                <TextBox x:Name="telephonenumber" TextWrapping="Wrap" Width="127" Height="25" ToolTip="请输入有效的电话号码" MaxLength="13" KeyDown="telephonenumber_KeyDown" Canvas.Left="100" Canvas.Top="204"/>
                 <TextBlock x:Name="textBlock8" TextWrapping="Wrap" Text="电子邮箱" Width="50" Height="25" Canvas.Left="25" Canvas.Top="234"/>
-                <TextBox x:Name="emailadress"  TextWrapping="Wrap" Width="100" Height="25" Canvas.Left="100" Canvas.Top="234"/>
+                <TextBox x:Name="emailadress"  TextWrapping="Wrap" Width="127" Height="25" Canvas.Left="100" Canvas.Top="234"/>
                 <TextBlock Text="宿舍" Width="40" Height="25" Canvas.Left="25" Canvas.Top="264"/>
-                <TextBox x:Name="dormitaryadress" Width="100" Height="25" Canvas.Left="100" Canvas.Top="264"/>
-                <CheckBox x:Name="checkBox" Content="我同意使用协议" Canvas.Left="10" Canvas.Top="294"/>
-                <mui:ModernButton x:Name="register_button" Content="注册" Click="register_button_Click" IsEnabled="{Binding ElementName=checkBox,Path=IsChecked}" Canvas.Left="201" Canvas.Top="294"/>
+                <TextBox x:Name="dormitaryadress" Width="127" Height="25" Canvas.Left="100" Canvas.Top="264"/>
+                <CheckBox x:Name="checkBox" Content="我同意使用协议" Canvas.Left="10" Canvas.Top="318"/>
+                <mui:ModernButton IconData="{StaticResource Confirm}" x:Name="register_button" Content="注册" Click="register_button_Click" IsEnabled="{Binding ElementName=checkBox,Path=IsChecked}" Canvas.Left="175" Canvas.Top="315"/>
             </Canvas>
         </ScrollViewer>
     </Grid>

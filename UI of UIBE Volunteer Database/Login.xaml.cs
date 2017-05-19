@@ -50,7 +50,7 @@ namespace VolunteerDatabase.Desktop
 
         private void register_Click(object sender, RoutedEventArgs e)
         {
-            var register = new Register();
+            var register = new Register(null, this);
             register.Show();
             Hide();
         }
@@ -127,5 +127,13 @@ namespace VolunteerDatabase.Desktop
 
         public static event LogOutDelegate LogOutEvent;
 
+
+        private void password_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                login_btn_Click(this, new RoutedEventArgs());
+            }
+        }
     }
 }
