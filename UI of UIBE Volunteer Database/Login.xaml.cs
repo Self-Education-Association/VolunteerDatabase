@@ -50,7 +50,7 @@ namespace VolunteerDatabase.Desktop
 
         private void register_Click(object sender, RoutedEventArgs e)
         {
-            var register = new Register();
+            var register = new Register(null, this);
             register.Show();
             Hide();
         }
