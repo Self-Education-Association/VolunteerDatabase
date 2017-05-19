@@ -40,7 +40,7 @@ namespace VolunteerDatabase.Desktop.Pages
         {
             Window window = new Window();
             window.Width = 300;
-            window.Height = 250;
+            window.Height = 310;
             window.Content = new ChangePassWord(Claims,window);
             window.Show();
             window.ResizeMode=System.Windows.ResizeMode.NoResize;

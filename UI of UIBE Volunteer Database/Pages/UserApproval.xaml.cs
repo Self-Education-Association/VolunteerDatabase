@@ -18,27 +18,27 @@ namespace VolunteerDatabase.Desktop.Pages
 
         private IdentityHelper helper = IdentityHelper.GetInstance();
 
-        List<AppUser> approvallist;
+        private List<AppUser> approvallist;
         private AppUserIdentityClaims Claims { get; set; }
+
         public UserApproval()
         {
             InitializeComponent();
             Claims = identitypage.Claims;
-            if(Claims.IsInRole(AppRoleEnum.Administrator))
+            if (Claims.IsInRole(AppRoleEnum.Administrator))
             {
                 addorganization_btn.Visibility = Visibility.Visible;
             }
-            if(Claims.IsInRole(AppRoleEnum.Administrator)|| Claims.IsInRole(AppRoleEnum.OrgnizationAdministrator))
+            if (Claims.IsInRole(AppRoleEnum.Administrator) || Claims.IsInRole(AppRoleEnum.OrgnizationAdministrator))
             {
                 this.IsEnabled = true;
+                approvallist = helper.ShowNotApprovedMembers(Claims.User.Organization);
+                approval_list.ItemsSource = approvallist;
             }
             else
             {
                 this.IsEnabled = false;
             }
-            approvallist = helper.ShowNotApprovedMembers(Claims.User.Organization);
-            //approval_list.Items.Clear();
-            approval_list.ItemsSource = approvallist;
         }
 
         private void Approve_Click(object sender, RoutedEventArgs e)
@@ -58,7 +58,6 @@ namespace VolunteerDatabase.Desktop.Pages
                     approval_list.ItemsSource = null;
                     approval_list.ItemsSource = approvallist;
                 }
-
                 else
                     MessageBox.Show(string.Join(",", result.Errors));
             }
@@ -67,8 +66,6 @@ namespace VolunteerDatabase.Desktop.Pages
                 result = IdentityResult.Error("待审批的用户不存在.");
                 MessageBox.Show("错误:待审批的用户不存在.");
             }
-            
-
         }
 
         private void Reject_Click(object sender, RoutedEventArgs e)
@@ -95,8 +92,6 @@ namespace VolunteerDatabase.Desktop.Pages
                 result = IdentityResult.Error("待审批的用户不存在.");
                 MessageBox.Show("错误:待审批的用户不存在.");
             }
-
-
         }
 
         private void addorganization_btn_Click(object sender, RoutedEventArgs e)

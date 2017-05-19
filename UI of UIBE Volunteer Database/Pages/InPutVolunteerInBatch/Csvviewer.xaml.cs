@@ -35,10 +35,8 @@ namespace VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch
             project = p;
             chelper = CsvHelper.GetInstance();
             csvList = list;
-            
             csvGrid.ItemsSource = csvList;
             Claims = identitypage.Claims;
-
         }
 
 
@@ -64,25 +62,18 @@ namespace VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch
 
         private void SelectAll_Click(object sender, RoutedEventArgs e)
         {
-            CheckBox cbox;
-            foreach (var row in rows)
+            foreach (var vm in csvList)
             {
-                cbox = csvGrid.Columns[0].GetCellContent(row) as CheckBox;
-                if (!hasAllSelected)
-                    cbox.IsChecked = true;
-                else
-                    cbox.IsChecked = false;
+                vm.Selected = hasAllSelected ? true : false;
             }
-            hasAllSelected = !(hasAllSelected);
+            hasAllSelected = !hasAllSelected;
         }
 
         private void SelectNotSelected_Click(object sender, RoutedEventArgs e)
         {
-            CheckBox cbox;
-            foreach (var item in rows)
+            foreach (var vm in csvList)
             {
-                cbox = csvGrid.Columns[0].GetCellContent(item) as CheckBox;
-                cbox.IsChecked = !(cbox.IsChecked);
+                vm.Selected = !vm.Selected;
             }
         }
 
@@ -108,11 +99,12 @@ namespace VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch
                         {
                             var addToProjectResult = pphelper.SingleVolunteerInputById(v.StudentNum, project);
                             if (!addToProjectResult.Succeeded)
+                            {
                                 errors.Add(string.Join(",", addToProjectResult.Errors) + "没有成功添加入项目");
+                            }
                             else
                             {
                                 succeededList.Add(v);
-                                
                             }
                         }
                     }
@@ -120,21 +112,19 @@ namespace VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch
                     {
                         var addToProjectResult = pphelper.SingleVolunteerInputById(v.StudentNum, project);
                         if (!addToProjectResult.Succeeded)
+                        {
                             errors.Add(string.Join(",", addToProjectResult.Errors) + "没有成功添加入项目");
+                        }
                         else
                         {
                             succeededList.Add(v);
                         }
-
                     }
-                   
                 }
             }
-            foreach (string error in errors)
-            {
-                MessageBox.Show(error);
-                //ModernDialog.ShowMessage("学号为:["+failedNum+"]的志愿者添加失败!\n"+failedNum,"错误信息",MessageBoxButton.OK);
-            }
+            string errorstring = string.Join("\n",errors);
+            if(errorstring!="")
+                MessageBox.Show(errorstring);
             foreach(csvItemViewModel vm in succeededList)
             {
                 csvList.Remove(vm);
@@ -144,16 +134,12 @@ namespace VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch
                 MessageBox.Show("最终，共往项目中添加:" + succeededList.Count + "位志愿者.\n现在显示的是没有选择的志愿者跟添加失败的志愿者.\n若不需要添加，请关闭该窗口.", "添加成功", MessageBoxButton.OK);
                 csvGrid.ItemsSource = null;
                 csvGrid.ItemsSource = csvList;
-                
             }
             else
             {
                 MessageBox.Show("最终，共往项目中添加: " + succeededList.Count + "位志愿者.\n所有列表中的志愿者已经添加完毕.");
-
                 fatherWindow.Close();
             }
-            
-            
         }
 
         private void csvGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -127,5 +127,13 @@ namespace VolunteerDatabase.Desktop
 
         public static event LogOutDelegate LogOutEvent;
 
+
+        private void password_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                login_btn_Click(this, new RoutedEventArgs());
+            }
+        }
     }
 }
