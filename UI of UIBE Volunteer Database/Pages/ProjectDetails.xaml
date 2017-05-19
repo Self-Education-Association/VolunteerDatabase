@@ -4,104 +4,119 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+        xmlns:lib="clr-namespace:VolunteerDatabase.Desktop.Resource"
         mc:Ignorable="d"
-        Title="项目详情" Height="auto" Width="auto">
+        Title="项目详情" Height="760" Width="auto">
     <Grid Style="{StaticResource ContentRoot}">
-        <ScrollViewer>
-            <StackPanel MinWidth="200">
-                <!--<Label x:Name="label1" Content="组织" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="40"/>
-                <TextBlock x:Name="org"/>-->
-                <Label Content="地点" HorizontalAlignment="Left" Height="20" Width="50"/>
-                <TextBlock x:Name="project_place"/>
-                <Label Content="编号" HorizontalAlignment="Left" Height="20" Width="50"></Label>
-                <TextBlock x:Name="project_id"/>
-                <Label Content="项目人数/最大人数" HorizontalAlignment="Left" Height="20" Width="100"/>
-                <TextBlock x:Name="project_accomodation"/>
-                <Label Content="开始时间" HorizontalAlignment="Left" Height="20" Width="50"/>
-                <TextBlock x:Name="project_time"/>
-                <Label Content="状态" HorizontalAlignment="Left" Height="20" Width="50"/>
-                <TextBlock x:Name="project_status"/>
-                <Label Content="负责人" HorizontalAlignment="Left" Height="20" Width="60"/>
-                <DataGrid x:Name="project_manager_list" AutoGenerateColumns="False">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="姓名" Binding="{Binding Name}"/>
-                        <DataGridTextColumn Header="学号" Binding="{Binding StudentNum}"/>
-                        <DataGridTextColumn Header="联系方式" Binding="{Binding Mobile}"/>
-                        <DataGridTextColumn Header="宿舍" Binding="{Binding Room}"/>
-                        <DataGridTemplateColumn Header="删除">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <mui:ModernButton x:Name="deleteprojectmanager_btn" Click="deleteprojectmanager_btn_Click"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
-                <Label Content="志愿者" HorizontalAlignment="Left" Height="20" Width="60"/>
-                <DataGrid x:Name="volunteer_list" AutoGenerateColumns="False">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="姓名" Binding="{Binding Name}"/>
-                        <DataGridTextColumn Header="学号" Binding="{Binding StudentNum}"/>
-                        <DataGridTextColumn Header="联系方式" Binding="{Binding Mobile}"/>
-                        <DataGridTextColumn Header="技能" Binding="{Binding Skill}"/>
-                        <DataGridTextColumn Header="综合评分" Binding="{Binding AvgScore}"/>
-                        <!--<DataGridTemplateColumn Header="守时情况">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBox x:Name="shoushiqingkuang" LostFocus="shoushiqingkuang_LostFocus"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
+        <ScrollViewer Margin="0,0,0,-18.5" VerticalAlignment="Top">
+            <StackPanel Height="auto">
+                <Canvas x:Name="BasicInfo" Height="151">
+                    <!--<Label x:Name="label1" Content="组织" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="40"/>
+                    <TextBlock x:Name="org"/>-->
+                    <Label  Canvas.Left="12" FontWeight="Bold" FontSize="18" Content="基本信息" />
+                    <Label Content="地点" HorizontalAlignment="Left" Height="20" Width="50" Canvas.Left="69" Canvas.Top="112"/>
+                    <TextBlock x:Name="project_place" Canvas.Left="100" Canvas.Top="112"/>
+                    <Label Content="编号" HorizontalAlignment="Left" Height="20" Width="50" Canvas.Left="69" Canvas.Top="40"/>
+                    <TextBlock x:Name="project_id" Canvas.Left="100" Canvas.Top="40"/>
+                    <Label Content="项目人数/最大人数" HorizontalAlignment="Left" Height="20" Width="100" Canvas.Left="214" Canvas.Top="78"/>
+                    <TextBlock x:Name="project_accomodation" Canvas.Left="347" Canvas.Top="78"/>
+                    <Label Content="开始时间" HorizontalAlignment="Left" Height="20" Width="50" Canvas.Left="45" Canvas.Top="78"/>
+                    <TextBlock x:Name="project_time" Canvas.Left="100" Canvas.Top="78"/>
+                    <Label Content="状态" HorizontalAlignment="Left" Height="20" Width="50" Canvas.Left="292" Canvas.Top="40"/>
+                    <TextBlock x:Name="project_status" Canvas.Left="347" Canvas.Top="40"/>
+                </Canvas>
+                <Canvas x:Name="Managers" Height="200">
+                    <Label Content="项目管理者" HorizontalAlignment="Left" Height="26" Width="101" Canvas.Left="8" Canvas.Top="22" FontWeight="Bold" FontSize="18"/>
+                    <TextBox x:Name="AddManager" KeyDown="AddManager_KeyDown" MaxLength="9" Width="120" HorizontalAlignment="Right" Canvas.Left="194" Canvas.Top="25"/>
+                    <mui:ModernButton IconData="{StaticResource AddPeople}" x:Name="AddManager_btn" Content="输入学号添加管理者" HorizontalAlignment="Right" Click="AddManager_btn_Click" Canvas.Left="333" Canvas.Top="22"/>
+                    <DataGrid x:Name="project_manager_list" AutoGenerateColumns="False" Canvas.Left="11" Canvas.Top="62">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="姓名" Binding="{Binding Name}"/>
+                            <DataGridTextColumn Header="学号" Binding="{Binding StudentNum}"/>
+                            <DataGridTextColumn Header="联系方式" Binding="{Binding Mobile}"/>
+                            <DataGridTextColumn Header="宿舍" Binding="{Binding Room}"/>
+                            <DataGridTemplateColumn Header="删除">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <mui:ModernButton IconData="{StaticResource DeletePeople}" x:Name="deleteprojectmanager_btn" Click="deleteprojectmanager_btn_Click"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Canvas>
+                <Canvas x:Name="Volunteers" Height="300">
+                    <Label Content="志愿者" HorizontalAlignment="Left" Height="28" Width="60" Canvas.Left="13" Canvas.Top="15" FontSize="18" FontWeight="Bold"/>
+                    <TextBox x:Name="AddVolunteer" KeyDown="AddVolunteer_KeyDown" MaxLength="9" Width="120" HorizontalAlignment="Right" Canvas.Left="188" Canvas.Top="16"/>
+                    <mui:ModernButton IconData="{StaticResource AddPeople}" x:Name="AddVolunteer_btn" Content="输入学号添加志愿者" HorizontalAlignment="Right" Click="AddVolunteer_btn_Click" Canvas.Left="336" Canvas.Top="15"/>
+                    <DataGrid x:Name="volunteer_list" AutoGenerateColumns="False" Canvas.Left="13" Canvas.Top="57" IsReadOnly="True" ItemsSource="{Binding Path=ItemsSource,ElementName=dataPager}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="姓名" Binding="{Binding Name}"/>
+                            <DataGridTextColumn Header="学号" Binding="{Binding StudentNum}"/>
+                            <DataGridTextColumn Header="联系方式" Binding="{Binding Mobile}"/>
+                            <DataGridTextColumn Header="技能" Binding="{Binding Skill}"/>
+                            <DataGridTextColumn Header="综合评分" Binding="{Binding AvgScore}"/>
+                            <!--<DataGridTemplateColumn Header="守时情况">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBox x:Name="shoushiqingkuang" LostFocus="shoushiqingkuang_LostFocus"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                         
-                        <DataGridTemplateColumn Header="服务态度">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBox x:Name="fuwutaidu" LostFocus="fuwutaidu_LostFocus"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Header="服务态度">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBox x:Name="fuwutaidu" LostFocus="fuwutaidu_LostFocus"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
 
-                        <DataGridTemplateColumn Header="通信情况">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBox x:Name="tongxinqingkuang" LostFocus="tongxinqingkuang_LostFocus"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>-->
+                                <DataGridTemplateColumn Header="通信情况">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBox x:Name="tongxinqingkuang" LostFocus="tongxinqingkuang_LostFocus"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>-->
 
-                        <DataGridTemplateColumn>
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button x:Name="rate_btn_click" Click="rate_btn_Click" Content="点击评分"></Button>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTextColumn Header="黑名单" Binding="{Binding BlaclistCondition}"/>
-                        <DataGridTemplateColumn>
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button x:Name="BlacklistDetails_btn" Content="黑名单详情"></Button>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="删除">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <mui:ModernButton x:Name="deletevolunteer_btn" Click="deletevolunteer_btn_Click"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
-                <!--<Label Content="添加管理者" HorizontalAlignment="Left" Height="20" Width="60"/>-->
-                <TextBox x:Name="AddManager" KeyDown="AddManager_KeyDown" MaxLength="9" Width="120" HorizontalAlignment="Right"/>
-                <mui:ModernButton x:Name="AddManager_btn" Content="输入学号添加管理者" HorizontalAlignment="Right" Click="AddManager_btn_Click"/>
-                <TextBox x:Name="AddVolunteer" KeyDown="AddVolunteer_KeyDown" MaxLength="9" Width="120" HorizontalAlignment="Right"/>
-                <mui:ModernButton x:Name="AddVolunteer_btn" Content="输入学号添加志愿者" HorizontalAlignment="Right" Click="AddVolunteer_btn_Click"/>
-                <mui:ModernButton x:Name="piliang" Content="批量添加志愿者" Click="piliang_Click" />
-                <mui:ModernButton x:Name="saveFile" Click="saveFile_Click">点击获取模板</mui:ModernButton>
-                <mui:ModernButton x:Name="endproject" Content="结项" Click="endproject_Click"/>
-                <mui:ModernButton x:Name="deleteproject_btn" Content="删除项目" Click="deleteproject_btn_Click"/>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button x:Name="rate_btn_click" Click="rate_btn_Click" Content="点击评分"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="黑名单" Binding="{Binding BlaclistCondition}"/>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button x:Name="BlacklistDetails_btn" Click="BlacklistDetails_btn_Click" Content="黑名单详情"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="删除">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <mui:ModernButton IconData="{StaticResource DeletePeople}" x:Name="deletevolunteer_btn" Click="deletevolunteer_btn_Click"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <!--<lib:DataPager Grid.Row="1" x:Name="dataPager" PageSizeList="10,20,30"
+                       PageChanged="dataPager_PageChanged" />-->
+                </Canvas>
+
+                <Canvas x:Name="Functions" Height="50">
+                    <!--<Label Content="添加管理者" HorizontalAlignment="Left" Height="20" Width="60"/>-->
+
+
+                    <mui:ModernButton IconData="{StaticResource AddInBatch}" x:Name="piliang" Content="批量添加志愿者" Click="piliang_Click" Canvas.Left="10" Canvas.Top="10" />
+                    <mui:ModernButton IconData="{StaticResource DownLoad}" x:Name="saveFile" Click="saveFile_Click" Canvas.Left="173" Canvas.Top="10" Content="点击获取导入模板"/>
+                    <mui:ModernButton IconData="{StaticResource Finish}" x:Name="endproject" Content="结项" Click="endproject_Click" Canvas.Left="365" Canvas.Top="10"/>
+                    <mui:ModernButton IconData="{StaticResource Cancel}" x:Name="deleteproject_btn" Content="删除项目" Click="deleteproject_btn_Click" Canvas.Left="493" Canvas.Top="10"/>
+                </Canvas>
             </StackPanel>
         </ScrollViewer>
     </Grid>

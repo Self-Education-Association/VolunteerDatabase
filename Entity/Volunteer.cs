@@ -31,7 +31,7 @@ namespace VolunteerDatabase.Entity
 
         public string BlaclistCondition {
                             get {
-                            if (BlackListRecords.Exists(o => o.Status == BlackListRecordStatus.Enabled))
+                            if (BlackListRecords!=null&&BlackListRecords.Exists(o => o.Status == BlackListRecordStatus.Enabled))
                                             return "正在黑名单中";
                                             else return "当前无黑名单"; }
                                 }

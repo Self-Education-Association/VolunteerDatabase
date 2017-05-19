@@ -133,11 +133,11 @@ namespace VolunteerDatabase.Helper
             }
             if(IsInProject(pro,Volunteer))
             {
-                return ProgressResult.Error("学号为[" + Volunteer.StudentNum + "] 姓名为[" + Volunteer.Name + "]的志愿者已经存在于该项目中.");
+                return ProgressResult.Error("学号为[" + Volunteer.StudentNum + "]姓名为[" + Volunteer.Name + "]的志愿者已经存在于该项目中.");
             }
             if (pro.Maximum <= pro.Volunteers?.Count)
             {
-                return ProgressResult.Error("已达项目人数上限，添加失败");
+                return ProgressResult.Error(ProgressResult.ProgressErrorEnum.BeyondMaxium);
             }
             lock (database)
             {

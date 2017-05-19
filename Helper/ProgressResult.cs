@@ -30,6 +30,18 @@ namespace VolunteerDatabase.Helper
             return result;
         }
 
+        public static ProgressResult Error(ProgressErrorEnum error)
+        {
+            if(error==ProgressErrorEnum.BeyondMaxium)
+            {
+                return Error("已达项目人数上限，添加失败");
+            }
+            else
+            {
+                return Error();
+            }
+        }
+
         public static ProgressResult Success()
         {
             var result = new ProgressResult
@@ -41,5 +53,10 @@ namespace VolunteerDatabase.Helper
         }
 
         private ProgressResult() { }
+
+        public enum ProgressErrorEnum
+        {
+            BeyondMaxium
+        }
     }
 }

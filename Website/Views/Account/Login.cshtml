@@ -1,0 +1,33 @@
+﻿@model Website.Models.ViewModels.LoginViewModel
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", @autocomplete = "on" }))
+{
+    @Html.AntiForgeryToken()
+    <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group" style="margin:auto;width:70%;">
+                    <a class="login-field-icon fui-mail col-xs-12" for="Email">邮箱</a>
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control login-filed", @placeholder = "请输入邮箱", @id = "Email", @style = "width:100%;" })
+                    <div class="col-xs-12">@Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })</div>
+                </div>
+                <div class="form-group" style="margin:auto;width:70%;">
+                    <div>
+                        <a class="login-field-icon fui-lock col-xs-12" for="Password">密码</a>
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control login-filed col-xs-10", @placeholder = "请输入密码", @id = "Password" })
+                        <div class="col-xs-12">@Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })</div>
+                    </div>
+                </div>
+                <div class="form-group" style="margin:auto;width:70%;padding-bottom:30px;">
+                    <label class="remember" for="RememberMe">
+                        @Html.CheckBoxFor(m => m.RememberMe)
+                        记住我？
+                    </label>
+                    <button type="submit" value="登录" class="btn btn-primary btn-lg btn-block">登录</button>
+                </div>
+
+}
+
