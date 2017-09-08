@@ -9,14 +9,15 @@
     <Grid Style="{StaticResource ContentRoot}">
         <ScrollViewer>
             <Canvas MinWidth="200">
-                <TextBlock Name="Status" Text="项目状态" Style="{StaticResource Heading2}" />
-                <ComboBox x:Name="StatusSwitch"  Width="100" Height="20" HorizontalAlignment="Left" FontSize="12" Canvas.Top="27" SelectedIndex="0" SelectionChanged="StatusSwitch_SelectionChanged">
+                <TextBlock Name="Status" Text="项目管理" Style="{StaticResource Heading2}" />
+                <Label Content="项目状态:" Canvas.Left="10" Canvas.Top="32" FontSize="12" Width="50" Height="20"/>
+                <ComboBox x:Name="StatusSwitch"  Width="100" Height="20" HorizontalAlignment="Left" FontSize="12" Canvas.Top="30" SelectedIndex="0" SelectionChanged="StatusSwitch_SelectionChanged" Canvas.Left="69">
                     <ComboBoxItem Content="全部"></ComboBoxItem>
                     <ComboBoxItem Content="进行中"></ComboBoxItem>
                     <ComboBoxItem Content="已完成"></ComboBoxItem>
                 </ComboBox>
                 <!--<Button x:Name="WhiteDivide" />-->
-                <DataGrid x:Name="project_list" AutoGenerateColumns="False" Width="560" Height="auto"
+                <DataGrid x:Name="project_list" AutoGenerateColumns="False" Width="578" Height="auto"
                                   ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Canvas.Top="55" IsReadOnly="True">
                     <!--<DataGrid.RowStyle>
                         <Style TargetType="DataGridRow">
@@ -37,11 +38,11 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>-->
                         </DataGridTemplateColumn>
-                        <DataGridTextColumn Header="项目编号" Binding="{Binding Id}" />
-                        <DataGridTextColumn Header="名称" Binding="{Binding Name}" />
-                        <DataGridTextColumn Header="地点" Binding="{Binding Place}" />
-                        <DataGridTextColumn Header="时间" Binding="{Binding Time,StringFormat='{}{0:yyyy年MM月dd日}',ConverterCulture=zh-CN}" />
-                        <DataGridTextColumn Header="创建时间" Binding="{Binding CreatTime,StringFormat='{}{0:yyyy年MM月dd日}',ConverterCulture=zh-CN}" />
+                        <DataGridTextColumn Width="70" Header="编号" Binding="{Binding Id}" />
+                        <DataGridTextColumn Width="100" Header="名称" Binding="{Binding Name}" />
+                        <DataGridTextColumn Width="70" Header="地点" Binding="{Binding Place}" />
+                        <DataGridTextColumn Width="110"  Header="时间" Binding="{Binding Time,StringFormat='{}{0:yyyy年MM月dd日}',ConverterCulture=zh-CN}" />
+                        <DataGridTextColumn Width="110" Header="创建时间" Binding="{Binding CreatTime,StringFormat='{}{0:yyyy年MM月dd日}',ConverterCulture=zh-CN}" />
                         <DataGridTemplateColumn Header="项目详情">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>

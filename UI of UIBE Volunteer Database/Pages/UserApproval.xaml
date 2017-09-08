@@ -11,7 +11,7 @@
             <StackPanel MinWidth="200">
                 <TextBlock Text="用户审批" Style="{StaticResource Heading2}"/>
                 <Button x:Name="addorganization_btn" Visibility="Collapsed" Click="addorganization_btn_Click"/>
-                <DataGrid x:Name="approval_list" AutoGenerateColumns="False">
+                <DataGrid x:Name="approval_list" AutoGenerateColumns="False" IsReadOnly="True">
                     <DataGrid.Columns>
                         <DataGridTemplateColumn>
                             <DataGridTemplateColumn.CellTemplate>

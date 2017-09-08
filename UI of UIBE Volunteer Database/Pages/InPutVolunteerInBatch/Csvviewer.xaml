@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mui="http://firstfloorsoftware.com/ModernUI"
              mc:Ignorable="d" 
              d:DesignHeight="650" d:DesignWidth="470">
 
@@ -11,7 +12,7 @@
             <TextBlock Text="成功读取的志愿者列表" Canvas.Left="12" Style="{StaticResource Heading2}"/>
             <ScrollViewer Canvas.Top="20">
                 <DataGrid x:Name="csvGrid" Canvas.Top="30" Canvas.Left="35" LoadingRow="csvGrid_LoadingRow" AutoGenerateColumns="False" IsReadOnly="True"  MouseLeftButtonUp="csvGrid_MouseLeftButtonUp" >
-                    
+
                     <DataGrid.Columns>
 
 
@@ -24,12 +25,16 @@
                         <DataGridTextColumn Header="综合评分" Binding="{Binding AvgScore}"/>
                     </DataGrid.Columns>
                 </DataGrid>
+
             </ScrollViewer>
+            <Label Name="CddPge" FontSize="15" Content="0/0"  Canvas.Left="226" Canvas.Top="499"></Label>
+            <mui:ModernButton IconData="{StaticResource Page-Left}" x:Name="CddPgePrevious" Canvas.Left="171" Canvas.Top="497" Click="CddPgePrevious_Click" />
+            <mui:ModernButton IconData="{StaticResource Page-Right}" x:Name="CddPgeNext" Canvas.Left="277" Canvas.Top="497" Click="CddPgeNext_Click"  />
             <Button Name="SelectAll" Content="全选/全不选" Canvas.Bottom="20" Canvas.Left="30" Click="SelectAll_Click" />
             <Button Name="SelectNotSelected" Content="反选" Canvas.Bottom="20" Canvas.Left="140" Click="SelectNotSelected_Click" />
             <Button x:Name="Confirm" Content="确认名单" Canvas.Bottom="20" Canvas.Right="20" Click="Confirm_Click" />
             <TextBlock x:Name="Limit" Text="{Binding Counts}" Canvas.Left="198" Canvas.Top="10"/>
         </Canvas>
-        
+
     </Grid>
 </UserControl>

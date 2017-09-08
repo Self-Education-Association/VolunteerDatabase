@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using VolunteerDatabase.Entity;
 using VolunteerDatabase.Interface;
 using System.Data.Entity.Infrastructure;
+
 namespace VolunteerDatabase.Helper
 {
     public class ProjectProgressHelper
@@ -108,18 +109,14 @@ namespace VolunteerDatabase.Helper
         }*/ 
         
 
-        [AppAuthorize(AppRoleEnum.Administrator)]
+        /*[AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
         public List<Volunteer> FindSortedVolunteersByProject(Project project)
         {
-            List<Volunteer> Volunteers = new List<Volunteer>();
-            foreach (var item in project.Volunteers)
-            {
-                Volunteers.Add(item);
-            }
+            List<Volunteer> Volunteers = project.Volunteers;
             Volunteers.Sort(); //根据Score平均值降序排列
             return Volunteers;
-        }
+        }*/
 
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
         public ProgressResult SingleVolunteerInputById(int num, Project pro)
@@ -163,11 +160,10 @@ namespace VolunteerDatabase.Helper
             ProgressResult result;
             if (!Pro.Volunteers.Contains(Vol))
             {
-                return ProgressResult.Error("志愿者不在该项目中");
+                return ProgressResult.Error("志愿者不在该项目中.");
             }
             else
-            lock (database)
-            {
+            { 
                 Pro.Volunteers.Remove(Vol);
                 Save();
             }
@@ -176,7 +172,7 @@ namespace VolunteerDatabase.Helper
         }
 
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public ProgressResult ScoringDefaultForVolunteers(Project Pro,double Score)
+        public ProgressResult ScoringDefaultForVolunteers(Project Pro,CreditRecord.CreditScore score)
         {
             ProgressResult result;
             Pro = database.Projects.SingleOrDefault(p => p.Id == Pro.Id);
@@ -184,7 +180,8 @@ namespace VolunteerDatabase.Helper
             {
                 return ProgressResult.Error("数据库中不存在该项目！");
             }
-            var Volunteers = database.Volunteers.Where(o => o.Project.Count() > 0).ToList();
+            List<Volunteer> selectedvolunteers = Pro.Volunteers;
+            /*var Volunteers = database.Volunteers.Where(o => o.Project.Count() > 0).ToList();
             List<Volunteer> selectedvolunteers = new List<Volunteer>();
             foreach(var item in Volunteers)
             {
@@ -192,50 +189,60 @@ namespace VolunteerDatabase.Helper
                 {
                     selectedvolunteers.Add(item);
                 }
-            }
-            lock (database)
+            }*/
+            foreach (var item in selectedvolunteers)
             {
-                foreach (var item in selectedvolunteers)
+                if (!item.CreditRecords.Exists(o=>o.Project.Id==Pro.Id))
                 {
-                    if (!item.CreditRecords.Exists(o=>o.Project.Id==Pro.Id))
-                    {
-                        item.Score += Score;
-                        CreditRecord cr = new CreditRecord();
-                        cr.Participant = item;
-                        cr.Project = Pro;
-                        cr.Score = Score;
-                        item.CreditRecords.Add(cr);
-                    }                 
-                }
-                Pro.ScoreCondition = ProjectScoreCondition.Scored;
-                Save();
+                    item.AddCredit(score);
+                    CreditRecord cr = new CreditRecord();
+                    cr.Participant = item;
+                    cr.Project = Pro;
+                    cr.Score = score;
+                    item.CreditRecords.Add(cr);
+                }                 
             }
+            Pro.ScoreCondition = ProjectScoreCondition.Scored;
+            Save();
             result = ProgressResult.Success();
             return result;
         }
-        public ProgressResult AddScore(Volunteer vol, Project pro,double score)
+        public ProgressResult AddScore(Volunteer vol, Project pro, CreditRecord.CreditScore score)
         {
-            if(vol!=null&&pro!=null&&score<=5.0)
+            if(vol!=null&&pro!=null&&score.PncScore<=5.0&&score.SrvScore<=5.0&&score.CmmScore<=5.0)
             {
-                CreditRecord cr = new CreditRecord();
-                cr.Organization = pro.Organization;
-                cr.Participant = vol;
-                cr.Score = score;
-                vol.CreditRecords.Add(cr);
-                vol.Score += score;
-                return  ProgressResult.Success();
+                if(vol.CreditRecords.FirstOrDefault(o=>o.Project.Id==pro.Id)!=null)
+                {
+                    return EditScore(vol, pro, score);
+                }
+                else
+                {
+                    CreditRecord cr = new CreditRecord
+                    {
+                        UID = Guid.NewGuid(),
+                        Project = pro,
+                        Participant = vol,
+                        Score = score
+                    };
+                    database.CreditRecords.Add(cr);
+                    //pro.CreditRecords.Add(cr);
+                    //vol.CreditRecords.Add(cr);
+                    vol.AddCredit(score);
+                    Save();
+                    return ProgressResult.Success();
+                }
             }
             else
             {
-                return ProgressResult.Error("评分失败");
+                return ProgressResult.Error("评分失败，项目或志愿者不存在.");
             }
         }
 
-        [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public ProgressResult ScoreSingleVolunteer(double Score, Volunteer Vol)
+        /*[AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
+        public ProgressResult ScoreSingleVolunteer(CreditRecord.CreditScore score, Volunteer Vol)
         {
             ProgressResult result;
-            if (Score < 1 || Score > 5)
+            if (score. < 1 || Score > 5)
             {
               return  ProgressResult.Error("分数超出合法范围");
             }
@@ -243,7 +250,8 @@ namespace VolunteerDatabase.Helper
             Save();
             result = ProgressResult.Success();
             return result;
-        }
+        }*/
+        //换用CreditRecord 停用原有Score方法。
 
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
         public ProgressResult FinishProject(Project Pro)
@@ -264,7 +272,7 @@ namespace VolunteerDatabase.Helper
         }
 
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public ProgressResult EditScore(Volunteer volunteer,Project project,double score)
+        public ProgressResult EditScore(Volunteer volunteer,Project project, CreditRecord.CreditScore score)
         {
             CreditRecord crecord = database.CreditRecords.SingleOrDefault(r => r.Participant.UID == volunteer.UID && r.Project.Id == project.Id);
             if(crecord == null)
@@ -275,8 +283,8 @@ namespace VolunteerDatabase.Helper
             {
                 try
                 {
-                    volunteer.Score -= crecord.Score;
-                    volunteer.Score += score;
+                    volunteer.DeleteCredit(crecord.Score);
+                    volunteer.AddCredit(score);
                     crecord.Score = score;
                     Save();
                     return ProgressResult.Success();
@@ -289,7 +297,7 @@ namespace VolunteerDatabase.Helper
         }
 
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public ProgressResult DeleteCreditRecord(CreditRecord crecord)
+        public ProgressResult DeleteCreditRecord(CreditRecord crecord)//重灾区
         {
             if(crecord == null)
             {
@@ -299,7 +307,7 @@ namespace VolunteerDatabase.Helper
             {
                 try
                 {
-                    database.CreditRecords.Remove(crecord);//多对多的中间表，应该可以直接删除.
+                    database.CreditRecords.Remove(crecord);
                     Save();
                     return ProgressResult.Success();
                 }

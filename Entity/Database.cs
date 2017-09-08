@@ -7,7 +7,7 @@
     public class Database : DbContext
     {
         public Database()
-            : base(@"name=Database")
+        : base(@"Name=Database")
         {
         }
 
@@ -28,6 +28,7 @@
             modelBuilder.Entity<Volunteer>().HasMany(v => v.Project).WithMany(p => p.Volunteers);
             modelBuilder.Entity<Volunteer>().HasMany(v => v.CreditRecords).WithRequired(c => c.Participant).WillCascadeOnDelete(true);
 
+            modelBuilder.Entity<CreditRecord>().HasKey(c=>c.UID).Property(c=>c.UID).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 
             modelBuilder.Entity<LogRecord>().HasRequired(l => l.Adder).WithMany(a => a.AddedLogRecords).WillCascadeOnDelete(true);
             modelBuilder.Entity<LogRecord>().HasOptional(l => l.TargetAppUser).WithMany(t => t.TargetedBy);

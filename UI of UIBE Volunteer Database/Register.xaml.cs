@@ -74,10 +74,9 @@ namespace VolunteerDatabase.Desktop
                 {
                     string passWord = passwordBox.Password;
                     OrganizationEnum org = ih.Matching(comboBox.Text);
-                        
-                   
-                    AppUserStatus status = AppUserStatus.NotApproved;
-                    AppRoleEnum role = AppRoleEnum.OrgnizationMember;
+                    //创建第一个用户
+                    AppUserStatus status = AppUserStatus.Enabled;
+                    AppRoleEnum role = AppRoleEnum.Administrator;
                     if(isAdministrator)
                     {
                         status = AppUserStatus.Enabled;
