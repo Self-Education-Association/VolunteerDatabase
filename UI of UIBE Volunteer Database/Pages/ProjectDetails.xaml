@@ -13,7 +13,7 @@
                 <Canvas x:Name="BasicInfo" Height="151">
                     <!--<Label x:Name="label1" Content="组织" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="40"/>
                     <TextBlock x:Name="org"/>-->
-                    <Label  Canvas.Left="12" FontWeight="Bold" FontSize="18" Content="基本信息" />
+                    <Label  Canvas.Left="12" FontWeight="Bold" FontSize="18" Content="项目基本信息" />
                     <Label Content="地点" HorizontalAlignment="Left" Height="20" Width="50" Canvas.Left="69" Canvas.Top="112"/>
                     <TextBlock x:Name="project_place" Canvas.Left="100" Canvas.Top="112"/>
                     <Label Content="编号" HorizontalAlignment="Left" Height="20" Width="50" Canvas.Left="69" Canvas.Top="40"/>
@@ -29,7 +29,7 @@
                     <Label Content="项目管理者" HorizontalAlignment="Left" Height="26" Width="101" Canvas.Left="8" Canvas.Top="22" FontWeight="Bold" FontSize="18"/>
                     <TextBox x:Name="AddManager" KeyDown="AddManager_KeyDown" MaxLength="9" Width="120" HorizontalAlignment="Right" Canvas.Left="194" Canvas.Top="25"/>
                     <mui:ModernButton IconData="{StaticResource AddPeople}" x:Name="AddManager_btn" Content="输入学号添加管理者" HorizontalAlignment="Right" Click="AddManager_btn_Click" Canvas.Left="333" Canvas.Top="22"/>
-                    <DataGrid x:Name="project_manager_list" AutoGenerateColumns="False" Canvas.Left="11" Canvas.Top="62">
+                    <DataGrid MaxHeight="110" x:Name="project_manager_list" IsReadOnly="True" AutoGenerateColumns="False" Canvas.Left="11" Canvas.Top="62" ItemsSource="{Binding Path=ItemSource}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="姓名" Binding="{Binding Name}"/>
                             <DataGridTextColumn Header="学号" Binding="{Binding StudentNum}"/>
@@ -44,6 +44,10 @@
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
+                    <Label x:Name="LblMngListEpt" Visibility="Hidden" Foreground="DarkGray" Content="这个项目还没有管理者。" Canvas.Left="266" Canvas.Top="113"></Label>
+                    <Label Name="MngPge" Canvas.Left="342" Canvas.Top="177" Content="0/0" FontSize="15" ></Label>
+                    <mui:ModernButton IconData="{StaticResource Page-Left}" x:Name="MngPgePrevious" Canvas.Left="284" Canvas.Top="175" Click="MngPgePrevious_Click" />
+                    <mui:ModernButton IconData="{StaticResource Page-Right}" x:Name="MngPgeNext" Canvas.Left="390" Canvas.Top="175" Click="MngPgeNext_Click" />
                 </Canvas>
                 <Canvas x:Name="Volunteers" Height="300">
                     <Label Content="志愿者" HorizontalAlignment="Left" Height="28" Width="60" Canvas.Left="13" Canvas.Top="15" FontSize="18" FontWeight="Bold"/>
@@ -83,7 +87,7 @@
                             <DataGridTemplateColumn>
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button x:Name="rate_btn_click" Click="rate_btn_Click" Content="点击评分"/>
+                                        <Button x:Name="BtnRate" Content="评分" Click="BtnRate_Click"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
@@ -104,14 +108,15 @@
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
+                    <Label Name="VltPge" Content="0/0" FontSize="15" Canvas.Left="339" Canvas.Top="278"></Label>
+                    <mui:ModernButton IconData="{StaticResource Page-Left}" x:Name="VltPgePrevious" Canvas.Left="284" Canvas.Top="276" Click="VltPgePrevious_Click" />
+                    <mui:ModernButton IconData="{StaticResource Page-Right}" x:Name="VltPgeNext" Canvas.Left="390" Canvas.Top="276" Click="VltPgeNext_Click" />
                     <!--<lib:DataPager Grid.Row="1" x:Name="dataPager" PageSizeList="10,20,30"
                        PageChanged="dataPager_PageChanged" />-->
+                    <Label x:Name="LblVltListEpt" Visibility="Hidden" Foreground="DarkGray" Content="这个项目还没有志愿者。" Canvas.Left="267" Canvas.Top="162"></Label>
                 </Canvas>
 
                 <Canvas x:Name="Functions" Height="50">
-                    <!--<Label Content="添加管理者" HorizontalAlignment="Left" Height="20" Width="60"/>-->
-
-
                     <mui:ModernButton IconData="{StaticResource AddInBatch}" x:Name="piliang" Content="批量添加志愿者" Click="piliang_Click" Canvas.Left="10" Canvas.Top="10" />
                     <mui:ModernButton IconData="{StaticResource DownLoad}" x:Name="saveFile" Click="saveFile_Click" Canvas.Left="173" Canvas.Top="10" Content="点击获取导入模板"/>
                     <mui:ModernButton IconData="{StaticResource Finish}" x:Name="endproject" Content="结项" Click="endproject_Click" Canvas.Left="365" Canvas.Top="10"/>

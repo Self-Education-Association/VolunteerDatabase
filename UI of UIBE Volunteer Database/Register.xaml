@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mui="http://firstfloorsoftware.com/ModernUI"
         mc:Ignorable="d"
-        Height="439.378" Width="305.699" ResizeMode="NoResize" Title="注册">
+        Height="439.378" Width="305.699" Closing="Window_Closing" ResizeMode="NoResize" Title="注册">
     <Grid Style="{StaticResource ContentRoot}">
         <ScrollViewer>
             <Canvas>

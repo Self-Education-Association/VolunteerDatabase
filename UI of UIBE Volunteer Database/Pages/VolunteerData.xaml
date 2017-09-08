@@ -9,13 +9,12 @@
     <Grid Style="{StaticResource ContentRoot}">
         <ScrollViewer>
             <StackPanel MinWidth="200">
-                <!--<TextBox x:Name="search_volunteer" Width="80" Height="25" HorizontalAlignment="Right"/>-->
-                <!--<mui:ModernButton x:Name="search_btn" Content="查找" Width="63" Height="29" HorizontalAlignment="Right" Click="ModernButton_Click"/>-->
-                <TextBlock Text="Volunteer Data" Style="{StaticResource Heading2}" />
-                <TextBox x:Name="studentnum" Width="80" Height="20" HorizontalAlignment="Left" />
-                <mui:ModernButton IconData="{StaticResource Search}" x:Name="searchbyid_btn" Content="点我按学号查找志愿者信息" Click="searchbyid_btn_Click"/>
-                <DataGrid x:Name="Volunteerdata" IsReadOnly="True">
-                    <DataGrid AutoGenerateColumns="False"></DataGrid>
+                <TextBlock Text="志愿者查询" Style="{StaticResource Heading2}" />
+                <Canvas MinHeight="25">
+                    <TextBox x:Name="studentnum" Width="100" Height="20" HorizontalAlignment="Left" Canvas.Right="120"/>
+                    <mui:ModernButton IconData="{StaticResource Search}" x:Name="searchbyid_btn" Content="输入学号查询" Click="searchbyid_btn_Click" Canvas.Right="0"/>
+                </Canvas>
+                <DataGrid x:Name="Volunteerdata" IsReadOnly="True" AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="姓名" Binding="{Binding Name}"/>
                         <DataGridTextColumn Header="电话" Binding="{Binding Mobile}"/>
@@ -38,7 +37,6 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>

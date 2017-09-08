@@ -651,7 +651,7 @@ namespace VolunteerDatabase.Helper.Tests
             {
                 Participant = v,
                 Project = pro,
-                Organization = org,
+                //Organization = org,
                 Score = 0
             };
             database.CreditRecords.Add(record);
@@ -714,7 +714,7 @@ namespace VolunteerDatabase.Helper.Tests
             {
                 Participant = v,
                 Project = pro,
-                Organization = org,
+                //Organization = org,
                 Score = 0
             };
             database.CreditRecords.Add(record);

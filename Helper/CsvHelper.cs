@@ -96,16 +96,15 @@ namespace VolunteerDatabase.Helper
                     Volunteer v = vhelper.CreateTempVolunteer(StudentNum, Name, Class, Mobile, Room, Email, Skill);
                     Temp.Add(v);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-                   // throw;
+                    informingMessage.Add("出现错误，"+e.Message);// throw;
                 }
                 
             }
             if (Temp.Count() == 0)
             {
-                informingMessage.Add("导入的表中没有找到志愿者信息,请检查输入格式!");
+                errorList.Add("导入的表中没有找到志愿者信息,请检查输入格式!");
             }
             //if (Temp.Count()>Pro.Maximum)
             //{

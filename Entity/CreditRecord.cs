@@ -10,11 +10,22 @@ namespace VolunteerDatabase.Entity
 {
     public class CreditRecord
     {
-        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public Guid UID { get; set; }
         public Volunteer Participant { get; set; }
+        
         public Project Project { get; set; }
-        public Organization Organization { get; set; }
-        public double Score { get; set; }
+        public Organization Organization { get { return Project.Organization; } }
+        public CreditScore Score { get; set; }
+
+        public struct CreditScore
+        {
+            public int PncScore { get; set; }
+            public int SrvScore { get; set; }
+            public int CmmScore { get; set; }
+            public double AvgScore { get { return Math.Round((PncScore + SrvScore + CmmScore) / 3.0, 2); } }//保留两位小数
+            public int TotalScore { get { return PncScore + SrvScore + CmmScore; } }
+        }
+        
     }
 }

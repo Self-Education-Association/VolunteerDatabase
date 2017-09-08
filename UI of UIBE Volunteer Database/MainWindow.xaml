@@ -7,9 +7,9 @@
         ContentSource="/Pages/MainTab.xaml">
 
     <mui:ModernWindow.MenuLinkGroups>
-        <mui:LinkGroup DisplayName="Volunteer Database"> 
+        <mui:LinkGroup DisplayName="贸大志愿者信息库"> 
             <mui:LinkGroup.Links>
-                <mui:Link DisplayName="main" Source="/Pages/MainTab.xaml"/>
+                <mui:Link DisplayName="主界面" Source="/Pages/MainTab.xaml"/>
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
         <mui:LinkGroup DisplayName="settings" GroupKey="settings">

@@ -18,12 +18,36 @@ namespace VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch
         private InputWindow fatherWindow;
         private Project project;
         private Database database;
+
+        //所有志愿者
         private List<Volunteer> fullList = new List<Volunteer>();
+
+        //有冲突的志愿者
         private List<Volunteer> conflictList = new List<Volunteer>();
+
+        //正常的志愿者
         private List<Volunteer> normalList = new List<Volunteer>();
         private VolunteerHelper vhelper = VolunteerHelper.GetInstance();
+
+        //显示的列表
         private List<csvItemViewModel> itemList;
 
+        //显示部分
+        private int CnfCount { get { return itemList.Count; } }
+        private int CnfPgeIndex { get; set; }
+        private int MaxCnfItems = 18;
+
+        private void ShowCnfGrid()
+        {
+            List<csvItemViewModel> Cnfs = new List<csvItemViewModel>();
+            for (int i = CnfPgeIndex; i <= CnfPgeIndex + MaxCnfItems; i++)
+            {
+                if (i > CnfCount - 1) break;
+                Cnfs.Add(itemList[i]);
+            }
+            CnfPge.Content = string.Format("{0}/{1}", CnfPgeIndex / MaxCnfItems + 1, CnfCount / MaxCnfItems + 1);
+            csvGrid.ItemsSource = Cnfs;
+        }
         public DealWithConflict(Project p, List<Volunteer> fulllist, InputWindow window)//list为完整list
         {
             InitializeComponent();
@@ -40,7 +64,7 @@ namespace VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch
                 }
                 else
                 {
-                    normalList.Add(item);
+                    normalList.Add(vhelper.FindVolunteer(item.StudentNum));
                 }
             }
 
@@ -82,7 +106,7 @@ namespace VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch
                  isOld = false;
                  conflictList = theOldAndNew;
                  csvGrid.ItemsSource = conflictList;*/
-                csvGrid.ItemsSource = itemList;
+                ShowCnfGrid();
             }
         }
 
@@ -178,6 +202,10 @@ namespace VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch
                 {
                     finalList.Add(new csvItemViewModel(v));
                 }
+                foreach (csvItemViewModel v in finalList)
+                {
+                    v.Volunteer = vhelper.FindVolunteer(v.Volunteer.StudentNum);
+                }
                 MessageBox.Show("完成了对志愿者库信息的更新.\n请确认最终要导入的志愿者.");
                 Csvviewer viewer = new Csvviewer(project, finalList, fatherWindow);
                 fatherWindow.Content = viewer;
@@ -233,6 +261,21 @@ namespace VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch
             csvItemViewModel vm = csvGrid.SelectedItem as csvItemViewModel;
             if(vm!=null)
                 vm.Selected = !vm.Selected;
+        }
+        private void CnfPgePrevious_Click(object sender, RoutedEventArgs e)
+        {
+            CnfPgeIndex = (CnfPgeIndex - MaxCnfItems < 0) ? CnfPgeIndex : CnfPgeIndex - MaxCnfItems;
+            if (CnfPgeIndex - MaxCnfItems < 0) CnfPgePrevious.IsEnabled = false;
+            CnfPgeNext.IsEnabled = true;
+            ShowCnfGrid();
+        }
+
+        private void CnfPgeNext_Click(object sender, RoutedEventArgs e)
+        {
+            CnfPgeIndex = (CnfPgeIndex + MaxCnfItems > CnfCount) ? CnfPgeIndex : CnfPgeIndex + MaxCnfItems;
+            if (CnfPgeIndex + MaxCnfItems > CnfCount) CnfPgeNext.IsEnabled = false;
+            CnfPgePrevious.IsEnabled = true;
+            ShowCnfGrid();
         }
     }
 }

@@ -68,6 +68,30 @@
     <Compile Include="Migrations\201703191551394_score.Designer.cs">
       <DependentUpon>201703191551394_score.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708060943060_CreditRecordEdit.cs" />
+    <Compile Include="Migrations\201708060943060_CreditRecordEdit.Designer.cs">
+      <DependentUpon>201708060943060_CreditRecordEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708071457145_AlterCreditRecordKey.cs" />
+    <Compile Include="Migrations\201708071457145_AlterCreditRecordKey.Designer.cs">
+      <DependentUpon>201708071457145_AlterCreditRecordKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708071512545_AlterCreditRecordKey2.cs" />
+    <Compile Include="Migrations\201708071512545_AlterCreditRecordKey2.Designer.cs">
+      <DependentUpon>201708071512545_AlterCreditRecordKey2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708230615002_MoveTo56.cs" />
+    <Compile Include="Migrations\201708230615002_MoveTo56.Designer.cs">
+      <DependentUpon>201708230615002_MoveTo56.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709041522298_CreditScoreModify.cs" />
+    <Compile Include="Migrations\201709041522298_CreditScoreModify.Designer.cs">
+      <DependentUpon>201709041522298_CreditScoreModify.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709041540426_StructToClass.cs" />
+    <Compile Include="Migrations\201709041540426_StructToClass.Designer.cs">
+      <DependentUpon>201709041540426_StructToClass.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Organization.cs" />
     <Compile Include="Project.cs" />
@@ -90,6 +114,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703191551394_score.resx">
       <DependentUpon>201703191551394_score.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708060943060_CreditRecordEdit.resx">
+      <DependentUpon>201708060943060_CreditRecordEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708071457145_AlterCreditRecordKey.resx">
+      <DependentUpon>201708071457145_AlterCreditRecordKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708071512545_AlterCreditRecordKey2.resx">
+      <DependentUpon>201708071512545_AlterCreditRecordKey2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708230615002_MoveTo56.resx">
+      <DependentUpon>201708230615002_MoveTo56.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709041522298_CreditScoreModify.resx">
+      <DependentUpon>201709041522298_CreditScoreModify.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709041540426_StructToClass.resx">
+      <DependentUpon>201709041540426_StructToClass.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
