@@ -91,7 +91,7 @@ namespace VolunteerDatabase.Desktop.Pages
                     {
                         MessageBox.Show("该志愿者本项目的评分已经更改.", "评分成功", MessageBoxButton.OK);
                         FinishScoringEvent?.Invoke();
-                        //this.;
+                        this.Close();
                         
                     }
                     else
@@ -103,6 +103,10 @@ namespace VolunteerDatabase.Desktop.Pages
                 }
             }
             
+        }
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
 
         #region 评分部分
@@ -204,6 +208,8 @@ namespace VolunteerDatabase.Desktop.Pages
                 e.Handled = true;
             }
         }*/
-        #endregion 
+        #endregion
+
+        
     }
 }

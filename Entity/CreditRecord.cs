@@ -15,10 +15,10 @@ namespace VolunteerDatabase.Entity
         public Volunteer Participant { get; set; }
         
         public Project Project { get; set; }
-        public Organization Organization { get { return Project.Organization; } }
+        public Organization Organization { get { return Project.Organization; } } 
         public CreditScore Score { get; set; }
 
-        public struct CreditScore
+        public class CreditScore
         {
             public int PncScore { get; set; }
             public int SrvScore { get; set; }

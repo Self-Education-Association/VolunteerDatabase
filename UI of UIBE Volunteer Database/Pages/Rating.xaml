@@ -12,7 +12,7 @@
         <TextBlock x:Name="ProName" Text="项目：" HorizontalAlignment="Left" Margin="40,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <TextBlock x:Name="VolName" Text="志愿者：" HorizontalAlignment="Left" Margin="40,27,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"/>
         <mui:ModernButton IconData="{StaticResource ResourceKey=Confirm}" x:Name="BtnConfirm" Content="确认" Click="Confirm_Click" HorizontalAlignment="Left" Margin="65,225,0,0" VerticalAlignment="Top" Width="75"/>
-        <mui:ModernButton IconData="{StaticResource ResourceKey=Cancel}" x:Name="BtnCancel" Content="取消" Click="Confirm_Click" HorizontalAlignment="Left" Margin="162,225,0,0" VerticalAlignment="Top" Width="75"/>
+        <mui:ModernButton IconData="{StaticResource ResourceKey=Cancel}" x:Name="BtnCancel" Content="关闭" Click="Cancel_Click" HorizontalAlignment="Left" Margin="162,225,0,0" VerticalAlignment="Top" Width="75"/>
         <TextBlock x:Name="textBlock"  HorizontalAlignment="Left" Margin="40,96,0,0" TextWrapping="Wrap" Text="守时情况评分" VerticalAlignment="Top"/>
         <Grid Margin="125,94,3,110">
             <RadioButton x:Name="PncScore1" HorizontalAlignment="Left" Margin="17,1,0,0" VerticalAlignment="Top" Checked="PncScore1_Checked"/>
