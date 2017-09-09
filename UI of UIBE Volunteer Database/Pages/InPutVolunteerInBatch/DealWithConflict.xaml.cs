@@ -64,7 +64,10 @@ namespace VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch
                 }
                 else
                 {
-                    normalList.Add(vhelper.FindVolunteer(item.StudentNum));
+                    if (vhelper.FindVolunteer(item.StudentNum) == null)
+                        normalList.Add(item);
+                    else
+                        normalList.Add(vhelper.FindVolunteer(item.StudentNum));
                 }
             }
 
@@ -204,7 +207,8 @@ namespace VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch
                 }
                 foreach (csvItemViewModel v in finalList)
                 {
-                    v.Volunteer = vhelper.FindVolunteer(v.Volunteer.StudentNum);
+                    if(vhelper.FindVolunteer(v.StudentNum)!=null)//挂上评分
+                        v.Volunteer = vhelper.FindVolunteer(v.Volunteer.StudentNum);
                 }
                 MessageBox.Show("完成了对志愿者库信息的更新.\n请确认最终要导入的志愿者.");
                 Csvviewer viewer = new Csvviewer(project, finalList, fatherWindow);
