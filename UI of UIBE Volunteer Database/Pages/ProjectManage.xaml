@@ -1,30 +1,31 @@
 ﻿<UserControl x:Class="VolunteerDatabase.Desktop.Pages.ProjectManage"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mui="http://firstfloorsoftware.com/ModernUI"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="600">
     <Grid Style="{StaticResource ContentRoot}">
         <ScrollViewer>
             <Canvas MinWidth="200">
-                <TextBlock Name="Status" Text="项目状态" Style="{StaticResource Heading2}" />
-                <ComboBox x:Name="StatusSwitch"  Width="100" Height="20" HorizontalAlignment="Left" FontSize="12" Canvas.Top="27" SelectedIndex="0" SelectionChanged="StatusSwitch_SelectionChanged" >
+                <TextBlock Name="Status" Text="项目管理" Style="{StaticResource Heading2}" />
+                <Label Content="项目状态:" Canvas.Left="10" Canvas.Top="32" FontSize="12" Width="50" Height="20"/>
+                <ComboBox x:Name="StatusSwitch"  Width="100" Height="20" HorizontalAlignment="Left" FontSize="12" Canvas.Top="30" SelectedIndex="0" SelectionChanged="StatusSwitch_SelectionChanged" Canvas.Left="69">
                     <ComboBoxItem Content="全部"></ComboBoxItem>
                     <ComboBoxItem Content="进行中"></ComboBoxItem>
                     <ComboBoxItem Content="已完成"></ComboBoxItem>
                 </ComboBox>
-                <!--<Button x:Name="WhiteDivide"/>-->
-                <DataGrid x:Name="project_list" AutoGenerateColumns="False" Width="auto" Height="auto"
+                <!--<Button x:Name="WhiteDivide" />-->
+                <DataGrid x:Name="project_list" AutoGenerateColumns="False" Width="578" Height="auto"
                                   ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Canvas.Top="55" IsReadOnly="True">
                     <!--<DataGrid.RowStyle>
                         <Style TargetType="DataGridRow">
                             <Setter Property="Background" Value="LightBlue" />
                             <Style.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="LightGray"/>
-                                    <Setter Property="Foreground" Value="Green"/>
+                                    <Setter Property="Background" Value="LightGray" />
+                                    <Setter Property="Foreground" Value="Green" />
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
@@ -33,27 +34,26 @@
                         <DataGridTemplateColumn Width="30">
                             <!--<DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <CheckBox/>
+                                    <CheckBox />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>-->
                         </DataGridTemplateColumn>
-                        <DataGridTextColumn Header="项目编号" Binding="{Binding Id}"/>
-                        <DataGridTextColumn Header="名称" Binding="{Binding Name}"/>
-                        <DataGridTextColumn Header="地点" Binding="{Binding Place}"/>
-                        <!--<DataGridTextColumn Header="最大人数" Binding="{Binding Maximum}"/>-->
-                        <DataGridTextColumn Header="时间" Binding="{Binding Time}"/>
-                        <DataGridTextColumn Header="创建时间" Binding="{Binding CreatTime}"/>
+                        <DataGridTextColumn Width="70" Header="编号" Binding="{Binding Id}" />
+                        <DataGridTextColumn Width="100" Header="名称" Binding="{Binding Name}" />
+                        <DataGridTextColumn Width="70" Header="地点" Binding="{Binding Place}" />
+                        <DataGridTextColumn Width="110"  Header="时间" Binding="{Binding Time,StringFormat='{}{0:yyyy年MM月dd日}',ConverterCulture=zh-CN}" />
+                        <DataGridTextColumn Width="110" Header="创建时间" Binding="{Binding CreatTime,StringFormat='{}{0:yyyy年MM月dd日}',ConverterCulture=zh-CN}" />
                         <DataGridTemplateColumn Header="项目详情">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <mui:ModernButton Click="Button_Click" x:Name="详情"/>
+                                    <mui:ModernButton IconData="{StaticResource ProjectDetail}" Click="Button_Click" x:Name="详情" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
-                <mui:ModernButton Content="按编号查找" HorizontalAlignment="Right"  Width="100" Height="25" Canvas.Left="478" Canvas.Top="31" Click="ModernButton_Click"/>
-                <TextBox x:Name="search_project" Width="90" Height="25" Canvas.Left="380" Canvas.Top="31"/>
+                <mui:ModernButton IconData="{StaticResource Search}" Content="按编号查找" HorizontalAlignment="Right"  Width="100" Height="25" Canvas.Left="478" Canvas.Top="31" Click="ModernButton_Click" />
+                <TextBox x:Name="search_project" Width="90" Height="25" Canvas.Left="380" Canvas.Top="31" />
             </Canvas>
         </ScrollViewer>
     </Grid>

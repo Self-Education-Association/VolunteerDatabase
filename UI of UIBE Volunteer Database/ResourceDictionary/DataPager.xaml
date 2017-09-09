@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="VolunteerDatabase.Desktop.Resource.DataPager"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+             xmlns:loc="clr-namespace:VolunteerDatabase.Desktop.Resource"
+             x:Name="dp" Margin="3"
+             mc:Ignorable="d" 
+             d:DesignHeight="46" d:DesignWidth="577" Loaded="DataPager_Loaded">
+
+    <Grid>
+        <!--<Grid.Resources>
+            <Style TargetType="{x:Type Image}">
+                <Setter Property="Margin" Value="3,0,3,0" />
+                <Setter Property="Cursor" Value="Hand" />
+            </Style>
+        </Grid.Resources>-->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <!--<ComboBox Grid.Column="0"  VerticalAlignment="Center" Name="cboPageSize"
+                  MinWidth="40" Margin="5,0,0,0"
+                  ItemsSource="{Binding Path=PageSizeItems,ElementName=dp}" 
+                  SelectedItem="{Binding PageSize,Mode=TwoWay,ElementName=dp}" SelectionChanged="cbpPageSize_SelectionChanged" />-->
+        <StackPanel Grid.Column="1" VerticalAlignment="Center" Orientation="Horizontal" Margin="5,0,0,0">
+
+            <mui:ModernButton Click="btnFirst_Click" x:Name="btnFirst" IconData="{StaticResource Page-First}"
+                 />
+            <mui:ModernButton Click="btnPrev_Click" x:Name="btnPrev" IconData="{StaticResource Page-Left}"
+                 />
+
+            <TextBlock Text="第 "  VerticalAlignment="Center"/>
+            <TextBox Width="30" Text="{Binding Path=PageIndex,ElementName=dp}" Name="tbPageIndex" PreviewKeyDown="tbPageIndex_PreviewKeyDown" LostFocus="tbPageIndex_LostFocus" />
+            <TextBlock Text="页 共"  VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding Path=PageCount, ElementName=dp}"  VerticalAlignment="Center"/>
+            <TextBlock Text="页" VerticalAlignment="Center"/>
+
+            <mui:ModernButton Click="btnNext_Click" x:Name="btnNext" IconData="{StaticResource Page-Right}"
+                 />
+            <mui:ModernButton Click="btnLast_Click" x:Name="btnLast" IconData="{StaticResource Page-Last}"
+                />
+            <!--<Button Click="btnRefresh_Click"
+                 />-->
+        </StackPanel>
+        <TextBlock Grid.Column="2" VerticalAlignment="Center" Margin="5,0,5,0" >
+            显示 <TextBlock Text="{Binding Path=Start,ElementName=dp}" /> 至 <TextBlock Text="{Binding Path=End,ElementName=dp}" /> 共 <TextBlock Text="{Binding Path=Total,ElementName=dp}" /> 志愿者
+        </TextBlock>
+    </Grid>
+</UserControl>

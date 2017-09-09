@@ -18,14 +18,37 @@ namespace VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch
         private InputWindow fatherWindow;
         private Project project;
         private Database database;
+
+        //所有志愿者
         private List<Volunteer> fullList = new List<Volunteer>();
+
+        //有冲突的志愿者
         private List<Volunteer> conflictList = new List<Volunteer>();
+
+        //正常的志愿者
         private List<Volunteer> normalList = new List<Volunteer>();
         private VolunteerHelper vhelper = VolunteerHelper.GetInstance();
-        private List<csvItemViewModel> itemList;
-        
 
-        public DealWithConflict(Project p, List<Volunteer> fulllist,InputWindow window)//list为完整list
+        //显示的列表
+        private List<csvItemViewModel> itemList;
+
+        //显示部分
+        private int CnfCount { get { return itemList.Count; } }
+        private int CnfPgeIndex { get; set; }
+        private int MaxCnfItems = 18;
+
+        private void ShowCnfGrid()
+        {
+            List<csvItemViewModel> Cnfs = new List<csvItemViewModel>();
+            for (int i = CnfPgeIndex; i <= CnfPgeIndex + MaxCnfItems; i++)
+            {
+                if (i > CnfCount - 1) break;
+                Cnfs.Add(itemList[i]);
+            }
+            CnfPge.Content = string.Format("{0}/{1}", CnfPgeIndex / MaxCnfItems + 1, CnfCount / MaxCnfItems + 1);
+            csvGrid.ItemsSource = Cnfs;
+        }
+        public DealWithConflict(Project p, List<Volunteer> fulllist, InputWindow window)//list为完整list
         {
             InitializeComponent();
             project = p;
@@ -35,32 +58,32 @@ namespace VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch
             itemList = new List<csvItemViewModel>();
             foreach (Volunteer item in fullList)
             {
-                if(database.Volunteers.Where(v=>v.StudentNum==item.StudentNum).ToList().Count()!=0)
+                if (database.Volunteers.Where(v => v.StudentNum == item.StudentNum).ToList().Count() != 0)
                 {
                     conflictList.Add(item);
                 }
                 else
                 {
-                    normalList.Add(item);
+                    normalList.Add(vhelper.FindVolunteer(item.StudentNum));
                 }
             }
-            
+
             if (conflictList.Count() == 0)
             {
                 List<csvItemViewModel> finalList = new List<csvItemViewModel>();
-                foreach(Volunteer v in normalList)
+                foreach (Volunteer v in normalList)
                 {
                     finalList.Add(new csvItemViewModel(v));
                 }
-                MessageBox.Show("导入信息成功!","",MessageBoxButton.OK);
-                Csvviewer viewer = new Csvviewer(project,finalList,fatherWindow);
+                MessageBox.Show("导入信息成功!", "", MessageBoxButton.OK);
+                Csvviewer viewer = new Csvviewer(project, finalList, fatherWindow);
                 fatherWindow.Content = viewer;
-                
+
                 //this.Visibility=Visibility.Collapsed;
             }
             else
             {
-                foreach(Volunteer v in conflictList)
+                foreach (Volunteer v in conflictList)
                 {
                     Volunteer old = vhelper.FindVolunteer(v.StudentNum);
                     csvItemViewModel vmNew = new csvItemViewModel(v);
@@ -83,16 +106,14 @@ namespace VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch
                  isOld = false;
                  conflictList = theOldAndNew;
                  csvGrid.ItemsSource = conflictList;*/
-                csvGrid.ItemsSource = itemList;
+                ShowCnfGrid();
             }
-            
-            
         }
 
         private void csvGrid_LoadingRow(object sender, DataGridRowEventArgs e)//inconfirmed.
         {
             csvItemViewModel vm = e.Row.Item as csvItemViewModel;
-            if(vm.IsOld)
+            if (vm.IsOld)
             {
                 e.Row.Header = "旧";
                 e.Row.Background = new SolidColorBrush(Colors.Wheat);
@@ -100,17 +121,14 @@ namespace VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch
             else
             {
                 e.Row.Header = "新";
-                
             }
-            
-            
         }
 
         private void SelectTheNew_Click(object sender, RoutedEventArgs e)
         {
-            foreach(csvItemViewModel item in itemList)
+            foreach (csvItemViewModel item in itemList)
             {
-                if(item.IsOld == false)
+                if (item.IsOld == false)
                 {
                     item.Selected = true;
                 }
@@ -119,14 +137,13 @@ namespace VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch
                     item.Selected = false;
                 }
             }
-           
         }
 
         private void SelectTheOld_Click(object sender, RoutedEventArgs e)
         {
             foreach (csvItemViewModel item in itemList)
             {
-                if(item.IsOld == true)
+                if (item.IsOld == true)
                 {
                     item.Selected = true;
                 }
@@ -141,12 +158,12 @@ namespace VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch
         {
             List<csvItemViewModel> finalList = new List<csvItemViewModel>();
             bool succeeded = true;
-            string error="记录选择有误,请检查选择.";
-            foreach(csvItemViewModel item in itemList)
+            string error = "记录选择有误,请检查选择.";
+            foreach (csvItemViewModel item in itemList)
             {
-                if(item.Selected)
+                if (item.Selected)
                 {
-                    if(item.Pair.Selected)
+                    if (item.Pair.Selected)
                     {
                         succeeded = false;
                         error = "每一个志愿者只能保存一条记录,请检查选择是否有错.";
@@ -154,13 +171,13 @@ namespace VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch
                     }
                     else
                     {
-                        if(!finalList.Contains(item))
-                        finalList.Add(item);
+                        if (!finalList.Contains(item))
+                            finalList.Add(item);
                     }
                 }
                 else
                 {
-                    if(!item.Pair.Selected)
+                    if (!item.Pair.Selected)
                     {
                         finalList.Add(item.IsOld ? item : item.Pair);
                         if (item.IsOld)
@@ -172,19 +189,22 @@ namespace VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch
                             item.Pair.Selected = true;
                         }
                     }
-                   
                 }
             }
-            if(!succeeded)
+            if (!succeeded)
             {
                 MessageBox.Show(error);
                 succeeded = true;
             }
             else
             {
-                foreach(Volunteer v in normalList)
+                foreach (Volunteer v in normalList)
                 {
                     finalList.Add(new csvItemViewModel(v));
+                }
+                foreach (csvItemViewModel v in finalList)
+                {
+                    v.Volunteer = vhelper.FindVolunteer(v.Volunteer.StudentNum);
                 }
                 MessageBox.Show("完成了对志愿者库信息的更新.\n请确认最终要导入的志愿者.");
                 Csvviewer viewer = new Csvviewer(project, finalList, fatherWindow);
@@ -236,16 +256,26 @@ namespace VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch
             }*/
         }
 
-       
-
         private void csvGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             csvItemViewModel vm = csvGrid.SelectedItem as csvItemViewModel;
-            vm.Selected = !vm.Selected;
+            if(vm!=null)
+                vm.Selected = !vm.Selected;
+        }
+        private void CnfPgePrevious_Click(object sender, RoutedEventArgs e)
+        {
+            CnfPgeIndex = (CnfPgeIndex - MaxCnfItems < 0) ? CnfPgeIndex : CnfPgeIndex - MaxCnfItems;
+            if (CnfPgeIndex - MaxCnfItems < 0) CnfPgePrevious.IsEnabled = false;
+            CnfPgeNext.IsEnabled = true;
+            ShowCnfGrid();
         }
 
-
-
-        
+        private void CnfPgeNext_Click(object sender, RoutedEventArgs e)
+        {
+            CnfPgeIndex = (CnfPgeIndex + MaxCnfItems > CnfCount) ? CnfPgeIndex : CnfPgeIndex + MaxCnfItems;
+            if (CnfPgeIndex + MaxCnfItems > CnfCount) CnfPgeNext.IsEnabled = false;
+            CnfPgePrevious.IsEnabled = true;
+            ShowCnfGrid();
+        }
     }
 }
