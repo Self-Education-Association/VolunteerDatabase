@@ -30,8 +30,9 @@ namespace VolunteerDatabase.Desktop.Pages
 
         private void searchbyid_btn_Click(object sender, RoutedEventArgs e)
         {
-            if (studentnum == null)
+            if (studentnum.Text == ""||studentnum.Text=="输入学号")
             {
+                ModernDialog.ShowMessage("请输入学号.", "", MessageBoxButton.OK);
             }
             else
             {
@@ -41,13 +42,22 @@ namespace VolunteerDatabase.Desktop.Pages
                     try
                     {
                         int num = int.Parse(studentnum.Text);
-                        sourceList.Add(vh.FindVolunteer(num));
-                        Volunteerdata.ItemsSource = sourceList;
+                        Volunteer volunteer = vh.FindVolunteer(num);
+                        if (volunteer == null)
+                        {
+                            ModernDialog.ShowMessage(string.Format("没有在数据库中找到学号为[{0}]的志愿者.",num.ToString()), "警告", MessageBoxButton.OK);
+                        }
+                        else
+                        {
+                            sourceList.Add(vh.FindVolunteer(num));
+                            Volunteerdata.ItemsSource = sourceList;
+                        }
                     }
                     catch (Exception)
                     {
                         ModernDialog.ShowMessage("学号输入非法,仅能输入数字.", "警告", MessageBoxButton.OK);
                     }
+
                 }
             }
         }
@@ -61,6 +71,12 @@ namespace VolunteerDatabase.Desktop.Pages
                 var Blacklist = new BlackList(vol);
                 Blacklist.Show();
             }
+        }
+
+        private void studentnum_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if(studentnum.Text=="输入学号")
+                studentnum.Text = "";
         }
     }
 }

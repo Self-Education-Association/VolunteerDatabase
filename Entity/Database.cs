@@ -7,7 +7,17 @@
     public class Database : DbContext
     {
         public Database()
-        : base(@"Name=Database")
+            :base(@"Name=Database")
+        //: base(@"Data Source=10.3.2.56;
+        //            Initial Catalog=VolunteerDatabase;
+        //            Integrated Security=False;
+        //            User ID=project1612;
+        //            Password=!@#project$%^1612;
+        //            Connect Timeout=15;
+        //            Encrypt=False;
+        //            TrustServerCertificate=True;
+        //            ApplicationIntent=ReadWrite;
+        //            MultiSubnetFailover=False")
         {
         }
 

@@ -11,8 +11,8 @@
             <StackPanel MinWidth="200">
                 <TextBlock Text="志愿者查询" Style="{StaticResource Heading2}" />
                 <Canvas MinHeight="25">
-                    <TextBox x:Name="studentnum" Width="100" Height="20" HorizontalAlignment="Left" Canvas.Right="120"/>
-                    <mui:ModernButton IconData="{StaticResource Search}" x:Name="searchbyid_btn" Content="输入学号查询" Click="searchbyid_btn_Click" Canvas.Right="0"/>
+                    <TextBox x:Name="studentnum" Text="输入学号"  Width="101" Height="22" HorizontalAlignment="Left" Canvas.Right="120" Canvas.Left="401" Canvas.Top="1" MouseDown="studentnum_MouseDown"/>
+                    <mui:ModernButton IconData="{StaticResource Search}" x:Name="searchbyid_btn" Click="searchbyid_btn_Click" Canvas.Right="0" Canvas.Left="512"/>
                 </Canvas>
                 <DataGrid x:Name="Volunteerdata" IsReadOnly="True" AutoGenerateColumns="False">
                     <DataGrid.Columns>

@@ -118,7 +118,7 @@ namespace VolunteerDatabase.Helper
                 v.ProjectCount = 0;
                 v.Project = new List<Project>();
                 v.Skill = v.Skill;
-                v.Score = new Volunteer.VScore();
+                //v.Score = new Volunteer.VScore();
                 v.TargetedBy = new List<LogRecord>();
                 database.Volunteers.Add(v);
                 Save();
@@ -146,7 +146,7 @@ namespace VolunteerDatabase.Helper
                 ProjectCount = 0,
                 Project = new List<Project>(),
                 Skill = skill,
-                Score = new Volunteer.VScore(),
+                //Score = new Volunteer.VScore(),
                 TargetedBy = new List<LogRecord>()
             };
             return AddVolunteer(v);
@@ -168,7 +168,7 @@ namespace VolunteerDatabase.Helper
                 ProjectCount = 0,
                 Project = new List<Project>(),
                 Skill = skill,
-                Score = new Volunteer.VScore(),
+                //Score = new Volunteer.VScore(),
                 TargetedBy = new List<LogRecord>()
             };
             return v;

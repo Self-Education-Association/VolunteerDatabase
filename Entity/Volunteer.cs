@@ -40,9 +40,19 @@ namespace VolunteerDatabase.Entity
         public virtual List<BlackListRecord> BlackListRecords { get; set; }
         public virtual List<CreditRecord> CreditRecords { get; set; }
         public virtual List<LogRecord> TargetedBy { get; set; }
-        public VScore Score { get; set; }
         public int ProjectCount { get; set; }
-        public double AvgScore { get { return Math.Round(Score.TotalScore / 3*(ProjectCount==0?1:ProjectCount),2); } }
+        public double AvgScore
+        {
+            get
+            {
+                double sum = 0;
+                foreach (CreditRecord record in CreditRecords)
+                {
+                    sum += record.Score.AvgScore;
+                }
+                return Math.Round(sum / (CreditRecords.Count == 0 ? 1 : CreditRecords.Count),2);
+            }
+        }
         public bool AreSameWith(Volunteer b)
         {
             if (b == null)
@@ -114,43 +124,9 @@ namespace VolunteerDatabase.Entity
             return GetHashCode(obj);
         }
 
-        public void AddCredit(CreditRecord.CreditScore s)
-        {
-            if(s.TotalScore!=0)
-            {
-                this.Score.Add(s);
-                this.ProjectCount++;
-            }
-        }
-
-        public void DeleteCredit(CreditRecord.CreditScore s)
-        {
-            if(s.TotalScore!=0)
-            {
-                this.Score.Minus(s);
-                this.ProjectCount--;
-            }
-        }
 
 
-        public class VScore
-        {
-            public double SrvScore { get; set; }
-            public double CmmScore { get; set; }
-            public double PncScore { get; set; }
-            public double TotalScore { get { return SrvScore + CmmScore + PncScore; } }
-            public void Add(CreditRecord.CreditScore s)
-            {
-                this.SrvScore += s.SrvScore;
-                this.CmmScore += s.CmmScore;
-                this.PncScore += s.PncScore;
-            }
-            public void Minus(CreditRecord.CreditScore s)
-            {
-                SrvScore -= s.SrvScore;
-                CmmScore -= s.CmmScore;
-                PncScore -= s.PncScore;
-            }
-        }
+
+        
     }
 }

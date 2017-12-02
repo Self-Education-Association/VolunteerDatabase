@@ -92,6 +92,10 @@
     <Compile Include="Migrations\201709041540426_StructToClass.Designer.cs">
       <DependentUpon>201709041540426_StructToClass.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712020431416_alterscore.cs" />
+    <Compile Include="Migrations\201712020431416_alterscore.Designer.cs">
+      <DependentUpon>201712020431416_alterscore.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Organization.cs" />
     <Compile Include="Project.cs" />
@@ -132,6 +136,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709041540426_StructToClass.resx">
       <DependentUpon>201709041540426_StructToClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712020431416_alterscore.resx">
+      <DependentUpon>201712020431416_alterscore.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

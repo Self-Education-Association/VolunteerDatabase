@@ -194,13 +194,7 @@ namespace VolunteerDatabase.Desktop.Pages
                 {
                     try
                     {
-                        var result1 = pph.ScoringDefaultForVolunteers(Pro, new CreditRecord.CreditScore
-                        {
-                            CmmScore = 4,
-                            PncScore = 4,
-                            SrvScore = 4
-                        }
-                        );
+                        var result1 = pph.ScoringDefaultForVolunteers(Pro);
                         if (!result1.Succeeded)
                         {
                             MessageBox.Show("评分失败,未能结项\n"+string.Join(",",result1.Errors));

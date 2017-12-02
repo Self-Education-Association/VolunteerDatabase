@@ -481,7 +481,7 @@ namespace VolunteerDatabase.Helper.Tests
             pro = database.Projects.SingleOrDefault(b => b.Name == pro.Name);
             helper.SingleVolunteerInputById(v1.StudentNum, pro);
             helper.SingleVolunteerInputById(v2.StudentNum, pro);
-            ProgressResult result = helper.ScoringDefaultForVolunteers(pro, 4);
+            ProgressResult result = helper.ScoringDefaultForVolunteers(pro);
             v1 = database.Volunteers.Single(b => b.StudentNum == v1.StudentNum);
             v2 = database.Volunteers.Single(b => b.StudentNum == v2.StudentNum);
             if (!result.Succeeded && pro.ScoreCondition == Interface.ProjectScoreCondition.Scored)
@@ -642,7 +642,7 @@ namespace VolunteerDatabase.Helper.Tests
             volunteerhelper.AddVolunteer(v);
             v = database.Volunteers.SingleOrDefault(b => b.StudentNum == v.StudentNum);
             helper.SingleVolunteerInputById(v.StudentNum, pro);
-            ProgressResult tempresult = helper.EditScore(v, pro, 2);
+            ProgressResult tempresult = helper.EditScore(v, pro, );
             if (tempresult.Succeeded)
             {
                 Assert.Fail("不存在对应的征信记录failed.");

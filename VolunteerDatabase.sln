@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.3
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interface", "Interface\Interface.csproj", "{65B0D4C3-2525-43AE-9EC4-D18FE6EDA055}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Desktop", "UI of UIBE Volunteer Database\Desktop.csproj", "{FE4658AC-DE28-4912-99B6-F9F0F76EDACB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Website", "Website\Website.csproj", "{A872546B-0353-4424-9275-9E4902AE70A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PasswordChanger", "PasswordChanger\PasswordChanger.csproj", "{26C99733-9240-4F12-8386-D4CAF4771694}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,8 +47,15 @@ Global
 		{A872546B-0353-4424-9275-9E4902AE70A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A872546B-0353-4424-9275-9E4902AE70A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A872546B-0353-4424-9275-9E4902AE70A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26C99733-9240-4F12-8386-D4CAF4771694}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26C99733-9240-4F12-8386-D4CAF4771694}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26C99733-9240-4F12-8386-D4CAF4771694}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26C99733-9240-4F12-8386-D4CAF4771694}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {50C63418-A4BC-4886-9ADA-02E853D77013}
 	EndGlobalSection
 EndGlobal

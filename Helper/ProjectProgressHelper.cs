@@ -172,7 +172,7 @@ namespace VolunteerDatabase.Helper
         }
 
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public ProgressResult ScoringDefaultForVolunteers(Project Pro,CreditRecord.CreditScore score)
+        public ProgressResult ScoringDefaultForVolunteers(Project Pro)
         {
             ProgressResult result;
             Pro = database.Projects.SingleOrDefault(p => p.Id == Pro.Id);
@@ -181,30 +181,22 @@ namespace VolunteerDatabase.Helper
                 return ProgressResult.Error("数据库中不存在该项目！");
             }
             List<Volunteer> selectedvolunteers = Pro.Volunteers;
-            /*var Volunteers = database.Volunteers.Where(o => o.Project.Count() > 0).ToList();
-            List<Volunteer> selectedvolunteers = new List<Volunteer>();
-            foreach(var item in Volunteers)
-            {
-                if( item.Project.Contains(Pro))
-                {
-                    selectedvolunteers.Add(item);
-                }
-            }*/
+            List<string> errorInfo=new List<string>();
             foreach (var item in selectedvolunteers)
             {
-                if (!item.CreditRecords.Exists(o=>o.Project.Id==Pro.Id))
+                var addResult = AddScore(item, Pro, new CreditRecord.CreditScore{
+                    CmmScore = 4,
+                    PncScore = 4,
+                    SrvScore = 4
+                });    
+                if(addResult.Succeeded==false)
                 {
-                    item.AddCredit(score);
-                    CreditRecord cr = new CreditRecord();
-                    cr.Participant = item;
-                    cr.Project = Pro;
-                    cr.Score = score;
-                    item.CreditRecords.Add(cr);
-                }                 
+                    errorInfo.Add(string.Join(",", addResult.Errors));
+                }
             }
             Pro.ScoreCondition = ProjectScoreCondition.Scored;
             Save();
-            result = ProgressResult.Success();
+            result = errorInfo.Count==0?ProgressResult.Success():ProgressResult.Error(errorInfo.ToArray());
             return result;
         }
         public ProgressResult AddScore(Volunteer vol, Project pro, CreditRecord.CreditScore score)
@@ -227,7 +219,7 @@ namespace VolunteerDatabase.Helper
                     database.CreditRecords.Add(cr);
                     //pro.CreditRecords.Add(cr);
                     //vol.CreditRecords.Add(cr);
-                    vol.AddCredit(score);
+                    //vol.AddCredit(score);
                     Save();
                     return ProgressResult.Success();
                 }
@@ -283,8 +275,8 @@ namespace VolunteerDatabase.Helper
             {
                 try
                 {
-                    volunteer.DeleteCredit(crecord.Score);
-                    volunteer.AddCredit(score);
+                    //volunteer.DeleteCredit(crecord.Score);
+                    //volunteer.AddCredit(score);
                     crecord.Score = score;
                     Save();
                     return ProgressResult.Success();

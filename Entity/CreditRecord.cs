@@ -23,7 +23,10 @@ namespace VolunteerDatabase.Entity
             public int PncScore { get; set; }
             public int SrvScore { get; set; }
             public int CmmScore { get; set; }
-            public double AvgScore { get { return Math.Round((PncScore + SrvScore + CmmScore) / 3.0, 2); } }//保留两位小数
+            public double AvgScore { get
+                {
+                    return Math.Round((PncScore + SrvScore + CmmScore) / 3.0, 2);
+                } }//保留两位小数
             public int TotalScore { get { return PncScore + SrvScore + CmmScore; } }
         }
         

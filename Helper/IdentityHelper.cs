@@ -223,13 +223,17 @@ namespace VolunteerDatabase.Helper
             return Task.Run(() => CreateClaims(userName, password, holderName));
         }
 
-        public IdentityResult ChangePassword(string userName, string currentPassword, string newPassword)
+        public IdentityResult ChangePassword(string userName, string currentPassword, string newPassword,bool Forced=false)
         {
             IdentityResult result;
             var claims = CreateClaims(userName: userName, password: currentPassword);
-            if (claims.IsAuthenticated)
+            if (claims.IsAuthenticated||Forced)
             {
-                var user = database.Users.SingleOrDefault(u => u.AccountName == claims.User.AccountName);
+                AppUser user;
+                if(!Forced)
+                    user = database.Users.SingleOrDefault(u => u.AccountName == claims.User.AccountName);
+                else
+                    user = database.Users.SingleOrDefault(u => u.AccountName == userName);
                 if (user == null)
                 {
                     return IdentityResult.Error("找不到用户。");
