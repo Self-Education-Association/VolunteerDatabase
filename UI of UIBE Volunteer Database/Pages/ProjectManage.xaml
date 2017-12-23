@@ -5,10 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mui="http://firstfloorsoftware.com/ModernUI"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="600">
-    <Grid Style="{StaticResource ContentRoot}">
-        <ScrollViewer>
-            <Canvas MinWidth="200">
+             d:DesignHeight="300" d:DesignWidth="602.5">
+    <Grid Style="{StaticResource ContentRoot}" Margin="16,28,0,16">
+        <ScrollViewer Margin="-14,0,10,0">
+            <Canvas MinWidth="200" Width="623">
                 <TextBlock Name="Status" Text="项目管理" Style="{StaticResource Heading2}" />
                 <Label Content="项目状态:" Canvas.Left="10" Canvas.Top="32" FontSize="12" Width="50" Height="20"/>
                 <ComboBox x:Name="StatusSwitch"  Width="100" Height="20" HorizontalAlignment="Left" FontSize="12" Canvas.Top="30" SelectedIndex="0" SelectionChanged="StatusSwitch_SelectionChanged" Canvas.Left="69">
@@ -17,7 +17,7 @@
                     <ComboBoxItem Content="已完成"></ComboBoxItem>
                 </ComboBox>
                 <!--<Button x:Name="WhiteDivide" />-->
-                <DataGrid x:Name="project_list" AutoGenerateColumns="False" Width="578" Height="auto"
+                <DataGrid x:Name="project_list" AutoGenerateColumns="False" Width="613" Height="auto"
                                   ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Canvas.Top="55" IsReadOnly="True">
                     <!--<DataGrid.RowStyle>
                         <Style TargetType="DataGridRow">

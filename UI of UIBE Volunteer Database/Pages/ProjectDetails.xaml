@@ -6,9 +6,9 @@
         xmlns:mui="http://firstfloorsoftware.com/ModernUI"
         xmlns:lib="clr-namespace:VolunteerDatabase.Desktop.Resource"
         mc:Ignorable="d"
-        Title="项目详情" Height="760" Width="auto">
+        Title="项目详情" Height="780" Width="auto">
     <Grid Style="{StaticResource ContentRoot}">
-        <ScrollViewer Margin="0,0,0,-18.5" VerticalAlignment="Top">
+        <!--<ScrollViewer Margin="0,0,0,-18.5" VerticalAlignment="Top">-->
             <StackPanel Height="auto">
                 <Canvas x:Name="BasicInfo" Height="151">
                     <!--<Label x:Name="label1" Content="组织" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="40"/>
@@ -123,6 +123,6 @@
                     <mui:ModernButton IconData="{StaticResource Cancel}" x:Name="deleteproject_btn" Content="删除项目" Click="deleteproject_btn_Click" Canvas.Left="493" Canvas.Top="10"/>
                 </Canvas>
             </StackPanel>
-        </ScrollViewer>
+        <!--</ScrollViewer>-->
     </Grid>
 </Window>

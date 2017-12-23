@@ -32,8 +32,8 @@
     <MinimumRequiredVersion>1.4.0.0</MinimumRequiredVersion>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>1</ApplicationRevision>
-    <ApplicationVersion>1.4.0.%2a</ApplicationVersion>
+    <ApplicationRevision>5</ApplicationRevision>
+    <ApplicationVersion>1.5.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -58,7 +58,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>false</SignManifests>
+    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>2E560C6A8B39347FCD6F73ACF6132C4884523D85</ManifestCertificateThumbprint>
@@ -75,6 +75,9 @@
   <PropertyGroup>
     <ManifestTimestampUrl>
     </ManifestTimestampUrl>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>20171222080556921_easyicon_net_128.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -117,6 +120,10 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\BlackList\AddBlackList.xaml.cs">
+      <DependentUpon>AddBlackList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\BlackList\BlackListViewModel.cs" />
     <Compile Include="Pages\ChangePassWord.xaml.cs">
       <DependentUpon>ChangePassWord.xaml</DependentUpon>
     </Compile>
@@ -135,7 +142,7 @@
     <Compile Include="Pages\ProjectDetails.xaml.cs">
       <DependentUpon>ProjectDetails.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\BlackList.xaml.cs">
+    <Compile Include="Pages\BlackList\BlackList.xaml.cs">
       <DependentUpon>BlackList.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\IdentityPage.cs" />
@@ -190,6 +197,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Pages\BlackList\AddBlackList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\ChangePassWord.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -214,7 +225,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\BlackList.xaml">
+    <Page Include="Pages\BlackList\BlackList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -333,6 +344,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <Resource Include="20171222080556921_easyicon_net_128.ico" />
     <Content Include="SelfEducationAssociation.cer">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

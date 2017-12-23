@@ -1,0 +1,23 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VolunteerDatabase.Desktop.Pages"
+        xmlns:mui="http://firstfloorsoftware.com/ModernUI" x:Class="VolunteerDatabase.Desktop.Pages.AddBlackList"
+        mc:Ignorable="d"
+        Title="AddBlackList" Height="289.125" Width="440.875">
+    <Grid>
+        <Canvas>
+            <mui:ModernButton IconData="{StaticResource AddPeople}" x:Name="btnAdd" Content="添加" HorizontalAlignment="Right" Canvas.Left="360" Canvas.Top="212" Click="btnAdd_Click"/>
+            <TextBlock Text="添加黑名单记录" Style="{StaticResource Heading2}" Height="26" Canvas.Left="10" Canvas.Top="10" />
+            <TextBox x:Name="txtReason" Height="65" Canvas.Left="90" TextWrapping="Wrap" Text="" Canvas.Top="61" Width="219"/>
+            <Label Content="拉黑原因" Canvas.Left="29" Canvas.Top="61"/>
+            <Label Foreground="DarkGray" Content="不超过50字" Canvas.Left="247" Canvas.Top="131"/>
+            <ComboBox x:Name="cmbTime" Canvas.Left="90" Canvas.Top="162" Width="219"/>
+            <Label Content="持续时间" Canvas.Left="29" Canvas.Top="162"/>
+            <Label Foreground="DarkGray" Content="黑名单的持续时间" Canvas.Left="213" Canvas.Top="188"/>
+        </Canvas>
+
+    </Grid>
+</Window>

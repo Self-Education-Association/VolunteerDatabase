@@ -228,6 +228,7 @@ namespace VolunteerDatabase.Helper
             {
                 Detail = Detail,
                 Volunteer = volunteer,
+                Project = project,
                 Adder = adder,
                 Status = status,
                 Organization = orgnization,

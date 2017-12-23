@@ -68,7 +68,7 @@ namespace VolunteerDatabase.Desktop.Pages
             if (senderButton.DataContext is Volunteer)
             {
                 Volunteer vol = (Volunteer)senderButton.DataContext;
-                var Blacklist = new BlackList(vol);
+                var Blacklist = new BlackList(vol,null);
                 Blacklist.Show();
             }
         }

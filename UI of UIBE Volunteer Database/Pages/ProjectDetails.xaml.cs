@@ -385,7 +385,7 @@ namespace VolunteerDatabase.Desktop.Pages
                 Volunteer Vol = (Volunteer)senderButton.DataContext;
                 if (Vol != null)
                 {
-                    var bl = new BlackList(Vol);
+                    var bl = new BlackList(Vol,Pro);
                     bl.Show();
                     bl.Owner = this;
                 }
@@ -423,8 +423,6 @@ namespace VolunteerDatabase.Desktop.Pages
             MngPgeNext.IsEnabled = true;
             ShowMngGrid();
         }
-
-
 
         private void BtnRate_Click(object sender, RoutedEventArgs e)
         {
