@@ -6,50 +6,30 @@
         xmlns:mui="http://firstfloorsoftware.com/ModernUI"
         xmlns:lib="clr-namespace:VolunteerDatabase.Desktop.Resource"
         mc:Ignorable="d"
-        Title="项目详情" Height="780" Width="auto">
-    <Grid Style="{StaticResource ContentRoot}">
+        Title="项目详情" Height="485" Width="781">
+    <StackPanel Style="{StaticResource ContentRoot}" Margin="16,28,15.667,-29.333" >
         <!--<ScrollViewer Margin="0,0,0,-18.5" VerticalAlignment="Top">-->
-            <StackPanel Height="auto">
-                <Canvas x:Name="BasicInfo" Height="151">
+        <TabControl Margin="0,0,-0.333,20.667" Height="346">
+            <TabItem Header="基本状况">
+                <Canvas x:Name="BasicInfo" Margin="0,8,11.667,49.667" HorizontalAlignment="Right" Width="727">
                     <!--<Label x:Name="label1" Content="组织" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="40"/>
                     <TextBlock x:Name="org"/>-->
-                    <Label  Canvas.Left="12" FontWeight="Bold" FontSize="18" Content="项目基本信息" />
-                    <Label Content="地点" HorizontalAlignment="Left" Height="20" Width="50" Canvas.Left="69" Canvas.Top="112"/>
-                    <TextBlock x:Name="project_place" Canvas.Left="100" Canvas.Top="112"/>
-                    <Label Content="编号" HorizontalAlignment="Left" Height="20" Width="50" Canvas.Left="69" Canvas.Top="40"/>
-                    <TextBlock x:Name="project_id" Canvas.Left="100" Canvas.Top="40"/>
-                    <Label Content="项目人数/最大人数" HorizontalAlignment="Left" Height="20" Width="100" Canvas.Left="214" Canvas.Top="78"/>
-                    <TextBlock x:Name="project_accomodation" Canvas.Left="347" Canvas.Top="78"/>
-                    <Label Content="开始时间" HorizontalAlignment="Left" Height="20" Width="50" Canvas.Left="45" Canvas.Top="78"/>
-                    <TextBlock x:Name="project_time" Canvas.Left="100" Canvas.Top="78"/>
-                    <Label Content="状态" HorizontalAlignment="Left" Height="20" Width="50" Canvas.Left="292" Canvas.Top="40"/>
-                    <TextBlock x:Name="project_status" Canvas.Left="347" Canvas.Top="40"/>
+                    <Label  Canvas.Left="18" FontWeight="Bold" FontSize="18" Content="项目基本信息" Canvas.Top="10" />
+                    <Label Content="地点" HorizontalAlignment="Left" Height="20" Width="50" Canvas.Left="65" Canvas.Top="124"/>
+                    <TextBlock x:Name="project_place" Canvas.Left="100" Canvas.Top="124"/>
+                    <Label Content="编号" HorizontalAlignment="Left" Height="20" Width="50" Canvas.Left="65" Canvas.Top="52"/>
+                    <TextBlock x:Name="project_id" Canvas.Left="100" Canvas.Top="52"/>
+                    <Label Content="项目人数/最大人数" HorizontalAlignment="Left" Height="20" Width="100" Canvas.Left="210" Canvas.Top="90"/>
+                    <TextBlock x:Name="project_accomodation" Canvas.Left="335" Canvas.Top="90"/>
+                    <Label Content="开始时间" HorizontalAlignment="Left" Height="20" Width="50" Canvas.Left="41" Canvas.Top="90"/>
+                    <TextBlock x:Name="project_time" Canvas.Left="100" Canvas.Top="90"/>
+                    <Label Content="状态" HorizontalAlignment="Left" Height="20" Width="50" Canvas.Left="288" Canvas.Top="52"/>
+                    <TextBlock x:Name="project_status" Canvas.Left="335" Canvas.Top="52"/>
                 </Canvas>
-                <Canvas x:Name="Managers" Height="200">
-                    <Label Content="项目管理者" HorizontalAlignment="Left" Height="26" Width="101" Canvas.Left="8" Canvas.Top="22" FontWeight="Bold" FontSize="18"/>
-                    <TextBox x:Name="AddManager" KeyDown="AddManager_KeyDown" MaxLength="9" Width="120" HorizontalAlignment="Right" Canvas.Left="194" Canvas.Top="25"/>
-                    <mui:ModernButton IconData="{StaticResource AddPeople}" x:Name="AddManager_btn" Content="输入学号添加管理者" HorizontalAlignment="Right" Click="AddManager_btn_Click" Canvas.Left="333" Canvas.Top="22"/>
-                    <DataGrid MaxHeight="110" x:Name="project_manager_list" IsReadOnly="True" AutoGenerateColumns="False" Canvas.Left="11" Canvas.Top="62" ItemsSource="{Binding Path=ItemSource}">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="姓名" Binding="{Binding Name}"/>
-                            <DataGridTextColumn Header="学号" Binding="{Binding StudentNum}"/>
-                            <DataGridTextColumn Header="联系方式" Binding="{Binding Mobile}"/>
-                            <DataGridTextColumn Header="宿舍" Binding="{Binding Room}"/>
-                            <DataGridTemplateColumn Header="删除">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <mui:ModernButton IconData="{StaticResource DeletePeople}" x:Name="deleteprojectmanager_btn" Click="deleteprojectmanager_btn_Click"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                    <Label x:Name="LblMngListEpt" Visibility="Hidden" Foreground="DarkGray" Content="这个项目还没有管理者。" Canvas.Left="266" Canvas.Top="113"></Label>
-                    <Label Name="MngPge" Canvas.Left="342" Canvas.Top="177" Content="0/0" FontSize="15" ></Label>
-                    <mui:ModernButton IconData="{StaticResource Page-Left}" x:Name="MngPgePrevious" Canvas.Left="284" Canvas.Top="175" Click="MngPgePrevious_Click" />
-                    <mui:ModernButton IconData="{StaticResource Page-Right}" x:Name="MngPgeNext" Canvas.Left="390" Canvas.Top="175" Click="MngPgeNext_Click" />
-                </Canvas>
-                <Canvas x:Name="Volunteers" Height="300">
+            </TabItem>
+            <TabItem Header="项目的志愿者">
+
+                <Canvas x:Name="Volunteers" Height="300" Margin="-2,0,1.667,0">
                     <Label Content="志愿者" HorizontalAlignment="Left" Height="28" Width="60" Canvas.Left="13" Canvas.Top="15" FontSize="18" FontWeight="Bold"/>
                     <TextBox x:Name="AddVolunteer" KeyDown="AddVolunteer_KeyDown" MaxLength="9" Width="120" HorizontalAlignment="Right" Canvas.Left="188" Canvas.Top="16"/>
                     <mui:ModernButton IconData="{StaticResource AddPeople}" x:Name="AddVolunteer_btn" Content="输入学号添加志愿者" HorizontalAlignment="Right" Click="AddVolunteer_btn_Click" Canvas.Left="336" Canvas.Top="15"/>
@@ -115,14 +95,44 @@
                        PageChanged="dataPager_PageChanged" />-->
                     <Label x:Name="LblVltListEpt" Visibility="Hidden" Foreground="DarkGray" Content="这个项目还没有志愿者。" Canvas.Left="267" Canvas.Top="162"></Label>
                 </Canvas>
+            </TabItem>
 
-                <Canvas x:Name="Functions" Height="50">
-                    <mui:ModernButton IconData="{StaticResource AddInBatch}" x:Name="piliang" Content="批量添加志愿者" Click="piliang_Click" Canvas.Left="10" Canvas.Top="10" />
-                    <mui:ModernButton IconData="{StaticResource DownLoad}" x:Name="saveFile" Click="saveFile_Click" Canvas.Left="173" Canvas.Top="10" Content="点击获取导入模板"/>
-                    <mui:ModernButton IconData="{StaticResource Finish}" x:Name="endproject" Content="结项" Click="endproject_Click" Canvas.Left="365" Canvas.Top="10"/>
-                    <mui:ModernButton IconData="{StaticResource Cancel}" x:Name="deleteproject_btn" Content="删除项目" Click="deleteproject_btn_Click" Canvas.Left="493" Canvas.Top="10"/>
+            <TabItem Header="项目的管理员">
+                <Canvas x:Name="Managers" Margin="1,0,-1.333,-1.333">
+                    <Label Content="项目管理者" HorizontalAlignment="Left" Height="26" Width="101" Canvas.Left="8" Canvas.Top="22" FontWeight="Bold" FontSize="18"/>
+                    <TextBox x:Name="AddManager" KeyDown="AddManager_KeyDown" MaxLength="9" Width="120" HorizontalAlignment="Right" Canvas.Left="194" Canvas.Top="25"/>
+                    <mui:ModernButton IconData="{StaticResource AddPeople}" x:Name="AddManager_btn" Content="输入学号添加管理者" HorizontalAlignment="Right" Click="AddManager_btn_Click" Canvas.Left="333" Canvas.Top="22"/>
+                    <DataGrid MaxHeight="110" x:Name="project_manager_list" IsReadOnly="True" AutoGenerateColumns="False" Canvas.Left="11" Canvas.Top="62" ItemsSource="{Binding Path=ItemSource}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="姓名" Binding="{Binding Name}"/>
+                            <DataGridTextColumn Header="学号" Binding="{Binding StudentNum}"/>
+                            <DataGridTextColumn Header="联系方式" Binding="{Binding Mobile}"/>
+                            <DataGridTextColumn Header="宿舍" Binding="{Binding Room}"/>
+                            <DataGridTemplateColumn Header="删除">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <mui:ModernButton IconData="{StaticResource DeletePeople}" x:Name="deleteprojectmanager_btn" MouseEnter="deleteprojectmanager_btn_MouseEnter" Click="deleteprojectmanager_btn_Click"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Label x:Name="LblMngListEpt" Visibility="Hidden" Foreground="DarkGray" Content="这个项目还没有管理者。" Canvas.Left="266" Canvas.Top="113"></Label>
+                    <Label Name="MngPge" Canvas.Left="336" Canvas.Top="288" Content="0/0" FontSize="15" ></Label>
+                    <mui:ModernButton IconData="{StaticResource Page-Left}" x:Name="MngPgePrevious" Canvas.Left="280" Canvas.Top="286" Click="MngPgePrevious_Click" />
+                    <mui:ModernButton IconData="{StaticResource Page-Right}" x:Name="MngPgeNext" Canvas.Left="386" Canvas.Top="286" Click="MngPgeNext_Click" />
+
                 </Canvas>
-            </StackPanel>
+
+
+            </TabItem>
+        </TabControl>
+        <Canvas x:Name="Functions" Height="50" Margin="0,0,-0.333,0" >
+            <mui:ModernButton IconData="{StaticResource AddInBatch}" x:Name="piliang" Content="批量添加志愿者" Click="piliang_Click" Canvas.Left="10" Canvas.Top="10" />
+            <mui:ModernButton IconData="{StaticResource DownLoad}" x:Name="saveFile" Click="saveFile_Click" Canvas.Left="173" Canvas.Top="10" Content="点击获取导入模板"/>
+            <mui:ModernButton IconData="{StaticResource Finish}" x:Name="endproject" Content="结项" Click="endproject_Click" Canvas.Left="365" Canvas.Top="10"/>
+            <mui:ModernButton IconData="{StaticResource Cancel}" x:Name="deleteproject_btn" Content="删除项目" Click="deleteproject_btn_Click" Canvas.Left="493" Canvas.Top="10"/>
+        </Canvas>
         <!--</ScrollViewer>-->
-    </Grid>
+    </StackPanel>
 </Window>

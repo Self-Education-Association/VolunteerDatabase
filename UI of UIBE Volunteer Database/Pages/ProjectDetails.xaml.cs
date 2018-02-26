@@ -442,7 +442,15 @@ namespace VolunteerDatabase.Desktop.Pages
                 MessageBox.Show("数据上下文非志愿者，请联系管理员。");
             }
         }
-        
+
+        private void deleteprojectmanager_btn_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if(!Claims.IsAuthenticated||!Claims.Roles.Contains(AppRoleEnum.OrgnizationAdministrator))
+            {
+
+            }
+        }
+
         //public void Query(int size, int pageIndex)
         //{
         //    Result.Total = Student.Students.Count;
