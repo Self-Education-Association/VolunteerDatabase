@@ -116,7 +116,7 @@ namespace VolunteerDatabase.Helper
             return IdentityResult.Success();
         }
 
-        private IdentityResult AddToRole(int userId, string roleName)
+        private IdentityResult AddToRole(long userId, string roleName)
         {
             var user = database.Users.Find(userId);
             if (user == null)
@@ -142,13 +142,13 @@ namespace VolunteerDatabase.Helper
             return IdentityResult.Success();
         }
 
-        public IdentityResult AddToRole(int userId, AppRoleEnum roleEnum)
+        public IdentityResult AddToRole(long userId, AppRoleEnum roleEnum)
         {
             var role = CreateOrFindRole(roleEnum);
             return AddToRole(userId: userId, roleName: roleEnum.ToString());
         }
 
-        public async Task<IdentityResult> AddToRoleAsync(int userId, AppRoleEnum roleEnum)
+        public async Task<IdentityResult> AddToRoleAsync(long userId, AppRoleEnum roleEnum)
         {
             var result = Task.Run(() => AddToRole(userId: userId, roleEnum: roleEnum));
 

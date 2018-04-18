@@ -6,7 +6,7 @@
         xmlns:mui="http://firstfloorsoftware.com/ModernUI"
         xmlns:lib="clr-namespace:VolunteerDatabase.Desktop.Resource"
         mc:Ignorable="d"
-        Title="项目详情" Height="485" Width="781">
+        Title="项目详情" Height="485" Width="832">
     <StackPanel Style="{StaticResource ContentRoot}" Margin="16,28,15.667,-29.333" >
         <!--<ScrollViewer Margin="0,0,0,-18.5" VerticalAlignment="Top">-->
         <TabControl Margin="0,0,-0.333,20.667" Height="346">

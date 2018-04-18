@@ -79,7 +79,7 @@ namespace VolunteerDatabase.Helper
         [AppAuthorize(AppRoleEnum.LogViewer)]
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
         [AppAuthorize(AppRoleEnum.TestOnly)]
-        public Volunteer FindVolunteer(int num)
+        public Volunteer FindVolunteer(long num)
         {
             var result = database.Volunteers.SingleOrDefault(v => v.StudentNum == num);
             return result;
@@ -107,7 +107,7 @@ namespace VolunteerDatabase.Helper
                 return VolunteerResult.Error(VolunteerResult.AddVolunteerErrorEnum.SameIdVolunteerExisted, v.StudentNum);
             else
             {
-                int stunum = v.StudentNum;
+                long stunum = v.StudentNum;
                 v.Mobile = v.Mobile == DEFAULTSTRING ? DEFAULTSTRING : v.Mobile;
                 v.Room = v.Room == DEFAULTSTRING ? DEFAULTSTRING : v.Room;
                 v.Name = v.Name == DEFAULTSTRING ? DEFAULTSTRING : v.Name;
@@ -129,7 +129,7 @@ namespace VolunteerDatabase.Helper
         }
 
         [AppAuthorize(AppRoleEnum.Administrator)]
-        public VolunteerResult AddVolunteer(int num, string name = DEFAULTSTRING, string c = DEFAULTSTRING, string mobile = DEFAULTSTRING, string room = DEFAULTSTRING, string email = DEFAULTSTRING,string skill=DEFAULTSTRING)
+        public VolunteerResult AddVolunteer(long num, string name = DEFAULTSTRING, string c = DEFAULTSTRING, string mobile = DEFAULTSTRING, string room = DEFAULTSTRING, string email = DEFAULTSTRING,string skill=DEFAULTSTRING)
         {
             if (num == 0)
                 return VolunteerResult.Error(VolunteerResult.EditVolunteerErrorEnum.EmptyId);
@@ -153,7 +153,7 @@ namespace VolunteerDatabase.Helper
         }
 
         [AppAuthorize(AppRoleEnum.Administrator)]
-        public Volunteer CreateTempVolunteer(int num, string name = DEFAULTSTRING, string c = DEFAULTSTRING, string mobile = DEFAULTSTRING, string room = DEFAULTSTRING, string email = DEFAULTSTRING,string skill = DEFAULTSTRING)
+        public Volunteer CreateTempVolunteer(long num, string name = DEFAULTSTRING, string c = DEFAULTSTRING, string mobile = DEFAULTSTRING, string room = DEFAULTSTRING, string email = DEFAULTSTRING,string skill = DEFAULTSTRING)
         {
             var v = new Volunteer
             {
@@ -203,7 +203,7 @@ namespace VolunteerDatabase.Helper
         }
 
         [AppAuthorize(AppRoleEnum.Administrator)]
-        public VolunteerResult EditVolunteer(Volunteer a, int num, string name = DEFAULTSTRING, string c = DEFAULTSTRING, string mobile = DEFAULTSTRING, string room = DEFAULTSTRING, string email = DEFAULTSTRING)
+        public VolunteerResult EditVolunteer(Volunteer a, long num, string name = DEFAULTSTRING, string c = DEFAULTSTRING, string mobile = DEFAULTSTRING, string room = DEFAULTSTRING, string email = DEFAULTSTRING)
         {
             if (num == 0)
                 return VolunteerResult.Error(VolunteerResult.EditVolunteerErrorEnum.EmptyId);
@@ -240,7 +240,7 @@ namespace VolunteerDatabase.Helper
         {
             if (a != null)
             {
-                int deletedVolunteerStuNum = a.StudentNum;
+                var deletedVolunteerStuNum = a.StudentNum;
                 string deletedVolunteerName = a.Name;
                 var volunteer = FindVolunteer(a.StudentNum);
                 List<LogRecord> loglist = logger.FindLogRecordByTargetVolunteer(volunteer).ToList();
@@ -262,7 +262,7 @@ namespace VolunteerDatabase.Helper
         }
 
         [AppAuthorize(AppRoleEnum.Administrator)]
-        public VolunteerResult DeleteVolunteer(int num)
+        public VolunteerResult DeleteVolunteer(long num)
         {
             var v = database.Volunteers.Include("Project.TargetedBy").SingleOrDefault(o => o.StudentNum == num);
             return DeleteVolunteer(v);

@@ -119,7 +119,7 @@ namespace VolunteerDatabase.Helper
         }*/
 
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public ProgressResult SingleVolunteerInputById(int num, Project pro)
+        public ProgressResult SingleVolunteerInputById(long num, Project pro)
         {
             ProgressResult result;
             var Volunteer = database.Volunteers.SingleOrDefault(r => r.StudentNum == num);

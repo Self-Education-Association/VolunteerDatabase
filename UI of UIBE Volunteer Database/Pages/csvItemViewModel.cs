@@ -33,7 +33,7 @@ namespace VolunteerDatabase.Desktop.Pages
                 }
         }
 
-        public int StudentNum { get { return Volunteer.StudentNum; } }
+        public long StudentNum { get { return Volunteer.StudentNum; } }
 
         public string Name { get { return Volunteer.Name; } }
         public string Class { get { return Volunteer.Class; } }

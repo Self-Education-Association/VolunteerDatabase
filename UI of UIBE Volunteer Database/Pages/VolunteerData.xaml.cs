@@ -41,7 +41,7 @@ namespace VolunteerDatabase.Desktop.Pages
                 {
                     try
                     {
-                        int num = int.Parse(studentnum.Text);
+                        long num = long.Parse(studentnum.Text);
                         Volunteer volunteer = vh.FindVolunteer(num);
                         if (volunteer == null)
                         {

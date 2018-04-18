@@ -11,12 +11,12 @@ namespace VolunteerDatabase.Helper
     {
         private bool _succeeded;
         private string[] _errors;
-        private int _errorvolunteernum;
+        private long _errorvolunteernum;
         private string _errorstring;
         public bool Succeeded { get { return _succeeded; } }
         public string[] Errors { get { return _errors; } }
         public string ErrorString { get { return _errorstring; } }
-        public int ErrorVolunteerNum { get { return _errorvolunteernum; } }
+        public long ErrorVolunteerNum { get { return _errorvolunteernum; } }
         /// <summary>
         /// 使用字符串数组作为错误信息的方法
         /// </summary>
@@ -37,7 +37,7 @@ namespace VolunteerDatabase.Helper
             };
             return result;
         }
-        public static VolunteerResult Error(string errors,int num = 0)
+        public static VolunteerResult Error(string errors,long num = 0)
         {
             
             if (errors.Count() == 0)
@@ -53,7 +53,7 @@ namespace VolunteerDatabase.Helper
             };
             return result;
         }
-        public static VolunteerResult Error(AddVolunteerErrorEnum err,int num=0)
+        public static VolunteerResult Error(AddVolunteerErrorEnum err,long num=0)
         {
             VolunteerResult result;
             switch (err)
@@ -125,9 +125,9 @@ namespace VolunteerDatabase.Helper
             else
                 return false;
         }
-        public static List<int> CreateNumList(params int[] nums)
+        public static List<long> CreateNumList(params long[] nums)
         {
-            List<int> list = new List<int>();
+            List<long> list = new List<long>();
             foreach (int n in nums)
             {
                 list.Add(n);

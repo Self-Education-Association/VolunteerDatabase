@@ -32,8 +32,8 @@ namespace VolunteerDatabase.Desktop
 
         private void register_button_Click(object sender, RoutedEventArgs e)
         {
-                int studentnum;
-                if(!int.TryParse(studentid.Text,out studentnum))
+                long studentnum;
+                if(!long.TryParse(studentid.Text,out studentnum))
             {
                 ModernDialog.ShowMessage("学号输入非法", "警告", MessageBoxButton.OK);
             }
@@ -89,7 +89,7 @@ namespace VolunteerDatabase.Desktop
                     }
                         AppUser au = new AppUser()
                     {
-                        StudentNum = int.Parse(studentid.Text),
+                        StudentNum = long.Parse(studentid.Text),
                         AccountName = accountname.Text,
                         Name = wholename.Text,
                         Mobile = telephonenumber.Text,
