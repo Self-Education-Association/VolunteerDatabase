@@ -29,7 +29,7 @@ namespace VolunteerDatabase.Desktop.Pages
             get
             {
                 return current.Count;
-             }//?如何count,如果按编号查，只有一个
+             }
         }
         public ProjectManage()
         {
