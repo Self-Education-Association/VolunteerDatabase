@@ -61,7 +61,7 @@ namespace VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch
         private void ShowCddGrid()
         {
             List<csvItemViewModel> cdds = new List<csvItemViewModel>();
-            for (int i = CddPgeIndex; i <= CddPgeIndex + MaxCddItems; i++)
+            for (int i = CddPgeIndex; i <= CddPgeIndex + MaxCddItems; i++)//?
             {
                 if (i > CddCount - 1) break;
                 cdds.Add(csvList[i]);

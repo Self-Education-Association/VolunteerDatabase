@@ -67,7 +67,7 @@ namespace VolunteerDatabase.Helper
             StreamReader sr;
             try
             {
-                fs = new FileStream(op.FileName, FileMode.Open, FileAccess.Read, FileShare.None);
+                fs = new FileStream(op.FileName, FileMode.Open, FileAccess.Read, FileShare.None);//？
                 sr = new StreamReader(fs, Encoding.GetEncoding(936));
             }
             catch(Exception e)

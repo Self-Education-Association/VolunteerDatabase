@@ -20,7 +20,17 @@ namespace VolunteerDatabase.Desktop.Pages
         private ProjectManageHelper managehelper;
         private ProjectProgressHelper progresshelper;
         private AppUserIdentityClaims Claims { get; set; }
+        private List<Project> current;
 
+        private int ProPgeIndex { get; set; }
+        private int MaxProItems = 5;
+        private int ProCount
+        {
+            get
+            {
+                return current.Count;
+             }//?如何count,如果按编号查，只有一个
+        }
         public ProjectManage()
         {
             InitializeComponent();
@@ -33,7 +43,7 @@ namespace VolunteerDatabase.Desktop.Pages
             if (managehelper.ShowProjectList(Claims.User.Organization, true) != null)
                 allprojectlist = managehelper.ShowProjectList(Claims.User.Organization, true);
             allprojectlist.AddRange(managehelper.ShowProjectList(Claims.User.Organization, false));
-            ShowList(StatusSwitch.SelectedIndex);
+            GenList();
             if (Claims.Roles.Count() == 1 && Claims.IsInRole(AppRoleEnum.OrgnizationMember))
             {
                 project_list.ItemsSource = progresshelper.FindAuthorizedProjectsByUser(Claims.User);
@@ -41,48 +51,53 @@ namespace VolunteerDatabase.Desktop.Pages
             }
         }
 
-        private void ShowList(int status)
+        private void GenList()
         {
-            List<Project> list = new List<Project>();
-            switch (status)
-            {
-                case 0:
-                    {
-                        list = allprojectlist;
-                    }
-                    break;
-
-                case 1:
-                    foreach (Project project in allprojectlist)
-                    {
-                        if (project.Condition == ProjectCondition.Ongoing)
-                            list.Add(project);
-                    }
-                    break;
-
-                case 2:
-                    foreach (Project project in allprojectlist)
-                    {
-                        if (project.Condition == ProjectCondition.Finished)
-                            list.Add(project);
-                    }
-                    break;
-
-                default:
-                    break;
-            }
-            project_list.ItemsSource = list;
-        }
-
-        private void StatusSwitch_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+            int status = StatusSwitch.SelectedIndex;
             if (managehelper != null && progresshelper != null)
             {
                 allprojectlist = managehelper.ShowProjectList(Claims.User.Organization, true);
                 allprojectlist.AddRange(managehelper.ShowProjectList(Claims.User.Organization, false));
             }
             if (project_list != null)
-                ShowList(StatusSwitch.SelectedIndex);
+            {
+                List<Project> list = new List<Project>();
+                switch (status)
+                {
+                    case 0:
+                        {
+                            list = allprojectlist;
+                        }
+                        break;
+
+                    case 1:
+                        foreach (Project project in allprojectlist)
+                        {
+                            if (project.Condition == ProjectCondition.Ongoing)
+                                list.Add(project);
+                        }
+                        break;
+
+                    case 2:
+                        foreach (Project project in allprojectlist)
+                        {
+                            if (project.Condition == ProjectCondition.Finished)
+                                list.Add(project);
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+                current = list;
+                ShowProGrid();
+                //project_list.ItemsSource = list;
+            }
+        }
+
+        private void StatusSwitch_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            GenList();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -116,5 +131,33 @@ namespace VolunteerDatabase.Desktop.Pages
                 }
             }
         }
+
+        private void ShowProGrid()
+        {
+            List<Project> records = new List<Project>();
+            for (int i = ProPgeIndex; i < ProPgeIndex + MaxProItems; i++)
+            {
+                if (i > ProCount - 1) break;
+                records.Add(current[i]);
+            }
+            project_list.ItemsSource = records;
+            ProPge.Content = string.Format("{0}/{1}", ProPgeIndex / MaxProItems + 1, ProCount / MaxProItems + 1);
+        }
+
+        private void ProPgePrevious_Click(object sender, RoutedEventArgs e)
+        {
+            ProPgeIndex = (ProPgeIndex - MaxProItems < 0) ? ProPgeIndex : ProPgeIndex - MaxProItems;
+            if (ProPgeIndex - MaxProItems < 0) ProPgePrevious.IsEnabled = false;
+            else ProPgeNext.IsEnabled = true;
+            ShowProGrid();
+        }
+        private void ProPgeNext_Click(object sender, RoutedEventArgs e)
+        {
+            ProPgeIndex = (ProPgeIndex + MaxProItems > ProCount) ? ProPgeIndex : ProPgeIndex + MaxProItems;
+            if (ProPgeIndex + MaxProItems > ProCount) ProPgeNext.IsEnabled = false;
+            else ProPgePrevious.IsEnabled = true;
+            ShowProGrid();
+        }
+
     }
 }

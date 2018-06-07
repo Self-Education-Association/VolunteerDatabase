@@ -40,7 +40,7 @@ namespace VolunteerDatabase.Helper
         [AppAuthorize(AppRoleEnum.LogViewer)]
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
         [AppAuthorize(AppRoleEnum.TestOnly)]
-        public async Task<BlackListHelper> GetInstanceAsync()
+        public async Task<BlackListHelper> GetInstanceAsync()//异步同行，到await挂起直到其它方法完成
         {
             Task<BlackListHelper> helper = Task.Run(() =>
             {
@@ -58,14 +58,14 @@ namespace VolunteerDatabase.Helper
         [AppAuthorize(AppRoleEnum.LogViewer)]
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
         [AppAuthorize(AppRoleEnum.TestOnly)]
-        public List<BlackListRecord> FindBlackList(Guid uid)
+        public List<BlackListRecord> FindBlackList(Guid uid)//按照uid查找黑名单
         {
             try
             {
                 var result = database.BlackListRecords.Where(b => b.UID == uid).ToList();
                 return result;
             }
-            catch (Exception)
+            catch (Exception)//错误
             {
                 return null;
             }
@@ -76,7 +76,7 @@ namespace VolunteerDatabase.Helper
         [AppAuthorize(AppRoleEnum.LogViewer)]
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
         [AppAuthorize(AppRoleEnum.TestOnly)]
-        public List<BlackListRecord> FindBlackList(Volunteer v)
+        public List<BlackListRecord> FindBlackList(Volunteer v)//给出变量志愿者，按照uid查找黑名单
         {
             try
             {
@@ -94,7 +94,7 @@ namespace VolunteerDatabase.Helper
         [AppAuthorize(AppRoleEnum.LogViewer)]
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
         [AppAuthorize(AppRoleEnum.TestOnly)]
-        public List<BlackListRecord> FindBlackList(Organization org)
+        public List<BlackListRecord> FindBlackList(Organization org)//按照组织id查找黑名单
         {
             try
             {
@@ -112,7 +112,7 @@ namespace VolunteerDatabase.Helper
         [AppAuthorize(AppRoleEnum.LogViewer)]
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
         [AppAuthorize(AppRoleEnum.TestOnly)]
-        public List<BlackListRecord> FindBlackList(AppUser adder)
+        public List<BlackListRecord> FindBlackList(AppUser adder)//按照添加者id查找黑名单
         {
             try
             {
@@ -130,7 +130,7 @@ namespace VolunteerDatabase.Helper
         [AppAuthorize(AppRoleEnum.LogViewer)]
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
         [AppAuthorize(AppRoleEnum.TestOnly)]
-        public List<BlackListRecord> FindBlackList(Project project)
+        public List<BlackListRecord> FindBlackList(Project project)//按照项目id查找黑名单
         {
             try
             {
@@ -148,7 +148,7 @@ namespace VolunteerDatabase.Helper
         [AppAuthorize(AppRoleEnum.LogViewer)]
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
         [AppAuthorize(AppRoleEnum.TestOnly)]
-        public List<BlackListRecord> FindBlackListByAddTime(DateTime start, DateTime end)
+        public List<BlackListRecord> FindBlackListByAddTime(DateTime start, DateTime end)//按照添加时间查找黑名单
         {
             if (start > end)
             {
@@ -163,7 +163,7 @@ namespace VolunteerDatabase.Helper
         [AppAuthorize(AppRoleEnum.LogViewer)]
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
         [AppAuthorize(AppRoleEnum.TestOnly)]
-        public List<BlackListRecord> FindBlackListByEndTime(DateTime start, DateTime end)
+        public List<BlackListRecord> FindBlackListByEndTime(DateTime start, DateTime end)//按照结束时间查找黑名单
         {
             if (start > end)
             {
@@ -175,7 +175,7 @@ namespace VolunteerDatabase.Helper
 
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]//必须是被授权管理某个project的
-        public BlackListResult AddBlackListRecord(BlackListRecord brec)
+        public BlackListResult AddBlackListRecord(BlackListRecord brec)//根据黑名单记录查找项目
         {
             if (brec == null)
             {
@@ -186,7 +186,7 @@ namespace VolunteerDatabase.Helper
             {
                 tempbrec = database.BlackListRecords.Where(b => b.Project.Id == brec.Project.Id).ToList();
             // if (database.BlackListRecords.Where(b=>b.Project==brec.Project).Count()!=0)
-            if ( tempbrec.Count() != 0)
+            if ( tempbrec.Count() != 0)//查看是否有重复的黑名单
             {
                 foreach (var eptempbrec in tempbrec)
                 {
@@ -198,7 +198,7 @@ namespace VolunteerDatabase.Helper
                 //  return BlackListResult.Error(BlackListResult.AddBlackListRecordErrorEnum.ExistingRecord);
             }
             }
-            if (brec.EndTime < System.DateTime.Now)
+            if (brec.EndTime < System.DateTime.Now)//查看结束时间是否允许
             {
                 return BlackListResult.Error(BlackListResult.AddBlackListRecordErrorEnum.WrongTime);
             }

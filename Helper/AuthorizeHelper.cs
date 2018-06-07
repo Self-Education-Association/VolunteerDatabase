@@ -18,9 +18,9 @@ namespace VolunteerDatabase.Helper
         public static TOut Execute(IAuthorizeInput<TData, AppUser> input, AuthorizeFunction function)
         {
             if (!Authorize(input, function))
-            {
+            {//检索应用于类型的成员的自定义特性的数组
                 var attributes = Attribute.GetCustomAttributes(function.GetMethodInfo(), typeof(AppAuthorizeAttribute));
-                IEnumerable<AppRoleEnum> requiredRoles = from AppAuthorizeAttribute a in attributes select a.Role;
+                IEnumerable<AppRoleEnum> requiredRoles = from AppAuthorizeAttribute a in attributes select a.Role;//在attributes里用a将a.role投影到新枚举类
                 throw new AppUserNotAuthorizedException(input.Claims, requiredRoles);
             }
             var output = function(input.Data);
@@ -37,7 +37,7 @@ namespace VolunteerDatabase.Helper
             }
             else
             {
-                requiredRoles = from AppAuthorizeAttribute a in attributes select a.Role;
+                requiredRoles = from AppAuthorizeAttribute a in attributes select a.Role;//在attributes里用a将a.role投影到新表单
             }
             if (input == null || input.Claims == null)
             {
@@ -58,14 +58,14 @@ namespace VolunteerDatabase.Helper
                     return true;
                 }
             }
-            if (typeof(Project).IsAssignableFrom(input.Data.GetType()))
+            if (typeof(Project).IsAssignableFrom(input.Data.GetType()))//考察input.Data.GetType()是否可以分配给project的实例
             {
                 var project = input.Data as Project;
                 bool flag = false;
                 List<AppUser> managerlist = project.Managers;
                 foreach (AppUser manager in managerlist)
                 {
-                    if (manager.AccountName == input.Claims.User.AccountName)
+                    if (manager.AccountName == input.Claims.User.AccountName)//如果管理者项目姓名等于输入的用户姓名，返回真
                         flag = true;
                 }
                 return flag;

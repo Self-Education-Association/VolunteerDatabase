@@ -22,7 +22,7 @@ namespace VolunteerDatabase.Helper
         {
             get
             {
-                if (!_isAuthenticated) return null;
+                if (!_isAuthenticated) return null;//有效则返回user
                 return _user;
             }
         }
@@ -48,7 +48,7 @@ namespace VolunteerDatabase.Helper
 
         public bool IsInRole(AppRoleEnum roleEnum)
         {
-            return Roles.Contains(roleEnum);
+            return Roles.Contains(roleEnum);//roles是否包含roleenum使用的默认相等比较器
         }
 
         internal static AppUserIdentityClaims Create(AppUser user, AppUser holder)
@@ -68,7 +68,7 @@ namespace VolunteerDatabase.Helper
                 {
                     _user = user,
                     _holder = holder,
-                    _roles = from r in user.Roles select r.RoleEnum,
+                    _roles = from r in user.Roles select r.RoleEnum,//在user.roles用r将r.roleenum投影到新表单
                     _isAuthenticated = true
                 };
             }

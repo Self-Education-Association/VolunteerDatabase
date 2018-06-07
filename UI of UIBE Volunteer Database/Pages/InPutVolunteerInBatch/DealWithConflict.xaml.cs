@@ -268,7 +268,7 @@ namespace VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch
         }
         private void CnfPgePrevious_Click(object sender, RoutedEventArgs e)
         {
-            CnfPgeIndex = (CnfPgeIndex - MaxCnfItems < 0) ? CnfPgeIndex : CnfPgeIndex - MaxCnfItems;
+            CnfPgeIndex = (CnfPgeIndex - MaxCnfItems < 0) ? CnfPgeIndex : CnfPgeIndex - MaxCnfItems; //?
             if (CnfPgeIndex - MaxCnfItems < 0) CnfPgePrevious.IsEnabled = false;
             CnfPgeNext.IsEnabled = true;
             ShowCnfGrid();

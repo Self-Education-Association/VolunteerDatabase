@@ -38,7 +38,7 @@ namespace VolunteerDatabase.Desktop.Pages
         {
             List<BlackListRecord> records = new List<BlackListRecord>();
             List<BlackListViewModel> viewRecords = new List<BlackListViewModel>();
-            for (int i = BlkPgeIndex; i <= BlkPgeIndex + MaxBlkItems; i++)
+            for (int i = BlkPgeIndex; i <= BlkPgeIndex + MaxBlkItems; i++)//?
             {
                 if (i > BlkCount - 1) break;
                 records.Add(volunteer.BlackListRecords[i]);

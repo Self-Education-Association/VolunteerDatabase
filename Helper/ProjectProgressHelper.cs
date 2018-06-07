@@ -56,7 +56,7 @@ namespace VolunteerDatabase.Helper
         }
 
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
-        public List<Project> FindAuthorizedProjectsByUser(AppUser user)
+        public List<Project> FindAuthorizedProjectsByUser(AppUser user)//按照用户查找正在进行的项目
         {
             var projectlist = database.Projects.Where(p => p.Managers.Count() > 0).ToList();
             List<Project> authorizedproject = new List<Project>();
@@ -71,7 +71,7 @@ namespace VolunteerDatabase.Helper
         }
 
         [AppAuthorize(AppRoleEnum.Administrator)]
-        public Project FindProjectByProjectId(int ProjectId)
+        public Project FindProjectByProjectId(int ProjectId)//按照id找项目
         {
             var Project = database.Projects.SingleOrDefault(r => r.Id == ProjectId);
             if (Project == null)
@@ -119,7 +119,7 @@ namespace VolunteerDatabase.Helper
         }*/
 
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public ProgressResult SingleVolunteerInputById(int num, Project pro)
+        public ProgressResult SingleVolunteerInputById(int num, Project pro)//按学号将志愿者添加到项目中
         {
             ProgressResult result;
             var Volunteer = database.Volunteers.SingleOrDefault(r => r.StudentNum == num);
@@ -172,7 +172,7 @@ namespace VolunteerDatabase.Helper
         }
 
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public ProgressResult ScoringDefaultForVolunteers(Project Pro)
+        public ProgressResult ScoringDefaultForVolunteers(Project Pro)//为志愿者打出默认评分4分
         {
             ProgressResult result;
             Pro = database.Projects.SingleOrDefault(p => p.Id == Pro.Id);
@@ -199,7 +199,7 @@ namespace VolunteerDatabase.Helper
             result = errorInfo.Count==0?ProgressResult.Success():ProgressResult.Error(errorInfo.ToArray());
             return result;
         }
-        public ProgressResult AddScore(Volunteer vol, Project pro, CreditRecord.CreditScore score)
+        public ProgressResult AddScore(Volunteer vol, Project pro, CreditRecord.CreditScore score)//判断评分是否符合规定
         {
             if(vol!=null&&pro!=null&&score.PncScore<=5.0&&score.SrvScore<=5.0&&score.CmmScore<=5.0)
             {
@@ -246,7 +246,7 @@ namespace VolunteerDatabase.Helper
         //换用CreditRecord 停用原有Score方法。
 
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public ProgressResult FinishProject(Project Pro)
+        public ProgressResult FinishProject(Project Pro)//将项目状态改为结束
         {
             ProgressResult result;
             if (Pro.Condition == ProjectCondition.Finished || Pro.ScoreCondition == ProjectScoreCondition.UnScored)
@@ -264,7 +264,7 @@ namespace VolunteerDatabase.Helper
         }
 
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public ProgressResult EditScore(Volunteer volunteer,Project project, CreditRecord.CreditScore score)
+        public ProgressResult EditScore(Volunteer volunteer,Project project, CreditRecord.CreditScore score)//编辑评分
         {
             CreditRecord crecord = database.CreditRecords.SingleOrDefault(r => r.Participant.UID == volunteer.UID && r.Project.Id == project.Id);
             if(crecord == null)

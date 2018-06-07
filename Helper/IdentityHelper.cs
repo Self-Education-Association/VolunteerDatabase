@@ -48,7 +48,7 @@ namespace VolunteerDatabase.Helper
             database = DatabaseContext.GetInstance();
         }
 
-        public OrganizationEnum Matching(string str)
+        public OrganizationEnum Matching(string str)//匹配院系
         {
             OrganizationEnum org = new OrganizationEnum();
             if (OrganizationEnum.中国语言文学学院.ToString() == str)
@@ -93,7 +93,7 @@ namespace VolunteerDatabase.Helper
         }
 
         public IdentityResult CreateUser(AppUser user, string password, AppRoleEnum roleEnum = AppRoleEnum.OrgnizationMember, OrganizationEnum orgEnum = OrganizationEnum.TestOnly)
-        {
+        {//创建新用户，密码，角色，组织
             lock (database)
             {
                 if (database.Users.Where(u => u.AccountName == user.AccountName) != null && database.Users.Where(u => u.AccountName == user.AccountName).Count() != 0)
@@ -116,7 +116,7 @@ namespace VolunteerDatabase.Helper
             return IdentityResult.Success();
         }
 
-        private IdentityResult AddToRole(int userId, string roleName)
+        private IdentityResult AddToRole(int userId, string roleName)//将用户添加到某个用户组
         {
             var user = database.Users.Find(userId);
             if (user == null)
@@ -155,7 +155,7 @@ namespace VolunteerDatabase.Helper
             return await result;
         }
 
-        public AppRole CreateOrFindRole(AppRoleEnum roleEnum)
+        public AppRole CreateOrFindRole(AppRoleEnum roleEnum)//创建或查找角色
         {
             var role = database.Roles.SingleOrDefault(r => r.RoleEnum == roleEnum);
             if (role == null)
@@ -179,7 +179,7 @@ namespace VolunteerDatabase.Helper
             return role;
         }
 
-        public Organization CreateOrFindOrganization(OrganizationEnum orgEnum)
+        public Organization CreateOrFindOrganization(OrganizationEnum orgEnum)//查找或创建角色
         {
             var org = database.Organizations.SingleOrDefault(r => r.OrganizationEnum == orgEnum);
             if (org == null)
@@ -208,7 +208,7 @@ namespace VolunteerDatabase.Helper
             var user = database.Users.SingleOrDefault(u => u.AccountName == userName);
             if (SecurityHelper.CheckPassword(password: password, salt: user?.Salt, hashedPassword: user?.HashedPassword))
             {
-                var holder = database.Users.SingleOrDefault(u => u.AccountName == holderName);
+                var holder = database.Users.SingleOrDefault(u => u.AccountName == holderName);//?
                 if (holder != null)
                 {
                     return AppUserIdentityClaims.Create(user, holder);
