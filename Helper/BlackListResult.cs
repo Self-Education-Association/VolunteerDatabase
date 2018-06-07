@@ -39,7 +39,7 @@ namespace VolunteerDatabase.Helper
             };
             return result;
         }
-        public static BlackListResult Error(int id ,params string[] errors)
+        public static BlackListResult Error(long id ,params string[] errors)
         {
             if (errors.Count() == 0)
             {
@@ -117,10 +117,10 @@ namespace VolunteerDatabase.Helper
             else
                 return false;
         }
-        public static List<int> CreateNumList(params int[] nums)
+        public static List<long> CreateNumList(params long[] nums)
         {
-            List<int> list = new List<int>();
-            foreach (int n in nums)
+            List<long> list = new List<long>();
+            foreach (long n in nums)
             {
                 list.Add(n);
             }

@@ -79,7 +79,7 @@ namespace VolunteerDatabase.Helper
         [AppAuthorize(AppRoleEnum.LogViewer)]
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
         [AppAuthorize(AppRoleEnum.TestOnly)]
-        public Volunteer FindVolunteer(int num)//按照学号查找志愿者
+        public Volunteer FindVolunteer(long num)
         {
             var result = database.Volunteers.SingleOrDefault(v => v.StudentNum == num);
             return result;
@@ -90,14 +90,14 @@ namespace VolunteerDatabase.Helper
         [AppAuthorize(AppRoleEnum.LogViewer)]
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
         [AppAuthorize(AppRoleEnum.TestOnly)]
-        public List<Volunteer> FindVolunteer(string name)//按照名字查找志愿者
+        public List<Volunteer> FindVolunteer(string name)
         {
             var result = database.Volunteers.Where(v => v.Name == name).ToList();//返回一个集合
             return result;
         }
 
         [AppAuthorize(AppRoleEnum.Administrator)]
-        public VolunteerResult AddVolunteer(Volunteer v)//添加志愿者，查找是否重复，学号是否为0，其它依次填入
+        public VolunteerResult AddVolunteer(Volunteer v)
         {
             if (v == null)
                 return VolunteerResult.Error(VolunteerResult.AddVolunteerErrorEnum.NullVolunteerObject);
@@ -107,7 +107,7 @@ namespace VolunteerDatabase.Helper
                 return VolunteerResult.Error(VolunteerResult.AddVolunteerErrorEnum.SameIdVolunteerExisted, v.StudentNum);
             else
             {
-                int stunum = v.StudentNum;
+                long stunum = v.StudentNum;
                 v.Mobile = v.Mobile == DEFAULTSTRING ? DEFAULTSTRING : v.Mobile;
                 v.Room = v.Room == DEFAULTSTRING ? DEFAULTSTRING : v.Room;
                 v.Name = v.Name == DEFAULTSTRING ? DEFAULTSTRING : v.Name;
@@ -129,8 +129,7 @@ namespace VolunteerDatabase.Helper
         }
 
         [AppAuthorize(AppRoleEnum.Administrator)]
-        public VolunteerResult AddVolunteer(int num, string name = DEFAULTSTRING, string c = DEFAULTSTRING, string mobile = DEFAULTSTRING, string room = DEFAULTSTRING, string email = DEFAULTSTRING,string skill=DEFAULTSTRING)
-            //分别添加志愿者的各项信息
+        public VolunteerResult AddVolunteer(long num, string name = DEFAULTSTRING, string c = DEFAULTSTRING, string mobile = DEFAULTSTRING, string room = DEFAULTSTRING, string email = DEFAULTSTRING,string skill=DEFAULTSTRING)
         {
             if (num == 0)
                 return VolunteerResult.Error(VolunteerResult.EditVolunteerErrorEnum.EmptyId);
@@ -154,8 +153,8 @@ namespace VolunteerDatabase.Helper
         }
 
         [AppAuthorize(AppRoleEnum.Administrator)]
-        public Volunteer CreateTempVolunteer(int num, string name = DEFAULTSTRING, string c = DEFAULTSTRING, string mobile = DEFAULTSTRING, string room = DEFAULTSTRING, string email = DEFAULTSTRING,string skill = DEFAULTSTRING)
-        {//添加临时志愿者
+        public Volunteer CreateTempVolunteer(long num, string name = DEFAULTSTRING, string c = DEFAULTSTRING, string mobile = DEFAULTSTRING, string room = DEFAULTSTRING, string email = DEFAULTSTRING,string skill = DEFAULTSTRING)
+        {
             var v = new Volunteer
             {
                 StudentNum = num,
@@ -177,7 +176,7 @@ namespace VolunteerDatabase.Helper
         //编辑志愿者
         [AppAuthorize(AppRoleEnum.Administrator)]
         public VolunteerResult EditVolunteer(Volunteer a, Volunteer b)
-        {//将志愿者a的信息修改为b的？
+        {
             if (a == null || a.StudentNum == 0)
                 return VolunteerResult.Error(VolunteerResult.EditVolunteerErrorEnum.NonExistingVolunteer);
             var v = database.Volunteers.SingleOrDefault(o => o.StudentNum == a.StudentNum);
@@ -204,8 +203,8 @@ namespace VolunteerDatabase.Helper
         }
 
         [AppAuthorize(AppRoleEnum.Administrator)]
-        public VolunteerResult EditVolunteer(Volunteer a, int num, string name = DEFAULTSTRING, string c = DEFAULTSTRING, string mobile = DEFAULTSTRING, string room = DEFAULTSTRING, string email = DEFAULTSTRING)
-        {//分别修改a的每项信息
+        public VolunteerResult EditVolunteer(Volunteer a, long num, string name = DEFAULTSTRING, string c = DEFAULTSTRING, string mobile = DEFAULTSTRING, string room = DEFAULTSTRING, string email = DEFAULTSTRING)
+        {
             if (num == 0)
                 return VolunteerResult.Error(VolunteerResult.EditVolunteerErrorEnum.EmptyId);
             var v = database.Volunteers.SingleOrDefault(o => o.StudentNum == a.StudentNum);
@@ -241,7 +240,7 @@ namespace VolunteerDatabase.Helper
         {
             if (a != null)
             {
-                int deletedVolunteerStuNum = a.StudentNum;
+                var deletedVolunteerStuNum = a.StudentNum;
                 string deletedVolunteerName = a.Name;
                 var volunteer = FindVolunteer(a.StudentNum);
                 List<LogRecord> loglist = logger.FindLogRecordByTargetVolunteer(volunteer).ToList();
@@ -263,7 +262,7 @@ namespace VolunteerDatabase.Helper
         }
 
         [AppAuthorize(AppRoleEnum.Administrator)]
-        public VolunteerResult DeleteVolunteer(int num)//直接按学号删除志愿者
+        public VolunteerResult DeleteVolunteer(long num)
         {
             var v = database.Volunteers.Include("Project.TargetedBy").SingleOrDefault(o => o.StudentNum == num);
             return DeleteVolunteer(v);
@@ -337,7 +336,7 @@ namespace VolunteerDatabase.Helper
             {
                 foreach (var v in source)
                 {
-                    if (!target.Contains(v))//如果不包含v的相应字符串就添加v
+                    if (!target.Contains(v))
                         target.Add(v);
                 }
                 return true;

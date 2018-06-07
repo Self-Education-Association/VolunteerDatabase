@@ -127,7 +127,7 @@ namespace VolunteerDatabase.Helper
 
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public ProgressResult AddManager(int StuNum, Project Pro)
+        public ProgressResult AddManager(long StuNum, Project Pro)
         {
             var Manager = database.Users.SingleOrDefault(o => o.StudentNum == StuNum);       
             if(Pro==null||Pro.Condition==ProjectCondition.Finished)
@@ -145,7 +145,7 @@ namespace VolunteerDatabase.Helper
         }
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public ProgressResult DeletManager(int StuNum, Project Pro)
+        public ProgressResult DeletManager(long StuNum, Project Pro)
         {
             var Manager = database.Users.SingleOrDefault(o => o.StudentNum == StuNum);
             if (Pro == null || Pro.Condition == ProjectCondition.Finished)

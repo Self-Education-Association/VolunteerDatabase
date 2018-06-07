@@ -10,7 +10,7 @@ namespace VolunteerDatabase.Entity
 {
     public class CreditRecord
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid UID { get; set; }
         public Volunteer Participant { get; set; }
         

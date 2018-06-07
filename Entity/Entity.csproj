@@ -96,6 +96,14 @@
     <Compile Include="Migrations\201712020431416_alterscore.Designer.cs">
       <DependentUpon>201712020431416_alterscore.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804151610008_intToLong.cs" />
+    <Compile Include="Migrations\201804151610008_intToLong.Designer.cs">
+      <DependentUpon>201804151610008_intToLong.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804181340478_creditRecordScore.cs" />
+    <Compile Include="Migrations\201804181340478_creditRecordScore.Designer.cs">
+      <DependentUpon>201804181340478_creditRecordScore.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Organization.cs" />
     <Compile Include="Project.cs" />
@@ -139,6 +147,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712020431416_alterscore.resx">
       <DependentUpon>201712020431416_alterscore.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804151610008_intToLong.resx">
+      <DependentUpon>201804151610008_intToLong.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804181340478_creditRecordScore.resx">
+      <DependentUpon>201804181340478_creditRecordScore.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

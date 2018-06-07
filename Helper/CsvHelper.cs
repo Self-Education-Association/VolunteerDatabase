@@ -53,7 +53,7 @@ namespace VolunteerDatabase.Helper
         public List<string> errorList = new List<string>();
         public List<string> informingMessage = new List<string>();
         public List<Volunteer> ChangedVols = new List<Volunteer>();
-        public List<int> conflictNums = new List<int>();
+        public List<long> conflictNums = new List<long>();
 
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
         public List<Volunteer> PrepareAddInBatch(OpenFileDialog op, Project Pro)
@@ -86,7 +86,7 @@ namespace VolunteerDatabase.Helper
                 {
                     string[] eachLine = new string[7];
                     eachLine = str.Split(',');
-                    int StudentNum = int.Parse(eachLine[0]);
+                    long StudentNum = long.Parse(eachLine[0]);
                     string Name = eachLine[1];
                     string Mobile = eachLine[2];
                     string Email = eachLine[3];
@@ -126,7 +126,7 @@ namespace VolunteerDatabase.Helper
                 else
                 if (vol == null)
                 {
-                    if (item.StudentNum > 205000000 || item.StudentNum < 201100000)
+                    if (item.StudentNum > 2000000000000 || item.StudentNum < 201100000)
                     {
                         errorList.Add("下面这些学号是不合法的,未予以导入,确认没有输错吗:" + item.StudentNum);
                     }
@@ -156,7 +156,7 @@ item.StudentNum, vol.Name, item.Name, vol.Mobile, item.Mobile, vol.Email, item.E
         }
 
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
-        public void determChanges(params int[] StuNums)
+        public void determChanges(params long[] StuNums)
         {
             foreach (var item in StuNums)
             {
