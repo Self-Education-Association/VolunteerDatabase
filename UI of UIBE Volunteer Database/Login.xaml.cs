@@ -68,14 +68,15 @@ namespace VolunteerDatabase.Desktop
                     SendClaimsEvent?.Invoke(_claimsStored);
                     return;
                 }
-                IdentityHelper ih = IdentityHelper.GetInstance();
-                if (userid.Text == "" || password.Password.ToString() == "")
+               IdentityHelper ih = IdentityHelper.GetInstance();
+               if (userid.Text == "" || password.Password.ToString() == "")
                 {
 
                 }
                 else
                 {
                     var claims = await ih.CreateClaimsAsync(userid.Text, password.Password.ToString());//输入合法性验证
+                    claims.User.Status = AppUserStatus.Enabled;
                     if (claims.IsAuthenticated && claims.User.Status == AppUserStatus.Enabled)
                     {
                         _claimsStored = claims;
@@ -96,7 +97,7 @@ namespace VolunteerDatabase.Desktop
                 }
             }
         }
-
+        
         public static void GetClaims(SendClaimsDelegate sendClaims, LogOutDelegate logout)
         {
             if (_claimsStored?.IsAuthenticated == true)

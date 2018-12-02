@@ -95,7 +95,7 @@ namespace VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch
                     vmNew.IsOld = false;
                     vmNew.Pair = vmOld;
                     vmOld.Pair = vmNew;
-                    itemList.Add(vmNew);
+                    itemList.Add(vmNew); //同一个学号，查找到的记为old,新传入的记为new，并将他们对应
                     itemList.Add(vmOld);
                 }
                 /* List<Volunteer> theOldAndNew = new List<Volunteer>();
@@ -133,11 +133,11 @@ namespace VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch
             {
                 if (item.IsOld == false)
                 {
-                    item.Selected = true;
+                    item.Selected = true;//vmOld可选中
                 }
                 else
                 {
-                    item.Selected = false;
+                    item.Selected = false;//vmNew不可选中
                 }
             }
         }
@@ -148,7 +148,7 @@ namespace VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch
             {
                 if (item.IsOld == true)
                 {
-                    item.Selected = true;
+                    item.Selected = true;//vmOld将可以被选中
                 }
                 else
                 {
@@ -166,7 +166,7 @@ namespace VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch
             {
                 if (item.Selected)
                 {
-                    if (item.Pair.Selected)
+                    if (item.Pair.Selected)//vmOld的pair的初始为false，所以应该没有这部分？
                     {
                         succeeded = false;
                         error = "每一个志愿者只能保存一条记录,请检查选择是否有错.";
@@ -174,15 +174,15 @@ namespace VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch
                     }
                     else
                     {
-                        if (!finalList.Contains(item))
+                        if (!finalList.Contains(item))//添加了vmOld ？
                             finalList.Add(item);
                     }
                 }
-                else
+                else  //即不可被选中,为vmNew
                 {
-                    if (!item.Pair.Selected)
+                    if (!item.Pair.Selected)//pair初始都为false
                     {
-                        finalList.Add(item.IsOld ? item : item.Pair);
+                        finalList.Add(item.IsOld ? item : item.Pair);//添加vmOld的pair  ?不应该添加vmOld?
                         if (item.IsOld)
                         {
                             item.Selected = true;
@@ -203,7 +203,7 @@ namespace VolunteerDatabase.Desktop.Pages.InPutVolunteerInBatch
             {
                 foreach (Volunteer v in normalList)
                 {
-                    finalList.Add(new csvItemViewModel(v));
+                    finalList.Add(new csvItemViewModel(v));//添加所有vmNew
                 }
                 foreach (csvItemViewModel v in finalList)
                 {

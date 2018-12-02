@@ -100,7 +100,7 @@ namespace VolunteerDatabase.Desktop.Pages
         {
             if (Pro.ScoreCondition != ProjectScoreCondition.Scored)
             {
-                endproject.IsEnabled = false;
+                endproject.IsEnabled = true;//未评分时会给出默认评分4
             }
             if (Claims.Roles.Count() == 0 || Pro.Condition == ProjectCondition.Finished)
             {

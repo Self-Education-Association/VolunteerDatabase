@@ -8,6 +8,7 @@
     {
         public Database()
             : base(@"Name=Database")
+
         {
         }
 

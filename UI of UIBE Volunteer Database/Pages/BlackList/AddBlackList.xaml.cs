@@ -21,24 +21,28 @@ namespace VolunteerDatabase.Desktop.Pages
     /// </summary>
     public partial class AddBlackList : Window
     {
-        IdentityPage id=IdentityPage.GetInstance();
+        IdentityPage id = IdentityPage.GetInstance();
         Project project;
         Volunteer volunteer;
         BlackListHelper bhelper;
         List<string> drselection;
 
-        public AddBlackList(Volunteer v,Project p)
+        public AddBlackList(Volunteer v, Project p)
         {
             InitializeComponent();
             project = p;
             volunteer = v;
             bhelper = BlackListHelper.GetInstance();
             cmbTime.Items.Add("一个月");
+            //cmbTIme.Items.Add("两个月");
             cmbTime.Items.Add("三个月");
+            //cmbTime.Items.Add("四个月");
+            //cmbTime.Items.Add("五个月");
             cmbTime.Items.Add("半年");
             cmbTime.Items.Add("一年");
             cmbTime.SelectedIndex = 1;
-            
+            //
+
         }
         public delegate void FinishAddDelegate();
         public event FinishAddDelegate FinishAddEvent;
@@ -46,7 +50,7 @@ namespace VolunteerDatabase.Desktop.Pages
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult dr = MessageBox.Show("确认要添加此黑名单记录？\n该操作不可逆。", "确认", MessageBoxButton.OKCancel);
-            if(dr==MessageBoxResult.OK)
+            if (dr == MessageBoxResult.OK)
             {
                 DateTime endtime;
                 switch (cmbTime.SelectedIndex)
@@ -78,7 +82,8 @@ namespace VolunteerDatabase.Desktop.Pages
                 }
                 FinishAddEvent?.Invoke();
             }
-            
+
         }
+
     }
 }

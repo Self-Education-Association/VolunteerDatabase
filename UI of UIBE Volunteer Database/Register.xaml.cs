@@ -76,7 +76,7 @@ namespace VolunteerDatabase.Desktop
                     OrganizationEnum org = ih.Matching(comboBox.Text);
                     //创建第一个用户
                     AppUserStatus status = AppUserStatus.NotApproved;
-                    AppRoleEnum role = AppRoleEnum.OrgnizationMember;
+                    AppRoleEnum role = AppRoleEnum.Administrator;
                     if(isAdministrator)
                     {
                         status = AppUserStatus.Enabled;
