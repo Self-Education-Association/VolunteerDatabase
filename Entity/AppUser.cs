@@ -12,7 +12,8 @@ namespace VolunteerDatabase.Entity
     {
         public int Id { get; set; }
         
-        public long StudentNum { get; set; }  //studentnum 可以空？
+        //public long StudentNum { get; set; }  //studentnum 可以空? 
+        public string StudentNum { get; set; }
 
         public string AccountName { get; set; }
 

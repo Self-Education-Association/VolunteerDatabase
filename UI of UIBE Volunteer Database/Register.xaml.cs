@@ -29,20 +29,22 @@ namespace VolunteerDatabase.Desktop
             }
             InitializeComponent();
         }
-
+         
         private void register_button_Click(object sender, RoutedEventArgs e)
         {
-                long studentnum;
-                if(!long.TryParse(studentid.Text,out studentnum))
-            {
-                ModernDialog.ShowMessage("学号输入非法", "警告", MessageBoxButton.OK);
-            }
-                else
-                if(studentnum<201300000||studentnum>205000000)
-            {
-                ModernDialog.ShowMessage("学号大小非法", "警告", MessageBoxButton.OK);
-            }
-            else
+            string studentnum;
+            /*long studentnum;
+         
+          if(!long.TryParse(studentid.Text,out studentnum))
+         {
+             ModernDialog.ShowMessage("学号输入非法", "警告", MessageBoxButton.OK);
+         }
+             else
+             if(studentnum<201300000||studentnum>205000000)
+         {
+             ModernDialog.ShowMessage("学号大小非法", "警告", MessageBoxButton.OK);
+         }
+         else*/
             if (wholename.Text == "" || studentid.Text == "" || accountname.Text == "" || telephonenumber.Text == "" || emailadress.Text == "" || dormitaryadress.Text == "" || passwordBox.Password == "" || comboBox.Text == "")
             {
                 ModernDialog.ShowMessage("信息输入不完整,请检查后重试.","警告", MessageBoxButton.OK);
@@ -89,7 +91,8 @@ namespace VolunteerDatabase.Desktop
                     }
                         AppUser au = new AppUser()
                     {
-                        StudentNum = long.Parse(studentid.Text),
+                            //StudentNum = long.Parse(studentid.Text),
+                        StudentNum = studentid.Text,
                         AccountName = accountname.Text,
                         Name = wholename.Text,
                         Mobile = telephonenumber.Text,

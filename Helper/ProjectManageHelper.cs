@@ -56,13 +56,14 @@ namespace VolunteerDatabase.Helper
 
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        //      public List<AppUser> FindManagerListByStudentNum(params string[] StuNums)  //将原本是string类型的参数改为 int
+             //public List<AppUser> FindManagerListByStudentNum(params string[] StuNums)  //将原本是string类型的参数改为 int
         public List<AppUser> FindManagerListByStudentNum(params int[] StuNums)
         {
             List<AppUser> Managers = new List<AppUser>();
             foreach (int StuNum in StuNums)
             {
-                var Manager = database.Users.SingleOrDefault(o=>o.StudentNum==StuNum);
+                string StuNumString = StuNum.ToString();
+                var Manager = database.Users.SingleOrDefault(o=>o.StudentNum==StuNumString);
                 if(Manager==null)
                 {
                     ProgressResult.Error("用户不存在");
@@ -127,9 +128,9 @@ namespace VolunteerDatabase.Helper
 
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public ProgressResult AddManager(long StuNum, Project Pro)
+        public ProgressResult AddManager(string StuNumString, Project Pro)
         {
-            var Manager = database.Users.SingleOrDefault(o => o.StudentNum == StuNum);       
+            var Manager = database.Users.SingleOrDefault(o => o.StudentNum == StuNumString);       
             if(Pro==null||Pro.Condition==ProjectCondition.Finished)
             {
                 return ProgressResult.Error("修改项目时失败!项目不存在或已结项.");
@@ -145,9 +146,9 @@ namespace VolunteerDatabase.Helper
         }
         [AppAuthorize(AppRoleEnum.Administrator)]
         [AppAuthorize(AppRoleEnum.OrgnizationAdministrator)]
-        public ProgressResult DeletManager(long StuNum, Project Pro)
+        public ProgressResult DeletManager(string StuNumString, Project Pro)
         {
-            var Manager = database.Users.SingleOrDefault(o => o.StudentNum == StuNum);
+            var Manager = database.Users.SingleOrDefault(o => o.StudentNum == StuNumString);
             if (Pro == null || Pro.Condition == ProjectCondition.Finished)
             {
                 return ProgressResult.Error("修改项目时失败!项目不存在或已结项.");

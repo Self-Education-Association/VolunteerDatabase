@@ -104,6 +104,10 @@
     <Compile Include="Migrations\201804181340478_creditRecordScore.Designer.cs">
       <DependentUpon>201804181340478_creditRecordScore.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812041627276_changeStudentIDtoString.cs" />
+    <Compile Include="Migrations\201812041627276_changeStudentIDtoString.Designer.cs">
+      <DependentUpon>201812041627276_changeStudentIDtoString.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Organization.cs" />
     <Compile Include="Project.cs" />
@@ -153,6 +157,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804181340478_creditRecordScore.resx">
       <DependentUpon>201804181340478_creditRecordScore.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812041627276_changeStudentIDtoString.resx">
+      <DependentUpon>201812041627276_changeStudentIDtoString.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

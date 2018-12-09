@@ -12,7 +12,8 @@ namespace VolunteerDatabase.Entity
     public class Volunteer:IComparable<Volunteer>, IEqualityComparer<Volunteer>
     {
         //[Required]
-        public long StudentNum { get; set;}//学号
+        //public long StudentNum { get; set; }
+        public string StudentNum { get; set;}
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid UID { get; set; }//唯一标识符：主键

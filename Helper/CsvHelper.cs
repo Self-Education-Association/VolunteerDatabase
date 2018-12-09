@@ -53,7 +53,7 @@ namespace VolunteerDatabase.Helper
         public List<string> errorList = new List<string>();
         public List<string> informingMessage = new List<string>();
         public List<Volunteer> ChangedVols = new List<Volunteer>();
-        public List<long> conflictNums = new List<long>();
+        public List<string> conflictNums = new List<string>();
 
         [AppAuthorize(AppRoleEnum.OrgnizationMember)]
         public List<Volunteer> PrepareAddInBatch(OpenFileDialog op, Project Pro)
@@ -86,7 +86,8 @@ namespace VolunteerDatabase.Helper
                 {
                     string[] eachLine = new string[7];
                     eachLine = str.Split(',');
-                    long StudentNum = long.Parse(eachLine[0]);
+                    string StudentNum = eachLine[0];
+                    //long StudentNum = long.Parse(eachLine[0]);
                     string Name = eachLine[1];
                     string Mobile = eachLine[2];
                     string Email = eachLine[3];
@@ -126,18 +127,18 @@ namespace VolunteerDatabase.Helper
                 else
                 if (vol == null)
                 {
-                    if (item.StudentNum > 2000000000000 || item.StudentNum < 201100000)
-                    {
+                    //if (item.StudentNum > 2000000000000 || item.StudentNum < 201100000)
+                    //{
                         errorList.Add("下面这些学号是不合法的,未予以导入,确认没有输错吗:" + item.StudentNum);
-                    }
-                    else
-                    {
+                    //}
+                    //else
+                    //{
                         VolunteerResult result = vhelper.AddVolunteer(item);
                         if (result.Succeeded == false)
                         {
                             informingMessage.Add("出现错误,错误信息[:" + result.ErrorString + "] 错误相关志愿者学号:[" + result.ErrorVolunteerNum + "]");
                         }
-                    }
+                    //}
                 }
                 else//重复且信息冲突
                 {
@@ -160,10 +161,11 @@ item.StudentNum, vol.Name, item.Name, vol.Mobile, item.Mobile, vol.Email, item.E
         {
             foreach (var item in StuNums)
             {
-                var nv = ChangedVols.SingleOrDefault(o => o.StudentNum == item);
+                string itemString = item.ToString();
+                var nv = ChangedVols.SingleOrDefault(o => o.StudentNum == itemString);
                 if (nv != null)
                 {
-                    Volunteer ov = vhelper.FindVolunteer(item);
+                    Volunteer ov = vhelper.FindVolunteer(itemString);
                     VolunteerResult result = vhelper.EditVolunteer(ov, nv);
                     if (result.Succeeded == false)
                     {

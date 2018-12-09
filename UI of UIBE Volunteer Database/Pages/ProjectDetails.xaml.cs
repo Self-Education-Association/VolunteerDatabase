@@ -250,7 +250,7 @@ namespace VolunteerDatabase.Desktop.Pages
                 var pmh = ProjectManageHelper.GetInstance();
                 try
                 {
-                    var result = pmh.AddManager(long.Parse(AddManager.Text), Pro);
+                    var result = pmh.AddManager(AddManager.Text, Pro);
                     if (result.Succeeded)
                     {
                         MessageBox.Show("学号为[" + AddManager.Text + "]的用户已经被添加为项目[" + Pro.Name + "]的项目管理者.");
@@ -278,7 +278,7 @@ namespace VolunteerDatabase.Desktop.Pages
             else
             {
                 var pph = ProjectProgressHelper.GetInstance();
-                var result = pph.SingleVolunteerInputById(long.Parse(AddVolunteer.Text), Pro);
+                var result = pph.SingleVolunteerInputById(AddVolunteer.Text, Pro);
                 if (result.Succeeded)
                 {
                     MessageBox.Show("学号为[" + AddVolunteer.Text + "]的志愿者已经被添加入项目[" + Pro.Name + "]的志愿者列表.");
